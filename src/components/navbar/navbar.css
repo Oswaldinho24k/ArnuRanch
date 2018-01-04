@@ -1,0 +1,7 @@
+.osw-navbar{
+    display: flex;
+    padding: 0 1%;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+}
