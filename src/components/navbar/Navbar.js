@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Icon, Menu} from 'antd';
+import {Icon, Menu, Avatar} from 'antd';
 
 const SubMenu = Menu.SubMenu
 
@@ -20,7 +20,7 @@ class Navbar extends Component {
                     <Menu
                         mode="horizontal">
                         <Menu.Item>lol</Menu.Item>
-                        <SubMenu key={'sub1'} title={<span><Icon type="person" /><span>User</span></span>}>
+                        <SubMenu key={'sub1'} title={<span>Hello, Username</span>}>
                             <Menu.Item>
                                 <Icon type="pie-chart" />
                                 <span>Option 1</span>

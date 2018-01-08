@@ -31,7 +31,7 @@ class AdminPage extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo" >LOGO</div>
+                    <div className="logo" >{!this.state.collapsed?'ADMINSITE':'ADMIN'}</div>
                     <LeftSide/>
                 </Sider>
                 <Layout>
@@ -40,7 +40,7 @@ class AdminPage extends Component {
                             collapsed={this.state.collapsed}
                             toggle={this.toggle}/>
                     </Header>
-                    <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: '90vh' }}>
+                    <Content style={{ margin: '1%', padding: '1%', background: '#f0f2f5', minHeight: '90vh' }}>
                         <Sections/>
                     </Content>
                 </Layout>

@@ -9,6 +9,7 @@ import configureStore from "./redux/store/configureStore";
 import 'antd/dist/antd.css';
 import { LocaleProvider } from 'antd';
 import sp from 'antd/lib/locale-provider/es_ES';
+import 'ant-design-pro/dist/ant-design-pro.css';
 
 
 
