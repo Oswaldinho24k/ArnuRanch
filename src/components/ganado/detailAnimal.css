@@ -1,0 +1,22 @@
+.principal{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    box-sizing: border-box;
+    background-color: white;
+    padding: 30px;
+    box-shadow: 5px 10px 50px 2px #777777 ;
+    margin: 0 auto;
+
+}
+
+.detalle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 70%;
+    box-sizing: border-box;
+}
