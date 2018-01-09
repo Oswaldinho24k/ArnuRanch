@@ -5,6 +5,7 @@ import EgresosPage from "../egresos/EgresosPage";
 import AnimalsPage from "../ganado/AnimalsPage";
 import DetailAnimalPage from "../ganado/DetailAnimalPage";
 import BatchPage from "../ganado/BatchPage";
+import BatchDetailPage from "../ganado/BatchDetailPage";
 
 const Sections = ({props}) => {
     return (
@@ -22,7 +23,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/granos'} component={IngresosPage}/>
 
                 {/***************************** BATCH ROUTES *****************************/}
-                <Route path='/admin/batch' component={BatchPage}/>
+                <Route path='/admin/batch/:id'  component={BatchDetailPage} />
+                <Route path='/admin/batch'      component={BatchPage}       />
                 {/***************************** END BATCH    *****************************/}
             </Switch>
 
