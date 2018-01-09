@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8473299b-e280-4ac5-bf19-5a96f3991551" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/login/LogStyles.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/login/Login.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/login/LoginContainer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Routes.js" afterPath="$PROJECT_DIR$/src/Routes.js" />
-    </list>
+    <list default="true" id="8473299b-e280-4ac5-bf19-5a96f3991551" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -54,18 +46,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/admin/AdminPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="42" column="49" lean-forward="false" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Sections.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/admin/Sections.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,6 +54,16 @@
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IngresosPage.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/ingresos/IngresosPage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="810">
+              <caret line="59" column="16" lean-forward="true" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -122,7 +112,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -163,7 +153,6 @@
         <option value="$PROJECT_DIR$/src/components/navbar/Navbar.js" />
         <option value="$PROJECT_DIR$/src/components/ingresos/TablaIngresos.js" />
         <option value="$PROJECT_DIR$/src/components/admin/AdminPage.js" />
-        <option value="$PROJECT_DIR$/src/components/ingresos/IngresosPage.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/components/ganado/GanadoPage.js" />
         <option value="$PROJECT_DIR$/src/components/ingresos/MainCards.js" />
@@ -172,6 +161,7 @@
         <option value="$PROJECT_DIR$/src/components/admin/Sections.js" />
         <option value="$PROJECT_DIR$/src/components/admin/LeftSide.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/components/ingresos/IngresosPage.js" />
       </list>
     </option>
   </component>
@@ -187,8 +177,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="432" />
-    <option name="y" value="183" />
+    <option name="x" value="450" />
+    <option name="y" value="44" />
     <option name="width" value="1063" />
     <option name="height" value="974" />
   </component>
@@ -301,15 +291,15 @@
       <updated>1514941613590</updated>
       <workItem from="1514941615245" duration="1070000" />
       <workItem from="1515001257073" duration="20081000" />
-      <workItem from="1515277498120" duration="186000" />
+      <workItem from="1515277498120" duration="2461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21337000" />
+    <option name="totallyTimeSpent" value="23612000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="432" y="183" width="1063" height="974" extended-state="0" />
+    <frame x="450" y="44" width="1063" height="974" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20057581" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -384,9 +374,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="61" column="28" lean-forward="false" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -479,6 +467,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -511,16 +502,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ingresos/TablaIngresos.js" />
-    <entry file="file://$PROJECT_DIR$/src/components/ingresos/IngresosPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="61" column="28" lean-forward="false" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/admin/AdminPage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -607,6 +588,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ingresos/IngresosPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="59" column="16" lean-forward="true" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
           <folding />
         </state>
       </provider>
