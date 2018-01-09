@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8473299b-e280-4ac5-bf19-5a96f3991551" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/ganado/DetailAnimalPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/admin/Sections.js" afterPath="$PROJECT_DIR$/src/components/admin/Sections.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ganado/AnimalsPage.js" afterPath="$PROJECT_DIR$/src/components/ganado/AnimalsPage.js" />
     </list>
@@ -33,8 +30,8 @@
       <file leaf-file-name="AnimalsPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ganado/AnimalsPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="151" column="26" lean-forward="false" selection-start-line="151" selection-start-column="15" selection-end-line="151" selection-end-column="26" />
+            <state relative-caret-position="162">
+              <caret line="9" column="51" lean-forward="false" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -54,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Sections.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Sections.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/admin/Sections.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="58" lean-forward="false" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+            <state relative-caret-position="378">
+              <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -66,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DetailAnimalPage.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DetailAnimalPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ganado/DetailAnimalPage.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1563">
@@ -154,10 +151,10 @@
         <option value="$PROJECT_DIR$/src/components/admin/admin.css" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/components/ingresos/IngresosPage.js" />
-        <option value="$PROJECT_DIR$/src/components/admin/Sections.js" />
         <option value="$PROJECT_DIR$/src/components/admin/LeftSide.js" />
-        <option value="$PROJECT_DIR$/src/components/ganado/AnimalsPage.js" />
         <option value="$PROJECT_DIR$/src/components/ganado/DetailAnimalPage.js" />
+        <option value="$PROJECT_DIR$/src/components/ganado/AnimalsPage.js" />
+        <option value="$PROJECT_DIR$/src/components/admin/Sections.js" />
       </list>
     </option>
   </component>
@@ -172,7 +169,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="683" />
     <option name="y" value="34" />
     <option name="width" value="683" />
@@ -269,15 +266,15 @@
       <workItem from="1515001257073" duration="20081000" />
       <workItem from="1515277498120" duration="2461000" />
       <workItem from="1515520997815" duration="276000" />
-      <workItem from="1515521948762" duration="4902000" />
+      <workItem from="1515521948762" duration="5216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28790000" />
+    <option name="totallyTimeSpent" value="29104000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="34" width="1366" height="734" extended-state="6" />
+    <frame x="0" y="34" width="1366" height="734" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -698,26 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/admin/Sections.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="58" lean-forward="false" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ganado/AnimalsPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="151" column="26" lean-forward="false" selection-start-line="151" selection-start-column="15" selection-end-line="151" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -734,6 +711,26 @@
           <caret line="150" column="16" lean-forward="false" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ganado/AnimalsPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="51" lean-forward="false" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/admin/Sections.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

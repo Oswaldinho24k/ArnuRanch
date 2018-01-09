@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 const columns = [{
     title: 'Arete Rancho',
     dataIndex: 'Arete_Rancho',
-    render: text => <Link to='#'>{text}</Link>,
+    render: text => <Link to='/admin/animals/detail'>{text}</Link>,
 }, {
     title: 'Fecha Entrada',
     dataIndex: 'Fecha_Entrada',
