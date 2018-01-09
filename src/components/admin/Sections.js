@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import IngresosPage from "../ingresos/IngresosPage";
 import EgresosPage from "../egresos/EgresosPage";
 import AnimalsPage from "../ganado/AnimalsPage";
+import DetailAnimalPage from "../ganado/DetailAnimalPage";
 
 const Sections = ({props}) => {
     return (
@@ -15,6 +16,7 @@ const Sections = ({props}) => {
 
             <Route path={'/admin/animals'} component={AnimalsPage}/>
             <Route path={'/admin/granos'} component={IngresosPage}/>
+            <Route path={'/admin/animals/detail'} component={DetailAnimalPage}/>
 
 
         </div>

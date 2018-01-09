@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 const columns = [{
     title: 'Arete Rancho',
     dataIndex: 'Arete_Rancho',
-    render: text => <Link to='#'>{text}</Link>,
+    render: text => <Link to="#">{text}</Link>,
 }, {
     title: 'Fecha Entrada',
     dataIndex: 'Fecha_Entrada',
@@ -122,13 +122,13 @@ const rowSelection = {
     }),*/
 };
 
-class AnimalsPage extends Component {
+class DetailAnimalPage extends Component {
     state = {};
 
     render() {
         return (
             <div>
-                <h1>Animals</h1>
+                <h1>Detail Animals</h1>
                 <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
             </div>
         );
@@ -148,5 +148,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-AnimalsPage = connect(mapStateToProps, mapDispatchToProps)(AnimalsPage);
-export default AnimalsPage;
+DetailAnimalPage = connect(mapStateToProps, mapDispatchToProps)(DetailAnimalPage);
+export default DetailAnimalPage;
