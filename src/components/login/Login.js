@@ -9,27 +9,41 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                this.props.logIn(this.props.data)
+
             }
         });
     };
 
+
     render() {
         const { getFieldDecorator } = this.props.form;
+        const {handleText, data} = this.props;
         return (
             <Form onSubmit={this.handleSubmit} className="login-form" >
                 <FormItem>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: 'Ingresa tú nombre de usuario!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" size="large" />
+                        <Input
+                            name={'username'}
+                            onChange={handleText}
+                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            placeholder="Username"
+                            size="large" />
                     )}
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: 'Ingresa tú contraseña!' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" size="large" />
+                        <Input
+                            name={'password'}
+                            onChange={handleText}
+                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            type="password"
+                            placeholder="Password"
+                            size="large" />
                     )}
                 </FormItem>
                 <FormItem>
