@@ -1,17 +1,25 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon , message} from 'antd';
 
 import LeftSide from "./LeftSide";
 import Sections from "./Sections";
 import Navbar from "../navbar/Navbar";
+import * as userActions from '../../redux/actions/userActions';
 
 const { Header, Sider, Content } = Layout;
 
 
 
 class AdminPage extends Component {
+
+    componentWillMount(){
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        if(!userToken){
+            this.props.history.push('/login')
+        }
+    }
 
     state = {
         collapsed: false,
@@ -20,7 +28,14 @@ class AdminPage extends Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
-    }
+    };
+    logOut = () => {
+        this.props.userActions.logOut();
+        message.info('Vuelve Pronto ;)');
+        this.props.history.push('/login');
+
+
+    };
 
 
     render() {
@@ -37,6 +52,8 @@ class AdminPage extends Component {
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Navbar
+                            user={this.props.user}
+                            logOut={this.logOut}
                             collapsed={this.state.collapsed}
                             toggle={this.toggle}/>
                     </Header>
@@ -51,14 +68,15 @@ class AdminPage extends Component {
 
 
 function mapStateToProps(state, ownProps) {
+    console.log(state)
     return {
-        state: state
+        user: state.user.object
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        userActions: bindActionCreators(userActions, dispatch)
     }
 }
 

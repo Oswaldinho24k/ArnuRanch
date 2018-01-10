@@ -3,9 +3,10 @@ import axios from 'axios';
 let debug = true;
 
 //Localhost urls
-let animalsUrl = 'http://localhost:8000/api/ganado/animals/';
+
 //let logInUrl = 'http://localhost:8000/api/auth/login/';
 //let logOutUrl = 'http://localhost:8000/api/auth/logout/';
+let animalsUrl = 'http://localhost:8000/api/ganado/animals/';
 let tokenUrl = 'http://localhost:8000/api/auth/token-auth/';
 let userUrl = 'http://localhost:8000/api/auth/me/';
 
@@ -13,6 +14,9 @@ let userUrl = 'http://localhost:8000/api/auth/me/';
 
 //heroku urls
 if(!debug){
+    animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
+    tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/token-auth/';
+    userUrl = 'https://arnu-ranch-backend.herokuapp.com/auth/me/';
 
 }
 
@@ -20,7 +24,6 @@ if(!debug){
 
 const api = {
     /*-----------------animals functions-----------------------*/
-
     //Get all animals
     getAnimals:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -67,6 +70,12 @@ const api = {
 
         });
     },
+    /*-----------------aliments functions-----------------------*/
+
+    /*-----------------lotes functions-----------------------*/
+
+    /*-----------------corrales functions-----------------------*/
+
 
 
     /*-----------------user functions-----------------------*/

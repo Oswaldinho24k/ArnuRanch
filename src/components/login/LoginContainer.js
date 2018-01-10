@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Login from './Login';
 import './LogStyles.css';
 import * as userActions from '../../redux/actions/userActions';
-
+import {message} from 'antd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -23,17 +23,19 @@ class LoginContainer extends Component {
     logIn=(data)=>{
         this.props.userActions.logIn(data)
             .then(r=>{
-                console.log(r)
+                this.props.history.push('/admin')
+                message.success('Welcome')
             }).catch(e=>{
                 console.log(e)
         })
     };
+
     render() {
         let {data} = this.state;
         return (
             <div className="login">
                 <div className="header">
-                    <img alt="logo" className="logoP" src="https://cdn.worldvectorlogo.com/logos/slack-1.svg" />
+                    <img alt="logo" className="logoP" src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" />
                     <span className="title">Administrador</span>
                 </div>
                 <div>

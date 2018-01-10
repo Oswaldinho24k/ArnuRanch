@@ -11,7 +11,8 @@ export function getAnimalsSuccess(animals){
 export const getAnimals=()=>(dispatch, getState)=>{
     api.getAnimals()
         .then(r=>{
-            console.log(r.results)
+            //console.log(r.results)
+            dispatch(getAnimalsSuccess(r.results))
         }).catch(e=>{
             console.log(e)
     })
