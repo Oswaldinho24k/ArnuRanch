@@ -4,17 +4,22 @@ import {Table, Row, Col, Card} from "antd";
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 
-const columns = [{
+const columns = [
+    {
+        title:'Key',
+        dataIndex: 'key',
+        render: text => <Link to={`/admin/animals/${text}`} >{text}</Link>,
+    },
+    {
     title: 'Arete Rancho',
     dataIndex: 'Arete_Rancho',
-    render: text => <Link to='/admin/animals/detail'>{text}</Link>,
 }, {
     title: 'Fecha Entrada',
     dataIndex: 'Fecha_Entrada',
 },{
     title:'Lote',
     dataIndex: 'Lote'
-}
+},
 ];
 const data = [{
     key: '1',

@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Table, Row, Col, Card, Avatar, Divider} from "antd";
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import './detailAnimal.css';
 
 const tabList = [{
     key: 'Detalle',
@@ -13,10 +12,6 @@ const tabList = [{
     tab: 'Alimentacion',
 }];
 
-const contentList = {
-    Detalle: <p>content1</p>,
-    Alimentacion: <p>content2</p>,
-};
 
 class DetailAnimalPage extends Component {
     state = {
@@ -24,15 +19,19 @@ class DetailAnimalPage extends Component {
         noTitleKey: 'article',
     };
     onTabChange = (key, type) => {
-        console.log(key, type);
+        //console.log(key, type);
         this.setState({ [type]: key });
     };
 
     render() {
+        let contentList = {
+            Detalle: <p>Info DetailAnimal {this.props.match.params.key}</p>,
+            Alimentacion: <p>content2</p>,
+        };
         return (
-        <div className={"principal"}>
+        <div style={{display:'flex',width:'80%', justifyContent:'center', margin:'0 auto'}}>
             <Card
-                style={{ width: '100%' }}
+                style={{ width: '80%' }}
                 cover={<img alt="example" src="https://psicologia-estrategica.com/wp-content/uploads/2015/12/cow-portrait-1346208-639x427-639x380.jpg" style={{height:250}}/>}
             >
                 <Card
@@ -47,7 +46,6 @@ class DetailAnimalPage extends Component {
         );
     }
 }
-
 
 function mapStateToProps(state, ownProps) {
     return {

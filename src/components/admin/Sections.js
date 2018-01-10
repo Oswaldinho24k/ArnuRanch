@@ -18,7 +18,7 @@ const Sections = ({props}) => {
                 <Route path={'/admin/clientes'} component={IngresosPage}/>
                 <Route path={'/admin/proovedores'} component={IngresosPage}/>
 
-                <Route path={'/admin/animals/detail'} component={DetailAnimalPage}/>
+                <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
                 <Route path={'/admin/animals'} component={AnimalsPage}/>
                 <Route path={'/admin/granos'} component={IngresosPage}/>
 
