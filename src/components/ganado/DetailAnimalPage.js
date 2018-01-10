@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Table, Row, Col, Card} from "antd";
+import {Table, Row, Col, Card, Avatar, Divider} from "antd";
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
+import './detailAnimal.css';
 
 const columns = [{
     title: 'Arete Rancho',
     dataIndex: 'Arete_Rancho',
-    render: text => <Link to='/admin/animals/detail'>{text}</Link>,
+    render: text => <Link to="#">{text}</Link>,
 }, {
     title: 'Fecha Entrada',
     dataIndex: 'Fecha_Entrada',
@@ -122,15 +123,25 @@ const rowSelection = {
     }),*/
 };
 
-class AnimalsPage extends Component {
+class DetailAnimalPage extends Component {
     state = {};
 
     render() {
         return (
-            <div>
-                <h1>Animals</h1>
-                <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
-            </div>
+
+                <div className={"principal"}>
+                        <img src={"https://psicologia-estrategica.com/wp-content/uploads/2015/12/cow-portrait-1346208-639x427-639x380.jpg"} style={{height:150, width:150, borderRadius:'50%'}}/>
+                        <div className={"detalle"}>
+                            <p style={{width:'50%'}}>Arete Siniga</p>
+                            <p style={{width:'50%'}}>312312</p>
+                            <Divider style={{margin:0}}/>
+                            <p style={{width:'50%'}}>Arete Siniga</p>
+                            <p style={{width:'50%'}}>312312</p>
+                            <Divider style={{margin:0}}/>
+
+                        </div>
+                </div>
+
         );
     }
 }
@@ -148,5 +159,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-AnimalsPage = connect(mapStateToProps, mapDispatchToProps)(AnimalsPage);
-export default AnimalsPage;
+DetailAnimalPage = connect(mapStateToProps, mapDispatchToProps)(DetailAnimalPage);
+export default DetailAnimalPage;
