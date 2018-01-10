@@ -11,9 +11,12 @@ import { LocaleProvider } from 'antd';
 import sp from 'antd/lib/locale-provider/es_ES';
 import 'ant-design-pro/dist/ant-design-pro.css';
 
+import {getAnimals} from "./redux/actions/animalsActions";
+
 
 
 export const store = configureStore();
+store.dispatch(getAnimals());
 
 
 const WithRouter = () => (
