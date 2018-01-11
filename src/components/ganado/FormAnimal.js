@@ -17,7 +17,6 @@ class FormAnimal extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                console.log(this.props);
                 this.props.saveAnimal(values)
 
             }
@@ -29,7 +28,6 @@ class FormAnimal extends Component {
     };
 
     normFile = (e) => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }
@@ -38,8 +36,6 @@ class FormAnimal extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const {handleText, data} = this.props;
-        console.log(this.props);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
