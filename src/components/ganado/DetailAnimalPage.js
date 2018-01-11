@@ -24,6 +24,7 @@ class DetailAnimalPage extends Component {
     };
 
     render() {
+        console.log(this.props);
         let contentList = {
             Detalle: <p>Info DetailAnimal {this.props.match.params.key}</p>,
             Alimentacion: <p>content2</p>,
@@ -48,8 +49,13 @@ class DetailAnimalPage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+    let id = this.props.match.params.key;
+    console.log(id)
+    let animal = state.animals.list.filter(a=>{
+        id === a.id;
+    });
     return {
-        state: state
+        animal,
     }
 }
 
