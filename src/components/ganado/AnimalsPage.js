@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {Table, Row, Col, Card, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
-import {bindActionCreators} from 'redux';
 import FormAnimal from './FormAnimal';
+import * as animalActions from '../../redux/actions/animalsActions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 
 const columns = [
     {
@@ -131,7 +133,7 @@ const rowSelection = {
 
 class AnimalsPage extends Component {
     state = {
-        ModalText: <FormAnimal/>,
+        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal}/>,
         visible: false,
     };
 
@@ -176,13 +178,13 @@ class AnimalsPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        state: state
+        animals: state.animals.list
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        animalActions: bindActionCreators(animalActions, dispatch)
     }
 }
 

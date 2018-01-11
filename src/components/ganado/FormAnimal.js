@@ -16,7 +16,8 @@ class FormAnimal extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values)
+                console.log(values);
+                this.props.saveAnimal(values)
 
             }
             if (Array.isArray(e)) {
@@ -45,7 +46,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Fecha Registro"
                         >
-                            {getFieldDecorator('fecha-registro', config)(
+                            {getFieldDecorator('fecha_entrada', config)(
                                 <DatePicker />
                             )}
                         </FormItem>
@@ -65,7 +66,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Factura"
                         >
-                            {getFieldDecorator('factura', {
+                            {getFieldDecorator('ref_factura_original', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -77,7 +78,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Peso Entrada"
                         >
-                            {getFieldDecorator('peso-entrada', {
+                            {getFieldDecorator('peso_entrada', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -95,7 +96,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Arete Siniga"
                         >
-                            {getFieldDecorator('Arete Siniga', {
+                            {getFieldDecorator('arete_siniga', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -107,7 +108,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Arete Rancho"
                         >
-                            {getFieldDecorator('Arete Rancho', {
+                            {getFieldDecorator('arete_rancho', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -119,7 +120,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Costo Inicial"
                         >
-                            {getFieldDecorator('costo-inicial', {
+                            {getFieldDecorator('costo_inicial', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -135,7 +136,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Costo Kilo"
                         >
-                            {getFieldDecorator('costo-kilo', {
+                            {getFieldDecorator('costo_kilo', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -171,7 +172,7 @@ class FormAnimal extends Component {
                                 <Input />
                             )}
                         </FormItem>
-
+                        {/*
                         <FormItem
                             label="Lote"
                         >
@@ -184,7 +185,7 @@ class FormAnimal extends Component {
                             )}
                         </FormItem>
 
-                        <FormItem
+                       <FormItem
                             label="Cuarto"
                         >
                             {getFieldDecorator('cuarto', {
@@ -223,7 +224,7 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Semana"
                         >
-                            {getFieldDecorator('numero-semana', {
+                            {getFieldDecorator('numero_semana', {
                                 rules: [{
                                     required: true, message: 'Escribe prro!',
                                 }],
@@ -231,7 +232,7 @@ class FormAnimal extends Component {
                                 <InputNumber min={1} max={5} />
                             )}
                         </FormItem>
-
+*/}
                     </div>
 
                     <FormItem
@@ -262,7 +263,7 @@ class FormAnimal extends Component {
                         label="Fierro Original"
                     >
                         <div className="dropbox">
-                            {getFieldDecorator('fierro-original', {
+                            {getFieldDecorator('fierro_original', {
                                 valuePropName: 'fierroOriginal',
                                 getValueFromEvent: this.normFile,
                             })(
@@ -281,7 +282,7 @@ class FormAnimal extends Component {
                         label="Fierro Nuevo"
                     >
                         <div className="dropbox">
-                            {getFieldDecorator('fierro-nuevo', {
+                            {getFieldDecorator('fierro_nuevo', {
                                 valuePropName: 'fierroNuevo',
                                 getValueFromEvent: this.normFile,
                             })(

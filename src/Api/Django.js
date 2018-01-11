@@ -57,12 +57,13 @@ const api = {
     },
     newAnimal:(animal)=>{
         return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
             const instance = axios.create({
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
-                    //'Authorization': 'Bearer ' + userToken
+                    'Authorization': 'Token ' + userToken
                 }
             });
             instance.post('', animal)
