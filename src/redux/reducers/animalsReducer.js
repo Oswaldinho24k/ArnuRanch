@@ -3,6 +3,7 @@ import {GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS} from "../actions/animalsAction
 
 
 function list(state=[], action){
+    console.log(action)
     switch(action.type){
         case GET_ANIMALS_SUCCESS:
             return action.animals;

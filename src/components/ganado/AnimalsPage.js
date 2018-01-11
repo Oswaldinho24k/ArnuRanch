@@ -133,7 +133,7 @@ const rowSelection = {
 
 class AnimalsPage extends Component {
     state = {
-        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal}/>,
+        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} />,
         visible: false,
     };
 
@@ -152,6 +152,7 @@ class AnimalsPage extends Component {
 
     render() {
         const { visible, confirmLoading, ModalText } = this.state;
+        console.log(this.props.animalActions)
         return (
             <div>
                 <h1>Animals</h1>

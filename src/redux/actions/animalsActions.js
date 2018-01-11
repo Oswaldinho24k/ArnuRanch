@@ -27,8 +27,9 @@ export function saveAnimalSuccess(animal){
     }
 }
 
-export const saveAnimal=()=>(dispatch, getState)=>{
-    api.newAnimal()
+export const saveAnimal=(animal)=>(dispatch, getState)=>{
+    console.log("Pasé")
+    api.newAnimal(animal)
         .then(r=>{
             console.log(r);
             dispatch(saveAnimalSuccess(r))
