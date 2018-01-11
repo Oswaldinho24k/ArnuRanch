@@ -29,7 +29,9 @@ const LeftSide = ({props}) => {
                 </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Ganado</span></span>}>
-                <Menu.Item key="6">Corrales</Menu.Item>
+                <Menu.Item key="6">
+                    <Link to ={'/admin/granos'}>Corrales</Link>
+                </Menu.Item>
                 <Menu.Item key="7">
                     <Link to={'/admin/animals'}>Animales</Link>
                 </Menu.Item>

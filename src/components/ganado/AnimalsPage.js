@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Table, Row, Col, Card} from "antd";
+import {Table, Row, Col, Card, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
+import FormAnimal from './FormAnimal';
 
 const columns = [
     {
@@ -127,14 +128,46 @@ const rowSelection = {
     }),*/
 };
 
+
 class AnimalsPage extends Component {
-    state = {};
+    state = {
+        ModalText: <FormAnimal/>,
+        visible: false,
+    };
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleCancel = () => {
+        console.log('Clicked cancel button');
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
+        const { visible, confirmLoading, ModalText } = this.state;
         return (
             <div>
                 <h1>Animals</h1>
                 <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+
+                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <Modal title="Agregar nuevo animal"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'60%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    {ModalText}
+                </Modal>
             </div>
         );
     }
