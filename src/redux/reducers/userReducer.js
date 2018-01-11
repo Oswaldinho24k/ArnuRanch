@@ -1,12 +1,14 @@
 import {combineReducers} from 'redux';
-import {LOG_IN_SUCCESS} from "../actions/userActions";
+import {GET_USER_SUCCESS, LOG_OUT_SUCCESS} from "../actions/userActions";
 
 
 
 function object(state={}, action){
     switch(action.type){
-        case LOG_IN_SUCCESS:
-            return {...state};
+        case GET_USER_SUCCESS:
+            return action.user;
+        case LOG_OUT_SUCCESS:
+            return state;
         default:
             return state;
     }
@@ -14,7 +16,7 @@ function object(state={}, action){
 
 
 const userReducer = combineReducers({
-    object,
+    object:object,
 });
 
 export default userReducer

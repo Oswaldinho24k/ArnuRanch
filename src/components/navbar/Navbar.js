@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import {Icon, Menu, Avatar} from 'antd';
+import {connect} from "react-redux";
 
 const SubMenu = Menu.SubMenu
 
 
 
-class Navbar extends Component {
-    render() {
-        return (
+
+const Navbar=({logOut, user, collapsed, toggle})=> (
             <div className={'osw-navbar'}>
                 <span>
                     <Icon
                         className="trigger"
-                        type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
-                        onClick={this.props.toggle}
+                        type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                        onClick={toggle}
                     />
                 </span>
                 <span>
                     <Menu
                         mode="horizontal">
                         <Menu.Item>lol</Menu.Item>
-                        <SubMenu key={'sub1'} title={<span>Hello, Username</span>}>
+                        <SubMenu key={'sub1'} title={<span>Hello, {user.username}</span>}>
                             <Menu.Item>
                                 <Icon type="pie-chart" />
                                 <span>Option 1</span>
@@ -31,15 +31,16 @@ class Navbar extends Component {
                             </Menu.Item>
                             <Menu.Divider></Menu.Divider>
                             <Menu.Item>
-                                <Icon type="logout" />
+                               <span onClick={logOut}>
+                                    <Icon type="logout" />
                                 <span>Cerrar Sesión</span>
+                               </span>
                             </Menu.Item>
                         </SubMenu>
                     </Menu>
                 </span>
             </div>
-        )
-    }
-}
+        );
+
 
 export default Navbar;
