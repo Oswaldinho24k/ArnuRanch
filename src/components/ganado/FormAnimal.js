@@ -32,7 +32,7 @@ class FormAnimal extends Component {
             return e;
         }
         return e && e.fileList;
-    }
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -277,6 +277,7 @@ class FormAnimal extends Component {
                     </FormItem>
 
                     <FormItem
+                        onChange={()=>{}}
                         label="Fierro Nuevo"
                     >
                         <div className="dropbox">

@@ -56,6 +56,15 @@ const api = {
         });
     },
     newAnimal:(animal)=>{
+        let data = new FormData();
+        for ( var key in animal ) {
+            data.append(key, animal[key]);
+        }
+        let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+        data.append('fierro_original', animal.fierro_original[0].originFileObj);
+        data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+        data.append('fecha_entrada', date);
+
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -63,15 +72,16 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': undefined,
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.post('', animal)
+            instance.post('', data)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
+                    console.log(data);
                     console.log('el error: ', error.response);
                     reject(error);
                 });
@@ -108,6 +118,8 @@ const api = {
     newLote:(lote)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
+
+            let data = new FormData();
             const instance = axios.create({
                 baseURL: lotesUrl,
                 // timeout: 2000,
