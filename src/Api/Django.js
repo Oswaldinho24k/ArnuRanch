@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -17,7 +17,7 @@ let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
 //heroku urls
 if(!debug){
     animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
-    tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/token-auth/';
+    tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
     userUrl = 'https://arnu-ranch-backend.herokuapp.com/auth/me/';
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
