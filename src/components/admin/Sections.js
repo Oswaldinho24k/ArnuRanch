@@ -4,8 +4,8 @@ import IngresosPage from "../ingresos/IngresosPage";
 import EgresosPage from "../egresos/EgresosPage";
 import AnimalsPage from "../ganado/AnimalsPage";
 import DetailAnimalPage from "../ganado/DetailAnimalPage";
-import BatchPage from "../ganado/BatchPage";
-import BatchDetailPage from "../ganado/BatchDetailPage";
+import BatchPage from "../ganado/lotes/BatchPage";
+import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
 import Form from "../ganado/FormAnimal";
 
 const Sections = ({props}) => {

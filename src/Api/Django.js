@@ -18,7 +18,7 @@ let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
 if(!debug){
     animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
     tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
-    userUrl = 'https://arnu-ranch-backend.herokuapp.com/auth/me/';
+    userUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/me/';
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
 
@@ -56,6 +56,7 @@ const api = {
         });
     },
     newAnimal:(animal)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
             const instance = axios.create({
@@ -185,7 +186,7 @@ const api = {
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
-                    //'Authorization': 'Bearer ' + userToken
+                   // 'Authorization': 'Token ' + userToken
                 }
             });
             instance.post('', data)
