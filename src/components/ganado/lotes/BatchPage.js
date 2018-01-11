@@ -2,6 +2,8 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Table} from 'antd';
+import * as lotesActions from '../../../redux/actions/lotesActions';
+import {bindActionCreators} from "redux";
 
 const columns = [
     {
@@ -16,31 +18,16 @@ const columns = [
     {
         title: 'Estado',
         dataIndex: 'status',
+        render: val => <p>{val?'Activo':'Inactivo'}</p>
     },
     {
         title: 'Corral',
         dataIndex: 'corral',
+        render:val => <p>{val.no_corral}</p>
     }
 ];
 
-const data = [
-    {
-        id: '1',
-        name: '1T2T3G44TY',
-        status: 'activo',
-        corral: '1',
-    },{
-        id: '2',
-        name: '1T2T3G44TE',
-        status: 'activo',
-        corral: '2',
-    },{
-        id: '3',
-        name: '1T2T3G44TE',
-        status: 'activo',
-        corral: '3',
-    }
-];
+
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -55,20 +42,21 @@ class BatchPage extends Component {
     }
 
     render() {
+        let {lotes} = this.props;
         return (
             <Fragment>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+                <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} />
             </Fragment>
         );
     }
 }
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state, oP) => ({
+    lotes:state.lotes.list,
 });
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch) => ({
+    lotesActions:bindActionCreators(lotesActions, dispatch)
 });
 
 BatchPage = connect(mapStateToProps,mapDispatchToProps)(BatchPage);

@@ -1,5 +1,6 @@
 import api from "../../Api/Django";
 import {getAnimals} from "./animalsActions";
+import {getLotes} from "./lotesActions";
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -46,7 +47,7 @@ export function logOutSuccess(){
 }
 
 export const logOut=()=>(dispatch)=>{
-    localStorage.removeItem('userRanchoToken')
+    localStorage.removeItem('userRanchoToken');
     dispatch(logOutSuccess())
 };
 
@@ -56,7 +57,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
     if(userToken){
         //dispatch the functions
         dispatch(getUser());
-        dispatch(getAnimals())
+        dispatch(getAnimals());
+        dispatch(getLotes());
     }
 };
 
