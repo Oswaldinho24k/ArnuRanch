@@ -6,7 +6,7 @@ import AnimalsPage from "../ganado/AnimalsPage";
 import DetailAnimalPage from "../ganado/DetailAnimalPage";
 import BatchPage from "../ganado/lotes/BatchPage";
 import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
-import Form from "../ganado/FormAnimal";
+import Form from "../ganado/lotes/BatchForm";
 
 const Sections = ({props}) => {
     return (
