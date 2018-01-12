@@ -1,17 +1,31 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber } from 'antd';
-import '../detailAnimal.css';
+import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber, Select } from 'antd';
 
 
 const FormItem = Form.Item;
 const TextArea = Input;
+const InputGroup = Input.Group;
+const Option = Select.Option;
 
 const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
+const opciones = [{
+    name :'Corral1',
+    id: 12
+},{
+    name:'Corral2',
+    id:23
+}
+];
+
 class BatchForm extends Component {
+    state = {
+        value: '',
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -26,10 +40,11 @@ class BatchForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        let options = opciones.map((a) => <Option key={a.id}>{a.name}</Option>);
         return (
-            <div className={"formulario"} style={{backgroundColor: 'white'}}>
-                <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
-                    <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+
+                <Form onSubmit={this.handleSubmit} >
+                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
                         <FormItem
                             label="Nombre"
                         >
@@ -43,26 +58,37 @@ class BatchForm extends Component {
                         </FormItem>
 
                         <FormItem
-                            label="Corral"
+                            label={"Corral"}
                         >
                             {getFieldDecorator('corral', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                                props:{
+                                    placeholder:'Selecciona un Corral',
+                                    defaultValue: 'Home'
+                                }
                             })(
-                                <Input />
+
+
+                                <Select  placeholder={"Selecciona un Corral"}>
+                                    {options}
+                                </Select>
                             )}
+
                         </FormItem>
 
                     </div>
-
                     <FormItem>
                         <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                             Guardar
                         </Button>
                     </FormItem>
+
+
+
                 </Form>
-            </div>
+
         );
     }
 }

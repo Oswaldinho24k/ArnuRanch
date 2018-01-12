@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Table} from 'antd';
+import {Table, Button, Modal} from 'antd';
 import * as lotesActions from '../../../redux/actions/lotesActions';
 import {bindActionCreators} from "redux";
+import BatchForm from './BatchForm';
 
 const columns = [
     {
@@ -36,16 +37,43 @@ const rowSelection = {
 };
 
 class BatchPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+    state = {
+        ModalText: <BatchForm/>,
+        visible: false,
+    };
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
+        const { visible, ModalText } = this.state;
         let {lotes} = this.props;
         return (
             <Fragment>
                 <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} />
+
+                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <Modal title="Nuevo Lote"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    {ModalText}
+                </Modal>
             </Fragment>
         );
     }
