@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Table, Row, Col, Card, Button, Modal} from "antd";
+import {Table} from "antd";
 import {Link} from 'react-router-dom';
-import FormAnimal from './FormAnimal';
-import * as animalActions from '../../redux/actions/animalsActions';
-import * as lotesActions from '../../redux/actions/lotesActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import * as corralesActions from '../../../redux/actions/corralesActions';
 
 
 const columns = [
@@ -15,12 +13,12 @@ const columns = [
         render: text => <Link to={`/admin/animals/${text}`} >{text}</Link>,
     },
     {
-    title: 'Arete Rancho',
-    dataIndex: 'arete_rancho',
-}, {
-    title: 'Owner',
-    dataIndex: 'owner',
-},
+        title: 'NUMERO SERIAL',
+        dataIndex: 'numero_serial',
+    }, {
+        title: 'FECHA GENERACIÓN',
+        dataIndex: 'fecha_generacion',
+    },
 ];
 
 const rowSelection = {
@@ -30,9 +28,9 @@ const rowSelection = {
 };
 
 
-class AnimalsPage extends Component {
+class CorralPage extends Component {
     state = {
-        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} lotes={this.props.lotes}/>,
+        //ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} />,
         visible: false,
     };
 
@@ -50,12 +48,12 @@ class AnimalsPage extends Component {
 
     render() {
         const { visible, ModalText } = this.state;
-        let {animals} = this.props;
+        let {corrales} = this.props;
         return (
             <div>
-                <h1>Animals</h1>
-                <Table bordered rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id}/>
-
+                <h1>Corrales</h1>
+                <Table bordered rowSelection={rowSelection} columns={columns} dataSource={corrales} rowKey={record => record.id}/>
+                {/*
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
@@ -68,7 +66,7 @@ class AnimalsPage extends Component {
                        ]}
                 >
                     {ModalText}
-                </Modal>
+                </Modal>*/}
             </div>
         );
     }
@@ -77,17 +75,15 @@ class AnimalsPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        animals: state.animals.list,
-        lotes:state.lotes.list,
+        corrales: state.corrales.list
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        animalActions: bindActionCreators(animalActions, dispatch),
-        lotesActions:bindActionCreators(lotesActions, dispatch)
+        corralesActions: bindActionCreators(corralesActions, dispatch)
     }
 }
 
-AnimalsPage = connect(mapStateToProps, mapDispatchToProps)(AnimalsPage);
-export default AnimalsPage;
+CorralPage = connect(mapStateToProps, mapDispatchToProps)(CorralPage);
+export default CorralPage;
