@@ -11,6 +11,7 @@ let tokenUrl = 'http://localhost:8000/api/auth/token-auth/';
 let userUrl = 'http://localhost:8000/api/auth/me/';
 let lotesUrl = 'http://localhost:8000/api/ganado/lotes/';
 let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
+let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
 
 
 
@@ -21,6 +22,7 @@ if(!debug){
     userUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/me/';
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
+    animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
 
 }
 
@@ -65,7 +67,6 @@ const api = {
         data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
         data.append('fecha_entrada', date);
 
-        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
             const instance = axios.create({
@@ -90,6 +91,32 @@ const api = {
         });
     },
     /*-----------------aliments functions-----------------------*/
+
+
+    newGasto:(gasto)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: animalGastoUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', gasto)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
 
     /*-----------------lotes functions-----------------------*/
     getLotes:()=>{

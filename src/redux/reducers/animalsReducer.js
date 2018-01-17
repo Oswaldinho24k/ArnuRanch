@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import {GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS} from "../actions/animalsActions";
+import {SAVE_ANIMAL_GASTO_SUCCESS} from '../actions/gastoAnimalActions';
 
 
 function list(state=[], action){
@@ -8,6 +9,12 @@ function list(state=[], action){
             return action.animals;
         case SAVE_ANIMAL_SUCCESS:
             return [...state, action.animal];
+        case SAVE_ANIMAL_GASTO_SUCCESS:
+            let animalId = action.gasto.animal;
+            let animal = state.filter(a=>{return a.id==animalId});
+
+
+            return [...state];
         default:
             return state;
     }

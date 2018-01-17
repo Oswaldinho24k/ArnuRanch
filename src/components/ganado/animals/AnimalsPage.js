@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table, Row, Col, Card, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
-import * as animalActions from '../../redux/actions/animalsActions';
+import * as animalActions from '../../../redux/actions/animalsActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 

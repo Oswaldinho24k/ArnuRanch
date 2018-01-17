@@ -84,7 +84,7 @@ class FormAnimal extends Component {
                                 <InputNumber
                                     step={0.01}
                                     min={0}
-                                    max={100}
+                                    max={2000}
                                     formatter={value => `${value}kg`}
                                     parser={value => value.replace('kg', '')}
                                 />
@@ -314,7 +314,8 @@ const mapDispatchToProps = () => ({
 
 });
 
-const FormAnimals = Form.create()(FormAnimal);
+
 
 FormAnimal = connect(mapStateToProps, mapDispatchToProps)(FormAnimal);
+const FormAnimals = Form.create()(FormAnimal);
 export default FormAnimals;
