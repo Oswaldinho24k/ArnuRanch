@@ -59,7 +59,8 @@ class BatchPage extends Component {
         let {lotes} = this.props;
         return (
             <Fragment>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} />
+                <h1>Lotes</h1>
+                <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} rowKey={record => record.id}/>
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Nuevo Lote"

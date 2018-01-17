@@ -1,15 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber } from 'antd';
+import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber, Select, Modal } from 'antd';
 import './detailAnimal.css';
 
 const MonthPicker = DatePicker.MonthPicker;
 const FormItem = Form.Item;
 const TextArea = Input;
+const Option = Select.Option;
 
 const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
+
+const opciones = [{
+    name :'becerro',
+    id: 1
+},{
+    name:'toro',
+    id:3
+},{
+    name:'vaca',
+    id:4
+},{
+    name:'vaquilla',
+    id:5
+}
+
+];
 
 class FormAnimal extends Component {
     handleSubmit = (e) => {
@@ -36,6 +53,9 @@ class FormAnimal extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        console.log(this.props.lotes)
+        let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
@@ -50,11 +70,32 @@ class FormAnimal extends Component {
                         </FormItem>
 
                         <FormItem
+                            label={"Tipo"}
+                            style={{width:'70%'}}
+                        >
+                            {getFieldDecorator('tipo_animal', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                                props:{
+                                    placeholder:'Selecciona un tipo',
+                                }
+                            })(
+
+
+                                <Select  placeholder={"Selecciona un tipo"}>
+                                    {options}
+                                </Select>
+                            )}
+
+                        </FormItem>
+
+                        <FormItem
                             label="Owner"
                         >
                             {getFieldDecorator('owner', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
@@ -66,7 +107,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('ref_factura_original', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
@@ -78,13 +119,13 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('peso_entrada', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <InputNumber
                                     step={0.01}
                                     min={0}
-                                    max={100}
+                                    max={1000}
                                     formatter={value => `${value}kg`}
                                     parser={value => value.replace('kg', '')}
                                 />
@@ -96,7 +137,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('arete_siniga', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
@@ -108,7 +149,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('arete_rancho', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
@@ -120,7 +161,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('costo_inicial', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <InputNumber
@@ -136,7 +177,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('costo_kilo', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <InputNumber
@@ -152,7 +193,7 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('raza', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
@@ -164,25 +205,31 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('color', {
                                 rules: [{
-                                    required: true, message: 'Escribe prro!',
-                                }],
-                            })(
-                                <Input />
-                            )}
-                        </FormItem>
-                        {/*
-                        <FormItem
-                            label="Lote"
-                        >
-                            {getFieldDecorator('lote', {
-                                rules: [{
-                                    required: true, message: 'Escribe prro!',
+                                    required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Input />
                             )}
                         </FormItem>
 
+                        <FormItem
+                            label={"Lote"}
+                            style={{width:'70%'}}
+                        >
+                            {getFieldDecorator('lote', {
+                                props:{
+                                    placeholder:'Selecciona un Lote',
+                                }
+                            })(
+
+
+                                <Select  placeholder={"Selecciona un Lote"}>
+                                    {options_lote}
+                                </Select>
+                            )}
+
+                        </FormItem>
+                        {/*
                        <FormItem
                             label="Cuarto"
                         >
@@ -238,7 +285,7 @@ class FormAnimal extends Component {
                     >
                         {getFieldDecorator('comentarios', {
                             rules: [{
-                                required: true, message: 'Escribe prro!',
+                                required: true, message: 'Completa el campo!',
                             }],
                         })(
                             <Input />
@@ -250,15 +297,16 @@ class FormAnimal extends Component {
                     >
                         {getFieldDecorator('descripcion', {
                             rules: [{
-                                required: true, message: 'Escribe prro!',
+                                required: true, message: 'Completa el campo!',
                             }],
                         })(
                             <Input />
                         )}
                     </FormItem>
+                    <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     <FormItem
-                        label="Fierro Original"
+                        label="Fierro Propietario"
                     >
                         <div className="dropbox">
                             {getFieldDecorator('fierro_original', {
@@ -277,7 +325,6 @@ class FormAnimal extends Component {
                     </FormItem>
 
                     <FormItem
-                        onChange={()=>{}}
                         label="Fierro Nuevo"
                     >
                         <div className="dropbox">
@@ -295,6 +342,7 @@ class FormAnimal extends Component {
                             )}
                         </div>
                     </FormItem>
+                    </div>
 
                     <FormItem>
                         <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
