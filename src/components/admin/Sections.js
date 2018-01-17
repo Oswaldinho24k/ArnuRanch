@@ -6,7 +6,7 @@ import AnimalsPage from "../ganado/animals/AnimalsPage";
 import DetailAnimalPage from "../ganado/animals/DetailAnimalPage";
 import BatchPage from "../ganado/lotes/BatchPage";
 import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
-import Form from "../ganado/lotes/BatchForm";
+import CorralPage from "../ganado/corrales/CorralPage";
 
 const Sections = ({props}) => {
     return (
@@ -21,7 +21,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
                 <Route path={'/admin/animals'} component={AnimalsPage}/>
-                <Route path={'/admin/granos'} component={Form}/>
+
+                <Route path={'/admin/corrales'} component={CorralPage}/>
 
                 {/***************************** BATCH ROUTES *****************************/}
                 <Route path='/admin/batch/:id'  component={BatchDetailPage} />
