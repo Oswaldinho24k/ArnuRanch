@@ -362,7 +362,8 @@ const mapDispatchToProps = () => ({
 
 });
 
-const FormAnimals = Form.create()(FormAnimal);
+
 
 FormAnimal = connect(mapStateToProps, mapDispatchToProps)(FormAnimal);
+const FormAnimals = Form.create()(FormAnimal);
 export default FormAnimals;

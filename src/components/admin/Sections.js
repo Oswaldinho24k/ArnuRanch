@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import IngresosPage from "../ingresos/IngresosPage";
 import EgresosPage from "../egresos/EgresosPage";
-import AnimalsPage from "../ganado/AnimalsPage";
-import DetailAnimalPage from "../ganado/DetailAnimalPage";
+import AnimalsPage from "../ganado/animals/AnimalsPage";
+import DetailAnimalPage from "../ganado/animals/DetailAnimalPage";
 import BatchPage from "../ganado/lotes/BatchPage";
 import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
 import CorralPage from "../ganado/corrales/CorralPage";
@@ -27,7 +27,7 @@ const Sections = ({props}) => {
                 {/***************************** BATCH ROUTES *****************************/}
                 <Route path='/admin/batch/:id'  component={BatchDetailPage} />
                 <Route path='/admin/batch'      component={BatchPage}       />
-                {/***************************** END BATCH    *****************************/}
+
             </Switch>
 
 
