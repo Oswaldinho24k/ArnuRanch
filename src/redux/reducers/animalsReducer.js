@@ -12,7 +12,10 @@ function list(state=[], action){
         case SAVE_ANIMAL_GASTO_SUCCESS:
             let animalId = action.gasto.animal;
             let animal = state.filter(a=>{return a.id==animalId});
-
+            console.log(animal[0]);
+            animal = animal[0];
+            animal['aliments'] = [...animal.aliments, action.gasto];
+            console.log(animal);
 
             return [...state];
         default:

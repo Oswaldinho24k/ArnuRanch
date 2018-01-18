@@ -1,30 +1,39 @@
 import React, {Component} from 'react';
-import {Table, Row, Col, Card, Button, Modal} from "antd";
+import {Table, Row, Col, Card, Button, Modal, Divider, Icon} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 
 
-import * as animalActions from '../../redux/actions/animalsActions';
-import * as lotesActions from '../../redux/actions/lotesActions';
+import * as animalActions from '../../../redux/actions/animalsActions';
+import * as lotesActions from '../../../redux/actions/lotesActions';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 
 const columns = [
-    {
-        title:'ID',
-        dataIndex: 'id',
-        render: text => <Link to={`/admin/animals/${text}`} >{text}</Link>,
-    },
-    {
+{
     title: 'Arete Rancho',
     dataIndex: 'arete_rancho',
+},{
+    title: 'Arete Siniga',
+    dataIndex: 'arete_siniga',
 }, {
     title: 'Owner',
     dataIndex: 'owner',
 },
-];
+{
+    title: 'Actions',
+    key: 'action',
+    width: 360,
+    render: (text, record) => (
+        <span>
+  <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
+  <Divider type="vertical" />
+  <a href="#">Delete</a>
+</span>
+    ),
+}];
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -35,7 +44,7 @@ const rowSelection = {
 
 class AnimalsPage extends Component {
     state = {
-        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} lotes={this.props.lotes}/>,
+        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} lotes={this.props.lotes} handleCancel={this.handleCancel}/>,
         visible: false,
     };
 

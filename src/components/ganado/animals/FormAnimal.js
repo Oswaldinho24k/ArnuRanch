@@ -34,7 +34,8 @@ class FormAnimal extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.saveAnimal(values)
+                this.props.saveAnimal(values);
+                this.props.handleCancel();
 
             }
             if (Array.isArray(e)) {
@@ -53,7 +54,6 @@ class FormAnimal extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        console.log(this.props.lotes)
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
         return (

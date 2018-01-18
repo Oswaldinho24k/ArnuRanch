@@ -25,8 +25,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/corrales'} component={CorralPage}/>
 
                 {/***************************** BATCH ROUTES *****************************/}
-                <Route path='/admin/batch/:id'  component={BatchDetailPage} />
-                <Route path='/admin/batch'      component={BatchPage}       />
+                <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
+                <Route path='/admin/lotes'      component={BatchPage}       />
 
             </Switch>
 

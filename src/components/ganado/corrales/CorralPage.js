@@ -4,13 +4,14 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as corralesActions from '../../../redux/actions/corralesActions';
+import moment from 'moment';
 
 
 const columns = [
     {
         title:'ID',
         dataIndex: 'id',
-        render: text => <Link to={`/admin/animals/${text}`} >{text}</Link>,
+        render: text => <Link to={`/admin/corrales/${text}`} >{text}</Link>,
     },
     {
         title: 'NUMERO SERIAL',
@@ -18,6 +19,8 @@ const columns = [
     }, {
         title: 'FECHA GENERACIÓN',
         dataIndex: 'fecha_generacion',
+        render:val=><p>{moment(val).format('LL')}</p>
+
     },
 ];
 

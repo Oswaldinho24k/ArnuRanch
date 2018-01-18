@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react';
-import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button} from 'antd';
+import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select} from 'antd';
 import moment from 'moment';
 
+const Option = Select.Option;
 
 const FormItem = Form.Item;
 
@@ -10,7 +11,11 @@ const gridStyle = {
     textAlign: 'center',
 };
 
-const BasicInfo = ({arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original }) => {
+
+//let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
+
+
+const BasicInfo = ({arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo}) => {
 
     return (
         <Fragment>
@@ -89,6 +94,7 @@ const BasicInfo = ({arete_siniga, arete_rancho, fecha_entrada, peso_entrada, des
                         label="Costo Kilo"
                     >
                             <InputNumber
+                                defaultValue={costo_kilo}
                                 disabled
                                 step={0.01}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -114,6 +120,17 @@ const BasicInfo = ({arete_siniga, arete_rancho, fecha_entrada, peso_entrada, des
                                 defaultValue={color}/>
 
                     </FormItem>
+                    <FormItem
+                        label={"Lote"}
+                        style={{width:'70%'}}
+                >
+                        <Select
+                            disabled
+                            defaultValue={lote.name}
+                            placeholder={"Selecciona un Lote"}>
+                            <Option value={lote.name}>{lote.name}</Option>
+                        </Select>
+                    </FormItem>
 
                 </div>
 
@@ -135,43 +152,46 @@ const BasicInfo = ({arete_siniga, arete_rancho, fecha_entrada, peso_entrada, des
 
                 </FormItem>
 
-                <FormItem
-                    label="Fierro Original"
-                >
-                    {fierro_original?
-                        <a href={fierro_nuevo}target="_blank">Imagen</a>:
-                    <div className="dropbox">
-                            <Upload.Dragger name="files">
-                                <p className="ant-upload-drag-icon">
-                                    <Icon type="inbox" />
-                                </p>
-                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-                            </Upload.Dragger>
-                    </div>}
-                </FormItem>
+               <div style={{display:'flex', justifyContent:'space-around'}}>
+                   <FormItem
+                       label="Fierro Original"
+                   >
+                       {fierro_original?
 
-                <FormItem
-                    onChange={()=>{}}
-                    label="Fierro Nuevo"
-                >
-                    {fierro_nuevo?
-                        <a href={fierro_nuevo}target="_blank">Imagen</a>:
+                           <img src={fierro_original} alt="" style={{width:'200px', height:'200px'}}/>:
+                           <div className="dropbox">
+                               <Upload.Dragger name="files">
+                                   <p className="ant-upload-drag-icon">
+                                       <Icon type="inbox" />
+                                   </p>
+                                   <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                   <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                               </Upload.Dragger>
+                           </div>}
+                   </FormItem>
 
-                    <div className="dropbox">
-                            <Upload.Dragger name="files" >
-                                <p className="ant-upload-drag-icon">
-                                    <Icon type="inbox" />
-                                </p>
-                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-                            </Upload.Dragger>
-                    </div>}
-                </FormItem>
+                   <FormItem
+                       onChange={()=>{}}
+                       label="Fierro Nuevo"
+                   >
+                       {fierro_nuevo?
+                           <img src={fierro_nuevo} alt="" style={{width:'200px', height:'200px'}}/>:
+
+                           <div className="dropbox">
+                               <Upload.Dragger name="files" >
+                                   <p className="ant-upload-drag-icon">
+                                       <Icon type="inbox" />
+                                   </p>
+                                   <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                   <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                               </Upload.Dragger>
+                           </div>}
+                   </FormItem>
+               </div>
 
                 <FormItem>
                     <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
-                        Guardar
+                        Editar
                     </Button>
                 </FormItem>
             </Form>
