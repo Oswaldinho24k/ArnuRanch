@@ -196,7 +196,7 @@ const api = {
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: lotesUrl,
+                baseURL: corralesUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',

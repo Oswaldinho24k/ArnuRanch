@@ -8,24 +8,24 @@ import BatchForm from './BatchForm';
 
 const columns = [
     {
-        title: 'ID',
-        dataIndex: 'id',
-        render: text => <Link to={`/admin/lotes/${text}`} >{text}</Link>,
-    },
-    {
-        title: 'Nombre',
+        title: 'NOMBRE',
         dataIndex: 'name',
     },
     {
-        title: 'Estado',
+        title: 'STATUS',
         dataIndex: 'status',
         render: val => <p>{val?'Activo':'Inactivo'}</p>
     },
     {
-        title: 'Corral',
+        title: 'CORRAL NUM_SERIAL',
         dataIndex: 'corral',
-        render:val => <p>{val.no_corral}</p>
-    }
+        render:val => <p>{val.numero_serial}</p>
+    },
+    {
+        title: 'ACTIONS',
+        dataIndex: 'id',
+        render: text => <Link to={`/admin/lotes/${text}`} >Detalle</Link>,
+    },
 ];
 
 
@@ -60,7 +60,13 @@ class BatchPage extends Component {
         return (
             <Fragment>
                 <h1>Lotes</h1>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} rowKey={record => record.id}/>
+                <Table
+                    bordered
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={lotes}
+                    rowKey={record => record.id}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Nuevo Lote"
