@@ -19,7 +19,6 @@ const Navbar=({logOut, user, collapsed, toggle})=> (
                 <span>
                     <Menu
                         mode="horizontal">
-                        <Menu.Item>lol</Menu.Item>
                         <SubMenu key={'sub1'} title={<span>Hello, {user.username}</span>}>
                             <Menu.Item>
                                 <Icon type="pie-chart" />

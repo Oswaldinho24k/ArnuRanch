@@ -39,6 +39,8 @@ class AdminPage extends Component {
 
 
     render() {
+        let {user, fetched} = this.props;
+        if(!fetched)return(<p>loading</p>)
         return (
             <Layout className={'leftside'}>
                 <Sider
@@ -52,7 +54,7 @@ class AdminPage extends Component {
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Navbar
-                            user={this.props.user}
+                            user={user}
                             logOut={this.logOut}
                             collapsed={this.state.collapsed}
                             toggle={this.toggle}/>
@@ -70,7 +72,8 @@ class AdminPage extends Component {
 function mapStateToProps(state, ownProps) {
     console.log(state)
     return {
-        user: state.user.object
+        user: state.user.object,
+        fetched:state.user.object!==undefined,
     }
 }
 

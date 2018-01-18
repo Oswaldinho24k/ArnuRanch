@@ -36,7 +36,7 @@ const LeftSide = ({props}) => {
                     <Link to={'/admin/animals'}>Animales</Link>
                 </Menu.Item>
                 <Menu.Item key="8">
-                    <Link to='/admin/batch'> Lotes </Link>
+                    <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
 

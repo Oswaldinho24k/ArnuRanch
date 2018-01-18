@@ -10,7 +10,7 @@ const columns = [
     {
         title: 'ID',
         dataIndex: 'id',
-        render: text => <Link to={`/admin/batch/${text}`} >{text}</Link>,
+        render: text => <Link to={`/admin/lotes/${text}`} >{text}</Link>,
     },
     {
         title: 'Nombre',
