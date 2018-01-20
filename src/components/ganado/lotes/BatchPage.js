@@ -5,6 +5,7 @@ import {Table, Button, Modal} from 'antd';
 import * as lotesActions from '../../../redux/actions/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
+import MainLoader from "../../common/Main Loader";
 
 const columns = [
     {
@@ -56,7 +57,8 @@ class BatchPage extends Component {
 
     render() {
         const { visible, ModalText } = this.state;
-        let {lotes} = this.props;
+        let {lotes, fetched} = this.props;
+        if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
                 <h1>Lotes</h1>
@@ -82,6 +84,7 @@ class BatchPage extends Component {
 
 const mapStateToProps = (state, oP) => ({
     lotes:state.lotes.list,
+    fetched:state.lotes.list!==undefined
 });
 
 const mapDispatchToProps = (dispatch) => ({

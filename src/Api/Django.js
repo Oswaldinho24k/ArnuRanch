@@ -90,6 +90,44 @@ const api = {
 
         });
     },
+    editAnimal:(animal)=>{
+        let data = new FormData();
+        for ( var key in animal ) {
+            data.append(key, animal[key]);
+        }
+        let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+        data.append('fecha_entrada', date);
+        if(!animal.fierro_original){
+           data.append('fierro_original', animal.fierro_original[0].originFileObj);
+        }
+        if(!animal.fierro_nuevo){
+           data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+        }
+
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: animalsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.put(animal.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log(data);
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
     /*-----------------aliments functions-----------------------*/
 
 

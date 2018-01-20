@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, Modal, Form, message} from "antd";
+import {Card, Modal, Form, message, Select} from "antd";
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import BasicInfo from "./BasicInfo";
+import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
 import FormGasto from "./FormGasto";
 import * as animalGastoActions from '../../../redux/actions/gastoAnimalActions';
+import MainLoader from "../../common/Main Loader";
 
+
+const Option = Select.Option;
 
 
 
@@ -25,6 +28,7 @@ const tabList = [{
 
 class DetailAnimalPage extends Component {
     state = {
+        editMode:false,
         key: 'Detalle',
         noTitleKey: 'article',
         selectedRowKeys: [], // Check here to configure the default column
@@ -54,37 +58,34 @@ class DetailAnimalPage extends Component {
         });
     };
 
+    handleEditMode=()=>{
+      this.setState({editMode:!this.state.editMode})
+    };
+
+
 
 
     render() {
-        console.log(this.props)
-        const {animal} = this.props;
-        const {selectedRowKeys, visible, ModalText} = this.state;
+
+        const {animal, fetched} = this.props;
+        const {selectedRowKeys, visible, ModalText, editMode} = this.state;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
             hideDefaultSelections: true,
-            selections: [{
-                key: 'all-data',
-                text: 'Select All Data',
-                onSelect: () => {
-                    this.setState({
-                        selectedRowKeys: [...Array(46).keys()], // 0...45
-                    });
-                },
-            }],
+
             onSelection: this.onSelection,
         };
-
+        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
         let contentList = {
-            Detalle: <BasicInfo {...animal}/>,
+            Detalle: <BasicInfoAndEdit {...animal} handleEditMode={this.handleEditMode} editMode={editMode} options={options_lote}/>,
             Gastos: <GastosComponent
                 animal={animal}
                 rowSelection={rowSelection}
                 showModal={this.showModal}/>,
             Reportes: <p>Reportes</p>
         };
-        if(!this.props.fetched)return(<p>loading</p>)
+        if(!fetched)return(<MainLoader/>);
         return (
         <div>
             <Card>
@@ -121,7 +122,8 @@ function mapStateToProps(state, ownProps) {
     animal = animal[0];
     return {
         animal,
-        fetched:animal!==undefined,
+        lotes:state.lotes.list,
+        fetched:animal!==undefined&&state.lotes.list!==undefined,
     }
 }
 
