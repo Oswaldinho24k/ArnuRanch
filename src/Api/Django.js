@@ -142,11 +142,9 @@ const api = {
 
         });
     },
-    newLote:(lote)=>{
+    newLote:(batch)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
-
-            let data = new FormData();
             const instance = axios.create({
                 baseURL: lotesUrl,
                 // timeout: 2000,
@@ -155,7 +153,7 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.post('', lote)
+            instance.post('', batch)
                 .then(function (response) {
                     resolve(response.data);
                 })

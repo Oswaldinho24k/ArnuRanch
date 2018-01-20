@@ -16,11 +16,11 @@ const columns = [
         dataIndex: 'status',
         render: val => <p>{val?'Activo':'Inactivo'}</p>
     },
-    {
+    /*{
         title: 'CORRAL NUM_SERIAL',
         dataIndex: 'corral',
         render:val => <p>{val.numero_serial}</p>
-    },
+    },*/
     {
         title: 'ACTIONS',
         dataIndex: 'id',
@@ -38,7 +38,7 @@ const rowSelection = {
 
 class BatchPage extends Component {
     state = {
-        ModalText: <BatchForm/>,
+        ModalText: <BatchForm corrales={this.props.corrales} saveLote={this.props.loteActions.saveLote}/>,
         visible: false,
     };
 
@@ -86,13 +86,18 @@ class BatchPage extends Component {
     }
 }
 
-const mapStateToProps = (state, oP) => ({
-    lotes:state.lotes.list,
-});
+function mapStateToProps(state, ownProps) {
+    return {
+        lotes:state.lotes.list,
+        corrales:state.corrales.list
+    }
+}
 
-const mapDispatchToProps = (dispatch) => ({
-    lotesActions:bindActionCreators(lotesActions, dispatch)
-});
+function mapDispatchToProps(dispatch) {
+    return {
+        loteActions:bindActionCreators(lotesActions, dispatch)
+    }
+}
 
 BatchPage = connect(mapStateToProps,mapDispatchToProps)(BatchPage);
 export default BatchPage;

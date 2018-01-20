@@ -12,15 +12,6 @@ const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
-const opciones = [{
-    name :'Corral1',
-    id: 12
-},{
-    name:'Corral2',
-    id:23
-}
-];
-
 class BatchForm extends Component {
     state = {
         value: '',
@@ -31,7 +22,7 @@ class BatchForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                //this.props.saveAnimal(values)
+                this.props.saveLote(values)
 
             }
         });
@@ -40,7 +31,7 @@ class BatchForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        let options = opciones.map((a) => <Option key={a.id}>{a.name}</Option>);
+        let options_corral = this.props.corrales.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.numero_serial}</Option>);
         return (
 
                 <Form onSubmit={this.handleSubmit} >
@@ -72,7 +63,7 @@ class BatchForm extends Component {
 
 
                                 <Select  placeholder={"Selecciona un Corral"}>
-                                    {options}
+                                    {options_corral}
                                 </Select>
                             )}
 
