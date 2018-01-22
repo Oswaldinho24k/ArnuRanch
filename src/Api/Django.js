@@ -13,6 +13,8 @@ let lotesUrl = 'http://localhost:8000/api/ganado/lotes/';
 let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
 let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
 
+let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
+
 
 
 //heroku urls
@@ -298,7 +300,57 @@ const api = {
 
 
         });
-    }
+    },
+
+    //EGRESOS FUNCTIONS
+
+    getProveedores:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: proveedoresUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    newProveedor:(proveedor)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: proveedoresUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', proveedor)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
 
 
 

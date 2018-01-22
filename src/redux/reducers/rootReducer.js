@@ -3,13 +3,15 @@ import animalsReducer from "./animalsReducer";
 import userReducer from './userReducer';
 import lotesReducer from "./lotesReducer";
 import corralesReducer from './corralesReducer';
+import proveedoresReducer from "./proveedoresReducer";
 
 
 const rootReducer = combineReducers({
     animals:animalsReducer,
     user:userReducer,
     lotes:lotesReducer,
-    corrales:corralesReducer
+    corrales:corralesReducer,
+    proveedores: proveedoresReducer,
 });
 
 export default rootReducer
