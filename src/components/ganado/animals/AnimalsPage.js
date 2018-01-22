@@ -9,6 +9,7 @@ import * as lotesActions from '../../../redux/actions/lotesActions';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import MainLoader from "../../common/Main Loader";
 
 
 const columns = [
@@ -62,7 +63,8 @@ class AnimalsPage extends Component {
 
     render() {
         const { visible, ModalText } = this.state;
-        let {animals} = this.props;
+        let {animals, fetched} = this.props;
+        if(!fetched)return(<MainLoader/>);
         return (
             <div>
                 <h1>Animals</h1>
@@ -91,6 +93,7 @@ function mapStateToProps(state, ownProps) {
     return {
         animals: state.animals.list,
         lotes:state.lotes.list,
+        fetched:state.lotes.list&&state.animals.list!==undefined,
     }
 }
 
