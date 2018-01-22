@@ -35,7 +35,7 @@ class FormAnimal extends Component {
             if (!err) {
                 console.log(values);
                 this.props.saveAnimal(values);
-                this.props.handleCancel();
+                //this.props.handleCancel();
 
             }
             if (Array.isArray(e)) {
@@ -55,7 +55,7 @@ class FormAnimal extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
-        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
+        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>

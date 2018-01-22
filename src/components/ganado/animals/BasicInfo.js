@@ -24,7 +24,7 @@ const BasicInfo = ({form, editMode,handleEditMode, arete_siniga, arete_rancho, f
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                
+
 
 
             }

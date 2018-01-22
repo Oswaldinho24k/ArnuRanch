@@ -3,6 +3,7 @@ import {Table, Divider} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
+import InfoBatch from "./InfoBatch";
 
 
 
@@ -36,39 +37,46 @@ const rowSelection = {
     }
 };
 
-class BatchDetailPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
 
+
+
+class BatchDetailPage extends Component {
     render() {
+
         let {fetched, lote} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <InfoBatch {...lote}/>
                 <Table rowSelection={rowSelection} columns={columns} dataSource={lote.animals} rowKey={record => record.id}/>
             </Fragment>
+
         );
     }
 }
 
-function mapStateToProps (state, ownProps){
+
+function mapStateToProps (state, ownProps) {
     let loteId = ownProps.match.params.id;
-    let lote = state.lotes.list.filter(l=>{
-        return loteId==l.id;
+    let lote = state.lotes.list.filter(l => {
+        return loteId == l.id;
     });
 
     lote = lote[0];
- return{
-     lote,
-     fetched:lote!==undefined
- }
+    return {
+        lote,
+        fetched: lote !== undefined
+    }
+}
+ function mapDispatchToProps(state, oP){
+     return{
+     }
+
 }
 
-const mapDispatchToProps = () => ({
 
-});
+
+
 
 BatchDetailPage = connect(mapStateToProps, mapDispatchToProps)(BatchDetailPage);
 export default BatchDetailPage;

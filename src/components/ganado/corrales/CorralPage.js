@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
-import {Table} from "antd";
+import {Table, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as corralesActions from '../../../redux/actions/corralesActions';
 import moment from 'moment';
+import FormCorral from "./CorralForm";
 
 
 const columns = [
-    {
-        title:'ID',
-        dataIndex: 'id',
-        render: text => <Link to={`/admin/corrales/${text}`} >{text}</Link>,
-    },
     {
         title: 'NUMERO SERIAL',
         dataIndex: 'numero_serial',
@@ -21,7 +17,13 @@ const columns = [
         dataIndex: 'fecha_generacion',
         render:val=><p>{moment(val).format('LL')}</p>
 
+    }, {
+        title: 'LOTE',
+        dataIndex: 'lotes',
+        render:val => val.map((val,index)=>{ return <Link to={`/admin/lotes/${val.id}`} key={index}>{val.name}</Link>})
+
     },
+
 ];
 
 const rowSelection = {
@@ -33,7 +35,7 @@ const rowSelection = {
 
 class CorralPage extends Component {
     state = {
-        //ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} />,
+        ModalText: <FormCorral saveCorral={this.props.corralesActions.saveCorral}/>,
         visible: false,
     };
 
@@ -55,13 +57,20 @@ class CorralPage extends Component {
         return (
             <div>
                 <h1>Corrales</h1>
-                <Table bordered rowSelection={rowSelection} columns={columns} dataSource={corrales} rowKey={record => record.id}/>
-                {/*
+                <Table
+                    bordered
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={corrales}
+                    rowKey={record => record.id}
+
+                />
+
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Agregar nuevo animal"
+                <Modal title="Agregar nuevo corral"
                        visible={visible}
                        onCancel={this.handleCancel}
-                       width={'60%'}
+                       width={'30%'}
                        maskClosable={true}
                        footer={[
                            null,
@@ -69,7 +78,7 @@ class CorralPage extends Component {
                        ]}
                 >
                     {ModalText}
-                </Modal>*/}
+                </Modal>
             </div>
         );
     }

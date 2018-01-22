@@ -9,24 +9,24 @@ import MainLoader from "../../common/Main Loader";
 
 const columns = [
     {
-        title: 'ID',
-        dataIndex: 'id',
-        render: text => <Link to={`/admin/lotes/${text}`} >{text}</Link>,
-    },
-    {
-        title: 'Nombre',
+        title: 'NOMBRE',
         dataIndex: 'name',
     },
     {
-        title: 'Estado',
+        title: 'STATUS',
         dataIndex: 'status',
         render: val => <p>{val?'Activo':'Inactivo'}</p>
     },
-    {
-        title: 'Corral',
+    /*{
+        title: 'CORRAL NUM_SERIAL',
         dataIndex: 'corral',
-        render:val => <p>{val.no_corral}</p>
-    }
+        render:val => <p>{val.numero_serial}</p>
+    },*/
+    {
+        title: 'ACTIONS',
+        dataIndex: 'id',
+        render: text => <Link to={`/admin/lotes/${text}`} >Detalle</Link>,
+    },
 ];
 
 
@@ -39,7 +39,7 @@ const rowSelection = {
 
 class BatchPage extends Component {
     state = {
-        ModalText: <BatchForm/>,
+        ModalText: <BatchForm corrales={this.props.corrales} saveLote={this.props.loteActions.saveLote}/>,
         visible: false,
     };
 
@@ -62,7 +62,13 @@ class BatchPage extends Component {
         return (
             <Fragment>
                 <h1>Lotes</h1>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={lotes} rowKey={record => record.id}/>
+                <Table
+                    bordered
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={lotes}
+                    rowKey={record => record.id}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Nuevo Lote"
@@ -82,14 +88,22 @@ class BatchPage extends Component {
     }
 }
 
-const mapStateToProps = (state, oP) => ({
-    lotes:state.lotes.list,
-    fetched:state.lotes.list!==undefined
-});
 
-const mapDispatchToProps = (dispatch) => ({
-    lotesActions:bindActionCreators(lotesActions, dispatch)
-});
+
+
+function mapStateToProps(state, ownProps) {
+    return {
+        lotes:state.lotes.list,
+        corrales:state.corrales.list,
+        fetched:state.lotes.list!==undefined &&state.corrales.list!==undefined,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        loteActions:bindActionCreators(lotesActions, dispatch)
+    }
+}
 
 BatchPage = connect(mapStateToProps,mapDispatchToProps)(BatchPage);
 export default BatchPage;
