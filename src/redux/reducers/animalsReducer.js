@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS} from "../actions/animalsActions";
+import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS} from "../actions/animalsActions";
 import {SAVE_ANIMAL_GASTO_SUCCESS} from '../actions/gastoAnimalActions';
 
 
@@ -9,6 +9,11 @@ function list(state=[], action){
             return action.animals;
         case SAVE_ANIMAL_SUCCESS:
             return [...state, action.animal];
+        case EDIT_ANIMAL_SUCCESS:
+            let newList = state.filter(a=>{
+                return a.id!=action.animal.id
+            });
+            return [...newList, action.animal];
         case SAVE_ANIMAL_GASTO_SUCCESS:
             let animalId = action.gasto.animal;
             let animal = state.filter(a=>{return a.id==animalId});
@@ -18,6 +23,11 @@ function list(state=[], action){
             console.log(animal);
 
             return [...state];
+        case DELETE_ANIMAL_SUCCESS:
+            let acualList = state.filter(a=>{
+                return a.id!=action.animalId;
+            });
+            return acualList;
         default:
             return state;
     }

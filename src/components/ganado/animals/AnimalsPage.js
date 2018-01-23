@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Row, Col, Card, Button, Modal, Divider, Icon} from "antd";
+import {Table, Row, Col, Card, Button, Modal, Divider, Icon, Popconfirm, message} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 
@@ -26,28 +26,26 @@ const columns = [
 {
     title: 'Actions',
     key: 'action',
-    width: 360,
+    width: 100,
     render: (text, record) => (
         <span>
   <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
-  <Divider type="vertical" />
-  <a href="#">Delete</a>
+
 </span>
     ),
 }];
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-};
 
 
 class AnimalsPage extends Component {
     state = {
-        ModalText: <FormAnimal saveAnimal={this.props.animalActions.saveAnimal} lotes={this.props.lotes} handleCancel={this.handleCancel}/>,
+
         visible: false,
+        canDelete:false,
+        selectedRowKeys:[]
     };
+
+
 
     showModal = () => {
         this.setState({
@@ -61,13 +59,57 @@ class AnimalsPage extends Component {
         });
     };
 
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+    saveAnimal=(animal)=>{
+        this.props.animalActions.saveAnimal(animal)
+            .then(r=>{
+                this.handleCancel()
+            }).catch(e=>{
+
+        })
+    }
+    deleteAnimals=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+          this.props.animalActions.deleteAnimal(keys[i])
+              .then(r=>{
+                  console.log(r)
+              }).catch(e=>{
+                  console.log(e)
+          })
+        }
+    };
+    confirm=(e)=> {
+        console.log(e);
+        this.deleteAnimals();
+        message.success('Deleted successfully');
+    };
+
+    cancel=(e) =>{
+        console.log(e);
+    };
+
+
     render() {
-        const { visible, ModalText } = this.state;
-        let {animals, fetched} = this.props;
+
+        const { visible, ModalText , selectedRowKeys} = this.state;
+        const canDelete = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+        let {animals, fetched, lotes} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
                 <h1>Animals</h1>
+
+                {/*<Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>*/}
                 <Table bordered rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id}/>
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -81,7 +123,7 @@ class AnimalsPage extends Component {
                            null,
                        ]}
                 >
-                    {ModalText}
+                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel}/>
                 </Modal>
             </div>
         );
@@ -93,7 +135,7 @@ function mapStateToProps(state, ownProps) {
     return {
         animals: state.animals.list,
         lotes:state.lotes.list,
-        fetched:state.lotes.list&&state.animals.list!==undefined,
+        fetched:state.lotes.list!==undefined&&state.animals.list!==undefined,
     }
 }
 
@@ -101,6 +143,7 @@ function mapDispatchToProps(dispatch) {
     return {
         animalActions: bindActionCreators(animalActions, dispatch),
         lotesActions:bindActionCreators(lotesActions, dispatch)
+
     }
 }
 

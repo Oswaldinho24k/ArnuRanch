@@ -32,10 +32,13 @@ class FormAnimal extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(values);
             if (!err) {
-                console.log(values);
+                if(!values.lote){
+                    delete values.lote
+                }
                 this.props.saveAnimal(values);
-                //this.props.handleCancel();
+
 
             }
             if (Array.isArray(e)) {
@@ -84,6 +87,7 @@ class FormAnimal extends Component {
 
 
                                 <Select  placeholder={"Selecciona un tipo"}>
+
                                     {options}
                                 </Select>
                             )}
@@ -224,7 +228,9 @@ class FormAnimal extends Component {
 
 
                                 <Select  placeholder={"Selecciona un Lote"}>
+
                                     {options_lote}
+
                                 </Select>
                             )}
 

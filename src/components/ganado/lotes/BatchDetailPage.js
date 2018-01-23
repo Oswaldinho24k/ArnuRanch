@@ -1,9 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider} from 'antd';
+import {Table, Divider, Button, Modal} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
 import InfoBatch from "./InfoBatch";
+import FormGasto from "../animals/FormGasto";
+import * as animalGastoActions from "../../../redux/actions/gastoAnimalActions";
+import {bindActionCreators} from "redux";
 
 
 
@@ -25,30 +28,83 @@ const columns = [
         render: (text, record) => (
             <span>
   <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
-  <Divider type="vertical" />
-  <a href="#">Delete</a>
 </span>
         ),
     }];
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    }
-};
 
 
 
 
 class BatchDetailPage extends Component {
+    state={
+        visible:false,
+        selectedRowKeys:[]
+    }
+
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+    saveGastos=(gasto)=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            console.log(keys[i]);
+            let animalId = keys[i];
+            gasto['animal']=animalId;
+            let toSend = Object.assign({}, gasto);
+            console.log(toSend)
+
+
+            this.props.animalGastoActions.saveAnimalGasto(toSend)
+                .then(r=>{
+                    console.log(r)
+                }).catch(e=>{
+                console.log(e)
+            })
+        }
+        console.log('los gastos')
+    };
     render() {
 
         let {fetched, lote} = this.props;
+        let {visible, selectedRowKeys} = this.state;
         if(!fetched)return(<MainLoader/>);
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+        const disablebutton = selectedRowKeys.length > 0;
         return (
             <Fragment>
                 <InfoBatch {...lote}/>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={lote.animals} rowKey={record => record.id}/>
+                <Button disabled={!disablebutton} onClick={this.showModal}>Agregar Gasto</Button>
+                <Modal title="Agregar nuevo animal"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormGasto saveGasto={this.saveGastos} handleCancel={this.handleCancel}/>
+                </Modal>
+                <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={lote.animals} rowKey={record => record.id}/>
             </Fragment>
 
         );
@@ -68,8 +124,9 @@ function mapStateToProps (state, ownProps) {
         fetched: lote !== undefined
     }
 }
- function mapDispatchToProps(state, oP){
+ function mapDispatchToProps(dispatch){
      return{
+         animalGastoActions:bindActionCreators(animalGastoActions, dispatch)
      }
 
 }
