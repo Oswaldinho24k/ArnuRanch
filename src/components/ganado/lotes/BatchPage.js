@@ -95,7 +95,7 @@ function mapStateToProps(state, ownProps) {
     return {
         lotes:state.lotes.list,
         corrales:state.corrales.list,
-        fetched:state.lotes.list!==undefined &&state.corrales.list!==undefined,
+        fetched:state.lotes.list!==undefined && state.corrales.list!==undefined,
     }
 }
 

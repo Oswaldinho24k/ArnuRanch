@@ -97,11 +97,17 @@ const api = {
         }
         let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
         data.append('fecha_entrada', date);
-        if(!animal.fierro_original){
-           data.append('fierro_original', animal.fierro_original[0].originFileObj);
+        console.log(typeof animal.fierro_nuevo)
+        if(typeof animal.fierro_original === 'string'){
+            data.delete('fierro_original')
+        }else{
+            data.append('fierro_original', animal.fierro_original.file.originFileObj);
         }
-        if(!animal.fierro_nuevo){
-           data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+
+        if(typeof animal.fierro_nuevo === 'string'){
+            data.delete('fierro_nuevo')
+        }else{
+            data.append('fierro_nuevo', animal.fierro_nuevo.file.originFileObj);
         }
 
 
@@ -115,12 +121,36 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.put(animal.id+'/', data)
+            instance.patch(animal.id+'/', data)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
                     console.log(data);
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteAnimal:(animalId)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: animalsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(animalId+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
                     console.log('el error: ', error.response);
                     reject(error);
                 });

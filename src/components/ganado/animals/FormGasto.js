@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, InputNumber, Input, Select, Button} from 'antd';
+import {Form, InputNumber, Input, Select, Button, message} from 'antd';
 const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -10,9 +10,11 @@ class FormGasto extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(this.props)
-                values['animal']=this.props.animal;
+                console.log(this.props);
+
                 this.props.saveGasto(values)
+
+
 
             }
             if (Array.isArray(e)) {

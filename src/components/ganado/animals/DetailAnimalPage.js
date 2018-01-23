@@ -7,6 +7,7 @@ import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
 import FormGasto from "./FormGasto";
 import * as animalGastoActions from '../../../redux/actions/gastoAnimalActions';
+import * as animalActions from '../../../redux/actions/animalsActions';
 import MainLoader from "../../common/Main Loader";
 
 
@@ -32,7 +33,7 @@ class DetailAnimalPage extends Component {
         key: 'Detalle',
         noTitleKey: 'article',
         selectedRowKeys: [], // Check here to configure the default column
-        ModalText:  <FormGasto saveGasto={this.props.animalGastoActions.saveAnimalGasto} animal={this.props.match.params.key}/>,
+
         visible: false,
     };
 
@@ -62,11 +63,20 @@ class DetailAnimalPage extends Component {
       this.setState({editMode:!this.state.editMode})
     };
 
+    saveGasto=(gasto)=>{
+        gasto['animal']=this.props.match.params.key;
+        this.props.animalGastoActions.saveAnimalGasto(gasto)
+            .then(r=>{
+            this.handleCancel();
+            message.success('Gasto agregado con éxito')
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
 
 
 
     render() {
-
         const {animal, fetched} = this.props;
         const {selectedRowKeys, visible, ModalText, editMode} = this.state;
         const rowSelection = {
@@ -78,7 +88,7 @@ class DetailAnimalPage extends Component {
         };
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
         let contentList = {
-            Detalle: <BasicInfoAndEdit {...animal} handleEditMode={this.handleEditMode} editMode={editMode} options={options_lote}/>,
+            Detalle: <BasicInfoAndEdit {...animal} editAnimal={this.props.animalActions.editAnimal} handleEditMode={this.handleEditMode} editMode={editMode} options={options_lote}/>,
             Gastos: <GastosComponent
                 animal={animal}
                 rowSelection={rowSelection}
@@ -106,7 +116,7 @@ class DetailAnimalPage extends Component {
                        null,
                    ]}
             >
-                {ModalText}
+                <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
             </Modal>
         </div>
 
@@ -120,6 +130,7 @@ function mapStateToProps(state, ownProps) {
         return id == a.id;
     });
     animal = animal[0];
+
     return {
         animal,
         lotes:state.lotes.list,
@@ -129,7 +140,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        animalGastoActions: bindActionCreators(animalGastoActions, dispatch)
+        animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
+        animalActions:bindActionCreators(animalActions, dispatch),
     }
 }
 

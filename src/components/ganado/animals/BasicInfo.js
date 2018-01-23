@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select} from 'antd';
+import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message} from 'antd';
 import moment from 'moment';
 
 const Option = Select.Option;
@@ -18,13 +18,20 @@ const gridStyle = {
 
 
 
-const BasicInfo = ({form, editMode,handleEditMode, arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-
+                values['id']=id;
+                editAnimal(values)
+                    .then(r=>{
+                        message.success('Editado con éxito')
+                        handleEditMode()
+                    }).catch(e=>{
+                        console.log(e)
+                })
 
 
             }
@@ -175,20 +182,35 @@ const BasicInfo = ({form, editMode,handleEditMode, arete_siniga, arete_rancho, f
 
                                                         )}
                     </FormItem>
-                    <FormItem
-                        label={"Lote"}
-                        style={{width:'70%'}}>
+                    {lote?
+                        <FormItem
+                            label={"Lote"}
+                            style={{width:'70%'}}>
                             {form.getFieldDecorator('lote',{
-                                    initialValue:lote.name
+                                initialValue:lote.id
                             })(
-                        <Select
-                            disabled={!editMode}
+                                <Select
+                                    disabled={!editMode}
 
-                            placeholder={"Selecciona un Lote"}>
-                            {options}
-                        </Select>
-                                                               )}
-                    </FormItem>
+                                    placeholder={"Selecciona un Lote"}>
+                                    {options}
+                                </Select>
+                            )}
+                        </FormItem>:
+                        <FormItem
+                            label={"Lote"}
+                            style={{width:'70%'}}>
+                            {form.getFieldDecorator('lote',{
+
+                            })(
+                                <Select
+                                    disabled={!editMode}
+
+                                    placeholder={"Selecciona un Lote"}>
+                                    {options}
+                                </Select>
+                            )}
+                        </FormItem>}
 
                 </div>
 
@@ -272,18 +294,18 @@ const BasicInfo = ({form, editMode,handleEditMode, arete_siniga, arete_rancho, f
                         style={{width:'100%'}}
                         >
                         Guardar
-                    </Button>:
-                    <Button
-                        onClick={handleEditMode}
-                        size="large"
-                        type={"primary"}
-                        style={{width:'100%'}}
-                        >
-                        Editar
-                    </Button>}
+                    </Button>:''}
 
                 </FormItem>
             </Form>
+            {!editMode?
+                <Button
+                onClick={handleEditMode}
+                htmlType="button"
+                style={{width:'100%'}}
+            >
+                Editar
+            </Button>:''}
         </Fragment>
     )
 };
