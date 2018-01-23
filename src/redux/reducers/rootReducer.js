@@ -4,6 +4,7 @@ import userReducer from './userReducer';
 import lotesReducer from "./lotesReducer";
 import corralesReducer from './corralesReducer';
 import proveedoresReducer from "./proveedoresReducer";
+import clientesReducer from "./clientesReducer";
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     lotes:lotesReducer,
     corrales:corralesReducer,
     proveedores: proveedoresReducer,
+    clientes: clientesReducer,
 });
 
 export default rootReducer
