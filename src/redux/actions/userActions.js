@@ -2,6 +2,8 @@ import api from "../../Api/Django";
 import {getAnimals} from "./animalsActions";
 import {getLotes} from "./lotesActions";
 import {getCorrales} from './corralesActions';
+import {getProveedores} from "./proveedoresActions";
+import {getClientes} from "./clientesActions";
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -61,6 +63,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getAnimals());
         dispatch(getLotes());
         dispatch(getCorrales());
+        dispatch(getProveedores());
+        dispatch(getClientes());
     }
 };
 

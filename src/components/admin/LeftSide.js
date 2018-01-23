@@ -9,7 +9,7 @@ const LeftSide = ({props}) => {
 
         <Menu theme="dark"
               mode="inline"
-              defaultSelectedKeys={['1']}
+              //defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
             <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Administración</span></span>}>
                 <Menu.Item key="1">
@@ -25,7 +25,7 @@ const LeftSide = ({props}) => {
                     <Link to={'/admin/clientes'}>Clientes</Link>
                 </Menu.Item>
                 <Menu.Item key="5">
-                    <Link to={'/admin/proovedores'}>Proovedores</Link>
+                    <Link to={'/admin/proveedores'}>Proovedores</Link>
                 </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Ganado</span></span>}>
