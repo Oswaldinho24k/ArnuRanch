@@ -354,6 +354,37 @@ const api = {
         });
     },
 
+    editProveedor:(proveedor)=>{
+        let data = new FormData();
+        for ( var key in proveedor ) {
+            data.append(key, proveedor[key]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: proveedoresUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.put(proveedor.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log(data);
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+
     //Clientes
     getClientes:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));

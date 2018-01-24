@@ -9,6 +9,9 @@ import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
 import CorralPage from "../ganado/corrales/CorralPage";
 import ProovedorPage from "../proveedores/ProveedorPage";
 import ClientesPage from "../clientes/ClientePage"
+import DetailClientPage from "../clientes/DetailClientPage";
+import DetailProviderPage from "../proveedores/DetailProviderPage";
+
 
 const Sections = ({props}) => {
     return (
@@ -18,8 +21,11 @@ const Sections = ({props}) => {
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
                 <Route path={'/admin/egresos'} component={EgresosPage}/>
                 <Route path={'/admin/inventario'} component={IngresosPage}/>
+
+                <Route path={'/admin/clientes/:i'} component={DetailClientPage} />
                 <Route path={'/admin/clientes'} component={ClientesPage}/>
 
+                <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
 
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>

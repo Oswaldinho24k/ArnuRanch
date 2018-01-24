@@ -19,6 +19,16 @@ const columns = [
       title: 'E-MAIL',
         dataIndex: 'email'
     },
+    {
+        title: 'Actions',
+        key: 'action',
+        width: 360,
+        render: (text, record) => (
+            <span>
+              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
+            </span>
+        ),
+    }
 ];
 
 
@@ -57,7 +67,6 @@ class ProovedorPage extends Component {
                 <h1>PROOVEDOR LIST</h1>
 
                 <Table
-                    bordered
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={proveedores}

@@ -4,6 +4,7 @@ import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/clientesActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
+import {Link} from 'react-router-dom';
 
 const columns = [
     {
@@ -18,6 +19,16 @@ const columns = [
         title: 'E-MAIL',
         dataIndex: 'email'
     },
+    {
+        title: 'Actions',
+        key: 'action',
+        width: 360,
+        render: (text, record) => (
+            <span>
+              <Link to={`/admin/clientes/${record.id}`}>Detalle</Link>
+            </span>
+        ),
+    }
 ];
 
 
@@ -31,7 +42,7 @@ const rowSelection = {
 class ClientePage extends Component {
 
     state = {
-        ModalText: <ClienteForm saveCliente={this.props.clientesActions.saveCliente}/>,
+        ModalText: <ClienteForm saveCliente={this.props.clientesActions.saveCliente} />,
         visible: false,
     };
 
@@ -56,7 +67,6 @@ class ClientePage extends Component {
                 <h1>CLIENTES LIST</h1>
 
                 <Table
-                    bordered
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={clientes}
