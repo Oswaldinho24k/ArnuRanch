@@ -1,17 +1,25 @@
 import React, {Fragment} from 'react';
-import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select} from 'antd';
+import {Form, Input, Select, Button} from 'antd';
+import {editProveedor} from "../../redux/actions/proveedoresActions";
 
 const Option = Select.Option;
-
 const FormItem = Form.Item;
 
 
-const InfoProveedor = ({form, provider, address, email, phone_number,}) => {
+const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number,}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
+                values['id']=id;
+                editProveedor(values)
+                    .then(r=>{
+                        console.log("Editado con éxito");
+                        handleEditMode()
+                    }).catch(e=>{
+                        console.log(e)
+                })
             }
         });
     };
@@ -28,7 +36,7 @@ const InfoProveedor = ({form, provider, address, email, phone_number,}) => {
                             initialValue:provider
 
                         })(
-                            <Input />
+                            <Input disabled={!editMode}/>
                         )}
                     </FormItem>
 
@@ -39,7 +47,7 @@ const InfoProveedor = ({form, provider, address, email, phone_number,}) => {
                             initialValue:address
 
                         })(
-                            <Input />
+                            <Input disabled={!editMode}/>
                         )}
                     </FormItem>
 
@@ -50,7 +58,7 @@ const InfoProveedor = ({form, provider, address, email, phone_number,}) => {
                             initialValue:email
 
                         })(
-                            <Input />
+                            <Input disabled={!editMode}/>
                         )}
                     </FormItem>
 
@@ -61,15 +69,35 @@ const InfoProveedor = ({form, provider, address, email, phone_number,}) => {
                             initialValue:phone_number
 
                         })(
-                            <Input />
+                            <Input disabled={!editMode}/>
                         )}
                     </FormItem>
 
 
-
                 </div>
 
+                <FormItem>
+                    {editMode ?
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            type={"primary"}
+                            style={{width: '100%'}}
+                        >
+                            Guardar
+                        </Button> : ""
+                    }
+                </FormItem>
             </Form>
+            {!editMode ?
+                <Button
+                    htmlType={"button"}
+                    onClick={handleEditMode}
+                    style={{width: '90%', display:'flex', justifyContent:'center', margin:'0 auto'}}
+                >
+                    Editar
+                </Button> : ""
+            }
         </Fragment>
     )
 };

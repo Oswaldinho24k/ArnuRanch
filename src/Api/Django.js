@@ -400,7 +400,7 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.put(proveedor.id+'/', data)
+            instance.patch(proveedor.id+'/', data)
                 .then(function (response) {
                     resolve(response.data);
                 })
@@ -456,6 +456,35 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    editCliente:(cliente)=>{
+        let data = new FormData();
+        for ( var key in cliente ) {
+            data.append(key, cliente[key]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: clientesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(cliente.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log(data);
                     console.log('el error: ', error.response);
                     reject(error);
                 });

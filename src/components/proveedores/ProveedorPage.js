@@ -20,9 +20,8 @@ const columns = [
         dataIndex: 'email'
     },
     {
-        title: 'Actions',
+        title: 'ACTION5',
         key: 'action',
-        width: 360,
         render: (text, record) => (
             <span>
               <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
@@ -64,7 +63,7 @@ class ProovedorPage extends Component {
         let {proveedores} = this.props;
         return (
             <Fragment>
-                <h1>PROOVEDOR LIST</h1>
+                <h1>Proveedores</h1>
 
                 <Table
                     rowSelection={rowSelection}
@@ -97,7 +96,7 @@ class ProovedorPage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         proveedores:state.proveedores.list,
-        //fetched:state.lotes.list!==undefined &&state.corrales.list!==undefined,
+        //fetched:state.proveedores.list!==undefined &&state.proveedores.list!==undefined,
     }
 }
 
