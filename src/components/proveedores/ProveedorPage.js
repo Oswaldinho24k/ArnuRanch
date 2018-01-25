@@ -19,6 +19,15 @@ const columns = [
       title: 'E-MAIL',
         dataIndex: 'email'
     },
+    {
+        title: 'ACTION5',
+        key: 'action',
+        render: (text, record) => (
+            <span>
+              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
+            </span>
+        ),
+    }
 ];
 
 
@@ -54,10 +63,9 @@ class ProovedorPage extends Component {
         let {proveedores} = this.props;
         return (
             <Fragment>
-                <h1>PROOVEDOR LIST</h1>
+                <h1>Proveedores</h1>
 
                 <Table
-                    bordered
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={proveedores}
@@ -88,7 +96,7 @@ class ProovedorPage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         proveedores:state.proveedores.list,
-        //fetched:state.lotes.list!==undefined &&state.corrales.list!==undefined,
+        //fetched:state.proveedores.list!==undefined &&state.proveedores.list!==undefined,
     }
 }
 

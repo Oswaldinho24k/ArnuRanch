@@ -37,3 +37,21 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
         console.log(e)
     })
 };
+
+/*EDIT CLIENTE*/
+
+export const EDIT_CLIENTE_SUCCESS = 'EDIT_CLIENTE_SUCCESS';
+export function editClienteSucces(cliente) {
+    return{
+        type: EDIT_CLIENTE_SUCCESS, cliente
+    }
+}
+
+export const editCliente=(cliente)=>(dispatch, getState)=>{
+    return api.editCliente(cliente)
+        .then(r=>{
+            dispatch(editClienteSucces(r))
+        }).catch(e=>{
+            console.log(e)
+        })
+};

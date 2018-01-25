@@ -63,7 +63,6 @@ class BatchPage extends Component {
             <Fragment>
                 <h1>Lotes</h1>
                 <Table
-                    bordered
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={lotes}
