@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS} from "../actions/clientesActions";
+import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE_CLIENTE_SUCCESS} from "../actions/clientesActions";
 
 function list(state=[], action){
     switch(action.type){
@@ -12,6 +12,11 @@ function list(state=[], action){
                 return a.id!=action.cliente.id
             });
             return [...newL, action.cliente];
+        case DELETE_CLIENTE_SUCCESS:
+            let acualL = state.filter(a=>{
+                return a.id!=action.clienteId;
+            });
+            return acualL;
         default:
             return state;
     }
