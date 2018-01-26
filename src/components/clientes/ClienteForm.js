@@ -21,7 +21,7 @@ class ClienteForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.saveCliente(values)
+                this.props.saveCliente(values);
 
             }
         });

@@ -58,7 +58,10 @@ class CorralPage extends Component {
             <div>
                 <h1>Corrales</h1>
                 <Table
+
                     pagination={false}
+
+
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={corrales}
