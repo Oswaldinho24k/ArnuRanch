@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_PROVEEDORES_SUCCESS, SAVE_PROVEEDOR_SUCCESS, EDIT_PROVEEDOR_SUCCESS} from "../actions/proveedoresActions";
+import {GET_PROVEEDORES_SUCCESS, SAVE_PROVEEDOR_SUCCESS, EDIT_PROVEEDOR_SUCCESS, DELETE_PROVEEDOR_SUCCESS} from "../actions/proveedoresActions";
 
 function list(state=[], action){
     switch(action.type){
@@ -12,6 +12,11 @@ function list(state=[], action){
                 return a.id!=action.proveedor.id
         });
             return [...newL, action.proveedor];
+        case DELETE_PROVEEDOR_SUCCESS:
+            let acualL = state.filter(a=>{
+                return a.id!=action.proveedorId;
+            });
+            return acualL;
         default:
             return state;
     }

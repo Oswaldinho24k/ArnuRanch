@@ -56,3 +56,22 @@ export const editProveedor=(proveedor)=>(dispatch, getState)=>{
             console.log(e)
         })
 };
+
+/*DELETE PROVIDER*/
+
+export const DELETE_PROVEEDOR_SUCCESS = 'DELETE_PROVEEDOR_SUCCESS';
+
+export function deleteProveedorSuccess(proveedorId){
+    return {
+        type:DELETE_PROVEEDOR_SUCCESS, proveedorId
+    }
+}
+
+export const deleteProveedor=(proveedorId)=>(dispatch, getState)=>{
+    return api.deleteProveedor(proveedorId)
+        .then(r=>{
+            dispatch(deleteProveedorSuccess(proveedorId))
+        }).catch(e=>{
+            console.log(e)
+        })
+};
