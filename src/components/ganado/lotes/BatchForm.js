@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber, Select } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 
 
 const FormItem = Form.Item;
@@ -23,7 +23,6 @@ class BatchForm extends Component {
             if (!err) {
                 console.log(values);
                 this.props.saveLote(values)
-
             }
         });
     };

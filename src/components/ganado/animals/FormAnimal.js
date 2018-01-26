@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, Row, Col, DatePicker, Upload, Checkbox, InputNumber, Select, Modal } from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select} from 'antd';
 import './detailAnimal.css';
 
 const MonthPicker = DatePicker.MonthPicker;
@@ -38,6 +38,7 @@ class FormAnimal extends Component {
                     delete values.lote
                 }
                 this.props.saveAnimal(values);
+                this.props.form.resetFields()
 
 
             }
@@ -319,12 +320,12 @@ class FormAnimal extends Component {
                                 valuePropName: 'fierroOriginal',
                                 getValueFromEvent: this.normFile,
                             })(
-                                <Upload.Dragger name="files" >
+                                <Upload.Dragger name="files" multiple={false}>
                                     <p className="ant-upload-drag-icon">
                                         <Icon type="inbox" />
                                     </p>
-                                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                    <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+
+                                    <p className="ant-upload-hint">Click o arrastra una imagen</p>
                                 </Upload.Dragger>
                             )}
                         </div>
@@ -338,12 +339,12 @@ class FormAnimal extends Component {
                                 valuePropName: 'fierroNuevo',
                                 getValueFromEvent: this.normFile,
                             })(
-                                <Upload.Dragger name="files" >
+                                <Upload.Dragger name="files" multiple={false}>
                                     <p className="ant-upload-drag-icon">
                                         <Icon type="inbox" />
                                     </p>
-                                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                    <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+
+                                    <p className="ant-upload-hint">Click o arrastra una imagen</p>
                                 </Upload.Dragger>
                             )}
                         </div>

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Table, Row, Col, Card, Button, Modal, Divider, Icon, Popconfirm, message} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
-
+import FormAnimalLote from './FormLote';
 
 import * as animalActions from '../../../redux/actions/animalsActions';
 import * as lotesActions from '../../../redux/actions/lotesActions';
@@ -10,6 +10,8 @@ import * as lotesActions from '../../../redux/actions/lotesActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../../common/Main Loader";
+
+const Option = Select.Option;
 
 
 const columns = [
@@ -41,8 +43,13 @@ class AnimalsPage extends Component {
     state = {
 
         visible: false,
+        visible2:false,
         canDelete:false,
-        selectedRowKeys:[]
+        selectedRowKeys:[],
+        options:'',
+        loteFilter:'',
+        searchText:'',
+
     };
 
 
@@ -52,10 +59,12 @@ class AnimalsPage extends Component {
             visible: true,
         });
     };
+    showModal2 = () => {this.setState({visible2: true,});};
 
     handleCancel = () => {
         this.setState({
             visible: false,
+            visible2:false
         });
     };
 
@@ -77,41 +86,110 @@ class AnimalsPage extends Component {
           this.props.animalActions.deleteAnimal(keys[i])
               .then(r=>{
                   console.log(r)
+                  message.success('Deleted successfully');
               }).catch(e=>{
                   console.log(e)
+              message.error(e);
           })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    changeLote=(animal)=>{
+        let keys = this.state.selectedRowKeys;
+        for(let j in keys){
+            animal['id']=keys[j];
+            let toSend = Object.assign({}, animal);
+           this.props.animalActions.editAnimal(toSend)
+                .then(r => {
+                    console.log(r);
+                    message.success('Modificado con éxito')
+                }).catch(e => {
+                    console.log(e)
+            })
         }
     };
     confirm=(e)=> {
-        console.log(e);
         this.deleteAnimals();
-        message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
         console.log(e);
     };
 
+    handleChange=(loteFilter)=>{
+        this.setState({loteFilter});
+        console.log(this.state.loteFilter)
+    };
+    filterByLote=(lote, b)=>{
+
+        let basePath = 'http://localhost:8000/api/ganado/animals/';
+        let url = basePath+'?lote='+lote;
+        this.props.animalActions.getAnimals(url)
+        //this.setState({loteFilter:b.props.children})
+    };
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
+    };
+    onSearch=()=>{
+        let basePath = 'http://localhost:8000/api/ganado/animals/';
+        let url = basePath+'?q='+this.state.searchText;
+        this.props.animalActions.getAnimals(url)
+    };
+
+    resetFilters=()=>{
+        let basePath = 'http://localhost:8000/api/ganado/animals/';
+        this.props.animalActions.getAnimals(basePath)
+    }
+
 
     render() {
 
-        const { visible, ModalText , selectedRowKeys} = this.state;
-        const canDelete = selectedRowKeys.length > 0;
+
+        const { visible, ModalText , selectedRowKeys,visible2 , loteFilter, searchText} = this.state;
+        const canUse = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         let {animals, fetched, lotes} = this.props;
+        let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
+            this.state.loteFilter.toLowerCase())!== -1);
+        let options = optionsLote.map(d => <Option title={d.name} key={d.id}>{d.name}</Option>);
+
+
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
                 <h1>Animals</h1>
+                {/*Search and filters*/}
+                <Input.Search
+                    enterButton
+                    onSearch={this.onSearch}
+                    onChange={this.handleSearch}
+                    value={searchText}
+                    style={{ width: 400 }}
+                    placeholder={'Busca por arete rancho o arete siniga'}/>
+                <Divider
+                    type={'vertical'}/>
+                <Select
+                    value={loteFilter}
+                    mode="combobox"
+                    style={{ width: 200 }}
+                    onChange={this.handleChange}
+                    onSelect={this.filterByLote}
+                    placeholder="Filtra por nombre de lote"
+                    filterOption={false}
+                >
+                    {options}
+                </Select>
+                <Divider
+                    type={'vertical'}/>
+                <Button type="primary" onClick={this.resetFilters}>Restablecer</Button>
 
-                {/*<Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>*/}
-                <Table bordered rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id}/>
+                {/*table of animals*/}
+                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id}/>
 
+                {/*actions for animals*/}
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
@@ -125,6 +203,28 @@ class AnimalsPage extends Component {
                 >
                     <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel}/>
                 </Modal>
+                <Divider
+                    type={'vertical'}/>
+
+                <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canUse} type="primary">Delete</Button>
+                </Popconfirm>
+                <Divider
+                    type={'vertical'}/>
+                <Button disabled={!canUse} onClick={this.showModal2} type="primary">Reacomodar</Button>
+                <Modal title="Reasignar Lote"
+                       visible={visible2}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormAnimalLote lotes={lotes} handleCancel={this.handleCancel} changeLote={this.changeLote}/>
+                </Modal>
+
             </div>
         );
     }

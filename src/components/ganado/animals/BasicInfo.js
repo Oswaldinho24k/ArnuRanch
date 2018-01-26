@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message} from 'antd';
+import {Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message} from 'antd';
 import moment from 'moment';
 
 const Option = Select.Option;
@@ -51,14 +51,12 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         label="Fecha Registro">
                         {form.getFieldDecorator('fecha_entrada', {
                                     initialValue:moment(fecha_entrada)
-
                             })(
                         <DatePicker
 
                             disabled={!editMode}/>
                     )}
                     </FormItem>
-
                     <FormItem
                         label="Owner">
                         {form.getFieldDecorator('owner', {
@@ -70,12 +68,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             />
                         )}
                     </FormItem>
-
                     <FormItem
                         label="Factura">
                         {form.getFieldDecorator('ref_factura_original', {
                                     initialValue:ref_factura_original
-
                             })(
                             <Input
                                 disabled={!editMode}
@@ -83,16 +79,13 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
 
                             )}
                     </FormItem>
-
                     <FormItem
                         label="Peso Entrada">
                         {form.getFieldDecorator('peso_entrada', {
                                     initialValue:peso_entrada
-
                             })(
                             <InputNumber
                                 disabled={!editMode}
-
                                 step={0.01}
                                 min={0}
                                 max={100}
@@ -101,36 +94,30 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             />
                                 )}
                     </FormItem>
-
                     <FormItem
                         label="Arete Siniga">
                         {form.getFieldDecorator('arete_siniga', {
                                     initialValue:arete_siniga
-
                             })(
                             <Input
                                 disabled={!editMode}
                                 />
                         )}
                     </FormItem>
-
                     <FormItem
                         label="Arete Rancho">
                         {form.getFieldDecorator('arete_rancho', {
                                     initialValue:arete_rancho
-
                             })(
                             <Input
                                 disabled={!editMode}
                                 />
                                         )}
                     </FormItem>
-
                     <FormItem
                         label="Costo Inicial">
                         {form.getFieldDecorator('costo_inicial', {
                                     initialValue:costo_inicial
-
                             })(
                             <InputNumber
                                 disabled={!editMode}
@@ -140,12 +127,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             />
                                             )}
                     </FormItem>
-
                     <FormItem
                         label="Costo Kilo">
                         {form.getFieldDecorator('costo_kilo', {
                                     initialValue:costo_kilo
-
                             })(
                             <InputNumber
                                 disabled={!editMode}
@@ -153,33 +138,26 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             />
-
                                                 )}
                     </FormItem>
-
                     <FormItem
                         label="Raza">
                         {form.getFieldDecorator('raza', {
                                     initialValue:raza
-
                             })(
                             <Input
                                 disabled={!editMode}
                                 />
-
                                                     )}
                     </FormItem>
-
                     <FormItem
                         label="Color">
                         {form.getFieldDecorator('color', {
                                     initialValue:color
-
                             })(
                             <Input
                                 disabled={!editMode}
                             />
-
                                                         )}
                     </FormItem>
                     {lote?
@@ -191,7 +169,6 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             })(
                                 <Select
                                     disabled={!editMode}
-
                                     placeholder={"Selecciona un Lote"}>
                                     {options}
                                 </Select>

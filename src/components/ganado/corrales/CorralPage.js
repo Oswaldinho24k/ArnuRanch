@@ -20,9 +20,9 @@ const columns = [
     }, {
         title: 'LOTE',
         dataIndex: 'lotes',
-        render:val => val.map((val,index)=>{ return <Link to={`/admin/lotes/${val.id}`} key={index}>{val.name}</Link>})
+        render:val=><Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>
 
-    },
+    }
 
 ];
 
@@ -58,7 +58,7 @@ class CorralPage extends Component {
             <div>
                 <h1>Corrales</h1>
                 <Table
-                    bordered
+                    pagination={false}
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={corrales}

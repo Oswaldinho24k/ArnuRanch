@@ -24,7 +24,7 @@ const columns = [
     {
         title: 'Actions',
         key: 'action',
-        width: 360,
+        width: 100,
         render: (text, record) => (
             <span>
   <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
@@ -90,7 +90,10 @@ class BatchDetailPage extends Component {
         const disablebutton = selectedRowKeys.length > 0;
         return (
             <Fragment>
-                <InfoBatch {...lote}/>
+                <h1>Lote {lote.name}</h1>
+                <h3>Corral: {lote.corral.numero_serial}</h3>
+                <h5>Status: {lote.status?'Activo':'Inactivo'}</h5>
+                <Divider />
                 <Button disabled={!disablebutton} onClick={this.showModal}>Agregar Gasto</Button>
                 <Modal title="Agregar nuevo animal"
                        visible={visible}

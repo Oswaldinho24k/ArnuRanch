@@ -9,6 +9,9 @@ import BatchDetailPage from "../ganado/lotes/BatchDetailPage";
 import CorralPage from "../ganado/corrales/CorralPage";
 import ProovedorPage from "../proveedores/ProveedorPage";
 import ClientesPage from "../clientes/ClientePage"
+import GastosPage from "../ganado/gastos/GastosPage";
+import PesosPage from "../ganado/pesadas/PesosPage";
+import ReportesPage from "../ganado/reportes/ReportesPage";
 
 const Sections = ({props}) => {
     return (
@@ -21,15 +24,21 @@ const Sections = ({props}) => {
                 <Route path={'/admin/clientes'} component={ClientesPage}/>
 
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
-
+                {/***************************** Animal ROUTES *****************************/}
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
                 <Route path={'/admin/animals'} component={AnimalsPage}/>
-
+                {/***************************** Corral ROUTES *****************************/}
                 <Route path={'/admin/corrales'} component={CorralPage}/>
-
                 {/***************************** BATCH ROUTES *****************************/}
                 <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
                 <Route path='/admin/lotes'      component={BatchPage}       />
+
+                <Route path={'/admin/gastos'} component={GastosPage}/>
+
+                <Route path={'/admin/pesadas'} component={PesosPage}/>
+
+                <Route path={'/admin/reportes'} component={ReportesPage}/>
+
 
             </Switch>
 
