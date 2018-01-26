@@ -33,13 +33,12 @@ class AdminPage extends Component {
         this.props.userActions.logOut();
         message.info('Vuelve Pronto ;)');
         this.props.history.push('/login');
-
-
     };
 
 
     render() {
         let {user, fetched} = this.props;
+        console.log(this.props)
         if(!fetched)return(<p>loading</p>)
         return (
             <Layout className={'leftside'}>

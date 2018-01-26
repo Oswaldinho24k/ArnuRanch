@@ -1,8 +1,11 @@
 import api from "../../Api/Django";
-export const GET_ANIMALS_SUCCESS = 'GET_ANIMALS_SUCCESS';
+
+
+
 
 
 /*************************get All********************************+*/
+export const GET_ANIMALS_SUCCESS = 'GET_ANIMALS_SUCCESS';
 
 export function getAnimalsSuccess(animals){
     return{
@@ -10,11 +13,20 @@ export function getAnimalsSuccess(animals){
     }
 }
 
-export const getAnimals=()=>(dispatch, getState)=>{
-    api.getAnimals()
+export const GET_ALL_DATA_SUCCESS = 'GET_ALL_DATA_SUCCESS';
+
+export function getAllDataSuccess(data){
+    return{
+        type:GET_ALL_DATA_SUCCESS, data
+    }
+}
+
+export const getAnimals=(url)=>(dispatch, getState)=>{
+    api.getAnimals(url)
         .then(r=>{
             //console.log(r.results)
-            dispatch(getAnimalsSuccess(r.results))
+            dispatch(getAnimalsSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
         }).catch(e=>{
             console.log(e)
     })
@@ -53,7 +65,8 @@ export function editAnimalSuccess(animal){
 export const editAnimal=(animal)=>(dispatch, getState)=>{
     return api.editAnimal(animal)
         .then(r=>{
-            dispatch(editAnimalSuccess(r))
+            dispatch(editAnimalSuccess(r));
+            console.log(r)
         }).catch(e=>{
             console.log(e)
     })

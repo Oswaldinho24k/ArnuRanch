@@ -12,7 +12,7 @@ let userUrl = 'http://localhost:8000/api/auth/me/';
 let lotesUrl = 'http://localhost:8000/api/ganado/lotes/';
 let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
 let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
-
+let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
 let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 
@@ -25,6 +25,7 @@ if(!debug){
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
     animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
+    pesadasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/pesadas/';
 
 }
 
@@ -97,20 +98,25 @@ const api = {
         for ( var key in animal ) {
             data.append(key, animal[key]);
         }
-        let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
-        data.append('fecha_entrada', date);
-        console.log(typeof animal.fierro_nuevo)
-        if(typeof animal.fierro_original === 'string'){
-            data.delete('fierro_original')
-        }else{
-            data.append('fierro_original', animal.fierro_original.file.originFileObj);
+        if(animal.fecha_entrada){
+            let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+            data.append('fecha_entrada', date);
         }
 
-        if(typeof animal.fierro_nuevo === 'string'){
-            data.delete('fierro_nuevo')
-        }else{
-            data.append('fierro_nuevo', animal.fierro_nuevo.file.originFileObj);
-        }
+       if(animal.fierro_original){
+           if(typeof animal.fierro_original === 'string'){
+               data.delete('fierro_original')
+           }else{
+               data.append('fierro_original', animal.fierro_original.file.originFileObj);
+           }
+       }
+       if(animal.fierro_nuevo){
+           if(typeof animal.fierro_nuevo === 'string'){
+               data.delete('fierro_nuevo')
+           }else{
+               data.append('fierro_nuevo', animal.fierro_nuevo.file.originFileObj);
+           }
+       }
 
 
         return new Promise(function (resolve, reject) {
@@ -160,7 +166,7 @@ const api = {
 
         });
     },
-    /*-----------------aliments functions-----------------------*/
+    /*-----------------gastos functions-----------------------*/
 
 
     newGasto:(gasto)=>{
@@ -272,6 +278,56 @@ const api = {
                 }
             });
             instance.post('', corral)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    /*-----------------pesadas functions-----------------------*/
+
+    newPesada:(pesada)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: pesadasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', pesada)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    getPesadas:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: pesadasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
                 .then(function (response) {
                     resolve(response.data);
                 })

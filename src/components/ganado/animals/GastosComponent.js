@@ -11,12 +11,13 @@ const columns = [{
 }, {
     title: 'Costo',
     dataIndex: 'costo',
+    render:val=><p>${val}</p>
 },];
 
 const GastosComponent = ({animal, rowSelection, showModal}) => {
     return (
         <Fragment>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={animal.aliments} pagination={false}/>
+            <Table rowSelection={rowSelection} columns={columns} dataSource={animal.aliments} pagination={false} rowKey={record => record.id} />
             <Button onClick={showModal}>Agregar Gasto</Button>
         </Fragment>
     )

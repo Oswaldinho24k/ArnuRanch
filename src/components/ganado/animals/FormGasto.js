@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, InputNumber, Input, Select, Button, message} from 'antd';
+import {Form, InputNumber, Select, Button} from 'antd';
 const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -24,9 +24,24 @@ class FormGasto extends React.Component{
         });
     };
     render(){
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator, getFieldValue } = this.props.form;
+        let tipo = getFieldValue('tipo');
         return(
+
             <Form onSubmit={this.handleSubmit}>
+                <FormItem>
+                    {getFieldDecorator('tipo', {
+                        rules: [{
+                            required: true, message: 'Completa!',
+                        }],
+                    })(
+                        <Select>
+                            <Option value="Alimento">Alimento</Option>
+                            <Option value="Vacuna">Vacuna</Option>
+
+                        </Select>
+                    )}
+                </FormItem>
                 <FormItem  label="Monto">
                     {getFieldDecorator('costo', {
                         rules: [{
@@ -42,19 +57,23 @@ class FormGasto extends React.Component{
                         />
                     )}
                 </FormItem>
-                <FormItem>
-                    {getFieldDecorator('tipo', {
-                        rules: [{
-                            required: true, message: 'Completa!',
-                        }],
-                    })(
-                    <Select defaultValue="Alimento">
-                        <Option value="Alimento">Alimento</Option>
-                        <Option value="Vacuna">Vacuna</Option>
+                {tipo==='Alimento'?
+                    <FormItem  label="Cantidad">
+                        {getFieldDecorator('cantidad', {
+                            rules: [{
+                                required: true, message: 'Completa!',
+                            }],
+                        })(
+                            <InputNumber
+                                step={0.01}
+                                min={0}
+                                style={{width:'100%'}}
+                                formatter={value => `${value}g`}
+                                parser={value => value.replace('g', '')}
+                            />
+                        )}
+                    </FormItem>:''}
 
-                    </Select>
-                    )}
-                </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit">Guardar</Button>
                 </FormItem>
