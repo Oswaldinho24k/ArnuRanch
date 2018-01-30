@@ -15,6 +15,7 @@ let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
 let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
 let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
+let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 
 
 //heroku urls
@@ -587,6 +588,54 @@ const api = {
                 }
             });
             instance.delete(clienteId+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    /*********************INGRESOS API*************/
+    getIngresos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: salesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newIngreso:(ingreso)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: salesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', ingreso)
                 .then(function (response) {
                     resolve(response.data);
                 })
