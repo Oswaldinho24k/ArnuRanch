@@ -191,7 +191,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
 
                 </div>
 
-                <FormItem
+               {/* <FormItem
                     label="Comentarios">
                     {form.getFieldDecorator('comentarios', {
                                     initialValue:comentarios
@@ -202,7 +202,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             />
 
                                                                 )}
-                </FormItem>
+                </FormItem>*/}
 
                 <FormItem
                     label="Descripción">
@@ -228,7 +228,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                {form.getFieldDecorator('fierro_original',{
                                        initialValue:fierro_original
                                })(
-                               <Upload.Dragger name="files">
+                               <Upload.Dragger name="files" disabled={!editMode}>
                                    <p className="ant-upload-drag-icon">
                                        <Icon type="inbox" />
                                    </p>
@@ -250,7 +250,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                {form.getFieldDecorator('fierro_nuevo',{
                                        initialValue:fierro_nuevo
                                })(
-                               <Upload.Dragger name="files" >
+                               <Upload.Dragger name="files" disabled={!editMode}>
                                    <p className="ant-upload-drag-icon">
                                        <Icon type="inbox" />
                                    </p>

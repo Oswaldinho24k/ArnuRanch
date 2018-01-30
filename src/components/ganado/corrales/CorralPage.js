@@ -18,13 +18,10 @@ const columns = [
         render:val=><p>{moment(val).format('LL')}</p>
 
     }, {
-        title: 'LOTE',
+        title: 'LOTE ACTUAL',
         dataIndex: 'lotes',
-        render:val=><Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>
-
-    }
-
-];
+        render:val=> <span>{val?<Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>:'No asignado'}</span>
+}];
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {

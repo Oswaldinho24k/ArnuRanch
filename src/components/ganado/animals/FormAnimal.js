@@ -57,7 +57,7 @@ class FormAnimal extends Component {
     };
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator, getFieldValue } = this.props.form;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
         return (
@@ -181,6 +181,7 @@ class FormAnimal extends Component {
                             label="Costo Kilo"
                         >
                             {getFieldDecorator('costo_kilo', {
+                                initialValue:getFieldValue('costo_inicial')/getFieldValue('peso_entrada'),
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -287,7 +288,7 @@ class FormAnimal extends Component {
 */}
                     </div>
 
-                    <FormItem
+                    {/*<FormItem
                         label="Comentarios"
                     >
                         {getFieldDecorator('comentarios', {
@@ -297,7 +298,7 @@ class FormAnimal extends Component {
                         })(
                             <Input />
                         )}
-                    </FormItem>
+                    </FormItem>*/}
 
                     <FormItem
                         label="Descripción"
@@ -352,7 +353,7 @@ class FormAnimal extends Component {
                     </div>
 
                     <FormItem>
-                        <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                        <Button type="primary" htmlType="submit" size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                             Guardar
                         </Button>
                     </FormItem>

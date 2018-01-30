@@ -17,11 +17,11 @@ const columns = [
         dataIndex: 'status',
         render: val => <p>{val?'Activo':'Inactivo'}</p>
     },
-    /*{
-        title: 'CORRAL NUM_SERIAL',
+    {
+        title: 'CORRAL ',
         dataIndex: 'corral',
         render:val => <p>{val.numero_serial}</p>
-    },*/
+    },
     {
         title: 'ACTIONS',
         dataIndex: 'id',
