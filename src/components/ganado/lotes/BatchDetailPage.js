@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider, Button, Modal} from 'antd';
+import {Table, Divider, Button, Modal, message} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
@@ -39,7 +39,8 @@ const columns = [
 class BatchDetailPage extends Component {
     state={
         visible:false,
-        selectedRowKeys:[]
+        selectedRowKeys:[],
+        loading:false
     }
 
     onSelectChange = (selectedRowKeys) => {
@@ -60,6 +61,7 @@ class BatchDetailPage extends Component {
         });
     };
     saveGastos=(gasto)=>{
+        this.setState({loading:true})
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
             console.log(keys[i]);
@@ -67,8 +69,6 @@ class BatchDetailPage extends Component {
             gasto['animal']=animalId;
             let toSend = Object.assign({}, gasto);
             console.log(toSend)
-
-
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
                     console.log(r)
@@ -76,12 +76,14 @@ class BatchDetailPage extends Component {
                 console.log(e)
             })
         }
-        console.log('los gastos')
+        this.setState({loading:false})
+        this.handleCancel()
+        message.success('Gasto agregado con éxito')
     };
     render() {
 
         let {fetched, lote} = this.props;
-        let {visible, selectedRowKeys} = this.state;
+        let {visible, selectedRowKeys, loading} = this.state;
         if(!fetched)return(<MainLoader/>);
         const rowSelection = {
             selectedRowKeys,
@@ -95,6 +97,7 @@ class BatchDetailPage extends Component {
                 <h5>Status: {lote.status?'Activo':'Inactivo'}</h5>
                 <Divider />
                 <Button disabled={!disablebutton} onClick={this.showModal}>Agregar Gasto</Button>
+                {loading?<MainLoader/>:''}
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
                        onCancel={this.handleCancel}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input, Pagination} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
@@ -88,8 +88,9 @@ class AnimalsPage extends Component {
                   console.log(r)
                   message.success('Deleted successfully');
               }).catch(e=>{
-                  console.log(e)
-              message.error(e);
+                console.log(e)
+                message.error(e);
+
           })
         }
         this.setState({selectedRowKeys:[]})
@@ -99,6 +100,7 @@ class AnimalsPage extends Component {
         for(let j in keys){
             animal['id']=keys[j];
             let toSend = Object.assign({}, animal);
+            console.log(toSend)
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
                     console.log(r);
@@ -122,8 +124,8 @@ class AnimalsPage extends Component {
     };
     filterByLote=(lote, b)=>{
 
-        let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let url = basePath+'?lote='+lote;
+        let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
+        let url = basePath+lote;
         this.props.animalActions.getAnimals(url)
         //this.setState({loteFilter:b.props.children})
     };
@@ -131,15 +133,38 @@ class AnimalsPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let url = basePath+'?q='+this.state.searchText;
+        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url)
     };
 
     resetFilters=()=>{
         let basePath = 'http://localhost:8000/api/ganado/animals/';
-        this.props.animalActions.getAnimals(basePath)
-    }
+        this.props.animalActions.getAnimals(basePath);
+        this.setState({searchText:'', loteFilter:''});
+    };
+    handlePagination=(pagina)=>{
+        console.log(this.props.animalsData);
+        //let basePath = this.props.animalsData.next;
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?page=';
+        //let url=basePath+pagina
+        //this.props.animalActions.getAnimals(url);
+
+
+        let newUrl = this.props.animalsData.next;
+        let nextLength = pagina.toString().length;
+        if(newUrl!==null){
+            newUrl=newUrl.slice(0,newUrl.length-nextLength);
+            newUrl=newUrl+pagina;
+            this.props.animalActions.getAnimals(newUrl);
+            console.log(newUrl)
+        }else{
+            newUrl = this.props.animalsData.previous;
+            this.props.animalActions.getAnimals(newUrl);
+            console.log(newUrl)
+        }
+
+    };
 
 
     render() {
@@ -151,7 +176,7 @@ class AnimalsPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {animals, fetched, lotes} = this.props;
+        let {animals, fetched, lotes, animalsData} = this.props;
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
         let options = optionsLote.map(d => <Option title={d.name} key={d.id}>{d.name}</Option>);
@@ -162,32 +187,39 @@ class AnimalsPage extends Component {
             <div>
                 <h1>Animals</h1>
                 {/*Search and filters*/}
-                <Input.Search
-                    enterButton
-                    onSearch={this.onSearch}
-                    onChange={this.handleSearch}
-                    value={searchText}
-                    style={{ width: 400 }}
-                    placeholder={'Busca por arete rancho o arete siniga'}/>
-                <Divider
-                    type={'vertical'}/>
-                <Select
-                    value={loteFilter}
-                    mode="combobox"
-                    style={{ width: 200 }}
-                    onChange={this.handleChange}
-                    onSelect={this.filterByLote}
-                    placeholder="Filtra por nombre de lote"
-                    filterOption={false}
-                >
-                    {options}
-                </Select>
-                <Divider
-                    type={'vertical'}/>
-                <Button type="primary" onClick={this.resetFilters}>Restablecer</Button>
+                <div style={{padding:'2% 0'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por arete rancho o arete siniga'}/>
+                    <Divider
+                        type={'vertical'}/>
+                    <Select
+                        value={loteFilter}
+                        mode="combobox"
+                        style={{ width: 200 }}
+                        onChange={this.handleChange}
+                        onSelect={this.filterByLote}
+                        placeholder="Filtra por nombre de lote"
+                        filterOption={false}
+                    >
+                        {options}
+                    </Select>
+                    <Divider
+                        type={'vertical'}/>
+                    <Button type="primary" onClick={this.resetFilters}>Restablecer</Button>
+                </div>
 
                 {/*table of animals*/}
-                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id}/>
+                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id} pagination={false}/>
+                <Pagination
+                    pageSize={20}
+                    total={animalsData.count}
+                    onChange={this.handlePagination}
+                    style={{padding:'2% 0'}}/>
 
                 {/*actions for animals*/}
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -233,9 +265,10 @@ class AnimalsPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        animalsData:state.animals.allData,
         animals: state.animals.list,
         lotes:state.lotes.list,
-        fetched:state.lotes.list!==undefined&&state.animals.list!==undefined,
+        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined,
     }
 }
 

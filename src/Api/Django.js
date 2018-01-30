@@ -66,8 +66,22 @@ const api = {
             data.append(key, animal[key]);
         }
         let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
-        data.append('fierro_original', animal.fierro_original[0].originFileObj);
-        data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+        //data.append('fierro_original', animal.fierro_original[0].originFileObj);
+        //data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+
+        if(animal.fierro_original === null || animal.fierro_original === undefined){
+            data.delete('fierro_original')
+        }else{
+            data.append('fierro_original', animal.fierro_original[0].originFileObj);
+        }
+
+
+        if(animal.fierro_nuevo === null || animal.fierro_nuevo === undefined){
+            data.delete('fierro_nuevo')
+        }else{
+            data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
+        }
+
         data.append('fecha_entrada', date);
 
         return new Promise(function (resolve, reject) {
@@ -94,6 +108,7 @@ const api = {
         });
     },
     editAnimal:(animal)=>{
+        console.log(animal)
         let data = new FormData();
         for ( var key in animal ) {
             data.append(key, animal[key]);
@@ -104,18 +119,24 @@ const api = {
         }
 
        if(animal.fierro_original){
-           if(typeof animal.fierro_original === 'string'){
+            console.log(typeof animal.fierro_original)
+           if(animal.fierro_original === null || animal.fierro_original === undefined || typeof animal.fierro_original === 'string'){
                data.delete('fierro_original')
            }else{
                data.append('fierro_original', animal.fierro_original.file.originFileObj);
            }
+       }else{
+           data.delete('fierro_original')
        }
        if(animal.fierro_nuevo){
-           if(typeof animal.fierro_nuevo === 'string'){
-               data.delete('fierro_nuevo')
+           console.log(typeof animal.fierro_nuevo)
+           if(animal.fierro_nuevo === null || animal.fierro_nuevo === undefined || typeof animal.fierro_nuevo === 'string'){
+               data.delete('fierro_nuevo');
            }else{
                data.append('fierro_nuevo', animal.fierro_nuevo.file.originFileObj);
            }
+       }else{
+           data.delete('fierro_nuevo');
        }
 
 
