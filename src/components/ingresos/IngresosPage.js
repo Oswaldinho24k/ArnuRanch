@@ -1,67 +1,89 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Row, Col, Card} from "antd";
+import {Table, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
 import MainCards from "./MainCards";
+import MainLoader from "../common/Main Loader";
+import * as ingresosActions from '../../redux/actions/ingresosActions';
+import FormIngreso from "./IngresoForm";
 
 
+const columns = [
+    {
+        title: 'Cliente',
+        dataIndex: 'client',
+    },
+    {
+        title: 'UNIDADES',
+        dataIndex: 'units',
+    },
+    {
+        title: 'TOTAL',
+        dataIndex: 'total',
+    },
+    {
+        title: 'ACTIONS',
+        dataIndex: 'id',
+        render: id => <Link to={`/admin/ingresos/${id}`} >Detalle</Link>,
+    },
+];
 
 
-const columns = [{
-    title: 'Compra',
-    dataIndex: 'compra',
-    render: text => <Link to="#">{text}</Link>,
-}, {
-    title: 'Monto',
-    dataIndex: 'monto',
-}, {
-    title: 'Cliente',
-    dataIndex: 'cliente',
-}];
-const data = [{
-    key: '1',
-    compra: '1T2T3G44TY',
-    monto: '$27385930',
-    cliente: 'New York ',
-}, {
-    key: '2',
-    compra: 'J5HEHH4H4',
-    monto: '$27385930',
-    cliente: 'London ',
-}, {
-    key: '3',
-    compra: 'JHH4H4H4',
-    monto: '$27385930',
-    cliente: 'Sidney ',
-}, {
-    key: '4',
-    compra: 'D7D7GJ58',
-    monto: '$27385930',
-    cliente: 'Sidney ',
-}];
-
-// rowSelection object indicates the need for row selection
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    /*getCheckboxProps: record => ({
-        disabled: record.name === 'Disabled User', // Column configuration not to be checked
-    }),*/
+    }
 };
 
+
 class IngresosPage extends Component {
-    state = {};
+    state = {
+        ModalText: <FormIngreso clientes={this.props.clientes} saveIngreso={this.props.ingresosActions.saveIngreso} />,
+        visible: false,
+    };
 
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
 
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
+        const { visible, ModalText } = this.state;
+        let {ingresos, fetched} = this.props;
+        if(!fetched)return(<MainLoader/>);
         return (
-            <div>
+            <Fragment>
+                <h1>Ingresos Page</h1>
                 <MainCards/>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-            </div>
+                <Table
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={ingresos}
+                    rowKey={record => record.id}
+                />
+
+                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <Modal title="Nuevo Ingreso"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    {ModalText}
+                </Modal>
+            </Fragment>
         );
     }
 }
@@ -69,13 +91,15 @@ class IngresosPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        state: state
+        ingresos:state.ingresos.list,
+        fetched: state.ingresos.list !== undefined,
+        clientes:state.clientes.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        ingresosActions: bindActionCreators(ingresosActions, dispatch)
     }
 }
 

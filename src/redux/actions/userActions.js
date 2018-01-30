@@ -5,6 +5,7 @@ import {getCorrales} from './corralesActions';
 import {getProveedores} from "./proveedoresActions";
 import {getClientes} from "./clientesActions";
 import {getPesadas} from "./pesadasActions";
+import {getIngresos} from "./ingresosActions";
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -67,6 +68,7 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getProveedores());
         dispatch(getClientes());
         dispatch(getPesadas());
+        dispatch(getIngresos());
     }
 };
 
