@@ -9,15 +9,25 @@ const InputGroup = Input.Group;
 const Option = Select.Option;
 
 const opciones = [{
-    name :'Tarjeta Credito',
+    name :'Cerdos',
     id: 1
-},{
-    name:'Tarjeta Debito',
-    id:2
-},{
-    name:'Efectivo',
-    id:3
 },
+    {
+        name:'Ganado',
+        id:2
+    },
+    {
+        name:'Granos',
+        id:3
+    },
+    {
+        name:'Planta de alimentos',
+        id:4
+    },
+    {
+        name:'Campo',
+        id:5
+    },
 
 ];
 
@@ -25,6 +35,7 @@ const opciones = [{
 class IngresoForm extends Component {
     state = {
         value: '',
+        factura:false,
     };
 
     handleSubmit = (e) => {
@@ -37,6 +48,12 @@ class IngresoForm extends Component {
         });
     };
 
+    handleChange = e => {
+        this.setState({
+            factura: e.target.checked
+        })
+    };
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -47,7 +64,7 @@ class IngresoForm extends Component {
             <Form onSubmit={this.handleSubmit} >
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                   <FormItem
+                    <FormItem
                         label={"Cliente"}
                     >
                         {getFieldDecorator('client', {
@@ -67,88 +84,62 @@ class IngresoForm extends Component {
 
                     </FormItem>
 
-                    <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
-
                     <FormItem
-                        label="Unidades"
+                        label={"Linea de negocio"}
                     >
-                        {getFieldDecorator('units', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <InputNumber min={1} max={1000} />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Kg Total"
-                    >
-                        {getFieldDecorator('kg_total', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <InputNumber
-                                step={0.01}
-                                min={0}
-                                max={5000}
-                                formatter={value => `${value}kg`}
-                                parser={value => value.replace('kg', '')}
-                            />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Total"
-                    >
-                        {getFieldDecorator('total', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <InputNumber
-                                step={0.01}
-                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            />
-                        )}
-                    </FormItem>
-
-                    </div>
-
-                    <FormItem
-                        label={"Forma de Pago"}
-                    >
-                        {getFieldDecorator('payment', {
+                        {getFieldDecorator('business_line', {
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
                             props:{
-                                placeholder:'Selecciona forma de pago',
+                                placeholder:'Linea de Negocio',
                             }
                         })(
-
-
-                            <Select  placeholder={"Selecciona forma de pago"}>
-
+                            <Select  placeholder={"Linea de Negocio"}>
                                 {options}
                             </Select>
                         )}
 
                     </FormItem>
 
-                    <FormItem>
-                        {getFieldDecorator('paid', {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Checkbox>Pagado</Checkbox>
-                        )}
-                    </FormItem>
+                    <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                        <FormItem>
+                            {getFieldDecorator('sale_check', {
+                                valuePropName: 'checked',
+                                initialValue: false,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Checkbox
+                                    value={this.state.factura}
+                                    onChange={this.handleChange}
+                                >
+                                    Factura?
+                                </Checkbox>
+                            )}
+                        </FormItem>
+
+                        <FormItem>
+                            {getFieldDecorator('no_scheck')(<Input disabled={!this.state.factura}/>)}
+                        </FormItem>
+
+                    </div>
+
+                    <div style={{display:'flex',justifyContent:'flex-end'}}>
+
+                        <FormItem >
+                            {getFieldDecorator('paid', {
+                                valuePropName: 'checked',
+                                initialValue: true,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Checkbox>Pagado</Checkbox>
+                            )}
+                        </FormItem>
+                    </div>
 
                 </div>
                 <FormItem>
@@ -156,8 +147,6 @@ class IngresoForm extends Component {
                         Guardar
                     </Button>
                 </FormItem>
-
-
 
             </Form>
 
