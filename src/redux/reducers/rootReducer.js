@@ -7,6 +7,7 @@ import proveedoresReducer from "./proveedoresReducer";
 import clientesReducer from "./clientesReducer";
 import pesadasReducer from "./pesadasReducer";
 import ingresosReducer from "./ingresosReducer";
+import egresosReducer from "./egresosReducer";
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     clientes: clientesReducer,
     pesadas:pesadasReducer,
     ingresos:ingresosReducer,
+    egresos:egresosReducer,
 });
 
 export default rootReducer
