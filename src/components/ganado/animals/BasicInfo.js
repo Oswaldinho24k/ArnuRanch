@@ -27,13 +27,11 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                 values['id']=id;
                 editAnimal(values)
                     .then(r=>{
-                        message.success('Editado con éxito')
+                        message.success('Editado con éxito');
                         handleEditMode()
                     }).catch(e=>{
                         console.log(e)
                 })
-
-
             }
             if (Array.isArray(e)) {
                 return e;
@@ -53,7 +51,6 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                     initialValue:moment(fecha_entrada)
                             })(
                         <DatePicker
-
                             disabled={!editMode}/>
                     )}
                     </FormItem>
