@@ -1,38 +1,69 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Checkbox} from 'antd';
+import {Form, Input, Checkbox, Button, Switch} from 'antd';
 
 
 const FormItem = Form.Item;
 
 
-const InfoBatch = ({name, status, corral}) => {
+
+
+const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, edit }) => {
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+            }
+            if (Array.isArray(e)) {
+                return e;
+            }
+            return e && e.fileList;
+        });
+    };
 
     return (
-        <Fragment>
-            <Form style={{width:'100%'}}>
+            <Fragment>
+                <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
-                    <FormItem
-                        label="Name"
-                    >
-                        <Input
-                            disabled
-                            defaultValue={name}/>
-                    </FormItem>
-                    <FormItem
-                        label="Corral"
-                    >
-                        <Input
-                            disabled
-                            defaultValue={corral.numero_serial}/>
-                    </FormItem>
-                    <FormItem>
-                        <Checkbox disabled
-                                  defaultChecked={status}>Status</Checkbox>
-                    </FormItem>
+                    {form.getFieldDecorator('name', {
+                        initialValue:name
+                    })(
+                        <FormItem
+                            label="Name"
+                        >
+                            <Input
+                                defaultValue={name}
+                                disabled={!canEdit}/>
+                        </FormItem>)}
+                    {form.getFieldDecorator('corral', {
+                        initialValue:corral.numero_serial
+                    })(
+                        <FormItem
+                            label="Corral"
+                        >
+                            <Input
+                                defaultValue={corral.numero_serial}
+                                disabled={!canEdit}/>
+                        </FormItem>)}
+                    {form.getFieldDecorator('status', {
+                        initialValue:status
+                    })(
+                        <FormItem
+                            defaultValue={status}
+                            label="Statussss">
+
+                            <Switch
+                                disabled={!canEdit}/>
+                        </FormItem>)}
                 </div>
+                {canEdit?
+                    <Button htmlType="submit">Guardar</Button>:''}
             </Form>
-        </Fragment>
+                {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}
+            </Fragment>
     )
 };
 
-export default InfoBatch;
+const BasicInfoForm= Form.create()(InfoBatch);
+
+export default BasicInfoForm;

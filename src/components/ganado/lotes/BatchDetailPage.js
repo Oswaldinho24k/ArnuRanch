@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider, Button, Modal, message} from 'antd';
+import {Table, Divider, Button, Modal, message, Switch, Icon} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
-import InfoBatch from "./InfoBatch";
+import BasicInfoForm from "./InfoBatch";
 import FormGasto from "../animals/FormGasto";
 import * as animalGastoActions from "../../../redux/actions/gastoAnimalActions";
+import * as lotesActions from '../../../redux/actions/lotesActions';
 import {bindActionCreators} from "redux";
 
 
@@ -40,7 +41,8 @@ class BatchDetailPage extends Component {
     state={
         visible:false,
         selectedRowKeys:[],
-        loading:false
+        loading:false,
+        canEdit:false,
     }
 
     onSelectChange = (selectedRowKeys) => {
@@ -61,7 +63,7 @@ class BatchDetailPage extends Component {
         });
     };
     saveGastos=(gasto)=>{
-        this.setState({loading:true})
+        this.setState({loading:true});
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
             console.log(keys[i]);
@@ -76,14 +78,27 @@ class BatchDetailPage extends Component {
                 console.log(e)
             })
         }
-        this.setState({loading:false})
-        this.handleCancel()
+        this.setState({loading:false});
+        this.handleCancel();
         message.success('Gasto agregado con éxito')
     };
-    render() {
+    handleStatus=(status)=>{
+        let lote = {};
+        lote['id'] = this.props.match.params.id;
+        lote['status']=status;
+        lote['corral']=null
+        //this.props.lotesActions.editLote()
+    };
+    handleEdit=()=>{
+        this.setState({canEdit:!this.state.canEdit})
+    };
+    edit=()=>{
+        this.setState({canEdit:!this.state.canEdit})
+    };
 
+    render() {
         let {fetched, lote} = this.props;
-        let {visible, selectedRowKeys, loading} = this.state;
+        let {visible, selectedRowKeys, loading, canEdit} = this.state;
         if(!fetched)return(<MainLoader/>);
         const rowSelection = {
             selectedRowKeys,
@@ -92,11 +107,13 @@ class BatchDetailPage extends Component {
         const disablebutton = selectedRowKeys.length > 0;
         return (
             <Fragment>
-                <h1>Lote {lote.name}</h1>
-                <h3>Corral: {lote.corral.numero_serial}</h3>
-                <h5>Status: {lote.status?'Activo':'Inactivo'}</h5>
+                <BasicInfoForm {...lote}
+                           canEdit={canEdit}
+                           handleEdit={this.handleEdit}
+                            edit={this.edit}/>
+
                 <Divider />
-                <Button disabled={!disablebutton} onClick={this.showModal}>Agregar Gasto</Button>
+                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'2% 0'}}>Agregar Gasto</Button>
                 {loading?<MainLoader/>:''}
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
@@ -132,7 +149,8 @@ function mapStateToProps (state, ownProps) {
 }
  function mapDispatchToProps(dispatch){
      return{
-         animalGastoActions:bindActionCreators(animalGastoActions, dispatch)
+         animalGastoActions:bindActionCreators(animalGastoActions, dispatch),
+         lotesActions:bindActionCreators(lotesActions, dispatch),
      }
 
 }
