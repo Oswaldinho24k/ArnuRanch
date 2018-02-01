@@ -15,17 +15,20 @@ const columns = [
         dataIndex: 'provider',
     },
     {
-        title: 'UNIDADES',
-        dataIndex: 'units',
+        title: 'Linea de negocio',
+        dataIndex: 'business_line',
     },
     {
-        title: 'TOTAL',
-        dataIndex: 'total',
+        title: 'No. Factura',
+        dataIndex: 'no_check',
+        render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
         title: 'ACTIONS',
         dataIndex: 'id',
         render: id => <Link to={`/admin/egresos/${id}`} >Detalle</Link>,
+        fixed:'right',
+        width:100
     },
 ];
 
@@ -68,6 +71,7 @@ class EgresosPage extends Component {
                     columns={columns}
                     dataSource={egresos}
                     rowKey={record => record.id}
+                    scroll={{x:650}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
