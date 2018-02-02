@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, Modal} from "antd";
 import {Link} from 'react-router-dom';
-import MainCards from "./MainCards";
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/ingresosActions';
 import FormIngreso from "./IngresoForm";
@@ -24,7 +23,7 @@ const columns = [
         render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
-        title: 'ACTIONS',
+        title: 'Actions',
         dataIndex: 'id',
         render: id => <Link to={`/admin/ingresos/${id}`} >Detalle</Link>,
         fixed:'right',
@@ -65,7 +64,6 @@ class IngresosPage extends Component {
         return (
             <Fragment>
                 <h1>Ingresos Page</h1>
-                <MainCards/>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}

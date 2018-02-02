@@ -9,19 +9,19 @@ import MainLoader from "../common/Main Loader";
 
 const columns = [
     {
-        title: 'CLIENTE',
+        title: 'Cliente',
         dataIndex: 'client',
     },
     {
-        title: 'DIRECCIÓN',
+        title: 'Dirección',
         dataIndex: 'address',
     },
     {
-        title: 'E-MAIL',
+        title: 'E-mail',
         dataIndex: 'email'
     },
     {
-        title: 'ACTIONS',
+        title: 'Actions',
         fixed:'right',
         width:100,
         key: 'action',

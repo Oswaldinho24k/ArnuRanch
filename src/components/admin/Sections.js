@@ -18,6 +18,7 @@ import DetailClientPage from "../clientes/DetailClientPage";
 import DetailProviderPage from "../proveedores/DetailProviderPage";
 import FormulasPage from "../plantaAlimentos/FormulasPage";
 import InsumosPage from "../plantaAlimentos/InsumosPage";
+import Dashboard from "./Dashboard";
 
 
 export const paths = {
@@ -28,6 +29,8 @@ const Sections = ({props}) => {
     return (
         <div className={'admin-sections'}>
             <Switch>
+
+                <Route path={'/admin/estadisticas'} component={Dashboard}/>
 
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
                 <Route path={'/admin/egresos'} component={EgresosPage}/>

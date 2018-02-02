@@ -906,8 +906,8 @@ const api = {
                 reject(error);
             });
         });
-    }
-=======
+    },
+
     /*********EGRESOS API******/
 
     getEgresos:()=>{

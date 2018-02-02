@@ -24,7 +24,7 @@ const columns = [
         render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
-        title: 'ACTIONS',
+        title: 'Actions',
         dataIndex: 'id',
         render: id => <Link to={`/admin/egresos/${id}`} >Detalle</Link>,
         fixed:'right',
@@ -65,7 +65,7 @@ class EgresosPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h1>Egresos DEMO-Page</h1>
+                <h1>Egresos Page</h1>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
