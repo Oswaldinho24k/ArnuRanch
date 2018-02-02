@@ -18,7 +18,7 @@ export const metadata = {
         {
             title: 'ACTIONS',
             dataIndex: 'id',
-            render: text => <Link to={`/admin/planta_alimentos/formulas/${text}`} >Detalle</Link>,
+            render: text => <Link to={`/admin/planta_alimentos/insumos/${text}`} >Editar</Link>,
         },
     ],
     rowSelection : {

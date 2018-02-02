@@ -4,8 +4,8 @@ import {InsumosDisplay} from "./InsumosForm";
 import {metadata} from "./metadataInsumos";
 import {Button, Modal, Table} from "antd";
 import InsumosForm from "./InsumosForm";
-import {saveInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
-import {Link, Route} from "react-router-dom";
+import {saveInsumo, editInsumo, deleteInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
+import {Link, Route, Switch} from "react-router-dom";
 
 const path = "/admin/planta_alimentos/insumos/:id";
 const absolutePath = "/admin/planta_alimentos/insumos/";
@@ -27,11 +27,33 @@ class InsumosPage extends Component {
     };
 
     onSubmit = (insumo) => {
-        this.props.saveInsumo(insumo)
-            .then( r => {
+        if (insumo.id) {
+            this.props.editInsumo(insumo)
+                .then(r => {
+                    console.log(r);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            this.closeModal();
+        }else {
+            this.props.saveInsumo(insumo)
+                .then(r => {
+                    console.log(r);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            this.closeModal();
+        }
+    };
+
+    onDelete = (id) => {
+        this.props.deleteInsumo(id)
+            .then(r => {
                 console.log(r);
             })
-            .catch( e => {
+            .catch(e => {
                 console.log(e);
             });
         this.closeModal();
@@ -40,12 +62,15 @@ class InsumosPage extends Component {
     render() {
         const {columns,rowSelection} = metadata;
         const {insumos} = this.props;
-        const InsumosFormRender = () => (
+        const InsumosFormRender = (props) => (
             <InsumosForm
                 onSubmit={this.onSubmit}
                 title="Agregar nuevo insumo"
                 width="30%"
                 onCancel={this.closeModal}
+                onDelete={this.onDelete}
+                {...this.props}
+                {...props}
             />
         );
         return (
@@ -64,7 +89,9 @@ class InsumosPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                <Route path={path} render={InsumosFormRender}/>
+                <Switch>
+                    <Route path={path} render={InsumosFormRender}/>
+                </Switch>
             </div>
         );
     }
@@ -74,5 +101,5 @@ const mapStateToProps = state => ({
     insumos: state.insumos.list
 });
 
-InsumosPage = connect(mapStateToProps, {saveInsumo})(InsumosPage);
+InsumosPage = connect(mapStateToProps, {saveInsumo, editInsumo, deleteInsumo})(InsumosPage);
 export default InsumosPage;

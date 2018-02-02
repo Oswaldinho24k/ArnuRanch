@@ -51,7 +51,7 @@ export const editInsumoSuccess = insumo => ({
 export const editInsumo = insumo => (dispatch, getState) => {
     return api.updateInsumo(insumo)
         .then( r => {
-            //dispatch(editINSUMOSuccess(r));
+            dispatch(editInsumoSuccess(r));
             console.log(r)
         }).catch(e=>{
             console.log(e)

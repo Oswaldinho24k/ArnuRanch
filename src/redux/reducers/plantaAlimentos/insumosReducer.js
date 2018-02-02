@@ -16,7 +16,7 @@ const list = (state=[], action) => {
                 return insumo;
             })];
         case DELETE_INSUMO_SUCCESS:
-            return [ ...state.filter( insumo => insumo.id !== action.insumo.id)];
+            return [ ...state.filter( insumo => insumo.id !== action.insumoId)];
         default:
             return state;
     }
