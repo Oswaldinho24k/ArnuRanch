@@ -30,7 +30,10 @@ class BatchForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        let options_corral = this.props.corrales.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.numero_serial}</Option>);
+        const {corrales} = this.props;
+        let options_corral = corrales.filter(c=> c.lotes===null);
+
+        options_corral = options_corral.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.numero_serial}</Option>);
         return (
 
                 <Form onSubmit={this.handleSubmit} >

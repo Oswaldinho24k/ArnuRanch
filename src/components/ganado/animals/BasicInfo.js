@@ -66,7 +66,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         )}
                     </FormItem>
                     <FormItem
-                        label="Factura">
+                        label="Factura Inicial">
                         {form.getFieldDecorator('ref_factura_original', {
                                     initialValue:ref_factura_original
                             })(

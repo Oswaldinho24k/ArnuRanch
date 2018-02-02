@@ -26,6 +26,7 @@ let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 
 
+
 //heroku urls
 if(!debug){
     animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
@@ -105,7 +106,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': undefined,
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': 'Token ' + userToken
                 }
             });
@@ -161,7 +162,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': undefined,
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': 'Token ' + userToken
                 }
             });
@@ -906,8 +907,8 @@ const api = {
                 reject(error);
             });
         });
-    }
-=======
+    },
+
     /*********EGRESOS API******/
 
     getEgresos:()=>{
@@ -964,3 +965,5 @@ const api = {
 };
 
 export default api;
+
+

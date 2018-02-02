@@ -120,7 +120,7 @@ class DetailAnimalPage extends Component {
 
             onSelection: this.onSelection,
         };
-        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} >{a.name}</Option>);
+        let options_lote = this.props.lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
         let contentList = {
             Detalle: <BasicInfoAndEdit
                  {...animal}

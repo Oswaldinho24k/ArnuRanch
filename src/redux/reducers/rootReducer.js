@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
     ingresos:ingresosReducer,
 
     formulas:formulasReducer,
-    insumos:insumosReducer
+    insumos:insumosReducer,
 
     egresos:egresosReducer,
 

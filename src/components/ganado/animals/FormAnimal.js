@@ -38,7 +38,7 @@ class FormAnimal extends Component {
                     delete values.lote
                 }
                 this.props.saveAnimal(values);
-                this.props.form.resetFields()
+                //this.props.form.resetFields()
 
 
             }
@@ -108,7 +108,7 @@ class FormAnimal extends Component {
                         </FormItem>
 
                         <FormItem
-                            label="Factura"
+                            label="Factura Inicial"
                         >
                             {getFieldDecorator('ref_factura_original', {
                                 rules: [{
@@ -181,7 +181,7 @@ class FormAnimal extends Component {
                             label="Costo Kilo"
                         >
                             {getFieldDecorator('costo_kilo', {
-                                initialValue:getFieldValue('costo_inicial')/getFieldValue('peso_entrada'),
+                                initialValue:(getFieldValue('costo_inicial')/getFieldValue('peso_entrada')).toFixed(2),
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -237,68 +237,8 @@ class FormAnimal extends Component {
                             )}
 
                         </FormItem>
-                        {/*
-                       <FormItem
-                            label="Cuarto"
-                        >
-                            {getFieldDecorator('cuarto', {
-                                rules: [{
-                                    required: true, message: 'Escribe prro!',
-                                }],
-                            })(
-                                <InputNumber min={1} max={100} />
-                            )}
-                        </FormItem>
 
-                        <FormItem
-                            label="Año"
-                        >
-                            {getFieldDecorator('ano', {
-                                rules: [{
-                                    required: true, message: 'Escribe prro!',
-                                }],
-                            })(
-                                <Input type={"number"}/>
-                            )}
-                        </FormItem>
-
-                        <FormItem
-                            label="Mes"
-                        >
-                            {getFieldDecorator('mes', {
-                                rules: [{
-                                    required: true, message: 'Escribe prro!',
-                                }],
-                            })(
-                                <InputNumber min={1} max={12} />
-                            )}
-                        </FormItem>
-
-                        <FormItem
-                            label="Semana"
-                        >
-                            {getFieldDecorator('numero_semana', {
-                                rules: [{
-                                    required: true, message: 'Escribe prro!',
-                                }],
-                            })(
-                                <InputNumber min={1} max={5} />
-                            )}
-                        </FormItem>
-*/}
                     </div>
-
-                    {/*<FormItem
-                        label="Comentarios"
-                    >
-                        {getFieldDecorator('comentarios', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>*/}
 
                     <FormItem
                         label="Descripción"
@@ -312,7 +252,6 @@ class FormAnimal extends Component {
                         )}
                     </FormItem>
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
-
                     <FormItem
                         label="Fierro Propietario"
                     >
@@ -331,7 +270,6 @@ class FormAnimal extends Component {
                             )}
                         </div>
                     </FormItem>
-
                     <FormItem
                         label="Fierro Nuevo"
                     >

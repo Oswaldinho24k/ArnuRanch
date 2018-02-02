@@ -39,7 +39,6 @@ const rowSelection = {
 
 class BatchPage extends Component {
     state = {
-        ModalText: <BatchForm corrales={this.props.corrales} saveLote={this.props.loteActions.saveLote}/>,
         visible: false,
     };
 
@@ -57,7 +56,7 @@ class BatchPage extends Component {
 
     render() {
         const { visible, ModalText } = this.state;
-        let {lotes, fetched} = this.props;
+        let {lotes, fetched, corrales, loteActions} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -80,7 +79,7 @@ class BatchPage extends Component {
                            null,
                        ]}
                 >
-                    {ModalText}
+                    <BatchForm corrales={corrales} saveLote={loteActions.saveLote}/>
                 </Modal>
             </Fragment>
         );
