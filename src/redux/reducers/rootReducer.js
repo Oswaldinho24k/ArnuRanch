@@ -7,8 +7,12 @@ import proveedoresReducer from "./proveedoresReducer";
 import clientesReducer from "./clientesReducer";
 import pesadasReducer from "./pesadasReducer";
 import ingresosReducer from "./ingresosReducer";
+
 import formulasReducer from "./plantaAlimentos/formulasReducer";
 import insumosReducer from "./plantaAlimentos/insumosReducer";
+
+import egresosReducer from "./egresosReducer";
+
 
 
 const rootReducer = combineReducers({
@@ -20,8 +24,12 @@ const rootReducer = combineReducers({
     clientes: clientesReducer,
     pesadas:pesadasReducer,
     ingresos:ingresosReducer,
+
     formulas:formulasReducer,
     insumos:insumosReducer
+
+    egresos:egresosReducer,
+
 });
 
 export default rootReducer

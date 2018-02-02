@@ -6,8 +6,12 @@ import {getProveedores} from "./proveedoresActions";
 import {getClientes} from "./clientesActions";
 import {getPesadas} from "./pesadasActions";
 import {getIngresos} from "./ingresosActions";
+
 import {getFormulas} from "./plantaAlimentos/formulasActions";
 import {getInsumos} from "./plantaAlimentos/insumosActions";
+
+import {getEgresos} from "./egresosActions";
+
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -71,8 +75,12 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getClientes());
         dispatch(getPesadas());
         dispatch(getIngresos());
+
         dispatch(getFormulas());
         dispatch(getInsumos());
+
+        dispatch(getEgresos());
+
     }
 };
 

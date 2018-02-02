@@ -16,10 +16,14 @@ let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
 let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
+
 // planta_alimentos
 let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
 let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
+
+let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
+
 
 
 //heroku urls
@@ -702,6 +706,7 @@ const api = {
         });
     },
 
+
     /*************** Planta Alimentos ************************/
     // Inicio Items
     getItems: url => {
@@ -902,6 +907,56 @@ const api = {
             });
         });
     }
+=======
+    /*********EGRESOS API******/
+
+    getEgresos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newEgreso:(egreso)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', egreso)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
 
     //Final Items
     /*******************Fin planta alimentos *********************/

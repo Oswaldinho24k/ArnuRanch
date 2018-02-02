@@ -9,9 +9,9 @@ const InputGroup = Input.Group;
 const Option = Select.Option;
 
 const opciones = [{
-    name :'Cerdos',
-    id: 1
-},
+        name :'Cerdos',
+        id: 1
+    },
     {
         name:'Ganado',
         id:2
@@ -32,7 +32,7 @@ const opciones = [{
 ];
 
 
-class IngresoForm extends Component {
+class EgresoForm extends Component {
     state = {
         value: '',
         factura:false,
@@ -43,42 +43,42 @@ class IngresoForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.saveIngreso(values)
+                this.props.saveEgreso(values)
             }
         });
     };
 
     handleChange = e => {
-        this.setState({
-            factura: e.target.checked
-        })
+      this.setState({
+          factura: e.target.checked
+      })
     };
 
 
     render() {
         const { getFieldDecorator } = this.props.form;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
-        let options_clients = this.props.clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
+        let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         return (
 
             <Form onSubmit={this.handleSubmit} >
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     <FormItem
-                        label={"Cliente"}
+                        label={"Proveedor"}
                     >
-                        {getFieldDecorator('client', {
+                        {getFieldDecorator('provider', {
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
                             props:{
-                                placeholder:'Selecciona un Cliente',
+                                placeholder:'Selecciona un Proveedor',
                             }
                         })(
 
 
-                            <Select  placeholder={"Selecciona un Cliente"}>
-                                {options_clients}
+                            <Select  placeholder={"Selecciona un Proveedor"}>
+                                {options_proveedores}
                             </Select>
                         )}
 
@@ -92,10 +92,13 @@ class IngresoForm extends Component {
                                 required: true, message: 'Completa el campo!',
                             }],
                             props:{
-                                placeholder:'Linea de Negocio',
+                                placeholder:'Selecciona forma de pago',
                             }
                         })(
-                            <Select  placeholder={"Linea de Negocio"}>
+
+
+                            <Select  placeholder={"Selecciona forma de pago"}>
+
                                 {options}
                             </Select>
                         )}
@@ -104,7 +107,7 @@ class IngresoForm extends Component {
 
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
                         <FormItem>
-                            {getFieldDecorator('sale_check', {
+                            {getFieldDecorator('purchase_check', {
                                 valuePropName: 'checked',
                                 initialValue: false,
                                 rules: [{
@@ -121,7 +124,7 @@ class IngresoForm extends Component {
                         </FormItem>
 
                         <FormItem>
-                            {getFieldDecorator('no_scheck')(<Input disabled={!this.state.factura}/>)}
+                            {getFieldDecorator('no_check')(<Input disabled={!this.state.factura}/>)}
                         </FormItem>
 
                     </div>
@@ -161,7 +164,7 @@ const mapDispatchToProps = () => ({
 
 });
 
-const FormIngreso = Form.create()(IngresoForm);
+const FormEgreso = Form.create()(EgresoForm);
 
-IngresoForm = connect(mapStateToProps, mapDispatchToProps)(IngresoForm);
-export default FormIngreso;
+EgresoForm = connect(mapStateToProps, mapDispatchToProps)(EgresoForm);
+export default FormEgreso;

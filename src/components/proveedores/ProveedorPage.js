@@ -23,6 +23,8 @@ const columns = [
     {
         title: 'ACTIONS',
         key: 'action',
+        fixed:'right',
+        width:100,
         render: (text, record) => (
             <span>
               <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
@@ -104,6 +106,7 @@ class ProovedorPage extends Component {
                     columns={columns}
                     dataSource={proveedores}
                     rowKey={record => record.id}
+                    scroll={{x:650}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
