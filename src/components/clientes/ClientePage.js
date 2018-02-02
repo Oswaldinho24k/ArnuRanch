@@ -22,6 +22,8 @@ const columns = [
     },
     {
         title: 'ACTIONS',
+        fixed:'right',
+        width:100,
         key: 'action',
         render: (text, record) => (
             <span>
@@ -102,6 +104,7 @@ class ClientePage extends Component {
                     columns={columns}
                     dataSource={clientes}
                     rowKey={record => record.id}
+                    scroll={{x:650}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>

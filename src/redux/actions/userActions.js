@@ -7,6 +7,12 @@ import {getClientes} from "./clientesActions";
 import {getPesadas} from "./pesadasActions";
 import {getIngresos} from "./ingresosActions";
 
+import {getFormulas} from "./plantaAlimentos/formulasActions";
+import {getInsumos} from "./plantaAlimentos/insumosActions";
+
+import {getEgresos} from "./egresosActions";
+
+
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
 export function logInSuccess(user){
@@ -57,7 +63,7 @@ export const logOut=()=>(dispatch)=>{
 };
 
 export const checkIfUser=()=>(dispatch, getState)=>{
-    console.log(getState())
+    console.log(getState());
     const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
     if(userToken){
         //dispatch the functions
@@ -69,6 +75,12 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getClientes());
         dispatch(getPesadas());
         dispatch(getIngresos());
+
+        dispatch(getFormulas());
+        dispatch(getInsumos());
+
+        dispatch(getEgresos());
+
     }
 };
 

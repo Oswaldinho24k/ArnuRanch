@@ -16,9 +16,14 @@ import ReportesPage from "../ganado/reportes/ReportesPage";
 
 import DetailClientPage from "../clientes/DetailClientPage";
 import DetailProviderPage from "../proveedores/DetailProviderPage";
+import FormulasPage from "../plantaAlimentos/FormulasPage";
+import InsumosPage from "../plantaAlimentos/InsumosPage";
 
 
-
+export const paths = {
+    formulas: '/admin/planta_alimentos/formulas',
+    insumos: '/admin/planta_alimentos/insumos'
+};
 const Sections = ({props}) => {
     return (
         <div className={'admin-sections'}>
@@ -47,7 +52,10 @@ const Sections = ({props}) => {
                 <Route path={'/admin/pesadas'} component={PesosPage}/>
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
-
+                {/* Planta alimentos routes begin*/}
+                <Route path={paths.formulas} component={FormulasPage}/>
+                <Route path={paths.insumos} component={InsumosPage}/>
+                {/* Planta alimentos routes end*/}
 
             </Switch>
 

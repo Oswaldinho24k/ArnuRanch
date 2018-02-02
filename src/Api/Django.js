@@ -17,6 +17,14 @@ let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 
+// planta_alimentos
+let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
+let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
+let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
+
+let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
+
+
 
 
 //heroku urls
@@ -32,6 +40,12 @@ if(!debug){
 }
 
 //functions
+let userTokenKey = 'userRanchoToken';
+const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Token ' + userToken
+};
 
 const api = {
     /*-----------------animals functions-----------------------*/
@@ -694,6 +708,259 @@ const api = {
     },
 
 
+    /*************** Planta Alimentos ************************/
+    // Inicio Items
+    getItems: url => {
+        itemsUrl = url ? url : itemsUrl;
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: itemsUrl,
+                headers: headers
+            });
+            instance.get('')
+                .then( response => {
+                    resolve(response.data)
+                })
+                .catch( error => {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        });
+    },
+    newItem: item => {
+        return new Promise( (resolve, reject ) => {
+           const instance = axios.create({
+               baseURL: itemsUrl,
+               headers: headers
+           });
+           instance.post( '', item )
+               .then( response => {
+                   resolve(response.data)
+               })
+               .catch( error => {
+                   console.log(error.response);
+                   reject(error);
+               });
+        });
+    },
+    updateItem : item => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: itemsUrl,
+                headers: headers
+            });
+            instance.patch(item.id + '/',item)
+                .then( response => {
+                    resolve(response.data);
+                })
+                .catch( error => {
+                console.error(error.response);
+                reject(error);
+            });
+        })
+    },
+    removeItem: idItem => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: itemsUrl,
+                headers: headers
+            });
+            instance.delete(idItem + '/')
+                .then( response => {
+                    resolve(response.data);
+                }).catch( error => {
+                    console.error(error.response);
+                    reject(error);
+            });
+        });
+    },
+
+    //Final Items
+    //  Insumos begin
+    getInsumos: url => {
+        insumosUrl = url ? url : insumosUrl;
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: insumosUrl,
+                headers: headers
+            });
+            instance.get('')
+                .then( response => {
+                    resolve(response.data)
+                })
+                .catch( error => {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        });
+    },
+    newInsumo: insumo => {
+        return new Promise( ( resolve, reject ) => {
+            const instance = axios.create({
+                baseURL: insumosUrl,
+                headers: headers
+            });
+            instance.post( '', insumo )
+                .then( response => {
+                    resolve(response.data)
+                })
+                .catch( error => {
+                    console.log(error.response);
+                    reject(error);
+                });
+        });
+    },
+    updateInsumo : insumo => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: insumosUrl,
+                headers: headers
+            });
+            instance.patch(insumo.id + '/',insumo)
+                .then( response => {
+                    resolve(response.data);
+                })
+                .catch( error => {
+                    console.error(error.response);
+                    reject(error);
+                });
+        })
+    },
+    removeInsumo: idInsumo => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: insumosUrl,
+                headers: headers
+            });
+            instance.delete(idInsumo + '/')
+                .then( response => {
+                    resolve(response.data);
+                }).catch( error => {
+                console.error(error.response);
+                reject(error);
+            });
+        });
+    },
+
+    // Insumos end
+    // Formulas begin
+    getFormulas: url => {
+        formulasUrl = url ? url : formulasUrl;
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: formulasUrl,
+                headers: headers
+            });
+            instance.get('')
+                .then( response => {
+                    resolve(response.data)
+                })
+                .catch( error => {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        });
+    },
+    newFormula: formula => {
+        return new Promise( (resolve, reject ) => {
+            const instance = axios.create({
+                baseURL: formulasUrl,
+                headers: headers
+            });
+            instance.post( '', formula )
+                .then( response => {
+                    resolve(response.data)
+                })
+                .catch( error => {
+                    console.log(error.response);
+                    reject(error);
+                });
+        });
+    },
+    updateFormula : formula => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: formulasUrl,
+                headers: headers
+            });
+            instance.patch(formula.id + '/',formula)
+                .then( response => {
+                    resolve(response.data);
+                })
+                .catch( error => {
+                    console.error(error.response);
+                    reject(error);
+                });
+        })
+    },
+    removeFormula: idFormula => {
+        return new Promise( (resolve, reject) => {
+            const instance = axios.create({
+                baseURL: formulasUrl,
+                headers: headers
+            });
+            instance.delete(idFormula + '/')
+                .then( response => {
+                    resolve(response.data);
+                }).catch( error => {
+                console.error(error.response);
+                reject(error);
+            });
+        });
+    }
+=======
+    /*********EGRESOS API******/
+
+    getEgresos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newEgreso:(egreso)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', egreso)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+
+    //Final Items
+    /*******************Fin planta alimentos *********************/
 
 };
 
