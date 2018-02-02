@@ -5,6 +5,10 @@ import {metadata} from "./metadataInsumos";
 import {Button, Modal, Table} from "antd";
 import InsumosForm from "./InsumosForm";
 import {saveInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
+import {Link, Route} from "react-router-dom";
+
+const path = "/admin/planta_alimentos/insumos/:id";
+const absolutePath = "/admin/planta_alimentos/insumos/";
 
 class InsumosPage extends Component {
     constructor(props) {
@@ -19,7 +23,7 @@ class InsumosPage extends Component {
     };
 
     closeModal = () => {
-        this.setState({open:false});
+        this.props.history.push(absolutePath);
     };
 
     onSubmit = (insumo) => {
@@ -34,9 +38,16 @@ class InsumosPage extends Component {
     };
 
     render() {
-        const {open} = this.state;
         const {columns,rowSelection} = metadata;
         const {insumos} = this.props;
+        const InsumosFormRender = () => (
+            <InsumosForm
+                onSubmit={this.onSubmit}
+                title="Agregar nuevo insumo"
+                width="30%"
+                onCancel={this.closeModal}
+            />
+        );
         return (
             <div>
                 <h1>Insumos</h1>
@@ -46,24 +57,14 @@ class InsumosPage extends Component {
                     dataSource={insumos}
                     rowKey={record => record.id}
                 />
-                <Button
-                    type="primary"
-                    onClick={this.openModal}
-                >
-                    Agregar
-                </Button>
-                <Modal
-                    title="Agregar nuevo insumo"
-                    visible={open}
-                    onCancel={this.closeModal}
-                    width="30%"
-                    maskClosable={true}
-                    footer={[null, null]}
-                >
-                    <InsumosForm
-                        onSubmit={this.onSubmit}
-                    />
-                </Modal>
+                <Link to={absolutePath + 'add'}>
+                    <Button
+                        type="primary"
+                    >
+                        Agregar
+                    </Button>
+                </Link>
+                <Route path={path} render={InsumosFormRender}/>
             </div>
         );
     }
