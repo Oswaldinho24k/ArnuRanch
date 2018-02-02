@@ -18,6 +18,7 @@ let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 
 
+
 //heroku urls
 if(!debug){
     animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
@@ -91,7 +92,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': undefined,
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': 'Token ' + userToken
                 }
             });
@@ -147,7 +148,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': undefined,
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': 'Token ' + userToken
                 }
             });
@@ -697,3 +698,5 @@ const api = {
 };
 
 export default api;
+
+

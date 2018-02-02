@@ -32,24 +32,22 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                             label="Name"
                         >
                             <Input
-                                defaultValue={name}
+
                                 disabled={!canEdit}/>
                         </FormItem>)}
                     {form.getFieldDecorator('corral', {
                         initialValue:corral.numero_serial
                     })(
                         <FormItem
-                            label="Corral"
-                        >
+                            label="Corral">
                             <Input
-                                defaultValue={corral.numero_serial}
+
                                 disabled={!canEdit}/>
                         </FormItem>)}
                     {form.getFieldDecorator('status', {
                         initialValue:status
                     })(
                         <FormItem
-                            defaultValue={status}
                             label="Statussss">
 
                             <Switch

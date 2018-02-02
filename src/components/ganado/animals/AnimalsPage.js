@@ -27,6 +27,8 @@ const columns = [
 },
 {
     title: 'Actions',
+    fixed:"right",
+    width:100,
     key: 'action',
     width: 100,
     render: (text, record) => (
@@ -185,7 +187,7 @@ class AnimalsPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
-                <h1>Animals</h1>
+                <h1>Lista de Aretes</h1>
                 {/*Search and filters*/}
                 <div style={{padding:'2% 0'}}>
                     <Input.Search
@@ -214,7 +216,7 @@ class AnimalsPage extends Component {
                 </div>
 
                 {/*table of animals*/}
-                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id} pagination={false}/>
+                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id} pagination={false} scroll={{x:650}}/>
                 <Pagination
                     pageSize={20}
                     total={animalsData.count}
