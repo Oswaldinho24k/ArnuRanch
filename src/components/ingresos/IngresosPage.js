@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, Modal} from "antd";
+import {Table, Button, Modal, message, Popconfirm} from "antd";
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/ingresosActions';
@@ -19,8 +19,8 @@ const columns = [
     },
     {
         title: 'No. Factura',
-        dataIndex: 'no_check',
-        render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
+        dataIndex: 'no_scheck',
+        render:no_scheck=> <span>{no_scheck?<span>{no_scheck}</span>:'No hay factura'}</span>
     },
     {
         title: 'Actions',
@@ -31,18 +31,11 @@ const columns = [
     },
 ];
 
-
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    }
-};
-
-
 class IngresosPage extends Component {
     state = {
         ModalText: <FormIngreso clientes={this.props.clientes} saveIngreso={this.props.ingresosActions.saveIngreso} />,
         visible: false,
+        selectedRowKeys:[]
     };
 
     showModal = () => {
@@ -57,13 +50,48 @@ class IngresosPage extends Component {
         });
     };
 
+    deleteIngreso=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            this.props.ingresosActions.deleteIngreso(keys[i])
+                .then(r=>{
+                    console.log(r)
+                }).catch(e=>{
+                console.log(e)
+            })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    confirm=(e)=> {
+        console.log(e);
+        this.deleteIngreso();
+        message.success('Deleted successfully');
+    };
+
+    cancel=(e) =>{
+        console.log(e);
+    };
+
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
     render() {
-        const { visible, ModalText } = this.state;
+        const { visible, ModalText, selectedRowKeys } = this.state;
+        const canDelete = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         let {ingresos, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
                 <h1>Ingresos Page</h1>
+                <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}

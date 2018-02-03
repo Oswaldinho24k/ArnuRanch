@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch} from "antd";
+import {Table, Button, Modal, Switch, message, Popconfirm} from "antd";
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -32,18 +32,11 @@ const columns = [
     },
 ];
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    }
-};
-
-
-
 class EgresosPage extends Component {
     state = {
        ModalText: <FormEgreso proveedores={this.props.proveedores} saveEgreso={this.props.egresosActions.saveEgreso} />,
         visible: false,
+        selectedRowKeys:[]
     };
 
     showModal = () => {
@@ -58,14 +51,49 @@ class EgresosPage extends Component {
         });
     };
 
+    deleteEgreso=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            this.props.egresosActions.deleteEgreso(keys[i])
+                .then(r=>{
+                    console.log(r)
+                }).catch(e=>{
+                console.log(e)
+            })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    confirm=(e)=> {
+        console.log(e);
+        this.deleteEgreso();
+        message.success('Deleted successfully');
+    };
+
+    cancel=(e) =>{
+        console.log(e);
+    };
+
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
 
     render() {
-        const { visible, ModalText } = this.state;
+        const { visible, ModalText, selectedRowKeys } = this.state;
+        const canDelete = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         let {egresos, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
                 <h1>Egresos Page</h1>
+                <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
