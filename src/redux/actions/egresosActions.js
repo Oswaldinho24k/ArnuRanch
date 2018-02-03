@@ -36,3 +36,40 @@ export const saveEgreso=(egreso)=>(dispatch, getState)=>{
         console.log(e)
     })
 };
+
+/*EDIT EGRESO*/
+
+export const EDIT_EGRESO_SUCCESS = 'EDIT_EGRESO_SUCCESS';
+export function editEgresoSucces(egreso) {
+    return{
+        type: EDIT_EGRESO_SUCCESS, egreso
+    }
+}
+
+export const editEgreso=(egreso)=>(dispatch, getState)=>{
+    return api.editEgreso(egreso)
+        .then(r=>{
+            dispatch(editEgresoSucces(r))
+        }).catch(e=>{
+            console.log(e)
+        })
+};
+
+/*DELETE EGRESO*/
+
+export const DELETE_EGRESO_SUCCESS = 'DELETE_EGRESO_SUCCESS';
+
+export function deleteEgresoSuccess(egresoId){
+    return {
+        type:DELETE_EGRESO_SUCCESS, egresoId
+    }
+}
+
+export const deleteEgreso=(egresoId)=>(dispatch, getState)=>{
+    return api.deleteEgreso(egresoId)
+        .then(r=>{
+            dispatch(deleteEgresoSuccess(egresoId))
+        }).catch(e=>{
+            console.log(e)
+        })
+};

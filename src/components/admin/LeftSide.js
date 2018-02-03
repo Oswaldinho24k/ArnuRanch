@@ -13,6 +13,9 @@ const LeftSide = ({props}) => {
               //defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
             <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Administración</span></span>}>
+                <Menu.Item key="14">
+                    <Link to={'/admin/estadisticas'} >Estadísticas</Link>
+                </Menu.Item>
                 <Menu.Item key="1">
                     <Link to={'/admin/ingresos'} >Ingresos</Link>
                 </Menu.Item>

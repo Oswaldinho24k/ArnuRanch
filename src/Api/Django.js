@@ -707,6 +707,61 @@ const api = {
         });
     },
 
+    editIngreso:(ingreso)=>{
+        let data = new FormData();
+        for ( var key in ingreso ) {
+            data.append(key, ingreso[key]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: salesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(ingreso.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log(data);
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteIngreso:(ingresoId)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: salesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(ingresoId+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
 
     /*************** Planta Alimentos ************************/
     // Inicio Items
@@ -946,6 +1001,61 @@ const api = {
                 }
             });
             instance.post('', egreso)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    editEgreso:(egreso)=>{
+        let data = new FormData();
+        for ( var key in egreso ) {
+            data.append(key, egreso[key]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': undefined,
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(egreso.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log(data);
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteEgreso:(egresoId)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: egresosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(egresoId+'/')
                 .then(function (response) {
                     resolve(response.data);
                 })
