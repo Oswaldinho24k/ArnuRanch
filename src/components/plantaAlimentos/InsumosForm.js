@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Button, Form, Input, InputNumber, Modal} from 'antd';
+import {Button, Form, Input, InputNumber, Modal, Select} from 'antd';
 import {connect} from 'react-redux';
+import DetailEgresoPage from "../egresos/DetailEgresoPage";
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 //TODO create CRUD of this component
 const style = {
@@ -35,6 +37,15 @@ class InsumosForm extends Component{
         let name = insumo ? insumo.name : '';
         let unit_price = insumo ? insumo.unit_price : 1;
         let unit = insumo ? insumo.unit : '';
+        let providers_options = this.props.providers || [];
+        providers_options = providers_options.map ( provider =>
+            <Option
+                value={parseInt(provider.id)}
+                key={provider.id}
+            >
+                {provider.provider}
+            </Option>
+        );
         return (
             <Modal
                 title={title}
@@ -69,14 +80,22 @@ class InsumosForm extends Component{
                         }
                     </FormItem>
 
-                    <FormItem label="Unidad">
+                    <FormItem label="Proveedor">
                         {
-                            getFieldDecorator('unit', {
+                            getFieldDecorator('provider', {
                                 initialValue: unit,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                            })(<Input/>)
+                                props:{
+                                    placeholder:'Selecciona un proveedor'
+                                }
+                            })
+                            (
+                                <Select >
+                                    {providers_options}
+                                </Select>
+                            )
                         }
 
                     </FormItem>
@@ -124,7 +143,8 @@ const mapStateToProps = (state, ownProps) => {
         insumo = (state.insumos.list.filter( insumo => insumo.id == id )[0]);
     }
     return {
-        insumo
+        insumo,
+        providers: state.proveedores.list
     }
 };
 

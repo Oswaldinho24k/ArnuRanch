@@ -81,6 +81,7 @@ class InsumosPage extends Component {
                     columns={columns}
                     dataSource={insumos}
                     rowKey={record => record.id}
+                    scroll={{x:650}}
                 />
                 <Link to={absolutePath + 'add'}>
                     <Button

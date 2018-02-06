@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {FormulasDisplay} from './FormulasDisplay';
 import {metadata} from "./metadataFormulas";
+import {Table} from "antd";
 
 class FormulasPage extends Component {
     constructor(props) {
@@ -14,10 +15,13 @@ class FormulasPage extends Component {
         const {formulas} = this.props;
         return (
             <div>
-                <FormulasDisplay
-                    columns={columns}
+                <h1>Fórmulas</h1>
+                <Table
                     rowSelection={rowSelection}
+                    columns={columns}
                     dataSource={formulas}
+                    rowKey={record => record.id}
+                    scroll={{x:650}}
                 />
             </div>
         );
