@@ -20,8 +20,6 @@ export const metadata = {
         {
             title: 'Actions',
             dataIndex: 'id',
-            fixed: 'right',
-            width: 100,
             render: text => <Link to={`/admin/planta_alimentos/insumos/${text}`} >Editar</Link>,
         },
     ],

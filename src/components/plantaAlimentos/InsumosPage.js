@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
-import {InsumosDisplay} from "./InsumosForm";
 import {metadata} from "./metadataInsumos";
-import {Button, Modal, Table} from "antd";
+import {Button, Table} from "antd";
 import InsumosForm from "./InsumosForm";
 import {saveInsumo, editInsumo, deleteInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
 import {Link, Route, Switch} from "react-router-dom";

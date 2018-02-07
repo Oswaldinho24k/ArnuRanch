@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
-import {FormulasDisplay} from './FormulasDisplay';
 import {metadata} from "./metadataFormulas";
-import {Table} from "antd";
+import {Button,Table} from "antd";
+
+const path = "/admin/planta_alimentos/formulas/:id";
+const absolutePath = "/admin/planta_alimentos/formulas/";
 
 class FormulasPage extends Component {
     constructor(props) {
