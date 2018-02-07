@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, message, Modal, Popconfirm, Table, Tag} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Tag} from "antd";
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-import * as ingresosActions from '../../redux/actions/ingresosActions';
-import FormIngreso from "./IngresoForm";
+
+
 
 
 const columns = [
@@ -26,7 +26,7 @@ const columns = [
     {
         title: 'Status',
         dataIndex:'paid',
-        render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
+        render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrar</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
     },
     {
         title: 'Actions',
@@ -37,22 +37,14 @@ const columns = [
     },
 ];
 
-class IngresosPage extends Component {
+class CobrarIngreso extends Component {
     state = {
-        ModalText: <FormIngreso clientes={this.props.clientes} saveIngreso={this.props.ingresosActions.saveIngreso} />,
-        visible: false,
         selectedRowKeys:[]
     };
 
     showModal = () => {
         this.setState({
             visible: true,
-        });
-    };
-
-    handleCancel = () => {
-        this.setState({
-            visible: false,
         });
     };
 
@@ -84,41 +76,31 @@ class IngresosPage extends Component {
     };
 
     render() {
-        const { visible, ModalText, selectedRowKeys } = this.state;
+        const { selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         let {ingresos, fetched} = this.props;
+        let filtrados = ingresos.filter(f=>{return f.paid===false });
         if(!fetched)return(<MainLoader/>);
+        console.log(filtrados);
         return (
             <Fragment>
-                <h1>Ingresos Page</h1>
+                <h1>Ingresos por Cobrar</h1>
                 <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={ingresos}
+                    dataSource={filtrados}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                 />
 
-                <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Nuevo Ingreso"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    {ModalText}
-                </Modal>
+
             </Fragment>
         );
     }
@@ -129,15 +111,14 @@ function mapStateToProps(state, ownProps) {
     return {
         ingresos:state.ingresos.list,
         fetched: state.ingresos.list !== undefined,
-        clientes:state.clientes.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        ingresosActions: bindActionCreators(ingresosActions, dispatch)
+        //actions: bindActionCreators(actions, dispatch)
     }
 }
 
-IngresosPage = connect(mapStateToProps, mapDispatchToProps)(IngresosPage);
-export default IngresosPage;
+CobrarIngreso = connect(mapStateToProps, mapDispatchToProps)(CobrarIngreso);
+export default CobrarIngreso;

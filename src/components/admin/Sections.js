@@ -16,6 +16,11 @@ import DetailClientPage from "../clientes/DetailClientPage";
 import DetailProviderPage from "../proveedores/DetailProviderPage";
 import FormulasPage from "../plantaAlimentos/FormulasPage";
 import InsumosPage from "../plantaAlimentos/InsumosPage";
+import Dashboard from "./Dashboard";
+import DetailIngresoPage from "../ingresos/DetailIngresoPage";
+import DetailEgresoPage from "../egresos/DetailEgresoPage";
+import CobrarIngreso from "../ingresos/CobrarIngreso";
+import PagarEgreso from "../egresos/PagarEgreso";
 
 
 export const paths = {
@@ -27,8 +32,16 @@ const Sections = ({props}) => {
         <div className={'admin-sections'}>
             <Switch>
 
+                <Route path={'/admin/estadisticas'} component={Dashboard}/>
+                <Route path={'/admin/ingresos/cobrar'} component={CobrarIngreso} />
+                <Route path={'/admin/ingresos/:in'} component={DetailIngresoPage} />
+
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
+
+                <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
+                <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>
                 <Route path={'/admin/egresos'} component={EgresosPage}/>
+
                 <Route path={'/admin/inventario'} component={IngresosPage}/>
 
                 <Route path={'/admin/clientes/:i'} component={DetailClientPage} />
