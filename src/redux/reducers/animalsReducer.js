@@ -9,12 +9,12 @@ function list(state=[], action){
         case GET_ANIMALS_SUCCESS:
             return action.animals;
         case SAVE_ANIMAL_SUCCESS:
-            return [...state, action.animal];
+            return [action.animal, ...state];
         case EDIT_ANIMAL_SUCCESS:
             let newList = state.filter(a=>{
                 return a.id!=action.animal.id
             });
-            return [...newList, action.animal];
+            return [action.animal, ...newList];
         case SAVE_ANIMAL_GASTO_SUCCESS:
             let animalId = action.gasto.animal;
             let animal = state.filter(a=>{return a.id==animalId});

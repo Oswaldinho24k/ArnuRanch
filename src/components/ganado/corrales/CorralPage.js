@@ -11,7 +11,7 @@ import FormCorral from "./CorralForm";
 const columns = [
     {
         title: 'Numero de Corral',
-        dataIndex: 'numero_serial',
+        dataIndex: 'no_corral',
     }, {
         title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',

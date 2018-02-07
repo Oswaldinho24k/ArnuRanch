@@ -56,7 +56,9 @@ class AnimalsPage extends Component {
         this.props.animalActions.saveAnimal(animal)
             .then(r=>{
                 this.handleCancel()
+                message.success('Arete añadido con éxito!')
             }).catch(e=>{
+            message.error('Uno de estos campos ya existe')
 
         })
     }

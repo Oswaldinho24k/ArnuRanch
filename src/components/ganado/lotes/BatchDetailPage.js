@@ -117,8 +117,7 @@ class BatchDetailPage extends Component {
                            handleEdit={this.handleEdit}
                             edit={this.edit}/>
 
-                <Divider />
-                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'2% 0'}}>Agregar Gasto</Button>
+
                 {loading?<MainLoader/>:''}
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
@@ -138,6 +137,7 @@ class BatchDetailPage extends Component {
                     rowSelection={rowSelection}
                     columns={columns} dataSource={lote.animals}
                     rowKey={record => record.id}/>
+                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'2% 0'}}>Agregar Gasto</Button>
             </Fragment>
 
         );

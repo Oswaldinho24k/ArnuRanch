@@ -28,7 +28,7 @@ export const getAnimals=(url)=>(dispatch, getState)=>{
             dispatch(getAnimalsSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
-            console.log(e)
+            throw e
     })
 };
 
@@ -51,7 +51,7 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
             console.log(r);
             dispatch(saveAnimalSuccess(r))
         }).catch(e=>{
-        console.log(e)
+        throw e
     })
 };
 
@@ -73,7 +73,7 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
             dispatch(editAnimalSuccess(r));
             console.log(r)
         }).catch(e=>{
-            console.log(e)
+            throw e
     })
 };
 
@@ -92,6 +92,6 @@ export const deleteAnimal=(animalId)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(deleteAnimalSuccess(animalId))
         }).catch(e=>{
-            console.log(e)
+            throw e
         })
 };

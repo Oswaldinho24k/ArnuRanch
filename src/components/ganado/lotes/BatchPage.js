@@ -27,7 +27,7 @@ const columns = [
         title: 'Corral ',
         dataIndex: 'corral',
         key:'corral',
-        render:val => <p>{val.numero_serial}</p>
+        render:val => <p>{val.no_corral}</p>
     },
     /*{
         title: 'Ac',

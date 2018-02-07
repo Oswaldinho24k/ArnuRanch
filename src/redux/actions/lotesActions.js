@@ -21,7 +21,7 @@ export const getLotes=(url)=>(dispatch, getState)=>{
             dispatch(getLotesSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
-        console.log(e)
+       throw e
     })
 };
 
@@ -43,7 +43,7 @@ export const saveLote=(batch)=>(dispatch, getState)=>{
             console.log(r);
             dispatch(saveLoteSuccess(r))
         }).catch(e=>{
-        console.log(e)
+       throw e
     })
 };
 
@@ -61,6 +61,6 @@ export const editLote=(lote)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editLoteSuccess(r))
         }).catch(e=>{
-            console.log(e)
+           throw e
     })
 };
