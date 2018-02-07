@@ -6,7 +6,6 @@ import DetailEgresoPage from "../egresos/DetailEgresoPage";
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-//TODO create CRUD of this component
 const style = {
     display:'flex',
     flexDirection:'column',
