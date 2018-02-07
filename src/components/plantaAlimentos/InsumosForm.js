@@ -36,7 +36,7 @@ class InsumosForm extends Component{
         const {form : {getFieldDecorator}, title, width, onCancel, insumo, onDelete} = this.props;
         let name = insumo ? insumo.name : '';
         let unit_price = insumo ? insumo.unit_price : 1;
-        let unit = insumo ? insumo.unit : '';
+        let provider = insumo ? insumo.provider.provider : '';
         let providers_options = this.props.providers || [];
         providers_options = providers_options.map ( provider =>
             <Option
@@ -83,7 +83,7 @@ class InsumosForm extends Component{
                     <FormItem label="Proveedor">
                         {
                             getFieldDecorator('provider', {
-                                initialValue: unit,
+                                initialValue: provider,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -117,7 +117,7 @@ class InsumosForm extends Component{
                         {
                             insumo &&
                             <Button
-                                type="secondary"
+                                type="danger"
                                 size="large"
                                 onClick={() => onDelete(insumo.id)}
                                 style={{

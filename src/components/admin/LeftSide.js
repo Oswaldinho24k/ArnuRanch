@@ -56,10 +56,13 @@ const LeftSide = ({props}) => {
             </SubMenu>
             <SubMenu key="sub3" title={<span><Icon type="appstore" /><span>Planta Alimentos</span></span>}>
                 <Menu.Item key="12">
-                    <Link to={paths.formulas}>Fórmulas</Link>
+                    <Link to='/admin/proveedores'>Proovedores</Link>
                 </Menu.Item>
                 <Menu.Item key="13">
                     <Link to={paths.insumos}>Insumos</Link>
+                </Menu.Item>
+                <Menu.Item key="14">
+                    <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
             </SubMenu>
         </Menu>

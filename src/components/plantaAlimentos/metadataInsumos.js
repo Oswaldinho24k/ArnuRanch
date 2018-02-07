@@ -25,9 +25,4 @@ export const metadata = {
             render: text => <Link to={`/admin/planta_alimentos/insumos/${text}`} >Editar</Link>,
         },
     ],
-    rowSelection : {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        }
-    }
 };

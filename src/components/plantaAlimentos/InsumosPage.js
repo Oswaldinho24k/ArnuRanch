@@ -14,13 +14,10 @@ class InsumosPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            selectedRowsKeys: []
         };
     }
-
-    openModal = () => {
-        this.setState({open:true});
-    };
 
     closeModal = () => {
         this.props.history.push(absolutePath);
@@ -59,9 +56,19 @@ class InsumosPage extends Component {
         this.closeModal();
     };
 
+    deleteSelection = () => {
+        const response = window.confirm('¿Seguro que quieres eliminar los insumos selecionados?');
+        if (response) {
+            const {selectedRowsKeys} = this.state;
+            selectedRowsKeys.forEach( key => this.onDelete(key));
+        }
+        this.setState({selectedRowsKeys:[]})
+    };
+
     render() {
-        const {columns,rowSelection} = metadata;
+        const {columns} = metadata;
         const {insumos} = this.props;
+        const {selectedRowsKeys} = this.state;
         const InsumosFormRender = (props) => (
             <InsumosForm
                 onSubmit={this.onSubmit}
@@ -73,6 +80,12 @@ class InsumosPage extends Component {
                 {...props}
             />
         );
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.setState({selectedRowsKeys:selectedRowKeys})
+            }
+        };
         return (
             <div>
                 <h1>Insumos</h1>
@@ -90,6 +103,16 @@ class InsumosPage extends Component {
                         Agregar
                     </Button>
                 </Link>
+                {
+                    selectedRowsKeys.length > 0 &&
+                    <Button
+                        type="danger"
+                        onClick={this.deleteSelection}
+                    >
+                        Eliminar
+                    </Button>
+                }
+
                 <Switch>
                     <Route path={path} render={InsumosFormRender}/>
                 </Switch>
