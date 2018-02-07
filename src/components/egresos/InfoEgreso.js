@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -29,16 +29,34 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                    <FormItem
-                        label="Nombre del Proveedor"
-                    >
-                        {form.getFieldDecorator('provider', {
-                            initialValue:provider
+                    {proveedores?
+                        <FormItem
+                            label={"Proveedor"}
+                        >
+                            {form.getFieldDecorator('provider',{
+                                initialValue:provider.id
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Proveedor"}>
+                                    {proveedores}
+                                </Select>
+                            )}
+                        </FormItem>:
+                        <FormItem
+                            label={"Proveedor"}
+                        >
+                            {form.getFieldDecorator('provider',{
 
-                        })(
-                            <Input disabled={!editMode}/>
-                        )}
-                    </FormItem>
+                            })(
+                                <Select
+                                    disabled={!editMode}
+
+                                    placeholder={"Proveeder"}>
+                                    {proveedores}
+                                </Select>
+                            )}
+                        </FormItem>}
 
                     {business_line?
                         <FormItem

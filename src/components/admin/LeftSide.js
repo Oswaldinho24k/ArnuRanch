@@ -19,8 +19,14 @@ const LeftSide = ({props}) => {
                 <Menu.Item key="1">
                     <Link to={'/admin/ingresos'} >Ingresos</Link>
                 </Menu.Item>
+                <Menu.Item key="15">
+                    <Link to={'/admin/ingresos/cobrar'} >Ingresos * Cobrar</Link>
+                </Menu.Item>
                 <Menu.Item key="2">
                     <Link to={'/admin/egresos'}>Egresos</Link>
+                </Menu.Item>
+                <Menu.Item key="16">
+                    <Link to={'/admin/egresos/pagar'} >Egresos * Pagar</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
                     <Link to={'/admin/inventario'}>Inventario</Link>

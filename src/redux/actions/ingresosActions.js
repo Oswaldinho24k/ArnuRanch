@@ -31,6 +31,8 @@ export const saveIngreso=(ingreso)=>(dispatch, getState)=>{
     api.newIngreso(ingreso)
         .then(r=>{
             console.log(r);
+            let client= getState().clientes.list.find(l=>l.id===r.client);
+            r['client'] = client
             dispatch(saveIngresoSuccess(r))
         }).catch(e=>{
         console.log(e)
@@ -49,6 +51,8 @@ export function editIngresoSucces(ingreso) {
 export const editIngreso=(ingreso)=>(dispatch, getState)=>{
     return api.editIngreso(ingreso)
         .then(r=>{
+            let client= getState().clientes.list.find(l=>l.id===r.client);
+            r['client'] = client
             dispatch(editIngresoSucces(r))
         }).catch(e=>{
             console.log(e)

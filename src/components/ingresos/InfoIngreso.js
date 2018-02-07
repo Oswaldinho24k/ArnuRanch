@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -29,16 +29,34 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                    <FormItem
-                        label="Nombre del Cliente"
-                    >
-                        {form.getFieldDecorator('client', {
-                            initialValue:client
+                    {clientes?
+                        <FormItem
+                            label={"Cliente"}
+                        >
+                            {form.getFieldDecorator('client',{
+                                initialValue:client.id
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Cliente"}>
+                                    {clientes}
+                                </Select>
+                            )}
+                        </FormItem>:
+                        <FormItem
+                            label={"Cliente"}
+                        >
+                            {form.getFieldDecorator('client',{
 
-                        })(
-                            <Input disabled={!editMode}/>
-                        )}
-                    </FormItem>
+                            })(
+                                <Select
+                                    disabled={!editMode}
+
+                                    placeholder={"Cliente"}>
+                                    {clientes}
+                                </Select>
+                            )}
+                        </FormItem>}
 
                     {business_line?
                         <FormItem

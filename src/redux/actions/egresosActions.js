@@ -31,6 +31,9 @@ export const saveEgreso=(egreso)=>(dispatch, getState)=>{
     api.newEgreso(egreso)
         .then(r=>{
             console.log(r);
+            let provider= getState().proveedores.list.find(l=>l.id===r.provider);
+            r['provider'] = provider
+            console.log(r);
             dispatch(saveEgresoSuccess(r))
         }).catch(e=>{
         console.log(e)
@@ -49,6 +52,9 @@ export function editEgresoSucces(egreso) {
 export const editEgreso=(egreso)=>(dispatch, getState)=>{
     return api.editEgreso(egreso)
         .then(r=>{
+            console.log(r);
+            let provider= getState().proveedores.list.find(l=>l.id===r.provider);
+            r['provider'] = provider
             dispatch(editEgresoSucces(r))
         }).catch(e=>{
             console.log(e)

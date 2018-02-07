@@ -5,10 +5,6 @@ import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as egresosActions from '../../redux/actions/egresosActions';
-import FormEgreso from "./EgresoForm";
-
-
 const columns = [
     {
         title: 'Proveedor',
@@ -27,7 +23,7 @@ const columns = [
     {
         title: 'Status',
         dataIndex:'paid',
-        render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}} >Pagado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>}</span>
+        render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Pagado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>}</span>
     },
     {
         title: 'Actions',
@@ -38,10 +34,8 @@ const columns = [
     },
 ];
 
-class EgresosPage extends Component {
+class PagarEgreso extends Component {
     state = {
-       ModalText: <FormEgreso proveedores={this.props.proveedores} saveEgreso={this.props.egresosActions.saveEgreso} />,
-        visible: false,
         selectedRowKeys:[]
     };
 
@@ -50,13 +44,6 @@ class EgresosPage extends Component {
             visible: true,
         });
     };
-
-    handleCancel = () => {
-        this.setState({
-            visible: false,
-        });
-    };
-
     deleteEgreso=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
@@ -86,41 +73,28 @@ class EgresosPage extends Component {
 
 
     render() {
-        const { visible, ModalText, selectedRowKeys } = this.state;
+        const { selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         let {egresos, fetched} = this.props;
+        let filtrados = egresos.filter(f=>{return f.paid===false });
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h1>Egresos Page</h1>
+                <h1>Egresos * Pagar</h1>
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={egresos}
+                    dataSource={filtrados}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                 />
-
-                <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Nuevo Egreso"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    {ModalText}
-                </Modal>
             </Fragment>
         );
     }
@@ -131,15 +105,14 @@ function mapStateToProps(state, ownProps) {
     return {
         egresos: state.egresos.list,
         fetched: state.egresos.list !==undefined,
-        proveedores: state.proveedores.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        egresosActions: bindActionCreators(egresosActions, dispatch)
+        //actions: bindActionCreators(actions, dispatch)
     }
 }
 
-EgresosPage = connect(mapStateToProps, mapDispatchToProps)(EgresosPage);
-export default EgresosPage;
+PagarEgreso = connect(mapStateToProps, mapDispatchToProps)(PagarEgreso);
+export default PagarEgreso;
