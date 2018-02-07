@@ -1,7 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, Modal, message, Popconfirm, Tag} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Tag, Divider} from "antd";
+import * as ingresosActions from '../../redux/actions/ingresosActions';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 
@@ -85,20 +86,23 @@ class CobrarIngreso extends Component {
         let {ingresos, fetched} = this.props;
         let filtrados = ingresos.filter(f=>{return f.paid===false });
         if(!fetched)return(<MainLoader/>);
-        console.log(filtrados);
         return (
             <Fragment>
                 <h1>Ingresos por Cobrar</h1>
-                <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
+
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={filtrados}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
+
+                <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
 
 
             </Fragment>
@@ -116,7 +120,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        ingresosActions: bindActionCreators(ingresosActions, dispatch)
     }
 }
 

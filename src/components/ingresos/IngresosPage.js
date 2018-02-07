@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, message, Modal, Popconfirm, Table, Tag} from "antd";
+import {Button, message, Modal, Popconfirm, Table, Tag, Divider} from "antd";
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/ingresosActions';
@@ -95,15 +95,15 @@ class IngresosPage extends Component {
         return (
             <Fragment>
                 <h1>Ingresos Page</h1>
-                <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
+
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={ingresos}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -119,6 +119,13 @@ class IngresosPage extends Component {
                 >
                     {ModalText}
                 </Modal>
+
+                <Divider
+                    type={'vertical'}/>
+
+                <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
             </Fragment>
         );
     }

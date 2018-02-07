@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {Table, Button, Modal, Switch, message, Popconfirm, Tag} from "antd";
 import MainLoader from "../common/Main Loader";
+import * as egresosActions from '../../redux/actions/egresosActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -85,16 +86,21 @@ class PagarEgreso extends Component {
         return (
             <Fragment>
                 <h1>Egresos * Pagar</h1>
-                <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
+
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={filtrados}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
+
+                <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
+
             </Fragment>
         );
     }
@@ -110,7 +116,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        egresosActions: bindActionCreators(egresosActions, dispatch)
     }
 }
 
