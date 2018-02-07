@@ -40,10 +40,11 @@ class DetailIngresoPage extends Component{
     };
 
     render(){
-        let {ingreso, fetched} = this.props;
+        let {ingreso, fetched, clientes} = this.props;
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
+        let options_clients = clientes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.client}</Option>);
         return(
             <div style={{width:'40%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
@@ -53,6 +54,7 @@ class DetailIngresoPage extends Component{
                         handleEditMode={this.handleEditMode}
                         editMode={editMode}
                         options={options}
+                        clientes={options_clients}
                     />
                 </Card>
             </div>
@@ -69,6 +71,7 @@ function mapStateToProps(state, ownProps) {
     return {
         ingreso,
         fetched: ingreso!==undefined && state.ingresos.list!==undefined,
+        clientes: state.clientes.list,
     }
 }
 
