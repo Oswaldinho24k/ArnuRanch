@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Select, Button, Checkbox} from 'antd';
+import {Form, Input, Select, Button, Checkbox, InputNumber} from 'antd';
 import {editIngreso} from "../../redux/actions/ingresosActions";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -86,6 +86,20 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                                 </Select>
                             )}
                         </FormItem>}
+
+                    <FormItem
+                        label="Monto">
+                        {form.getFieldDecorator('total', {
+                            initialValue:total
+                        })(
+                            <InputNumber
+                                disabled={!editMode}
+                                step={0.01}
+                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            />
+                        )}
+                    </FormItem>
 
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 

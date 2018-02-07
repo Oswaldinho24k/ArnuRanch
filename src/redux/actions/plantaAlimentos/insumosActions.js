@@ -13,7 +13,7 @@ export const getInsumos = url => (dispatch, getState) => {
     api.getInsumos( url )
         .then( r => {
             //console.log(r);
-            dispatch(getInsumosSuccess(r));
+            dispatch(getInsumosSuccess(r.results));
         }).catch( e => {
         console.log( e );
     });
@@ -32,7 +32,9 @@ export const saveInsumo = insumo => (dispatch, getState) => {
     return api.newInsumo(insumo)
         .then( r => {
             console.log(r);
-            dispatch(saveInsumoSuccess(r))
+            const provider = getState().proveedores.list.find( provider => provider.id === r.provider);
+            r.provider = provider;
+            dispatch(saveInsumoSuccess(r));
         })
         .catch(e=>{
             console.log(e);
@@ -51,6 +53,8 @@ export const editInsumoSuccess = insumo => ({
 export const editInsumo = insumo => (dispatch, getState) => {
     return api.updateInsumo(insumo)
         .then( r => {
+            const provider = getState().proveedores.list.find( provider => provider.id === r.provider);
+            r.provider = provider;
             dispatch(editInsumoSuccess(r));
             console.log(r)
         }).catch(e=>{

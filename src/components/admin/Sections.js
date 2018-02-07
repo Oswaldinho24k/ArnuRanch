@@ -21,6 +21,7 @@ import DetailIngresoPage from "../ingresos/DetailIngresoPage";
 import DetailEgresoPage from "../egresos/DetailEgresoPage";
 import CobrarIngreso from "../ingresos/CobrarIngreso";
 import PagarEgreso from "../egresos/PagarEgreso";
+import CuentasBanco from "../cuentasBanco/CuentasBanco";
 
 
 export const paths = {
@@ -37,6 +38,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/ingresos/:in'} component={DetailIngresoPage} />
 
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
+
+                <Route path={'/admin/cuentas'} component={CuentasBanco}/>
 
                 <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
                 <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>

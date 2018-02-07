@@ -102,6 +102,23 @@ class IngresoForm extends Component {
 
                     </FormItem>
 
+                    <FormItem
+                        label="Monto"
+                    >
+                        {getFieldDecorator('total', {
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <InputNumber
+                                style={{width:'100%'}}
+                                step={0.01}
+                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            />
+                        )}
+                    </FormItem>
+
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
                         <FormItem>
                             {getFieldDecorator('sale_check', {

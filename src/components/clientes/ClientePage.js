@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Input,Icon} from 'antd';
+import {Table, Button, Modal, message, Popconfirm, Input,Icon, Divider} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/clientesActions';
 import {connect} from 'react-redux';
@@ -95,16 +95,14 @@ class ClientePage extends Component {
             <Fragment>
                 <h1>Clientes</h1>
 
-                <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
-
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={clientes}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -120,6 +118,13 @@ class ClientePage extends Component {
                 >
                     {ModalText}
                 </Modal>
+
+                <Divider type={'vertical'} />
+
+                <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
+
             </Fragment>
         );
     }
