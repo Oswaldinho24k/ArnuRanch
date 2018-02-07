@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch, message, Popconfirm, Tag} from "antd";
+import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Divider} from "antd";
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -97,15 +97,14 @@ class EgresosPage extends Component {
         return (
             <Fragment>
                 <h1>Egresos Page</h1>
-                <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={egresos}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -121,6 +120,13 @@ class EgresosPage extends Component {
                 >
                     {ModalText}
                 </Modal>
+
+                <Divider
+                    type={'vertical'}/>
+
+                <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
             </Fragment>
         );
     }

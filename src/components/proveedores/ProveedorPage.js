@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, message, Popconfirm} from 'antd';
+import {Table, Button, Modal, message, Popconfirm, Divider} from 'antd';
 import ProveedorForm from './ProveedorForm';
 import * as proveedoresActions from '../../redux/actions/proveedoresActions';
 import {connect} from 'react-redux';
@@ -97,16 +97,14 @@ class ProovedorPage extends Component {
             <Fragment>
                 <h1>Proveedores</h1>
 
-                <Popconfirm title="Are you sure delete this proveedor?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>
-
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={proveedores}
                     rowKey={record => record.id}
                     scroll={{x:650}}
+                    pagination={false}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
@@ -122,6 +120,14 @@ class ProovedorPage extends Component {
                 >
                     {ModalText}
                 </Modal>
+
+                <Divider
+                    type={'vertical'}/>
+
+                <Popconfirm title="Are you sure delete this proveedor?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                </Popconfirm>
+
                </Fragment>
         );
     }

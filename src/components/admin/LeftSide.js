@@ -20,13 +20,16 @@ const LeftSide = ({props}) => {
                     <Link to={'/admin/ingresos'} >Ingresos</Link>
                 </Menu.Item>
                 <Menu.Item key="15">
-                    <Link to={'/admin/ingresos/cobrar'} >Ingresos * Cobrar</Link>
+                    <Link to={'/admin/ingresos/cobrar'} >Cuentas por Cobrar</Link>
                 </Menu.Item>
                 <Menu.Item key="2">
                     <Link to={'/admin/egresos'}>Egresos</Link>
                 </Menu.Item>
                 <Menu.Item key="16">
-                    <Link to={'/admin/egresos/pagar'} >Egresos * Pagar</Link>
+                    <Link to={'/admin/egresos/pagar'} >Cuentas por Pagar</Link>
+                </Menu.Item>
+                <Menu.Item key="17">
+                    <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
                     <Link to={'/admin/inventario'}>Inventario</Link>
