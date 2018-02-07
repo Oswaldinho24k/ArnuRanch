@@ -13,11 +13,11 @@ export function getAnimalsSuccess(animals){
     }
 }
 
-export const GET_ALL_DATA_SUCCESS = 'GET_ALL_DATA_SUCCESS';
+export const GET_ANIMALS_DATA_SUCCESS = 'GET_ANIMALS_DATA_SUCCESS';
 
 export function getAllDataSuccess(data){
     return{
-        type:GET_ALL_DATA_SUCCESS, data
+        type:GET_ANIMALS_DATA_SUCCESS, data
     }
 }
 

@@ -10,15 +10,15 @@ import FormCorral from "./CorralForm";
 
 const columns = [
     {
-        title: 'NUMERO SERIAL',
+        title: 'Numero de Corral',
         dataIndex: 'numero_serial',
     }, {
-        title: 'FECHA GENERACIÓN',
+        title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',
         render:val=><p>{moment(val).format('LL')}</p>
 
     }, {
-        title: 'LOTE ACTUAL',
+        title: 'Lote Actual',
         dataIndex: 'lotes',
         render:val=> <span>{val?<Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>:'No asignado'}</span>
 }];

@@ -14,30 +14,7 @@ import MainLoader from "../../common/Main Loader";
 const Option = Select.Option;
 
 
-const columns = [
-{
-    title: 'Arete Rancho',
-    dataIndex: 'arete_rancho',
-},{
-    title: 'Arete Siniga',
-    dataIndex: 'arete_siniga',
-}, {
-    title: 'Owner',
-    dataIndex: 'owner',
-},
-{
-    title: 'Actions',
-    fixed:"right",
-    width:100,
-    key: 'action',
-    width: 100,
-    render: (text, record) => (
-        <span>
-  <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
 
-</span>
-    ),
-}];
 
 
 
@@ -51,6 +28,7 @@ class AnimalsPage extends Component {
         options:'',
         loteFilter:'',
         searchText:'',
+
 
     };
 
@@ -124,6 +102,7 @@ class AnimalsPage extends Component {
         this.setState({loteFilter});
         console.log(this.state.loteFilter)
     };
+
     filterByLote=(lote, b)=>{
 
         let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
@@ -147,12 +126,6 @@ class AnimalsPage extends Component {
     };
     handlePagination=(pagina)=>{
         console.log(this.props.animalsData);
-        //let basePath = this.props.animalsData.next;
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?page=';
-        //let url=basePath+pagina
-        //this.props.animalActions.getAnimals(url);
-
-
         let newUrl = this.props.animalsData.next;
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
@@ -172,7 +145,51 @@ class AnimalsPage extends Component {
     render() {
 
 
-        const { visible, ModalText , selectedRowKeys,visible2 , loteFilter, searchText} = this.state;
+        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, } = this.state;
+
+        const columns = [
+            {
+                title: 'Arete Rancho',
+                dataIndex: 'arete_rancho',
+                key:'arete_rancho',
+                render: (text, record) => (
+                    <span>
+                      <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
+                    </span>
+                ),
+
+
+            },{
+                title: 'Arete Siniga',
+                dataIndex: 'arete_siniga',
+                key:'arete_siniga',
+            }, {
+                title: 'Owner',
+                dataIndex: 'owner',
+                key:'owner',
+            },
+            {
+                title:'Lote',
+                dataIndex:'lote',
+                key:'lote',
+                render:v=><p>{v?v.name:''}</p>
+            }
+
+            /*{
+                title: 'Actions',
+                fixed:"right",
+                width:100,
+                key: 'action',
+                width: 100,
+                render: (text, record) => (
+                    <span>
+                      <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
+                    </span>
+                ),}*/
+            ];
+
+
+
         const canUse = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -187,16 +204,16 @@ class AnimalsPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
-                <h1>Lista de Aretes</h1>
+                <h1>Aretes</h1>
                 {/*Search and filters*/}
-                <div style={{padding:'2% 0'}}>
+                <div style={{padding:'1% 0'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
                         onChange={this.handleSearch}
                         value={searchText}
                         style={{ width: 400 }}
-                        placeholder={'Busca por arete rancho o arete siniga'}/>
+                        placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
                     <Divider
                         type={'vertical'}/>
                     <Select
@@ -216,12 +233,20 @@ class AnimalsPage extends Component {
                 </div>
 
                 {/*table of animals*/}
-                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id} pagination={false} scroll={{x:650}}/>
+                <Table
+
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={animals}
+                    rowKey={record => record.id}
+
+                    pagination={false}
+                    scroll={{x:650, y:500}}/>
                 <Pagination
                     pageSize={20}
                     total={animalsData.count}
                     onChange={this.handlePagination}
-                    style={{padding:'2% 0'}}/>
+                    style={{padding:'1% 0'}}/>
 
                 {/*actions for animals*/}
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>

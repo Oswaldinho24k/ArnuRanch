@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ALL_DATA_SUCCESS} from "../actions/animalsActions";
+import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS} from "../actions/animalsActions";
 import {SAVE_ANIMAL_GASTO_SUCCESS} from '../actions/gastoAnimalActions';
 import {SAVE_PESADA_SUCCESS} from "../actions/pesadasActions";
 
@@ -43,7 +43,7 @@ function list(state=[], action){
 
 function allData(state={}, action){
     switch(action.type){
-        case GET_ALL_DATA_SUCCESS:
+        case GET_ANIMALS_DATA_SUCCESS:
             return action.data;
         default:
             return state;

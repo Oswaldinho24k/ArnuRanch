@@ -232,7 +232,8 @@ const api = {
     },
 
     /*-----------------lotes functions-----------------------*/
-    getLotes:()=>{
+    getLotes:(url)=>{
+        if(url)lotesUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({

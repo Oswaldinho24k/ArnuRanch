@@ -39,13 +39,8 @@ const LeftSide = ({props}) => {
                 <Menu.Item key="8">
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
+
                 <Menu.Item key="9">
-                    <Link to='/admin/gastos'> Gastos Animales </Link>
-                </Menu.Item>
-                <Menu.Item key="10">
-                    <Link to='/admin/pesadas'>  Pesadas </Link>
-                </Menu.Item>
-                <Menu.Item key="11">
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 

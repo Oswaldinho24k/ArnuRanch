@@ -3,7 +3,7 @@ import {Table, Divider, Button, Modal, message, Switch, Icon} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
-import BasicInfoForm from "./InfoBatch";
+import InfoBatch from "./InfoBatch";
 import FormGasto from "../animals/FormGasto";
 import * as animalGastoActions from "../../../redux/actions/gastoAnimalActions";
 import * as lotesActions from '../../../redux/actions/lotesActions';
@@ -15,22 +15,22 @@ const columns = [
     {
         title: 'Arete Rancho',
         dataIndex: 'arete_rancho',
+        key:'arete_rancho',
+        render: (text, record) => (
+            <span>
+                      <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
+                    </span>
+        ),
+        fixed:'left',
+        width:150,
     },{
         title: 'Arete Siniga',
         dataIndex: 'arete_siniga',
+        key:'arete_siniga'
     }, {
         title: 'Owner',
         dataIndex: 'owner',
-    },
-    {
-        title: 'Actions',
-        key: 'action',
-        width: 100,
-        render: (text, record) => (
-            <span>
-  <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
-</span>
-        ),
+        key:'owner'
     }];
 
 
@@ -43,7 +43,7 @@ class BatchDetailPage extends Component {
         selectedRowKeys:[],
         loading:false,
         canEdit:false,
-    }
+    };
 
     onSelectChange = (selectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -64,13 +64,18 @@ class BatchDetailPage extends Component {
     };
     saveGastos=(gasto)=>{
         this.setState({loading:true});
+
         let keys = this.state.selectedRowKeys;
+        let parcialAmount = gasto.costo/keys.length;
+        let parcialQuantity = gasto.cantidad/keys.length;
         for(let i in keys){
             console.log(keys[i]);
             let animalId = keys[i];
             gasto['animal']=animalId;
+            gasto['costo']=parcialAmount;
+            if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
-            console.log(toSend)
+            console.log(toSend);
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
                     console.log(r)
@@ -107,7 +112,7 @@ class BatchDetailPage extends Component {
         const disablebutton = selectedRowKeys.length > 0;
         return (
             <Fragment>
-                <BasicInfoForm {...lote}
+                <InfoBatch {...lote}
                            canEdit={canEdit}
                            handleEdit={this.handleEdit}
                             edit={this.edit}/>
@@ -127,7 +132,12 @@ class BatchDetailPage extends Component {
                 >
                     <FormGasto saveGasto={this.saveGastos} handleCancel={this.handleCancel}/>
                 </Modal>
-                <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={lote.animals} rowKey={record => record.id}/>
+                <Table
+                    pagination={false}
+                    scroll={{x:650, y:500}}
+                    rowSelection={rowSelection}
+                    columns={columns} dataSource={lote.animals}
+                    rowKey={record => record.id}/>
             </Fragment>
 
         );
