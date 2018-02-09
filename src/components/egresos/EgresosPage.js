@@ -4,10 +4,12 @@ import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Divider} from "a
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import moment from 'moment';
 
 import * as egresosActions from '../../redux/actions/egresosActions';
 import FormEgreso from "./EgresoForm";
 
+//fecha ingresos cuentas por cobrar ............... razon social............... check si es contacto directo o no con check e input.............nombre cambiar por razon social.....=> datos de facturación...........en egreso si es costo o si es gasto..... si es costo a que almacen se va
 
 const columns = [
     {
@@ -28,6 +30,12 @@ const columns = [
         title: 'Status',
         dataIndex:'paid',
         render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}} >Pagado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>}</span>
+    },
+    {
+        title: 'Registro',
+        dataIndex: 'created',
+        render: created => moment(created).startOf(3, 'days').calendar()
+
     },
     {
         title: 'Actions',

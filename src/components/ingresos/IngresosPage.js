@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Button, message, Modal, Popconfirm, Table, Tag, Divider} from "antd";
+import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/ingresosActions';
@@ -27,6 +28,12 @@ const columns = [
         title: 'Status',
         dataIndex:'paid',
         render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
+    },
+    {
+      title: 'Registro',
+      dataIndex: 'created',
+      render: created => moment(created).startOf(3, 'days').calendar()
+
     },
     {
         title: 'Actions',
