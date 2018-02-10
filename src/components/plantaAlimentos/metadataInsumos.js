@@ -13,8 +13,8 @@ export const metadata = {
             render: provider => provider && provider !== null ? provider.provider : 'Sin proveedor'
         },
         {
-            title: 'Precio unitario',
-            dataIndex: 'unit_price',
+            title: 'Precio unitario total',
+            dataIndex: 'unit_price_total',
             render: unit_price => `$ ${unit_price}`
         },
         {

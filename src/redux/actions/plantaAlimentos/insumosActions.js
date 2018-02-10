@@ -51,6 +51,7 @@ export const editInsumoSuccess = insumo => ({
 });
 
 export const editInsumo = insumo => (dispatch, getState) => {
+    console.log(insumo);
     return api.updateInsumo(insumo)
         .then( r => {
             const provider = getState().proveedores.list.find( provider => provider.id === r.provider);

@@ -23,6 +23,11 @@ class InsumosPage extends Component {
     };
 
     onSubmit = (insumo) => {
+        insumo.unit_price = parseFloat(insumo.unit_price);
+        insumo.freight = parseFloat(insumo.freight);
+        insumo.loading_maneuver = parseFloat(insumo.loading_maneuver);
+        insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
+        console.log(insumo);
         if (insumo.id) {
             this.props.editInsumo(insumo)
                 .then(r => {
