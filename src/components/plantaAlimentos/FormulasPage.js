@@ -18,6 +18,11 @@ class FormulasPage extends Component {
         this.props.history.push(absolutePath);
     };
 
+    onSubmit = e => {
+        e.preventDefault();
+
+    };
+
     render() {
         const {columns,rowSelection} = metadata;
         const {formulas} = this.props;

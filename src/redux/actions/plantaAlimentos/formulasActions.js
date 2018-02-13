@@ -31,8 +31,8 @@ export const saveFormulaSuccess = formula => ({
 export const saveFormula = formula => (dispatch, getState) => {
     return api.newFormula(formula)
         .then( r => {
-            console.log(r);
-            //dispatch(saveFormulaSuccess(r))
+            dispatch(saveFormulaSuccess(r));
+            return r;
         })
         .catch(e=>{
             console.log(e);
@@ -51,7 +51,7 @@ export const editFormulaSuccess = formula => ({
 export const editFormula = formula => (dispatch, getState) => {
     return api.updateFormula(formula)
         .then( r => {
-            //dispatch(editFormulaSuccess(r));
+            dispatch(editFormulaSuccess(r));
             console.log(r)
         }).catch(e=>{
             console.log(e)
