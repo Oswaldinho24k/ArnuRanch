@@ -27,6 +27,16 @@ class ProveedorForm extends Component {
         });
     };
 
+    checkRfc = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value.length <13) {
+            callback('Verifica el RFC ingresado');
+        } else {
+            callback();
+        }
+    };
+
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -47,6 +57,20 @@ class ProveedorForm extends Component {
                     </FormItem>
 
                     <FormItem
+                        label="RFC del Proveedor"
+                    >
+                        {getFieldDecorator('rfc', {
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },
+                                {validator: this.checkRfc}
+                            ],
+                        })(
+                            <Input maxLength={"13"}/>
+                        )}
+                    </FormItem>
+
+                    <FormItem
                         label="Dirección"
                     >
                         {getFieldDecorator('address', {
@@ -63,7 +87,9 @@ class ProveedorForm extends Component {
                     >
                         {getFieldDecorator('email', {
                             rules: [{
-                                required: true, message: 'Completa el campo!',
+                                type: 'email', message: 'No es una dirección de correo válida!',
+                            }, {
+                                required: true, message: 'Ingresa un E-mail!',
                             }],
                         })(
                             <Input />

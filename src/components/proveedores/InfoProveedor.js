@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number,}) => {
+const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number, rfc}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -37,6 +37,17 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
 
                         })(
                             <Input disabled={!editMode}/>
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        label="RFC del Proveedor"
+                    >
+                        {form.getFieldDecorator('rfc', {
+                            initialValue:rfc
+
+                        })(
+                            <Input maxLength={"13"} disabled={!editMode}/>
                         )}
                     </FormItem>
 

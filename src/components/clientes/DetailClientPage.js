@@ -20,7 +20,7 @@ class DetailClientPage extends Component{
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
         return(
-            <div style={{width:'50%', margin: '0 auto'}} >
+            <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <ClientInfo {...cliente} editCliente={this.props.clienteActions.editCliente} handleEditMode={this.handleEditMode} editMode={editMode}/>
                 </Card>

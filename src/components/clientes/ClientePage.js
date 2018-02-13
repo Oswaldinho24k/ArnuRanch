@@ -21,6 +21,10 @@ const columns = [
         dataIndex: 'email'
     },
     {
+        title: 'RFC',
+        dataIndex: 'rfc'
+    },
+    {
         title: 'Actions',
         fixed:'right',
         width:100,
