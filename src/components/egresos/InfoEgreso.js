@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total, contact_check, contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -27,11 +27,11 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
     return (
         <Fragment>
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
-                <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     {proveedores?
                         <FormItem
-                            label={"Proveedor"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('provider',{
                                 initialValue:provider.id
@@ -44,7 +44,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             )}
                         </FormItem>:
                         <FormItem
-                            label={"Proveedor"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('provider',{
 
@@ -52,11 +52,34 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                                 <Select
                                     disabled={!editMode}
 
-                                    placeholder={"Proveeder"}>
+                                    placeholder={"Proveedor"}>
                                     {proveedores}
                                 </Select>
                             )}
                         </FormItem>}
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact_check', {
+                            valuePropName: 'checked',
+                            initialValue: contact_check,
+                        })(
+                            <Checkbox
+                                disabled={!editMode}
+                            >
+                                Contacto directo?
+                            </Checkbox>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact',{
+                            initialValue:contact
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
+                        )}
+                    </FormItem>
 
                     {business_line?
                         <FormItem

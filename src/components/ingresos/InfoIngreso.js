@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -27,11 +27,11 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
     return (
         <Fragment>
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
-                <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     {clientes?
                         <FormItem
-                            label={"Cliente"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('client',{
                                 initialValue:client.id
@@ -44,7 +44,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             )}
                         </FormItem>:
                         <FormItem
-                            label={"Cliente"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('client',{
 
@@ -57,6 +57,30 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                                 </Select>
                             )}
                         </FormItem>}
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact_check', {
+                            valuePropName: 'checked',
+                            initialValue: contact_check,
+                        })(
+                            <Checkbox
+                                disabled={!editMode}
+                            >
+                                Contacto directo?
+                            </Checkbox>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact',{
+                            initialValue:contact
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
+                        )}
+                    </FormItem>
+
 
                     {business_line?
                         <FormItem

@@ -36,13 +36,14 @@ class IngresoForm extends Component {
     state = {
         value: '',
         factura:false,
+        contacto_directo:true,
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+                //console.log(values);
                 this.props.saveIngreso(values)
             }
         });
@@ -50,7 +51,13 @@ class IngresoForm extends Component {
 
     handleChange = e => {
         this.setState({
-            factura: e.target.checked
+            factura: e.target.checked,
+            })
+        };
+
+    handleChangeD = e => {
+        this.setState({
+            contacto_directo:e.target.checked
         })
     };
 
@@ -65,7 +72,7 @@ class IngresoForm extends Component {
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     <FormItem
-                        label={"Cliente"}
+                        label={"Razón Social"}
                     >
                         {getFieldDecorator('client', {
                             rules: [{
@@ -83,6 +90,29 @@ class IngresoForm extends Component {
                         )}
 
                     </FormItem>
+
+
+                    <FormItem>
+                        {getFieldDecorator('contact_check', {
+                            valuePropName: 'checked',
+                            initialValue: true,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Checkbox
+                                value={this.state.contacto_directo}
+                                onChange={this.handleChangeD}
+                            >
+                                Contacto directo?
+                            </Checkbox>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {getFieldDecorator('contact')(<Input disabled={this.state.contacto_directo}/>)}
+                    </FormItem>
+
 
                     <FormItem
                         label={"Linea de negocio"}

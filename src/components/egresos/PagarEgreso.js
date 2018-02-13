@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 
 const columns = [
     {
-        title: 'Proveedor',
+        title: 'Razón Social',
         dataIndex: 'provider',
         render: provider=>provider && provider !== null ?provider.provider:'No Provider'
     },
@@ -20,7 +20,7 @@ const columns = [
     {
         title: 'No. Factura',
         dataIndex: 'no_check',
-        render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
+        render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
         title: 'Status',

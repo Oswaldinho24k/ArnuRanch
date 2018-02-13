@@ -8,8 +8,17 @@ import moment from 'moment';
 
 import * as egresosActions from '../../redux/actions/egresosActions';
 import FormEgreso from "./EgresoForm";
+import EgresoInfo from "./InfoEgreso";
 
-//fecha ingresos cuentas por cobrar ............... razon social............... check si es contacto directo o no con check e input.............nombre cambiar por razon social.....=> datos de facturación...........en egreso si es costo o si es gasto..... si es costo a que almacen se va
+//fecha ingresos cuentas por cobrar ............... DONE!!
+// razon social............... DONE!!
+// .............nombre cambiar por razon social.....=> DONE!!
+
+// check si es contacto directo o no con check e input => DONE!
+// datos de facturación
+
+// ...........en egreso si es costo o si es gasto.....
+// si es costo a que almacen se va
 
 const columns = [
     {
@@ -24,7 +33,7 @@ const columns = [
     {
         title: 'No. Factura',
         dataIndex: 'no_check',
-        render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
+        render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
         title: 'Status',

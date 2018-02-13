@@ -23,7 +23,7 @@ const columns = [
     {
         title: 'No. Factura',
         dataIndex: 'no_scheck',
-        render:no_scheck=> <span>{no_scheck?<span>{no_scheck}</span>:'No hay factura'}</span>
+        render:no_scheck=> <span>{no_scheck && no_scheck !==null ?<span>{no_scheck}</span>:'No hay factura'}</span>
     },
     {
         title: 'Status',

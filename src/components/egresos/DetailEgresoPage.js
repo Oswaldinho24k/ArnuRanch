@@ -3,6 +3,7 @@ import {Card, Select} from 'antd';
 import EgresoInfo from "./InfoEgreso";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import moment from 'moment';
 import * as egresoActions from '../../redux/actions/egresosActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
@@ -47,8 +48,9 @@ class DetailEgresoPage extends Component{
         //let proveedoresO = proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
         return(
-            <div style={{width:'40%', margin: '0 auto'}} >
+            <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
+                    <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(egreso.created).startOf(3, 'days').calendar()}</span>
                     <EgresoInfo
                         {...egreso}
                         editEgreso={this.props.egresoActions.editEgreso}
