@@ -31,6 +31,7 @@ export const saveFormulaSuccess = formula => ({
 export const saveFormula = formula => (dispatch, getState) => {
     return api.newFormula(formula)
         .then( r => {
+            console.log(formula.items);
             r['items'] = formula['items'];
             dispatch(saveFormulaSuccess(r));
             return r;
