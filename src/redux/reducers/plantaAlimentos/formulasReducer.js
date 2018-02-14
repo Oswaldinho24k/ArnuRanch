@@ -16,7 +16,7 @@ const list = (state=[], action) => {
                 return formula;
             })];
         case DELETE_FORMULA_SUCCESS:
-            return [ ...state.filter( formula => formula.id !== action.formula.id)];
+            return [ ...state.filter( formula => formula.id !== action.formulaId)];
         default:
             return state;
     }

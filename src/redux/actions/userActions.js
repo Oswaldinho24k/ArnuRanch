@@ -27,7 +27,7 @@ export const logIn=(data)=>(dispatch, getState)=>{
         .then(r=>{
             localStorage.setItem('userRanchoToken', JSON.stringify(r.token));
         }).catch(e=>{
-        console.log(e)
+        throw e
     })
 
 };
@@ -45,7 +45,7 @@ export const getUser=()=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getUserSuccess(r))
         }).catch(e=>{
-            console.log(e)
+            throw e
         })
 };
 

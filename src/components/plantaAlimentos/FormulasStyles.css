@@ -1,0 +1,11 @@
+.newInsumo{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+}
+
+.addNewInsumoButton {
+    width: 100%;
+}

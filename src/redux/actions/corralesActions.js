@@ -9,11 +9,11 @@ export function getCorralesSuccess(corrales){
 }
 
 export const getCorrales=()=>(dispatch, getState)=>{
-    api.getCorrales()
+    return api.getCorrales()
         .then(r=>{
             dispatch(getCorralesSuccess(r))
         }).catch(e=>{
-        console.log(e)
+        throw e
     })
 };
 
@@ -28,11 +28,12 @@ export function saveCorralSuccess(corral){
 }
 
 export const saveCorral=(corral)=>(dispatch, getState)=>{
-    api.newCorral(corral)
+    return api.newCorral(corral)
         .then(r=>{
             console.log(r);
             dispatch(saveCorralSuccess(r))
-        }).catch(e=>{
-        console.log(e)
-    })
+        })
+        .catch(e=>{
+            throw e
+        })
 };

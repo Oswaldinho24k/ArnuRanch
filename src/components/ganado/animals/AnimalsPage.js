@@ -14,30 +14,7 @@ import MainLoader from "../../common/Main Loader";
 const Option = Select.Option;
 
 
-const columns = [
-{
-    title: 'Arete Rancho',
-    dataIndex: 'arete_rancho',
-},{
-    title: 'Arete Siniga',
-    dataIndex: 'arete_siniga',
-}, {
-    title: 'Owner',
-    dataIndex: 'owner',
-},
-{
-    title: 'Actions',
-    fixed:"right",
-    width:100,
-    key: 'action',
-    width: 100,
-    render: (text, record) => (
-        <span>
-  <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
 
-</span>
-    ),
-}];
 
 
 
@@ -51,6 +28,7 @@ class AnimalsPage extends Component {
         options:'',
         loteFilter:'',
         searchText:'',
+
 
     };
 
@@ -77,11 +55,15 @@ class AnimalsPage extends Component {
     saveAnimal=(animal)=>{
         this.props.animalActions.saveAnimal(animal)
             .then(r=>{
-                this.handleCancel()
+                this.handleCancel();
+                message.success('Arete añadido con éxito!')
             }).catch(e=>{
-
+            for (let i in e.response.data){
+                console.log(e.response.data[i])
+                message.error(e.response.data[i])
+            }
         })
-    }
+    };
     deleteAnimals=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
@@ -90,14 +72,19 @@ class AnimalsPage extends Component {
                   console.log(r)
                   message.success('Deleted successfully');
               }).catch(e=>{
-                console.log(e)
-                message.error(e);
+                console.log(e.response)
+                message.error('No puedes eliminar aretes con gastos registrados')
+              /*for (let i in this.props.errors){
+                  console.log(this.props.errors[i])
+                  message.error(this.props.errors[i])
+              }*/
 
           })
         }
         this.setState({selectedRowKeys:[]})
     };
     changeLote=(animal)=>{
+        console.log(animal)
         let keys = this.state.selectedRowKeys;
         for(let j in keys){
             animal['id']=keys[j];
@@ -124,8 +111,8 @@ class AnimalsPage extends Component {
         this.setState({loteFilter});
         console.log(this.state.loteFilter)
     };
-    filterByLote=(lote, b)=>{
 
+    filterByLote=(lote)=>{
         let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url)
@@ -147,12 +134,6 @@ class AnimalsPage extends Component {
     };
     handlePagination=(pagina)=>{
         console.log(this.props.animalsData);
-        //let basePath = this.props.animalsData.next;
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?page=';
-        //let url=basePath+pagina
-        //this.props.animalActions.getAnimals(url);
-
-
         let newUrl = this.props.animalsData.next;
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
@@ -172,7 +153,52 @@ class AnimalsPage extends Component {
     render() {
 
 
-        const { visible, ModalText , selectedRowKeys,visible2 , loteFilter, searchText} = this.state;
+        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, } = this.state;
+
+        const columns = [
+            {
+                title: 'Arete Rancho',
+                dataIndex: 'arete_rancho',
+                key:'arete_rancho',
+                render: (text, record) => (
+                    <span>
+                      <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
+                    </span>
+                ),
+                width:200
+
+
+            },{
+                title: 'Arete Siniga',
+                dataIndex: 'arete_siniga',
+                key:'arete_siniga',
+                width:150
+
+            }, {
+                title: 'Owner',
+                dataIndex: 'owner',
+                key:'owner',
+                width:150
+
+            },
+            {
+                title:'Lote',
+                dataIndex:'lote',
+                key:'lote',
+                render:(v)=><Link to={v?`/admin/lotes/${v.id}`:''}>{v?v.name:''}</Link>,
+                width:100
+
+            },{
+                title:'Última Pesada',
+                dataIndex:'pesadas',
+                key:'pesadas',
+                render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
+                width:150
+            }
+            ];
+
+
+
         const canUse = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -181,22 +207,20 @@ class AnimalsPage extends Component {
         let {animals, fetched, lotes, animalsData} = this.props;
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
-        let options = optionsLote.map(d => <Option title={d.name} key={d.id}>{d.name}</Option>);
-
 
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
-                <h1>Lista de Aretes</h1>
+                <h1>Aretes</h1>
                 {/*Search and filters*/}
-                <div style={{padding:'2% 0'}}>
+                <div style={{padding:'1% 0'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
                         onChange={this.handleSearch}
                         value={searchText}
                         style={{ width: 400 }}
-                        placeholder={'Busca por arete rancho o arete siniga'}/>
+                        placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
                     <Divider
                         type={'vertical'}/>
                     <Select
@@ -208,7 +232,7 @@ class AnimalsPage extends Component {
                         placeholder="Filtra por nombre de lote"
                         filterOption={false}
                     >
-                        {options}
+                        {optionsLote.map(d => <Option value={d.name} key={d.id}>{d.name}</Option>)}
                     </Select>
                     <Divider
                         type={'vertical'}/>
@@ -216,14 +240,25 @@ class AnimalsPage extends Component {
                 </div>
 
                 {/*table of animals*/}
-                <Table rowSelection={rowSelection} columns={columns} dataSource={animals} rowKey={record => record.id} pagination={false} scroll={{x:650}}/>
-                <Pagination
+                <Table
+
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={animals}
+                    rowKey={record => record.id}
+                    pagination={{
+                        pageSize: 20,
+                        total:animalsData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} aretes`}}
+                    scroll={{x:650, y:500}}/>
+                {/*<Pagination
                     pageSize={20}
                     total={animalsData.count}
                     onChange={this.handlePagination}
-                    style={{padding:'2% 0'}}/>
+                    style={{padding:'1% 0'}}/>
 
-                {/*actions for animals*/}
+                actions for animals*/}
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Agregar nuevo animal"
                        visible={visible}

@@ -22,7 +22,7 @@ const GastosComponent = ({animal, rowSelection, showModal}) => {
     return (
         <Fragment>
             <Table rowSelection={rowSelection} columns={columns} dataSource={animal.aliments} pagination={false} rowKey={record => record.id} />
-            <Button onClick={showModal}>Agregar Gasto</Button>
+            <Button onClick={showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
         </Fragment>
     )
 };

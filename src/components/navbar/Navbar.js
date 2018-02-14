@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Icon, Menu, Avatar} from 'antd';
-import {connect} from "react-redux";
+import React from 'react';
+import {Icon, Menu} from 'antd';
 
-const SubMenu = Menu.SubMenu
+
+const SubMenu = Menu.SubMenu;
 
 
 
