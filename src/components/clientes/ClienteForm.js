@@ -18,7 +18,7 @@ const ClienteForm = Form.create()(
         return(
             <Modal
                 visible={visible}
-                title={"Demo"}
+                title={"Nuevo Cliente"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}

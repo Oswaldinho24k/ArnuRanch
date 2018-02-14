@@ -24,7 +24,8 @@ import DetailEgresoPage from "../egresos/DetailEgresoPage";
 import CobrarIngreso from "../ingresos/CobrarIngreso";
 import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasBanco";
-
+import Inventario from "../inventario/Inventario";
+import Users from "../users/Users";
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -42,12 +43,13 @@ const Sections = ({props}) => {
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
 
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
+                <Route path={'/admin/usuarios'} component={Users}/>
 
                 <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
                 <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>
                 <Route path={'/admin/egresos'} component={EgresosPage}/>
 
-                <Route path={'/admin/inventario'} component={IngresosPage}/>
+                <Route path={'/admin/inventario'} component={Inventario}/>
 
                 <Route path={'/admin/clientes/:i'} component={DetailClientPage} />
                 <Route path={'/admin/clientes'} component={ClientesPage}/>

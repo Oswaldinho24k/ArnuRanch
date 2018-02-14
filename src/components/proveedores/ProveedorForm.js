@@ -18,7 +18,7 @@ const ProveedorForm = Form.create()(
         return(
             <Modal
                 visible={visible}
-                title={"Demo"}
+                title={"Nuevo Proveedor"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}

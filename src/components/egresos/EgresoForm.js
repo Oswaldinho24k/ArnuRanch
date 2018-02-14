@@ -17,7 +17,7 @@ const FormEgreso = Form.create()(
         return (
             <Modal
                 visible={visible}
-                title={"Demo"}
+                title={"Nuevo Egreso"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}

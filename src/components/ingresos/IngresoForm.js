@@ -16,7 +16,7 @@ const FormIngreso = Form.create()(
         return(
             <Modal
                 visible={visible}
-                title={"Demo"}
+                title={"Nuevo Ingreso"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}
