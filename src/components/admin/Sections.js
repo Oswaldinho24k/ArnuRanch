@@ -10,8 +10,6 @@ import CorralPage from "../ganado/corrales/CorralPage";
 import ProovedorPage from "../proveedores/ProveedorPage";
 import ClientesPage from "../clientes/ClientePage"
 
-import GastosPage from "../ganado/gastos/GastosPage";
-import PesosPage from "../ganado/pesadas/PesosPage";
 import ReportesPage from "../ganado/reportes/ReportesPage";
 
 import DetailClientPage from "../clientes/DetailClientPage";
@@ -62,10 +60,6 @@ const Sections = ({props}) => {
                 {/***************************** BATCH ROUTES *****************************/}
                 <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
                 <Route path='/admin/lotes'      component={BatchPage}       />
-
-                <Route path={'/admin/gastos'} component={GastosPage}/>
-
-                <Route path={'/admin/pesadas'} component={PesosPage}/>
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
                 {/* Planta alimentos routes begin*/}

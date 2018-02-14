@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ALL_DATA_SUCCESS} from "../actions/animalsActions";
+import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS} from "../actions/animalsActions";
 import {SAVE_ANIMAL_GASTO_SUCCESS} from '../actions/gastoAnimalActions';
 import {SAVE_PESADA_SUCCESS} from "../actions/pesadasActions";
 
@@ -9,12 +9,12 @@ function list(state=[], action){
         case GET_ANIMALS_SUCCESS:
             return action.animals;
         case SAVE_ANIMAL_SUCCESS:
-            return [...state, action.animal];
+            return [action.animal, ...state];
         case EDIT_ANIMAL_SUCCESS:
             let newList = state.filter(a=>{
                 return a.id!=action.animal.id
             });
-            return [...newList, action.animal];
+            return [action.animal, ...newList];
         case SAVE_ANIMAL_GASTO_SUCCESS:
             let animalId = action.gasto.animal;
             let animal = state.filter(a=>{return a.id==animalId});
@@ -41,9 +41,10 @@ function list(state=[], action){
     }
 }
 
+
 function allData(state={}, action){
     switch(action.type){
-        case GET_ALL_DATA_SUCCESS:
+        case GET_ANIMALS_DATA_SUCCESS:
             return action.data;
         default:
             return state;
@@ -54,6 +55,7 @@ function allData(state={}, action){
 const animalsReducer = combineReducers({
     list:list,
     allData:allData,
+
 });
 
 export default animalsReducer

@@ -21,7 +21,7 @@ const PesadasComponent = ({animal, rowSelection, showModal}) => {
     return (
         <Fragment>
             <Table rowKey={record => record.id}  rowSelection={rowSelection} columns={columns} dataSource={animal.pesadas} pagination={false}/>
-            <Button onClick={showModal}>Agregar Pesada</Button>
+            <Button onClick={showModal} style={{margin:'1% 0'}}>Agregar Pesada</Button>
         </Fragment>
     )
 };

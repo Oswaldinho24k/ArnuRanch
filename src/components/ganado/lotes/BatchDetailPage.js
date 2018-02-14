@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider, Button, Modal, message, Switch, Icon} from 'antd';
+import {Table, Divider, Button, Modal, message, Switch, Icon, Input} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
-import BasicInfoForm from "./InfoBatch";
+import InfoBatch from "./InfoBatch";
 import FormGasto from "../animals/FormGasto";
 import * as animalGastoActions from "../../../redux/actions/gastoAnimalActions";
 import * as lotesActions from '../../../redux/actions/lotesActions';
@@ -15,22 +15,30 @@ const columns = [
     {
         title: 'Arete Rancho',
         dataIndex: 'arete_rancho',
+        key:'arete_rancho',
+        render: (text, record) => (
+                <span>
+                  <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
+                </span>
+        ),
+
+        width:200,
     },{
         title: 'Arete Siniga',
         dataIndex: 'arete_siniga',
-    }, {
-        title: 'Owner',
+        key:'arete_siniga',
+        width:150
+    },{
+        title: 'Propietario',
         dataIndex: 'owner',
-    },
-    {
-        title: 'Actions',
-        key: 'action',
-        width: 100,
-        render: (text, record) => (
-            <span>
-  <Link to={`/admin/animals/${record.id}`}>Detalle</Link>
-</span>
-        ),
+        key:'owner',
+        width:150
+    },{
+        title:'Última Pesada',
+        dataIndex:'pesadas',
+        key:'pesadas',
+        render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
+        width:150
     }];
 
 
@@ -43,7 +51,8 @@ class BatchDetailPage extends Component {
         selectedRowKeys:[],
         loading:false,
         canEdit:false,
-    }
+        search:'',
+    };
 
     onSelectChange = (selectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -64,13 +73,18 @@ class BatchDetailPage extends Component {
     };
     saveGastos=(gasto)=>{
         this.setState({loading:true});
+
         let keys = this.state.selectedRowKeys;
+        let parcialAmount = gasto.costo/keys.length;
+        let parcialQuantity = gasto.cantidad/keys.length;
         for(let i in keys){
             console.log(keys[i]);
             let animalId = keys[i];
             gasto['animal']=animalId;
+            gasto['costo']=parcialAmount;
+            if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
-            console.log(toSend)
+            console.log(toSend);
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
                     console.log(r)
@@ -95,26 +109,40 @@ class BatchDetailPage extends Component {
     edit=()=>{
         this.setState({canEdit:!this.state.canEdit})
     };
+    handleSearch=(e)=>{
+        this.setState({search:e.target.value})
+    };
 
     render() {
         let {fetched, lote} = this.props;
-        let {visible, selectedRowKeys, loading, canEdit} = this.state;
+        let {visible, selectedRowKeys, loading, canEdit, search} = this.state;
         if(!fetched)return(<MainLoader/>);
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         const disablebutton = selectedRowKeys.length > 0;
+        let regEx = new RegExp(search, "i");
+        let animals = lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner));
         return (
             <Fragment>
-                <BasicInfoForm {...lote}
+                <InfoBatch {...lote}
                            canEdit={canEdit}
                            handleEdit={this.handleEdit}
                             edit={this.edit}/>
 
-                <Divider />
-                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'2% 0'}}>Agregar Gasto</Button>
+
                 {loading?<MainLoader/>:''}
+                <Divider/>
+                <h4>Aretes de este Lote:</h4>
+
+                <Input.Search
+
+                    onChange={this.handleSearch}
+                    value={search}
+                    style={{ width: 400 , margin:'1% 0'}}
+                    placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
+
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
                        onCancel={this.handleCancel}
@@ -127,7 +155,14 @@ class BatchDetailPage extends Component {
                 >
                     <FormGasto saveGasto={this.saveGastos} handleCancel={this.handleCancel}/>
                 </Modal>
-                <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={lote.animals} rowKey={record => record.id}/>
+
+                <Table
+                    pagination={false}
+                    scroll={{x:650, y:500}}
+                    rowSelection={rowSelection}
+                    columns={columns} dataSource={animals}
+                    rowKey={record => record.id}/>
+                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
             </Fragment>
 
         );

@@ -13,6 +13,7 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
+                handleEdit()
             }
             if (Array.isArray(e)) {
                 return e;
@@ -24,6 +25,7 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
     return (
             <Fragment>
                 <Form style={{width:'100%'}} onSubmit={handleSubmit}>
+                    {canEdit?
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
                     {form.getFieldDecorator('name', {
                         initialValue:name
@@ -53,11 +55,14 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                             <Switch
                                 disabled={!canEdit}/>
                         </FormItem>)}
-                </div>
+                </div>:
+                <div>
+                    <h2>Lote: {name} | Corral: {corral.no_corral} | Status: {status?'Activo':'Inactivo'}</h2>
+                </div>}
                 {canEdit?
                     <Button htmlType="submit">Guardar</Button>:''}
             </Form>
-                {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}
+               {/* {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}*/}
             </Fragment>
     )
 };

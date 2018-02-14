@@ -13,7 +13,6 @@ class CorralForm extends Component {
             if (!err) {
                 console.log(values);
                 this.props.saveCorral(values)
-
             }
         });
     };
@@ -33,7 +32,7 @@ class CorralForm extends Component {
                                 required: true, message: 'Completa el campo!',
                             }],
                         })(
-                            <InputNumber min={1} max={100} />
+                            <InputNumber />
                         )}
                     </FormItem>
 
