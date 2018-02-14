@@ -9,34 +9,34 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 const style = {
-    display:'flex',
-    flexDirection:'column',
-    justifyContent:'space-around',
-    flexWrap:'wrap'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap'
 };
 
 let uuid = 0;
+
 class Item {
-    constructor(idInsumo, idFormula, unit, subtotal){
-        this.idInsumo = idInsumo;
-        this.idFormula = idFormula;
+    constructor(insumo, formula, unit, subtotal) {
+        this.insumo = insumo;
+        this.formula = formula;
         this.unit = unit;
         this.subtotal = subtotal;
     }
 
-    toString (){
+    toString() {
         return 'Insumo: ' + this.idInsumo +
-                'Formula' + this.idFormula +
-                'Cantidad' + this.unit +
-                'Subtotal' + this.subtotal;
+            'Formula' + this.idFormula +
+            'Cantidad' + this.unit +
+            'Subtotal' + this.subtotal;
     }
 }
-class FormulasForm extends Component{
+
+class FormulasForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = {}
     }
 
     remove = k => {
@@ -52,12 +52,10 @@ class FormulasForm extends Component{
     };
 
     add = () => {
-        const { form } = this.props;
+        const {form} = this.props;
         const keys = form.getFieldValue('keys');
         const nextKeys = keys.concat(uuid);
         uuid++;
-        // can use data-binding to set
-        // important! notify form to detect changes
         form.setFieldsValue({
             keys: nextKeys,
         });
@@ -73,25 +71,24 @@ class FormulasForm extends Component{
                 let total_price = 0;
                 let items = [];
                 let i = 0;
-                for(let unit of values['units']){
-                    if(unit) {
+                for (let unit of values['units']) {
+                    if (unit) {
                         let unitFloat = parseFloat(unit.replace('kg', ''));
-                        units[i++] =  unitFloat ;
+                        units[i++] = unitFloat;
                         total_units += unitFloat;
                     }
                 }
                 let insumos = [];
                 i = 0;
-                for( let insumoId of values['insumos']){
-                    if (insumoId){
-                        let insumo = insumosObjs.find( insumo => insumo.id === insumoId );
+                for (let insumoId of values['insumos']) {
+                    if (insumoId) {
+                        let insumo = insumosObjs.find(insumo => insumo.id === insumoId);
                         let subtotal = insumo['unit_price_total'] * parseFloat(units[i]);
                         total_price += subtotal;
-                        let item = new Item(insumoId,0,parseFloat(units[i]),subtotal);
+                        let item = new Item(insumoId, 0, parseFloat(units[i]), subtotal);
                         insumos[i++] = insumoId;
                         items.push(item);
                     }
-
                 }
 
                 values['units'] = units;
@@ -103,30 +100,38 @@ class FormulasForm extends Component{
                 let formula = {
                     name: values['formulaName'],
                     total_units: total_units,
-                    total_price: total_price
+                    total_price: total_price,
+                    items: items
                 };
 
                 this.props.saveFormula(formula)
-                    .then( r => {
+                    .then(r => {
                         console.log(r);
+                        for (let item of items) {
+                            item.formula = r.id;
+                            this.props.saveItem(item)
+                                .then(r => {
+                                    console.log(r);
+                                })
+                                .catch(e => {
+                                    console.log(e);
+                                });
+                        }
                     })
-                    .catch( e => {
+                    .catch(e => {
                         console.log(e);
                     });
-
-
-
-                console.log('Received values of form: ', values);
+                this.props.onSubmit(e);
             }
         });
     };
 
     render() {
-        const { form:{getFieldDecorator,getFieldValue}, title, width, onCancel, onSubmit, formula, onDelete} = this.props;
-        getFieldDecorator('keys', { initialValue: [] });
+        const {form: {getFieldDecorator, getFieldValue}, title, width, onCancel, formula, onDelete} = this.props;
+        getFieldDecorator('keys', {initialValue: []});
         const keys = getFieldValue('keys');
         let insumos_options = this.props.insumos || [];
-        insumos_options = insumos_options.map (insumo =>
+        insumos_options = insumos_options.map(insumo =>
             <Option
                 value={parseInt(insumo.id)}
                 key={insumo.id}
@@ -140,7 +145,7 @@ class FormulasForm extends Component{
                     <FormItem
                         label={index === 0 ? 'Insumo' : ''}
                         required={true}
-                        style={{width:'45%', boxSizing:'border-box', padding:10}}
+                        style={{width: '45%', boxSizing: 'border-box', padding: 10}}
                     >
                         {
                             getFieldDecorator(`insumos[${k}]`, {
@@ -149,12 +154,12 @@ class FormulasForm extends Component{
                                     required: true,
                                     message: 'Selecciona un insumo o eliminalo!',
                                 }],
-                                props:{
-                                    placeholder:'Selecciona un proveedor'
+                                props: {
+                                    placeholder: 'Selecciona un proveedor'
                                 }
                             })
                             (
-                                <Select  >
+                                <Select>
                                     {insumos_options}
                                 </Select>
                             )
@@ -164,7 +169,7 @@ class FormulasForm extends Component{
                     <FormItem
                         label={index === 0 ? 'Cantidad (kg)' : ''}
                         required={true}
-                        style={{ width: '45%', marginRight: 8, boxSizing:'border-box', padding: 10 }}
+                        style={{width: '45%', marginRight: 8, boxSizing: 'border-box', padding: 10}}
                     >
                         {getFieldDecorator(`units[${k}]`, {
                             validateTrigger: ['onChange', 'onBlur'], //'onBlur'
@@ -175,21 +180,21 @@ class FormulasForm extends Component{
                             }],
                         })(
                             <InputNumber
-                                style={{width:'100%'}}
+                                style={{width: '100%'}}
                                 min={1}
                                 max={10000000}
                                 placeholder="Cantidad en kg"
                                 formatter={value => `${value}kg`}
-                                parser={value => value.replace("kg", '') }
+                                parser={value => value.replace("kg", '')}
                             />
                         )}
                     </FormItem>
-                    <div style={{width:'10%', boxSizing:'border-box', alignSelf:'center'}}>
+                    <div style={{width: '10%', boxSizing: 'border-box', alignSelf: 'center'}}>
                         {keys.length > 1 ? (
                             <Icon
                                 className="dynamic-delete-button"
                                 type="minus-circle-o"
-                                style={{maxWidth:'100%'}}
+                                style={{maxWidth: '100%'}}
                                 disabled={keys.length === 1}
                                 onClick={() => this.remove(k)}
                             />
@@ -206,7 +211,7 @@ class FormulasForm extends Component{
                 maskClosable={true}
                 footer={[null, null]}
                 onCancel={onCancel}
-                style={{height:'70vh'}}
+                style={{height: '70vh'}}
             >
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem
@@ -225,15 +230,15 @@ class FormulasForm extends Component{
                             />
                         )}
                     </FormItem>
-                    <div style={{height:300, overflow:'scroll'}}>
+                    <div style={{height: 300, overflow: 'scroll'}}>
                         {formItems}
-                        <FormItem >
-                            <Button type="dashed" onClick={this.add} >
-                                <Icon type="plus" /> Añadir insumo
+                        <FormItem>
+                            <Button type="dashed" onClick={this.add}>
+                                <Icon type="plus"/> Añadir insumo
                             </Button>
                         </FormItem>
                     </div>
-                    <FormItem >
+                    <FormItem>
                         <Button type="primary" htmlType="submit">Guardar</Button>
                     </FormItem>
                 </Form>
@@ -246,7 +251,7 @@ const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     let formula;
     if (id !== 'add') {
-        formula = (state.formulas.list.filter( formula => formula.id === id )[0]);
+        formula = (state.formulas.list.filter(formula => formula.id === id)[0]);
     }
     return {
         formula,
@@ -255,5 +260,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 FormulasForm = Form.create()(FormulasForm);
-FormulasForm = connect(mapStateToProps,{saveFormula, saveItem})(FormulasForm);
+FormulasForm = connect(mapStateToProps, {saveFormula, saveItem})(FormulasForm);
 export default FormulasForm;

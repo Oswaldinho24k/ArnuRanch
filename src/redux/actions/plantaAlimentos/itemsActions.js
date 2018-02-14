@@ -35,6 +35,7 @@ export const saveItem = item => (dispatch, getState) => {
             const provider = getState().proveedores.list.find( provider => provider.id === r.provider);
             r.provider = provider;
             dispatch(saveItemSuccess(r));
+            return r;
         })
         .catch(e=>{
             console.log(e);

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {metadata} from "./metadataFormulas";
-import {Button,Table} from "antd";
+import {Button, Table} from "antd";
 import {Link, Route, Switch} from "react-router-dom";
 import FormulasForm from "./FormulasForm";
 
@@ -20,11 +20,11 @@ class FormulasPage extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-
+        this.props.history.push(absolutePath);
     };
 
     render() {
-        const {columns,rowSelection} = metadata;
+        const {columns, rowSelection} = metadata;
         const {formulas} = this.props;
         const FormulasFormRender = (props) => (
             <FormulasForm
@@ -45,7 +45,7 @@ class FormulasPage extends Component {
                     columns={columns}
                     dataSource={formulas}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x: 650}}
                 />
                 <Link to={absolutePath + 'add'}>
                     <Button
@@ -66,5 +66,5 @@ const mapStateToProps = state => ({
     formulas: state.formulas.list
 });
 
-FormulasPage = connect(mapStateToProps, {}) (FormulasPage);
+FormulasPage = connect(mapStateToProps, {})(FormulasPage);
 export default FormulasPage;
