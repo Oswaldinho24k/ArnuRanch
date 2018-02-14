@@ -72,8 +72,9 @@ export const deleteFormula = formulaId => (dispatch, getState) =>{
     return api.removeFormula(formulaId)
         .then( r => {
             dispatch(deleteFormulaSuccess(formulaId));
+            return r;
         }).
         catch(e=>{
-            console.log(e)
+            return e;
     });
 };

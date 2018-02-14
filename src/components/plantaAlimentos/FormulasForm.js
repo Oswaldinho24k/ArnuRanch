@@ -209,11 +209,11 @@ class FormulasForm extends Component {
                 visible={true}
                 width={width}
                 maskClosable={true}
-                footer={[null, null]}
+                footer={[<Button form='formula' key='f' type="primary" htmlType="submit">Guardar</Button>, null]}
                 onCancel={onCancel}
                 style={{height: '70vh'}}
             >
-                <Form onSubmit={this.handleSubmit}>
+                <Form id='formula' onSubmit={this.handleSubmit}>
                     <FormItem
                         label='Nombre de la fórmula'
                         required={true}
@@ -232,15 +232,19 @@ class FormulasForm extends Component {
                     </FormItem>
                     <div style={{height: 300, overflow: 'scroll'}}>
                         {formItems}
-                        <FormItem>
-                            <Button type="dashed" onClick={this.add}>
+                        <FormItem style={{width: '100%'}}>
+                            <Button
+                                style={{width: '100%'}}
+                                type="dashed"
+                                onClick={this.add}
+                            >
                                 <Icon type="plus"/> Añadir insumo
                             </Button>
                         </FormItem>
                     </div>
-                    <FormItem>
-                        <Button type="primary" htmlType="submit">Guardar</Button>
-                    </FormItem>
+                    {/*<FormItem>*/}
+                        {/*<Button type="primary" htmlType="submit">Guardar</Button>*/}
+                    {/*</FormItem>*/}
                 </Form>
             </Modal>
         );
