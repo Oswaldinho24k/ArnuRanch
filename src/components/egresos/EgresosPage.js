@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Divider} from "antd";
+import {Table, Button, Switch, message, Popconfirm, Tag, Divider, Select, Modal} from "antd";
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -8,7 +8,6 @@ import moment from 'moment';
 
 import * as egresosActions from '../../redux/actions/egresosActions';
 import FormEgreso from "./EgresoForm";
-import EgresoInfo from "./InfoEgreso";
 
 //fecha ingresos cuentas por cobrar ............... DONE!!
 // razon social............... DONE!!
@@ -19,6 +18,30 @@ import EgresoInfo from "./InfoEgreso";
 
 // ...........en egreso si es costo o si es gasto.....
 // si es costo a que almacen se va
+const Option = Select.Option;
+const opciones = [{
+    name :'Cerdos',
+    id: 1
+},
+    {
+        name:'Ganado',
+        id:2
+    },
+    {
+        name:'Granos',
+        id:3
+    },
+    {
+        name:'Planta de alimentos',
+        id:4
+    },
+    {
+        name:'Campo',
+        id:5
+    },
+
+];
+
 
 const columns = [
     {
@@ -57,9 +80,10 @@ const columns = [
 
 class EgresosPage extends Component {
     state = {
-       ModalText: <FormEgreso proveedores={this.props.proveedores} saveEgreso={this.props.egresosActions.saveEgreso} />,
         visible: false,
-        selectedRowKeys:[]
+        selectedRowKeys:[],
+        factura:false,
+        contacto_directo:true,
     };
 
     showModal = () => {
@@ -101,15 +125,49 @@ class EgresosPage extends Component {
         this.setState({ selectedRowKeys });
     };
 
+    saveFormRef = (form) => {
+        this.form = form;
+    };
+
+    handleCreate = (e) => {
+        const form = this.form;
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+                this.props.egresosActions.saveEgreso(values);
+                message.success('Guardado con éxito');
+
+                form.resetFields();
+                this.setState({ visible: false });
+            }else{message.error('Algo fallo, verifica los campos');}
+
+        });
+    };
+
+    handleChange = e => {
+        this.setState({
+            factura: e.target.checked
+        })
+    };
+
+    handleChangeD = e => {
+        this.setState({
+            contacto_directo:e.target.checked
+        })
+    };
+
 
     render() {
-        const { visible, ModalText, selectedRowKeys } = this.state;
+        const { visible, selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         let {egresos, fetched} = this.props;
+        let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+        let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -125,18 +183,20 @@ class EgresosPage extends Component {
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Nuevo Egreso"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    {ModalText}
-                </Modal>
+                <FormEgreso
+                    ref={this.saveFormRef}
+                    visible={visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    options_proveedores={options_proveedores}
+                    options={options}
+                    handleChange={this.handleChange}
+                    handleChangeD={this.handleChangeD}
+                    contacto={this.state.contacto_directo}
+                    factura = {this.state.factura}
+
+
+                />
 
                 <Divider
                     type={'vertical'}/>

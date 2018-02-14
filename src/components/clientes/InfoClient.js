@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
-import {List, Avatar, Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select} from 'antd';
+import {Form, Input, Button, Select, message, Checkbox} from 'antd';
 
 const Option = Select.Option;
 
 const FormItem = Form.Item;
 
 
-const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc}) => {
+const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, contact_check, contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -15,12 +15,12 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                 values['id'] = id;
                 editCliente(values)
                     .then(r => {
-                        console.log("Editado con éxito");
+                        message.success('Guardado con éxito');
                         handleEditMode()
                     }).catch(e => {
                     console.log(e)
                 })
-            }
+            }else{message.error('Algo fallo, verifica los campos');}
         });
     };
 
@@ -33,10 +33,39 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         label="Nombre del Cliente"
                     >
                         {form.getFieldDecorator('client', {
-                            initialValue: client
+                            initialValue: client,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact_check', {
+                            valuePropName: 'checked',
+                            initialValue: contact_check,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Checkbox
+                                disabled={!editMode}
+                            >
+                                Contacto Directo?
+                            </Checkbox>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact',{
+                            initialValue:contact,
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
                         )}
                     </FormItem>
 
@@ -44,7 +73,12 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         label="RFC del Cliente"
                     >
                         {form.getFieldDecorator('rfc', {
-                            initialValue:rfc
+                            initialValue:rfc,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },
+                                {validator: rfcR}
+                            ],
 
                         })(
                             <Input maxLength={"13"} disabled={!editMode}/>
@@ -55,7 +89,10 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         label="Dirección"
                     >
                         {form.getFieldDecorator('address', {
-                            initialValue: address
+                            initialValue: address,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
@@ -66,7 +103,12 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         label="Correo electrónico"
                     >
                         {form.getFieldDecorator('email', {
-                            initialValue: email
+                            initialValue: email,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },{
+                                type: 'email', message: 'No es una dirección de correo válida!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
@@ -77,7 +119,12 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         label="Teléfono"
                     >
                         {form.getFieldDecorator('phone_number', {
-                            initialValue: phone_number
+                            initialValue: phone_number,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },
+                                {validator: phone}
+                            ],
 
                         })(
                             <Input disabled={!editMode}/>

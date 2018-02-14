@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Select, Button, Checkbox, InputNumber} from 'antd';
+import {Form, Input, Select, Button, Checkbox, InputNumber, message} from 'antd';
 import {editIngreso} from "../../redux/actions/ingresosActions";
 
 const Option = Select.Option;
@@ -17,10 +17,11 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                     .then(r=>{
                         console.log("Editado con éxito");
                         handleEditMode()
+                        message.success('Guardado con éxito');
                     }).catch(e=>{
                     console.log(e)
                 })
-            }
+            }else{message.error('Algo fallo, verifica los campos');}
         });
     };
 
@@ -34,7 +35,10 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             label={"Razón Social"}
                         >
                             {form.getFieldDecorator('client',{
-                                initialValue:client.id
+                                initialValue:client.id,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -47,6 +51,9 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             label={"Razón Social"}
                         >
                             {form.getFieldDecorator('client',{
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
 
                             })(
                                 <Select
@@ -58,36 +65,15 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             )}
                         </FormItem>}
 
-                    <FormItem>
-                        {form.getFieldDecorator('contact_check', {
-                            valuePropName: 'checked',
-                            initialValue: contact_check,
-                        })(
-                            <Checkbox
-                                disabled={!editMode}
-                            >
-                                Contacto directo?
-                            </Checkbox>
-                        )}
-                    </FormItem>
-
-                    <FormItem>
-                        {form.getFieldDecorator('contact',{
-                            initialValue:contact
-                        })(
-                            <Input
-                                disabled={!editMode}
-                            />
-                        )}
-                    </FormItem>
-
-
                     {business_line?
                         <FormItem
                             label={"Linea de negocio"}
                             >
                             {form.getFieldDecorator('business_line',{
-                                initialValue:business_line
+                                initialValue:business_line,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -100,6 +86,9 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             label={"Linea de negocio"}
                             >
                             {form.getFieldDecorator('business_line',{
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
 
                             })(
                                 <Select
@@ -114,7 +103,10 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                     <FormItem
                         label="Monto">
                         {form.getFieldDecorator('total', {
-                            initialValue:total
+                            initialValue:total,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <InputNumber
                                 disabled={!editMode}
@@ -131,6 +123,9 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             {form.getFieldDecorator('sale_check', {
                                 valuePropName: 'checked',
                                 initialValue: sale_check,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Checkbox
                                     disabled={!editMode}
@@ -142,7 +137,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
 
                         <FormItem>
                             {form.getFieldDecorator('no_scheck',{
-                                initialValue:no_scheck
+                                initialValue:no_scheck,
                             })(
                                 <Input
                                     disabled={!editMode}
@@ -156,6 +151,9 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                         {form.getFieldDecorator('paid', {
                             valuePropName: 'checked',
                             initialValue: paid,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Checkbox
                                 disabled={!editMode}

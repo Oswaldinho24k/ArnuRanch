@@ -1,12 +1,11 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Select, Button} from 'antd';
-import {editProveedor} from "../../redux/actions/proveedoresActions";
+import {Form, Input, Select, Button, message, Checkbox} from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number, rfc}) => {
+const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number, rfc, rfcR, phone, contact_check, contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -15,12 +14,12 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                 values['id']=id;
                 editProveedor(values)
                     .then(r=>{
-                        console.log("Editado con éxito");
+                        message.success('Guardado con éxito');
                         handleEditMode()
                     }).catch(e=>{
                         console.log(e)
                 })
-            }
+            }else{message.error('Algo fallo, verifica los campos');}
         });
     };
 
@@ -33,10 +32,39 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         label="Nombre del Proveedor"
                     >
                         {form.getFieldDecorator('provider', {
-                            initialValue:provider
+                            initialValue:provider,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact_check', {
+                            valuePropName: 'checked',
+                            initialValue: contact_check,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Checkbox
+                                disabled={!editMode}
+                            >
+                                Contacto Directo?
+                            </Checkbox>
+                        )}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('contact',{
+                            initialValue:contact,
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
                         )}
                     </FormItem>
 
@@ -44,7 +72,12 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         label="RFC del Proveedor"
                     >
                         {form.getFieldDecorator('rfc', {
-                            initialValue:rfc
+                            initialValue:rfc,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },
+                                {validator: rfcR}
+                            ],
 
                         })(
                             <Input maxLength={"13"} disabled={!editMode}/>
@@ -55,7 +88,10 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         label="Dirección"
                     >
                         {form.getFieldDecorator('address', {
-                            initialValue:address
+                            initialValue:address,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
@@ -66,7 +102,12 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         label="Correo electrónico"
                     >
                         {form.getFieldDecorator('email', {
-                            initialValue:email
+                            initialValue:email,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },{
+                                type: 'email', message: 'No es una dirección de correo válida!',
+                            }],
 
                         })(
                             <Input disabled={!editMode}/>
@@ -77,7 +118,12 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         label="Teléfono"
                     >
                         {form.getFieldDecorator('phone_number', {
-                            initialValue:phone_number
+                            initialValue:phone_number,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            },
+                                {validator: phone}
+                            ],
 
                         })(
                             <Input disabled={!editMode}/>

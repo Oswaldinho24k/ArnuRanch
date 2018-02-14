@@ -15,6 +15,28 @@ class DetailProviderPage extends Component{
       this.setState({editMode:!this.state.editMode})
     };
 
+    checkRfc = (rule, value, callback) => {
+        if (value === undefined) {
+            callback('Verifica el RFC ingresado');
+        } else {
+            if(value.length < 13){
+                callback('Recuerda que son trece dígitos');
+            }
+            callback()
+        }
+    };
+
+    checkPhone = (rule, value, callback) => {
+        if (value === undefined) {
+            callback('El número ingresa debe contener 10 dígitos.');
+        } else {
+            if(value.length < 10){
+                callback('Ingresa un número de 10 dígitos');
+            }
+            callback()
+        }
+    };
+
     render(){
         let {proveedor, fetched} = this.props;
         let {editMode} = this.state;
@@ -22,7 +44,14 @@ class DetailProviderPage extends Component{
         return(
             <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
-                    <ProveedorInfo {...proveedor} editProveedor={this.props.proveedorActions.editProveedor} handleEditMode={this.handleEditMode} editMode={editMode}/>
+                    <ProveedorInfo
+                        {...proveedor}
+                        editProveedor={this.props.proveedorActions.editProveedor}
+                        handleEditMode={this.handleEditMode}
+                        editMode={editMode}
+                        rfcR={this.checkRfc}
+                        phone={this.checkPhone}
+                    />
                 </Card>
             </div>
         )

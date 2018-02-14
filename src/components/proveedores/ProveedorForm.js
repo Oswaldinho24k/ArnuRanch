@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, Modal, Checkbox } from 'antd';
 
 
 const FormItem = Form.Item;
@@ -11,128 +10,127 @@ const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
-class ProveedorForm extends Component {
-    state = {
-        value: '',
-    };
+const ProveedorForm = Form.create()(
+    (props) => {
+        const{visible, onCancel, onCreate, form, rfc, phone, handleChange, contacto} = props;
+        const{getFieldDecorator} = form;
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log(values);
-                this.props.saveProveedor(values)
+        return(
+            <Modal
+                visible={visible}
+                title={"Demo"}
+                onCancel={onCancel}
+                width={'30%'}
+                maskClosable={true}
+                footer={[
+                    null,
+                    null,
+                ]}
+            >
+                <Form onSubmit={this.handleSubmit} >
+                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
+                        <FormItem
+                            label="Nombre del Proveedor"
+                        >
+                            {getFieldDecorator('provider', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
 
-            }
-        });
-    };
+                        <FormItem>
+                            {getFieldDecorator('contact_check', {
+                                valuePropName: 'checked',
+                                initialValue: true,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Checkbox
+                                    value={contacto}
+                                    onChange={handleChange}
+                                >
+                                    Contacto Directo?
+                                </Checkbox>
+                            )}
+                        </FormItem>
 
-    checkRfc = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value.length <13) {
-            callback('Verifica el RFC ingresado');
-        } else {
-            callback();
-        }
-    };
+                        <FormItem>
+                            {getFieldDecorator('contact')(<Input maxLength={"13"} disabled={contacto}/>)}
+                        </FormItem>
+
+                        <FormItem
+                            label="RFC del Proveedor"
+                        >
+                            {getFieldDecorator('rfc', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                    {validator: rfc}
+                                ],
+                            })(
+                                <Input minLength={"13"} maxLength={"13"}/>
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Dirección"
+                        >
+                            {getFieldDecorator('address', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Correo electrónico"
+                        >
+                            {getFieldDecorator('email', {
+                                rules: [{
+                                    type: 'email', message: 'No es una dirección de correo válida!',
+                                }, {
+                                    required: true, message: 'Ingresa un E-mail!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Teléfono"
+                        >
+                            {getFieldDecorator('phone_number', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }, {validator: phone}],
+                            })(
+                                <Input minLength={"10"} maxLength={"10"} />
+                            )}
+                        </FormItem>
 
 
 
-    render() {
-        const { getFieldDecorator } = this.props.form;
-        return (
-
-            <Form onSubmit={this.handleSubmit} >
-                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
-                    <FormItem
-                        label="Nombre del Proveedor"
-                    >
-                        {getFieldDecorator('provider', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
+                    </div>
+                    <FormItem>
+                        <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                            Guardar
+                        </Button>
                     </FormItem>
 
-                    <FormItem
-                        label="RFC del Proveedor"
-                    >
-                        {getFieldDecorator('rfc', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            },
-                                {validator: this.checkRfc}
-                            ],
-                        })(
-                            <Input maxLength={"13"}/>
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Dirección"
-                    >
-                        {getFieldDecorator('address', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Correo electrónico"
-                    >
-                        {getFieldDecorator('email', {
-                            rules: [{
-                                type: 'email', message: 'No es una dirección de correo válida!',
-                            }, {
-                                required: true, message: 'Ingresa un E-mail!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Teléfono"
-                    >
-                        {getFieldDecorator('phone_number', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
 
 
+                </Form>
 
-                </div>
-                <FormItem>
-                    <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
-                        Guardar
-                    </Button>
-                </FormItem>
+            </Modal>
 
-
-
-            </Form>
-
-        );
+        )
     }
-}
+);
 
-const mapStateToProps = (state, ownProps) => ({
-});
-
-const mapDispatchToProps = () => ({
-
-});
-
-const FormProveedor = Form.create()(ProveedorForm);
-
-ProveedorForm = connect(mapStateToProps, mapDispatchToProps)(ProveedorForm);
-export default FormProveedor;
+export default ProveedorForm;
