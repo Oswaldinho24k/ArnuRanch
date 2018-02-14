@@ -22,20 +22,38 @@ class InsumosForm extends Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
-                console.log("good");
                 if (this.props.insumo){
-                    values['id'] = this.props.insumo.id;
+                    values['id'] = parseInt(this.props.insumo.id);
                 }
                 this.props.onSubmit(values);
             }
         });
     };
     render() {
+        const myButton = (
+            <Button
+                type="primary"
+                form="insumo"
+                htmlType="submit"
+                size="large"
+                key='i'
+                style={{
+                    borderColor: '#72c6cd',
+                    backgroundColor: '#72c6cd',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: '0 auto',
+                    width: '100%'
+                }}
+            > Guardar
+            </Button>
+        );
         const {form : {getFieldDecorator}, title, width, onCancel, insumo, onDelete} = this.props;
         let name = insumo ? insumo.name : '';
-        let unit_price = insumo ? insumo.unit_price : 1;
-        let provider = insumo ? insumo.provider.provider : '';
+        let unit_price = insumo ? insumo.unit_price : 0;
+        let freight = insumo ? insumo.freight : 0;
+        let loading_maneuver = insumo ? insumo.loading_maneuver : 0;
+        let provider = insumo ? insumo.provider.id : '';
         let providers_options = this.props.providers || [];
         providers_options = providers_options.map ( provider =>
             <Option
@@ -51,10 +69,10 @@ class InsumosForm extends Component{
                 visible={true}
                 width={width}
                 maskClosable={true}
-                footer={[null, null]}
+                footer={[myButton, null]}
                 onCancel={onCancel}
             >
-                <Form style={style} onSubmit={this.handleSubmit}>
+                <Form id='insumo' style={style} onSubmit={this.handleSubmit}>
                     <FormItem label="Nombre">
                         {
                             getFieldDecorator(
@@ -75,7 +93,27 @@ class InsumosForm extends Component{
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                            })(<InputNumber width="100%" min={1} max={10000}/>)
+                            })(<InputNumber style={{width:'100%'}} min={0} max={10000}/>)
+                        }
+                    </FormItem>
+                    <FormItem label="Flete">
+                        {
+                            getFieldDecorator('freight', {
+                                initialValue: freight,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(<InputNumber style={{width:'100%'}} min={0} max={10000}/>)
+                        }
+                    </FormItem>
+                    <FormItem label="Maniobra de carga y descarga">
+                        {
+                            getFieldDecorator('loading_maneuver', {
+                                initialValue: loading_maneuver,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(<InputNumber style={{width:'100%'}} min={0} max={10000}/>)
                         }
                     </FormItem>
 
@@ -99,20 +137,6 @@ class InsumosForm extends Component{
 
                     </FormItem>
                     <FormItem>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            size="large"
-                            style={{
-                                borderColor: '#72c6cd',
-                                backgroundColor: '#72c6cd',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                margin: '0 auto',
-                                width: '100%'
-                            }}
-                        > Guardar
-                        </Button>
                         {
                             insumo &&
                             <Button

@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {metadata} from "./metadataFormulas";
-import {Button,Table} from "antd";
+import {Button, Table} from "antd";
 import {Link, Route, Switch} from "react-router-dom";
 import FormulasForm from "./FormulasForm";
+import {deleteFormula} from '../../redux/actions/plantaAlimentos/formulasActions';
 
 const path = "/admin/planta_alimentos/formulas/:id";
 const absolutePath = "/admin/planta_alimentos/formulas/";
@@ -11,16 +12,43 @@ const absolutePath = "/admin/planta_alimentos/formulas/";
 class FormulasPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            selectedRowsKeys: []
+        };
     }
 
     closeModal = () => {
         this.props.history.push(absolutePath);
     };
 
+    onSubmit = e => {
+        e.preventDefault();
+        this.props.history.push(absolutePath);
+    };
+
+    onDelete = id => {
+        this.props.deleteFormula(id)
+            .then(r => {
+                console.log(r);
+            }).catch(e => {
+                console.log(e);
+            });
+        this.closeModal();
+    };
+
+    deleteSelection = () => {
+        const response = window.confirm('¿Seguro que quieres eliminar los insumos selecionados?');
+        if (response) {
+            const {selectedRowsKeys} = this.state;
+            selectedRowsKeys.forEach( key => this.onDelete(key));
+        }
+        this.setState({selectedRowsKeys:[]})
+    };
+
     render() {
-        const {columns,rowSelection} = metadata;
+        const {columns} = metadata;
         const {formulas} = this.props;
+        const {selectedRowsKeys} = this.state;
         const FormulasFormRender = (props) => (
             <FormulasForm
                 onSubmit={this.onSubmit}
@@ -32,6 +60,12 @@ class FormulasPage extends Component {
                 {...props}
             />
         );
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.setState({selectedRowsKeys:selectedRowKeys})
+            }
+        };
         return (
             <div>
                 <h1>Fórmulas</h1>
@@ -40,7 +74,7 @@ class FormulasPage extends Component {
                     columns={columns}
                     dataSource={formulas}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x: 650}}
                 />
                 <Link to={absolutePath + 'add'}>
                     <Button
@@ -49,6 +83,15 @@ class FormulasPage extends Component {
                         Agregar
                     </Button>
                 </Link>
+                {
+                    selectedRowsKeys.length > 0 &&
+                    <Button
+                        type="danger"
+                        onClick={this.deleteSelection}
+                    >
+                        Eliminar
+                    </Button>
+                }
                 <Switch>
                     <Route path={path} render={FormulasFormRender}/>
                 </Switch>
@@ -57,9 +100,10 @@ class FormulasPage extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    formulas: state.formulas.list
-});
+const
+    mapStateToProps = state => ({
+        formulas: state.formulas.list
+    });
 
-FormulasPage = connect(mapStateToProps, {}) (FormulasPage);
+FormulasPage = connect(mapStateToProps, {deleteFormula})(FormulasPage);
 export default FormulasPage;
