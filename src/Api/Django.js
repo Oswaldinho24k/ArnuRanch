@@ -51,13 +51,13 @@ const api = {
     /*-----------------animals functions-----------------------*/
     //Get all animals
     getAnimals:(url)=>{
-
-        if(url)animalsUrl=url;
+        let newUrl = animalsUrl;
+        if(url)newUrl=url;
 
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: animalsUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
@@ -233,11 +233,12 @@ const api = {
 
     /*-----------------lotes functions-----------------------*/
     getLotes:(url)=>{
-        if(url)lotesUrl=url;
+        let newLoteUrl = lotesUrl;
+        if(url)newLoteUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: lotesUrl,
+                baseURL: newLoteUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',

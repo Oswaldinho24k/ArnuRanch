@@ -41,6 +41,7 @@ function list(state=[], action){
     }
 }
 
+
 function allData(state={}, action){
     switch(action.type){
         case GET_ANIMALS_DATA_SUCCESS:
@@ -54,6 +55,7 @@ function allData(state={}, action){
 const animalsReducer = combineReducers({
     list:list,
     allData:allData,
+
 });
 
 export default animalsReducer

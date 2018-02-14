@@ -21,13 +21,22 @@ const columns = [
         title: 'Status',
         dataIndex: 'status',
         key:'status',
-        render: val => <p>{val?'Activo':'Inactivo'}</p>
+        render: val => <p>{val?'Activo':'Inactivo'}</p>,
+        width:100
     },
     {
         title: 'Corral ',
         dataIndex: 'corral',
         key:'corral',
-        render:val => <p>{val.no_corral}</p>
+        render:val => <p>{val.no_corral}</p>,
+        width:150
+    },
+    {
+        title: 'No. de Aretes',
+        dataIndex:'animals',
+        key:'animals',
+        render:val=><p>{val.length}</p>,
+        width:100
     },
     /*{
         title: 'Ac',
@@ -127,6 +136,7 @@ class BatchPage extends Component {
                     <Button type="primary" onClick={this.resetFilters}>Restablecer</Button>
                 </div>
                 <Table
+
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={lotes}

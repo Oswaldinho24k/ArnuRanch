@@ -29,7 +29,7 @@ class FormGasto extends React.Component{
         return(
 
             <Form onSubmit={this.handleSubmit}>
-                <FormItem>
+                <FormItem label="Tipo">
                     {getFieldDecorator('tipo', {
                         rules: [{
                             required: true, message: 'Completa!',

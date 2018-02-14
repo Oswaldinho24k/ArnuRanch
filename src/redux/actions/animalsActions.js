@@ -2,8 +2,6 @@ import api from "../../Api/Django";
 
 
 
-
-
 /*************************get All********************************+*/
 export const GET_ANIMALS_SUCCESS = 'GET_ANIMALS_SUCCESS';
 
@@ -22,7 +20,7 @@ export function getAllDataSuccess(data){
 }
 
 export const getAnimals=(url)=>(dispatch, getState)=>{
-    api.getAnimals(url)
+    return api.getAnimals(url)
         .then(r=>{
             //console.log(r.results)
             dispatch(getAnimalsSuccess(r.results));
@@ -42,17 +40,19 @@ export function saveAnimalSuccess(animal){
     }
 }
 
+
 export const saveAnimal=(animal)=>(dispatch, getState)=>{
     return api.newAnimal(animal)
         .then(r=>{
-
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
             r['lote'] = lote;
             console.log(r);
             dispatch(saveAnimalSuccess(r))
-        }).catch(e=>{
-        throw e
-    })
+        })
+        .catch(e=>{
+            throw e;
+
+        })
 };
 
 /*************************edit********************************+*/
@@ -73,7 +73,7 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
             dispatch(editAnimalSuccess(r));
             console.log(r)
         }).catch(e=>{
-            throw e
+            throw e;
     })
 };
 
@@ -92,6 +92,6 @@ export const deleteAnimal=(animalId)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(deleteAnimalSuccess(animalId))
         }).catch(e=>{
-            throw e
+            throw e;
         })
 };

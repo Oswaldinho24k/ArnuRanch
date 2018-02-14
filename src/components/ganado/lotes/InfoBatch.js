@@ -13,6 +13,7 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
+                handleEdit()
             }
             if (Array.isArray(e)) {
                 return e;
@@ -58,10 +59,10 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                 <div>
                     <h2>Lote: {name} | Corral: {corral.no_corral} | Status: {status?'Activo':'Inactivo'}</h2>
                 </div>}
-               {/* {canEdit?
-                    <Button htmlType="submit">Guardar</Button>:''}*/}
+                {canEdit?
+                    <Button htmlType="submit">Guardar</Button>:''}
             </Form>
-                {/*{canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}*/}
+               {/* {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}*/}
             </Fragment>
     )
 };

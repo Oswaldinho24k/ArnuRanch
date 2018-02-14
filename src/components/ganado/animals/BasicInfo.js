@@ -10,7 +10,7 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -22,7 +22,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         message.success('Editado con éxito');
                         handleEditMode()
                     }).catch(e=>{
-                        console.log(e)
+                    for (let i in e.response.data){
+                        console.log(e.response.data[i])
+                        message.error(e.response.data[i])
+                    }
                 })
             }
             if (Array.isArray(e)) {
@@ -151,21 +154,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                     </FormItem>
 
 
-                    <FormItem
-                        label="Costo Inicial"
-                        style={{width:'150px'}}>
-                        {form.getFieldDecorator('costo_inicial', {
-                                    initialValue:costo_inicial
-                            })(
-                            <InputNumber
-                                style={{width:'150px'}}
-                                disabled={!editMode}
-                                step={0.01}
-                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            />
-                                            )}
-                    </FormItem>
+
                     <FormItem
                         label="Costo Kilo"
                         style={{width:'150px'}}>
@@ -180,6 +169,36 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             />
                                                 )}
+                    </FormItem>
+                    <FormItem
+                        label="Costo Inicial"
+                        style={{width:'150px'}}>
+                        {form.getFieldDecorator('costo_inicial', {
+                            initialValue:costo_inicial
+                        })(
+                            <InputNumber
+                                style={{width:'150px'}}
+                                disabled={!editMode}
+                                step={0.01}
+                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="Costo Merma"
+                        style={{width:'150px'}}>
+                        {form.getFieldDecorator('merma', {
+                            initialValue:merma
+                        })(
+                            <InputNumber
+                                style={{width:'150px'}}
+                                disabled={!editMode}
+                                step={0.01}
+                                formatter={value => `${value}%`}
+                                parser={value => value.replace('%', '')}
+                            />
+                        )}
                     </FormItem>
                     <FormItem
                         label="Raza">

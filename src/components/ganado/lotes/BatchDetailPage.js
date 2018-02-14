@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider, Button, Modal, message, Switch, Icon} from 'antd';
+import {Table, Divider, Button, Modal, message, Switch, Icon, Input} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
@@ -17,20 +17,28 @@ const columns = [
         dataIndex: 'arete_rancho',
         key:'arete_rancho',
         render: (text, record) => (
-            <span>
-                      <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
-                    </span>
+                <span>
+                  <Link to={`/admin/animals/${record.id}`}>{record.arete_rancho}</Link>
+                </span>
         ),
-        fixed:'left',
-        width:150,
+
+        width:200,
     },{
         title: 'Arete Siniga',
         dataIndex: 'arete_siniga',
-        key:'arete_siniga'
-    }, {
-        title: 'Owner',
+        key:'arete_siniga',
+        width:150
+    },{
+        title: 'Propietario',
         dataIndex: 'owner',
-        key:'owner'
+        key:'owner',
+        width:150
+    },{
+        title:'Última Pesada',
+        dataIndex:'pesadas',
+        key:'pesadas',
+        render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
+        width:150
     }];
 
 
@@ -43,6 +51,7 @@ class BatchDetailPage extends Component {
         selectedRowKeys:[],
         loading:false,
         canEdit:false,
+        search:'',
     };
 
     onSelectChange = (selectedRowKeys) => {
@@ -100,16 +109,21 @@ class BatchDetailPage extends Component {
     edit=()=>{
         this.setState({canEdit:!this.state.canEdit})
     };
+    handleSearch=(e)=>{
+        this.setState({search:e.target.value})
+    };
 
     render() {
         let {fetched, lote} = this.props;
-        let {visible, selectedRowKeys, loading, canEdit} = this.state;
+        let {visible, selectedRowKeys, loading, canEdit, search} = this.state;
         if(!fetched)return(<MainLoader/>);
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         const disablebutton = selectedRowKeys.length > 0;
+        let regEx = new RegExp(search, "i");
+        let animals = lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner));
         return (
             <Fragment>
                 <InfoBatch {...lote}
@@ -119,6 +133,16 @@ class BatchDetailPage extends Component {
 
 
                 {loading?<MainLoader/>:''}
+                <Divider/>
+                <h4>Aretes de este Lote:</h4>
+
+                <Input.Search
+
+                    onChange={this.handleSearch}
+                    value={search}
+                    style={{ width: 400 , margin:'1% 0'}}
+                    placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
+
                 <Modal title="Agregar nuevo animal"
                        visible={visible}
                        onCancel={this.handleCancel}
@@ -131,13 +155,14 @@ class BatchDetailPage extends Component {
                 >
                     <FormGasto saveGasto={this.saveGastos} handleCancel={this.handleCancel}/>
                 </Modal>
+
                 <Table
                     pagination={false}
                     scroll={{x:650, y:500}}
                     rowSelection={rowSelection}
-                    columns={columns} dataSource={lote.animals}
+                    columns={columns} dataSource={animals}
                     rowKey={record => record.id}/>
-                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'2% 0'}}>Agregar Gasto</Button>
+                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
             </Fragment>
 
         );

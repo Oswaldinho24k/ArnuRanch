@@ -33,14 +33,13 @@ class FormAnimal extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             console.log(values);
+            values['status']=true;
             if (!err) {
                 if(!values.lote){
                     delete values.lote
                 }
                 this.props.saveAnimal(values);
                 //this.props.form.resetFields()
-
-
             }
             if (Array.isArray(e)) {
                 return e;
@@ -164,11 +163,13 @@ class FormAnimal extends Component {
                             )}
                         </FormItem>
 
+
                         <FormItem
-                            label="Costo Inicial"
+                            label="Costo Kilo"
                             style={{width:'150px'}}
                         >
-                            {getFieldDecorator('costo_inicial', {
+                            {getFieldDecorator('costo_kilo', {
+
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -183,11 +184,11 @@ class FormAnimal extends Component {
                         </FormItem>
 
                         <FormItem
-                            label="Costo Kilo"
+                            label="Costo Inicial"
                             style={{width:'150px'}}
                         >
-                            {getFieldDecorator('costo_kilo', {
-                                initialValue:(getFieldValue('costo_inicial')/getFieldValue('peso_entrada')).toFixed(2),
+                            {getFieldDecorator('costo_inicial', {
+                                initialValue:(getFieldValue('costo_kilo')*getFieldValue('peso_entrada')).toFixed(2),
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -197,6 +198,24 @@ class FormAnimal extends Component {
                                     step={0.01}
                                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Merma (%)"
+                            style={{width:'150px'}}
+                        >
+                            {getFieldDecorator('merma', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <InputNumber
+                                    style={{width:'150px'}}
+                                    step={0.01}
+                                    formatter={value => `${value}%`}
+                                    parser={value => value.replace('%', '')}
                                 />
                             )}
                         </FormItem>

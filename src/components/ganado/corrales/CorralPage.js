@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal} from "antd";
+import {Table, Button, Modal, message} from "antd";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -12,15 +12,18 @@ const columns = [
     {
         title: 'Numero de Corral',
         dataIndex: 'no_corral',
+        width:200
     }, {
         title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',
-        render:val=><p>{moment(val).format('LL')}</p>
+        render:val=><p>{moment(val).format('LL')}</p>,
+        width:200
 
     }, {
         title: 'Lote Actual',
         dataIndex: 'lotes',
-        render:val=> <span>{val?<Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>:'No asignado'}</span>
+        render:val=> <span>{val?<Link to={`/admin/lotes/${val.id}`}>{val.name}</Link>:'No asignado'}</span>,
+        width:200
 }];
 
 const rowSelection = {
@@ -32,7 +35,6 @@ const rowSelection = {
 
 class CorralPage extends Component {
     state = {
-        ModalText: <FormCorral saveCorral={this.props.corralesActions.saveCorral}/>,
         visible: false,
     };
 
@@ -47,26 +49,34 @@ class CorralPage extends Component {
             visible: false,
         });
     };
+    saveCorral=(v)=>{
+        this.props.corralesActions.saveCorral(v)
+            .then(r=>{
+                message.success('agregado con éxito')
+            }).catch(e=>{
+                for (let i in e.response.data){
+                    console.log(e.response.data[i])
+                    message.error(e.response.data[i])
+                }
+        })
+    };
 
     render() {
-        const { visible, ModalText } = this.state;
+        const { visible } = this.state;
         let {corrales} = this.props;
         return (
             <div>
                 <h1>Corrales</h1>
                 <Table
-
                     pagination={false}
-
-
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={corrales}
                     rowKey={record => record.id}
-
+                    scroll={{x:650, y:500}}
                 />
 
-                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <Button type="primary" onClick={this.showModal} style={{margin:'1% 0'}}>Agregar</Button>
                 <Modal title="Agregar nuevo corral"
                        visible={visible}
                        onCancel={this.handleCancel}
@@ -77,7 +87,7 @@ class CorralPage extends Component {
                            null,
                        ]}
                 >
-                    {ModalText}
+                    <FormCorral saveCorral={this.saveCorral}/>
                 </Modal>
             </div>
         );
@@ -87,7 +97,8 @@ class CorralPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        corrales: state.corrales.list
+        corrales: state.corrales.list,
+
     }
 }
 
