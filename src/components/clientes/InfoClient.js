@@ -43,7 +43,7 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         )}
                     </FormItem>
 
-                    <FormItem>
+                    {/*<FormItem>
                         {form.getFieldDecorator('contact_check', {
                             valuePropName: 'checked',
                             initialValue: contact_check,
@@ -67,7 +67,7 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                                 disabled={!editMode}
                             />
                         )}
-                    </FormItem>
+                    </FormItem>*/}
 
                     <FormItem
                         label="RFC del Cliente"

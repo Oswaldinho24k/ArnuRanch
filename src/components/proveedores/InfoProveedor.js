@@ -42,7 +42,7 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         )}
                     </FormItem>
 
-                    <FormItem>
+                    {/*<FormItem>
                         {form.getFieldDecorator('contact_check', {
                             valuePropName: 'checked',
                             initialValue: contact_check,
@@ -66,7 +66,7 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                                 disabled={!editMode}
                             />
                         )}
-                    </FormItem>
+                    </FormItem>*/}
 
                     <FormItem
                         label="RFC del Proveedor"
