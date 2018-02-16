@@ -1,16 +1,42 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, message, Modal, Popconfirm, Table, Tag, Divider} from "antd";
+import {Button, message, Modal, Popconfirm, Table, Tag, Divider, Select} from "antd";
+import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/ingresosActions';
 import FormIngreso from "./IngresoForm";
 
+const Option = Select.Option;
+
+const opciones = [{
+    name :'Cerdos',
+    id: 1
+},
+    {
+        name:'Ganado',
+        id:2
+    },
+    {
+        name:'Granos',
+        id:3
+    },
+    {
+        name:'Planta de alimentos',
+        id:4
+    },
+    {
+        name:'Campo',
+        id:5
+    },
+
+];
+
 
 const columns = [
     {
-        title: 'Cliente',
+        title: 'Razón Social',
         dataIndex: 'client',
         render: client=>client && client !== null ?client.client:'No Cliente'
     },
@@ -21,12 +47,18 @@ const columns = [
     {
         title: 'No. Factura',
         dataIndex: 'no_scheck',
-        render:no_scheck=> <span>{no_scheck?<span>{no_scheck}</span>:'No hay factura'}</span>
+        render:no_scheck=> <span>{no_scheck && no_scheck !==null ?<span>{no_scheck}</span>:'No hay factura'}</span>
     },
     {
         title: 'Status',
         dataIndex:'paid',
         render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
+    },
+    {
+      title: 'Registro',
+      dataIndex: 'created',
+      render: created => moment(created).startOf(3, 'days').calendar()
+
     },
     {
         title: 'Actions',
@@ -39,9 +71,9 @@ const columns = [
 
 class IngresosPage extends Component {
     state = {
-        ModalText: <FormIngreso clientes={this.props.clientes} saveIngreso={this.props.ingresosActions.saveIngreso} />,
         visible: false,
-        selectedRowKeys:[]
+        selectedRowKeys:[],
+        contacto_directo:true,
     };
 
     showModal = () => {
@@ -83,14 +115,45 @@ class IngresosPage extends Component {
         this.setState({ selectedRowKeys });
     };
 
+    saveFormRef = (form) => {
+        this.form = form;
+    };
+
+    handleCreate = (e) => {
+        const form = this.form;
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+                this.props.ingresosActions.saveIngreso(values);
+                message.success('Guardado con éxito');
+
+                form.resetFields();
+                this.setState({ visible: false });
+            }else{message.error('Algo fallo, verifica los campos');}
+
+        });
+    };
+
+    handleChange = e => {
+        this.setState({
+            factura: e.target.checked
+        })
+    };
+
+
+
     render() {
-        const { visible, ModalText, selectedRowKeys } = this.state;
+        const { visible, selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {ingresos, fetched} = this.props;
+        let {ingresos, fetched, clientes} = this.props;
+        console.log(clientes)
+        let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+        let options_clientes = clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -107,18 +170,18 @@ class IngresosPage extends Component {
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Nuevo Ingreso"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    {ModalText}
-                </Modal>
+                <FormIngreso
+                    ref={this.saveFormRef}
+                    visible={visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    options_clientes={options_clientes}
+                    options={options}
+                    handleChange={this.handleChange}
+                    factura = {this.state.factura}
+
+                />
+
 
                 <Divider
                     type={'vertical'}/>
@@ -135,7 +198,7 @@ class IngresosPage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         ingresos:state.ingresos.list,
-        fetched: state.ingresos.list !== undefined,
+        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined,
         clientes:state.clientes.list,
     }
 }

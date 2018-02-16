@@ -29,17 +29,20 @@ const LeftSide = ({props}) => {
                 <Menu.Item key="16">
                     <Link to={'/admin/egresos/pagar'} >Cuentas por Pagar</Link>
                 </Menu.Item>
+                <Menu.Item key="4">
+                    <Link to={'/admin/clientes'}>Clientes</Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                    <Link to={'/admin/proveedores'}>Proovedores</Link>
+                </Menu.Item>
                 <Menu.Item key="17">
                     <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
                     <Link to={'/admin/inventario'}>Inventario</Link>
                 </Menu.Item>
-                <Menu.Item key="4">
-                    <Link to={'/admin/clientes'}>Clientes</Link>
-                </Menu.Item>
-                <Menu.Item key="5">
-                    <Link to={'/admin/proveedores'}>Proovedores</Link>
+                <Menu.Item key="18">
+                    <Link to='/admin/usuarios'>  Usuarios </Link>
                 </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" title={<span className={'my-icon'}>🐮<Icon /><span>Ganado</span></span>}>

@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Input,Icon, Divider} from 'antd';
+import {Table, Button, message, Popconfirm, Divider} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/clientesActions';
 import {connect} from 'react-redux';
@@ -21,6 +21,10 @@ const columns = [
         dataIndex: 'email'
     },
     {
+        title: 'RFC',
+        dataIndex: 'rfc'
+    },
+    {
         title: 'Actions',
         fixed:'right',
         width:100,
@@ -36,9 +40,9 @@ const columns = [
 class ClientePage extends Component {
 
     state = {
-            ModalText: <ClienteForm saveCliente={this.props.clientesActions.saveCliente} />,
             visible: false,
             selectedRowKeys:[],
+            contacto_directo:true,
         };
 
     showModal = () => {
@@ -79,11 +83,56 @@ class ClientePage extends Component {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
+    saveFormRef = (form) => {
+        this.form = form;
+    };
 
-    //window.location.reload();
+    handleCreate = (e) => {
+        const form = this.form;
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+                this.props.clientesActions.saveCliente(values);
+                message.success('Guardado con éxito');
+
+                form.resetFields();
+                this.setState({ visible: false });
+            }else{message.error('Algo fallo, verifica los campos');}
+
+        });
+    };
+
+    checkRfc = (rule, value, callback) => {
+        if (value === undefined) {
+            callback('Verifica el RFC ingresado');
+        } else {
+            if(value.length < 13){
+                callback('Recuerda que son trece dígitos');
+            }
+            callback()
+        }
+    };
+
+    checkPhone = (rule, value, callback) => {
+        if (value === undefined) {
+            callback('El número ingresa debe contener 10 dígitos.');
+        } else {
+            if(value.length < 10){
+                callback('Ingresa un número de 10 dígitos');
+            }
+            callback()
+        }
+    };
+
+    handleChange = e => {
+        this.setState({
+            contacto_directo: e.target.checked
+        })
+    };
 
     render() {
-        const { visible, ModalText, selectedRowKeys } = this.state;
+        const { visible, selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -106,18 +155,18 @@ class ClientePage extends Component {
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <Modal title="Nuevo Cliente"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    {ModalText}
-                </Modal>
+                <ClienteForm
+                    ref={this.saveFormRef}
+                    visible={visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    rfc={this.checkRfc}
+                    phone={this.checkPhone}
+                    handleChange={this.handleChange}
+                    contacto={this.state.contacto_directo}
+
+                />
+
 
                 <Divider type={'vertical'} />
 
