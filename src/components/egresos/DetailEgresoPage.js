@@ -31,6 +31,17 @@ const opciones = [{
 
 ];
 
+const type = [{
+    name :'Gasto',
+    id: 1
+},
+    {
+        name:'Costo',
+        id:2
+    },
+
+];
+
 class DetailEgresoPage extends Component{
     state={
         editMode:false,
@@ -48,6 +59,7 @@ class DetailEgresoPage extends Component{
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
+        let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
         let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
         return(
             <div style={{width:'30%', margin: '0 auto'}} >
@@ -60,6 +72,7 @@ class DetailEgresoPage extends Component{
                         editMode={editMode}
                         options={options}
                         proveedores={options_providers}
+                        types={tipo}
 
                     />
                 </Card>

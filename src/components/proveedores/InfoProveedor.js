@@ -5,7 +5,8 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number, rfc, rfcR, phone, contact_check, contact}) => {
+const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,
+                           comments_contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -42,10 +43,10 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                         )}
                     </FormItem>
 
-                    {/*<FormItem>
-                        {form.getFieldDecorator('contact_check', {
+                    <FormItem>
+                        {form.getFieldDecorator('direct_contact', {
                             valuePropName: 'checked',
-                            initialValue: contact_check,
+                            initialValue: direct_contact,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
@@ -56,17 +57,23 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
                                 Contacto Directo?
                             </Checkbox>
                         )}
+
                     </FormItem>
 
                     <FormItem>
-                        {form.getFieldDecorator('contact',{
-                            initialValue:contact,
-                        })(
-                            <Input
-                                disabled={!editMode}
-                            />
-                        )}
-                    </FormItem>*/}
+                        {form.getFieldDecorator('name_contact', {initialValue: name_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Nombre Completo"} />)}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('phone_contact', {initialValue: phone_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Telefono"} />)}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('comments_contact', {initialValue: comments_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Comentarios"} />)}
+                    </FormItem>
 
                     <FormItem
                         label="RFC del Proveedor"

@@ -4,9 +4,25 @@ import {Form, Input, Button, Select, message, Checkbox} from 'antd';
 const Option = Select.Option;
 
 const FormItem = Form.Item;
+const styles = {
+    form:{
+        display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
+
+    },
+    formSection:{
+        display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'
+    },
+    sectionCheck:{
+        display:'flex',justifyContent:'flex-end', flexWrap:'wrap'
+    },
+    buttonSave:{
+        borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'
+    }
+};
 
 
-const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, contact_check, contact}) => {
+const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,
+                        comments_contact}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -23,6 +39,8 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
             }else{message.error('Algo fallo, verifica los campos');}
         });
     };
+
+
 
     return (
         <Fragment>
@@ -43,31 +61,40 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                         )}
                     </FormItem>
 
-                    {/*<FormItem>
-                        {form.getFieldDecorator('contact_check', {
+                    <FormItem>
+                        {form.getFieldDecorator('direct_contact', {
                             valuePropName: 'checked',
-                            initialValue: contact_check,
+                            initialValue: direct_contact,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
                         })(
                             <Checkbox
+                                //value={on}
+                                //onChange={handleChangeOn}
                                 disabled={!editMode}
                             >
                                 Contacto Directo?
                             </Checkbox>
                         )}
+
                     </FormItem>
 
                     <FormItem>
-                        {form.getFieldDecorator('contact',{
-                            initialValue:contact,
-                        })(
-                            <Input
-                                disabled={!editMode}
-                            />
-                        )}
-                    </FormItem>*/}
+                        {form.getFieldDecorator('name_contact', {initialValue: name_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Nombre Completo"} />)}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('phone_contact', {initialValue: phone_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Telefono"} />)}
+                    </FormItem>
+
+                    <FormItem>
+                        {form.getFieldDecorator('comments_contact', {initialValue: comments_contact,})
+                        (<Input disabled={!editMode} hidden={!editMode} placeholder={"Comentarios"} />)}
+                    </FormItem>
+
 
                     <FormItem
                         label="RFC del Cliente"

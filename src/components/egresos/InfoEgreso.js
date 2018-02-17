@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total,}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total, types, type}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -97,8 +97,43 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                                 <Select
                                     disabled={!editMode}
 
-                                    placeholder={"Linea de negocio"}>
+                                    placeholder={"Tipo de egreso"}>
                                     {options}
+                                </Select>
+                            )}
+                        </FormItem>}
+
+                    {type?
+                        <FormItem
+                            label={"Tipo de egreso"}
+                        >
+                            {form.getFieldDecorator('type',{
+                                initialValue:type,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Linea de negocio"}>
+                                    {types}
+                                </Select>
+                            )}
+                        </FormItem>:
+                        <FormItem
+                            label={"Linea de negocio"}
+                        >
+                            {form.getFieldDecorator('type',{
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+
+                            })(
+                                <Select
+                                    disabled={!editMode}
+
+                                    placeholder={"Linea de negocio"}>
+                                    {types}
                                 </Select>
                             )}
                         </FormItem>}
