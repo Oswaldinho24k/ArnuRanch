@@ -33,7 +33,12 @@ export const saveFormula = formula => (dispatch, getState) => {
         .then( r => {
             console.log(formula.items);
             r['items'] = formula['items'];
-            dispatch(saveFormulaSuccess(r));
+            let rForRedux = JSON.parse(JSON.stringify(r));
+            for(let item of rForRedux.items){
+                item.insumo = getState().insumos.list.find( insumo => insumo.id == item.insumo);
+            }
+            console.log(rForRedux);
+            dispatch(saveFormulaSuccess(rForRedux));
             return r;
         })
         .catch(e=>{
@@ -51,9 +56,16 @@ export const editFormulaSuccess = formula => ({
 });
 
 export const editFormula = formula => (dispatch, getState) => {
+    let formulaForRedux = JSON.parse(JSON.stringify(formula));
     return api.updateFormula(formula)
         .then( r => {
-            dispatch(editFormulaSuccess(r));
+            r['items'] = formula['items'];
+            let rForRedux = JSON.parse(JSON.stringify(r));
+            for(let item of rForRedux.items){
+                item.insumo = getState().insumos.list.find( insumo => insumo.id == item.insumo);
+            }
+            console.log(rForRedux);
+            dispatch(editFormulaSuccess(rForRedux));
             console.log(r);
             return r;
         }).catch(e=>{

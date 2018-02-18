@@ -113,7 +113,7 @@ class FormulasForm extends Component {
                 };
                 console.log(`La formula{formula}`, formula);
 
-                if (!formula) {
+                if (this.props.formula === undefined) {
                     this.props.saveFormula(formula)
                         .then(r => {
                             console.log(r);
