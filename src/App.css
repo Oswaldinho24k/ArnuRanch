@@ -24,6 +24,12 @@
 .App-intro {
   font-size: large;
 }
+.my-icon{
+  font-size: 1.5em;
+}
+.my-icon span{
+  font-size: .8em;
+}
 
 
 

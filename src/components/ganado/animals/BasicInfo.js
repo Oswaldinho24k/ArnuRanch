@@ -5,20 +5,12 @@ import moment from 'moment';
 const Option = Select.Option;
 
 const FormItem = Form.Item;
-
-const gridStyle = {
-    width: '25%',
-    textAlign: 'center',
-};
+const {TextArea} = Input;
 
 
 
 
-
-
-
-
-const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga, arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -30,7 +22,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         message.success('Editado con éxito');
                         handleEditMode()
                     }).catch(e=>{
-                        console.log(e)
+                    for (let i in e.response.data){
+                        console.log(e.response.data[i])
+                        message.error(e.response.data[i])
+                    }
                 })
             }
             if (Array.isArray(e)) {
@@ -39,12 +34,52 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
             return e && e.fileList;
         });
     };
+    const opciones = [{
+        name :'becerro',
+        id: 1
+    },{
+        name:'toro',
+        id:3
+    },{
+        name:'vaca',
+        id:4
+    },{
+        name:'vaquilla',
+        id:5
+    }
+
+    ];
+
+    let tipos = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
 
     return (
         <Fragment>
-            <Form style={{width:'100%'}} onSubmit={handleSubmit}>
+            <Form style={{width:'100%', padding:'1% 3%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 
+
+                    <FormItem
+                        label="Arete Rancho"
+                        style={{width:'250px'}}>
+                        {form.getFieldDecorator('arete_rancho', {
+                            initialValue:arete_rancho
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="Arete Siniga"
+                        style={{width:'200px'}}>
+                        {form.getFieldDecorator('arete_siniga', {
+                            initialValue:arete_siniga
+                        })(
+                            <Input
+                                disabled={!editMode}
+                            />
+                        )}
+                    </FormItem>
                     <FormItem
                         label="Fecha Registro">
                         {form.getFieldDecorator('fecha_entrada', {
@@ -53,6 +88,29 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         <DatePicker
                             disabled={!editMode}/>
                     )}
+                    </FormItem>
+                    <FormItem
+                        label={"Tipo"}
+                        style={{width:'200px'}}
+
+                    >
+                        {form.getFieldDecorator('tipo_animal', {
+                            initialValue:tipo_animal,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                            props:{
+                                placeholder:'Selecciona un tipo',
+                            }
+                        })(
+
+
+                            <Select  disabled={!editMode} placeholder={"Selecciona un tipo"}>
+
+                                {tipos}
+                            </Select>
+                        )}
+
                     </FormItem>
                     <FormItem
                         label="Owner">
@@ -66,7 +124,8 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         )}
                     </FormItem>
                     <FormItem
-                        label="Factura Inicial">
+                        label="Factura Inicial"
+                        style={{width:'200px'}}>
                         {form.getFieldDecorator('ref_factura_original', {
                                     initialValue:ref_factura_original
                             })(
@@ -77,11 +136,13 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             )}
                     </FormItem>
                     <FormItem
-                        label="Peso Entrada">
+                        label="Peso Entrada"
+                        style={{width:'150px'}}>
                         {form.getFieldDecorator('peso_entrada', {
                                     initialValue:peso_entrada
                             })(
                             <InputNumber
+                                style={{width:'150px'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 min={0}
@@ -91,51 +152,53 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                             />
                                 )}
                     </FormItem>
+
+
+
                     <FormItem
-                        label="Arete Siniga">
-                        {form.getFieldDecorator('arete_siniga', {
-                                    initialValue:arete_siniga
-                            })(
-                            <Input
-                                disabled={!editMode}
-                                />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        label="Arete Rancho">
-                        {form.getFieldDecorator('arete_rancho', {
-                                    initialValue:arete_rancho
-                            })(
-                            <Input
-                                disabled={!editMode}
-                                />
-                                        )}
-                    </FormItem>
-                    <FormItem
-                        label="Costo Inicial">
-                        {form.getFieldDecorator('costo_inicial', {
-                                    initialValue:costo_inicial
-                            })(
-                            <InputNumber
-                                disabled={!editMode}
-                                step={0.01}
-                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            />
-                                            )}
-                    </FormItem>
-                    <FormItem
-                        label="Costo Kilo">
+                        label="Costo Kilo"
+                        style={{width:'150px'}}>
                         {form.getFieldDecorator('costo_kilo', {
                                     initialValue:costo_kilo
                             })(
                             <InputNumber
+                                style={{width:'150px'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             />
                                                 )}
+                    </FormItem>
+                    <FormItem
+                        label="Costo Inicial"
+                        style={{width:'150px'}}>
+                        {form.getFieldDecorator('costo_inicial', {
+                            initialValue:costo_inicial
+                        })(
+                            <InputNumber
+                                style={{width:'150px'}}
+                                disabled={!editMode}
+                                step={0.01}
+                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="Costo Merma"
+                        style={{width:'150px'}}>
+                        {form.getFieldDecorator('merma', {
+                            initialValue:merma
+                        })(
+                            <InputNumber
+                                style={{width:'150px'}}
+                                disabled={!editMode}
+                                step={0.01}
+                                formatter={value => `${value}%`}
+                                parser={value => value.replace('%', '')}
+                            />
+                        )}
                     </FormItem>
                     <FormItem
                         label="Raza">
@@ -160,7 +223,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                     {lote?
                         <FormItem
                             label={"Lote"}
-                            style={{width:'70%'}}>
+                            style={{width:'40%'}}>
                             {form.getFieldDecorator('lote',{
                                 initialValue:lote.id
                             })(
@@ -173,7 +236,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                         </FormItem>:
                         <FormItem
                             label={"Lote"}
-                            style={{width:'70%'}}>
+                            style={{width:'40%'}}>
                             {form.getFieldDecorator('lote',{
 
                             })(
@@ -185,6 +248,20 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                 </Select>
                             )}
                         </FormItem>}
+
+                    <FormItem
+                        label="Descripción"
+                        style={{width:'50%'}}>
+                        {form.getFieldDecorator('descripcion', {
+                            initialValue:descripcion
+
+                        })(
+                            <TextArea autosize
+                                disabled={!editMode}
+                            />
+
+                        )}
+                    </FormItem>
 
                 </div>
 
@@ -201,18 +278,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, arete_siniga,
                                                                 )}
                 </FormItem>*/}
 
-                <FormItem
-                    label="Descripción">
-                    {form.getFieldDecorator('descripcion', {
-                                    initialValue:descripcion
 
-                            })(
-                        <Input
-                            disabled={!editMode}
-                            />
-
-                                                                    )}
-                </FormItem>
 
                <div style={{display:'flex', justifyContent:'space-around'}}>
                    <FormItem

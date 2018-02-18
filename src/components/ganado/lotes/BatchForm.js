@@ -65,6 +65,7 @@ class BatchForm extends Component {
 
 
                                 <Select  placeholder={"Selecciona un Corral"}>
+
                                     {options_corral}
                                 </Select>
                             )}

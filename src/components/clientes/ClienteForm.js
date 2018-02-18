@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, Modal, Checkbox } from 'antd';
 
 
 const FormItem = Form.Item;
@@ -11,102 +10,130 @@ const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
-class ClienteForm extends Component {
-    state = {
-        value: '',
-    };
+const ClienteForm = Form.create()(
+    (props)=>{
+        const{visible, onCancel, onCreate, form, rfc, phone, handleChange, contacto} = props;
+        const {getFieldDecorator} = form;
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log(values);
-                this.props.saveCliente(values);
+        return(
+            <Modal
+                visible={visible}
+                title={"Nuevo Cliente"}
+                onCancel={onCancel}
+                width={'30%'}
+                maskClosable={true}
+                footer={[
+                    null,
+                    null,
+                ]}
+            >
+                <Form >
+                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
+                        <FormItem
+                            label="Nombre del Cliente"
+                        >
+                            {getFieldDecorator('client', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
 
-            }
-        });
-    };
+                        <FormItem>
+                            {getFieldDecorator('contact_check', {
+                                valuePropName: 'checked',
+                                initialValue: true,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Checkbox
+                                    value={contacto}
+                                    onChange={handleChange}
+                                >
+                                    Contacto Directo?
+                                </Checkbox>
+                            )}
+                        </FormItem>
+
+                        <FormItem>
+                            {getFieldDecorator('contact')(<Input maxLength={"13"} disabled={contacto}/>)}
+                        </FormItem>
+
+                        <FormItem
+                            label="RFC del Cliente"
+                        >
+                            {getFieldDecorator('rfc', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                    {validator: rfc}
+                                ],
+                            })(
+                                <Input minLength={"13"} maxLength={"13"}  />
+                            )}
+                        </FormItem>
 
 
-    render() {
-        const { getFieldDecorator } = this.props.form;
-        return (
+                        <FormItem
+                            label="Dirección"
+                        >
+                            {getFieldDecorator('address', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
 
-            <Form onSubmit={this.handleSubmit} >
-                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
-                    <FormItem
-                        label="Nombre del Cliente"
-                    >
-                        {getFieldDecorator('client', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
+                        <FormItem
+                            label="Correo electrónico"
+                        >
+                            {getFieldDecorator('email', {
+                                rules: [{
+                                    type: 'email', message: 'No es una dirección de correo válida!',
+                                }, {
+                                    required: true, message: 'Ingresa un E-mail!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Teléfono"
+                        >
+                            {getFieldDecorator('phone_number', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                    {validator: phone}
+                                ],
+                            })(
+                                <Input minLength={"10"} maxLength={"10"}  />
+                            )}
+                        </FormItem>
+
+
+
+                    </div>
+                    <FormItem>
+                        <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                            Guardar
+                        </Button>
                     </FormItem>
 
-                    <FormItem
-                        label="Dirección"
-                    >
-                        {getFieldDecorator('address', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Correo electrónico"
-                    >
-                        {getFieldDecorator('email', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        label="Teléfono"
-                    >
-                        {getFieldDecorator('phone_number', {
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
 
 
+                </Form>
 
-                </div>
-                <FormItem>
-                    <Button type="primary" htmlType="submit" size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
-                        Guardar
-                    </Button>
-                </FormItem>
+            </Modal>
 
-
-
-            </Form>
-
-        );
+        )
     }
-}
+);
 
-const mapStateToProps = (state, ownProps) => ({
-});
-
-const mapDispatchToProps = () => ({
-
-});
-
-const FormCliente = Form.create()(ClienteForm);
-
-ClienteForm = connect(mapStateToProps, mapDispatchToProps)(ClienteForm);
-export default FormCliente;
+export default ClienteForm

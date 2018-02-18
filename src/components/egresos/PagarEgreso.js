@@ -2,13 +2,14 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {Table, Button, Modal, Switch, message, Popconfirm, Tag} from "antd";
 import MainLoader from "../common/Main Loader";
+import moment from 'moment';
 import * as egresosActions from '../../redux/actions/egresosActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 const columns = [
     {
-        title: 'Proveedor',
+        title: 'Razón Social',
         dataIndex: 'provider',
         render: provider=>provider && provider !== null ?provider.provider:'No Provider'
     },
@@ -19,12 +20,18 @@ const columns = [
     {
         title: 'No. Factura',
         dataIndex: 'no_check',
-        render:no_check=> <span>{no_check?<span>{no_check}</span>:'No hay factura'}</span>
+        render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
     },
     {
         title: 'Status',
         dataIndex:'paid',
         render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Pagado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>}</span>
+    },
+    {
+        title: 'Registro',
+        dataIndex: 'created',
+        render: created => moment(created).startOf('day').fromNow()
+
     },
     {
         title: 'Actions',

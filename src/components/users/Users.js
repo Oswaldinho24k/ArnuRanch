@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class GastosPage extends Component {
+class Users extends Component {
     state = {};
 
     render() {
         return (
-            <div>
-                Lista general de gastos
-            </div>
+            <h1>Usuarios</h1>
         );
     }
 }
@@ -27,5 +25,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-GastosPage = connect(mapStateToProps, mapDispatchToProps)(GastosPage);
-export default GastosPage;
+Users = connect(mapStateToProps, mapDispatchToProps)(Users);
+export default Users;

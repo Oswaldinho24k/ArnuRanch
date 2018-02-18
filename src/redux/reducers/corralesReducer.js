@@ -15,6 +15,8 @@ function list(state=[], action){
 }
 
 
+
+
 const corralesReducer = combineReducers({
     list:list,
 });

@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Select, Button, Checkbox, InputNumber} from 'antd';
+import {Form, Input, Select, Button, Checkbox, InputNumber, message} from 'antd';
 import {editEgreso} from "../../redux/actions/egresosActions";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total,}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -16,25 +16,31 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                 editEgreso(values)
                     .then(r=>{
                         console.log("Editado con éxito");
-                        handleEditMode()
+                        handleEditMode();
+                        message.success('Guardado con éxito');
                     }).catch(e=>{
                     console.log(e)
                 })
-            }
+            }else{message.error('Algo fallo, verifica los campos');}
         });
     };
+
+
 
     return (
         <Fragment>
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
-                <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                     {proveedores?
                         <FormItem
-                            label={"Proveedor"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('provider',{
-                                initialValue:provider.id
+                                initialValue:provider.id,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -44,26 +50,33 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             )}
                         </FormItem>:
                         <FormItem
-                            label={"Proveedor"}
+                            label={"Razón Social"}
                         >
                             {form.getFieldDecorator('provider',{
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
 
                             })(
                                 <Select
                                     disabled={!editMode}
 
-                                    placeholder={"Proveeder"}>
+                                    placeholder={"Proveedor"}>
                                     {proveedores}
                                 </Select>
                             )}
                         </FormItem>}
+
 
                     {business_line?
                         <FormItem
                             label={"Linea de negocio"}
                         >
                             {form.getFieldDecorator('business_line',{
-                                initialValue:business_line
+                                initialValue:business_line,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -76,6 +89,9 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             label={"Linea de negocio"}
                         >
                             {form.getFieldDecorator('business_line',{
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
 
                             })(
                                 <Select
@@ -90,7 +106,10 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                     <FormItem
                         label="Monto">
                         {form.getFieldDecorator('total', {
-                            initialValue:total
+                            initialValue:total,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <InputNumber
                                 disabled={!editMode}
@@ -107,6 +126,9 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             {form.getFieldDecorator('purchase_check', {
                                 valuePropName: 'checked',
                                 initialValue: purchase_check,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
                             })(
                                 <Checkbox
                                     disabled={!editMode}
@@ -118,7 +140,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
 
                         <FormItem>
                             {form.getFieldDecorator('no_check',{
-                                initialValue:no_check
+                                initialValue:no_check,
                             })(
                                 <Input
                                     disabled={!editMode}
@@ -133,6 +155,9 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                         {form.getFieldDecorator('paid', {
                             valuePropName: 'checked',
                             initialValue: paid,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Checkbox
                                 disabled={!editMode}
