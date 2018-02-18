@@ -36,7 +36,34 @@ class Item {
 class FormulasForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            insumosKeys : [],
+            initialKeys: [],
+            units: []
+        }
+    }
+
+    componentWillMount () {
+        uuid = 0;
+        const {formula} = this.props || [];
+        let initialKeys = [];
+        let insumosKeys = [];
+        let units = [];
+        if (formula) {
+            let {items} = formula || [];
+            items.forEach( item => {
+                insumosKeys.push(item.insumo.id);
+                units.push(parseFloat(item.unit));
+            });
+            for(let i = 0 ; i < items.length; i++){
+                initialKeys.push(i);
+                uuid++;
+            }
+
+        }
+        console.log(insumosKeys);
+        this.setState({initialKeys,insumosKeys, units});
+
     }
 
     remove = k => {
@@ -127,8 +154,9 @@ class FormulasForm extends Component {
     };
 
     render() {
-        const {form: {getFieldDecorator, getFieldValue}, title, width, onCancel, formula, onDelete} = this.props;
-        getFieldDecorator('keys', {initialValue: []});
+        const {form: {getFieldDecorator, getFieldValue}, title, width, onCancel, formula = {items:[]}, onDelete} = this.props;
+        const {initialKeys,insumosKeys,units} = this.state;
+        getFieldDecorator('keys', {initialValue: initialKeys});
         const keys = getFieldValue('keys');
         let insumos_options = this.props.insumos || [];
         insumos_options = insumos_options.map(insumo =>
@@ -139,6 +167,9 @@ class FormulasForm extends Component {
                 {insumo.name}
             </Option>
         );
+        console.log(insumosKeys);
+        console.log(uuid);
+        console.log(keys);
         const formItems = keys.map((k, index) => {
             return (
                 <div className="newInsumo" key={k}>
@@ -149,6 +180,7 @@ class FormulasForm extends Component {
                     >
                         {
                             getFieldDecorator(`insumos[${k}]`, {
+                                initialValue: insumosKeys[k],
                                 validateTrigger: ['onChange', 'onBlur'],
                                 rules: [{
                                     required: true,
@@ -172,6 +204,7 @@ class FormulasForm extends Component {
                         style={{width: '45%', marginRight: 8, boxSizing: 'border-box', padding: 10}}
                     >
                         {getFieldDecorator(`units[${k}]`, {
+                            initialValue: units[k],
                             validateTrigger: ['onChange', 'onBlur'], //'onBlur'
                             rules: [{
                                 required: true,
@@ -255,7 +288,7 @@ const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     let formula;
     if (id !== 'add') {
-        formula = (state.formulas.list.filter(formula => formula.id === id)[0]);
+        formula = (state.formulas.list.filter(formula => formula.id == id)[0]);
     }
     return {
         formula,
