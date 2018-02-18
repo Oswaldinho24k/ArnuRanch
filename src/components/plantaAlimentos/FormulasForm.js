@@ -40,6 +40,10 @@ class FormulasForm extends Component {
         }
     }
 
+    componentWillMount () {
+        uuid = 0;
+    }
+
     remove = k => {
         const {form} = this.props;
         const keys = form.getFieldValue('keys');
@@ -155,7 +159,6 @@ class FormulasForm extends Component {
 
     render() {
         const {form: {getFieldDecorator, getFieldValue}, title, width, onCancel, formula = {items:[]}, onDelete} = this.props;
-        uuid = 0;
         let initialKeys = [];
         let insumosKeys = [];
         let units = [];
@@ -183,9 +186,6 @@ class FormulasForm extends Component {
                 {insumo.name}
             </Option>
         );
-        console.log(insumosKeys);
-        console.log(uuid);
-        console.log(keys);
         const formItems = keys.map((k, index) => {
             return (
                 <div className="newInsumo" key={k}>
