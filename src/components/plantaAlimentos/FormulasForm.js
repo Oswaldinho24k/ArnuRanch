@@ -90,8 +90,8 @@ class FormulasForm extends Component {
                     if (insumoId) {
                         let insumo = insumosObjs.find(insumo => insumo.id === insumoId);
                         let subtotal = insumo['unit_price_total'] * parseFloat(units[i]);
-                        total_price += subtotal;
-                        console.log(this.props.formula);
+                        subtotal = parseFloat(subtotal.toPrecision(2));
+                        total_price += parseFloat(subtotal.toPrecision(2));
                         const formulaId = this.props.formula ? this.props.formula.id : 0;
                         let item = new Item(insumoId, formulaId, parseFloat(units[i]), subtotal);
                         insumos[i++] = insumoId;
@@ -134,7 +134,7 @@ class FormulasForm extends Component {
                 } else {
                     formula['id'] = this.props.formula.id;
                     for(let item of this.props.formula.items){
-                        this.props.deleteItem(item.id);
+                        this.props.deleteItem(item.id).then(r => console.log(r)).catch( e => console.log(e));
                     }
                     this.props.editFormula(formula)
                         .then( r => {
