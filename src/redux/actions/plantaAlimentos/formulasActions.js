@@ -54,9 +54,11 @@ export const editFormula = formula => (dispatch, getState) => {
     return api.updateFormula(formula)
         .then( r => {
             dispatch(editFormulaSuccess(r));
-            console.log(r)
+            console.log(r);
+            return r;
         }).catch(e=>{
-            console.log(e)
+            console.log(e);
+            return e;
     });
 };
 
