@@ -37,33 +37,7 @@ class FormulasForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            insumosKeys : [],
-            initialKeys: [],
-            units: []
         }
-    }
-
-    componentWillMount () {
-        uuid = 0;
-        const {formula} = this.props || [];
-        let initialKeys = [];
-        let insumosKeys = [];
-        let units = [];
-        if (formula) {
-            let {items} = formula || [];
-            items.forEach( item => {
-                insumosKeys.push(item.insumo.id);
-                units.push(parseFloat(item.unit));
-            });
-            for(let i = 0 ; i < items.length; i++){
-                initialKeys.push(i);
-                uuid++;
-            }
-
-        }
-        console.log(insumosKeys);
-        this.setState({initialKeys,insumosKeys, units});
-
     }
 
     remove = k => {
@@ -155,7 +129,23 @@ class FormulasForm extends Component {
 
     render() {
         const {form: {getFieldDecorator, getFieldValue}, title, width, onCancel, formula = {items:[]}, onDelete} = this.props;
-        const {initialKeys,insumosKeys,units} = this.state;
+        uuid = 0;
+        let initialKeys = [];
+        let insumosKeys = [];
+        let units = [];
+        let nameFormula = '';
+        if (formula) {
+            nameFormula = formula.name;
+            let {items} = formula || [];
+            items.forEach( item => {
+                insumosKeys.push(item.insumo.id);
+                units.push(parseFloat(item.unit));
+            });
+            for(let i = 0 ; i < items.length; i++){
+                initialKeys.push(i);
+                uuid++;
+            }
+        }
         getFieldDecorator('keys', {initialValue: initialKeys});
         const keys = getFieldValue('keys');
         let insumos_options = this.props.insumos || [];
@@ -252,6 +242,7 @@ class FormulasForm extends Component {
                         required={true}
                     >
                         {getFieldDecorator(`formulaName`, {
+                            initialValue: nameFormula,
                             rules: [{
                                 required: true,
                                 whitespace: true,
