@@ -24,7 +24,7 @@ class AdminPage extends Component {
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         if(!userToken){
             this.props.history.push('/login');
-            this.setState({user:this.props.user})
+
         }
     }
 
@@ -44,7 +44,7 @@ class AdminPage extends Component {
     render() {
         let {user, fetched} = this.props;
         console.log(this.props);
-        if(!fetched)return(<MainLoader/>);
+        if(!user)return(<MainLoader/>);
         return (
             <Layout className={'leftside'}>
                 <Sider
