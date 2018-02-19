@@ -66,6 +66,18 @@ class FormulasPage extends Component {
                 this.setState({selectedRowsKeys:selectedRowKeys})
             }
         };
+
+        const expandedRowRender = (record, key) => {
+            const {columnsNestedTable} = metadata;
+            return (
+                <Table
+                    columns={columnsNestedTable}
+                    dataSource={record.items}
+                    rowKey={(record)=> record.id}
+                    pagination={false}
+                />
+            );
+        };
         return (
             <div>
                 <h1>Fórmulas</h1>
@@ -73,6 +85,7 @@ class FormulasPage extends Component {
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={formulas}
+                    expandedRowRender={expandedRowRender}
                     rowKey={record => record.id}
                     scroll={{x: 650}}
                 />
