@@ -73,7 +73,6 @@ class IngresosPage extends Component {
     state = {
         visible: false,
         selectedRowKeys:[],
-        contacto_directo:true,
     };
 
     showModal = () => {
@@ -151,7 +150,6 @@ class IngresosPage extends Component {
             onChange: this.onSelectChange,
         };
         let {ingresos, fetched, clientes} = this.props;
-        console.log(clientes)
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_clientes = clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
         if(!fetched)return(<MainLoader/>);

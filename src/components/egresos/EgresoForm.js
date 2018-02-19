@@ -10,7 +10,7 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura} = props;
+        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type} = props;
         const {getFieldDecorator} = form;
 
 
@@ -66,6 +66,24 @@ const FormEgreso = Form.create()(
                                 <Select  placeholder={"Linea de Negocio"}>
 
                                     {options}
+                                </Select>
+                            )}
+
+                        </FormItem>
+
+                        <FormItem
+                            label={"Tipo de egreso"}
+                        >
+                            {getFieldDecorator('type', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+
+
+                                <Select  placeholder={"Tipo de egreso"}>
+
+                                    {type}
                                 </Select>
                             )}
 

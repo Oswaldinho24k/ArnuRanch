@@ -6,14 +6,34 @@ const FormItem = Form.Item;
 const TextArea = Input;
 const InputGroup = Input.Group;
 
+const styles = {
+    form:{
+        display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
+
+    },
+    formSection:{
+        display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'
+    },
+    sectionCheck:{
+        display:'flex',justifyContent:'flex-end', flexWrap:'wrap'
+    },
+    buttonSave:{
+        borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'
+    }
+};
+
 const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
 const ClienteForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, rfc, phone, handleChange, contacto} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, handleChange, contacto, on, handleChangeOn} = props;
         const {getFieldDecorator} = form;
+
+        const style = {
+            display: on ? 'none' : 'block',
+        };
 
         return(
             <Modal
@@ -41,26 +61,43 @@ const ClienteForm = Form.create()(
                             )}
                         </FormItem>
 
-                        <FormItem>
-                            {getFieldDecorator('contact_check', {
-                                valuePropName: 'checked',
-                                initialValue: true,
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Checkbox
-                                    value={contacto}
-                                    onChange={handleChange}
-                                >
-                                    Contacto Directo?
-                                </Checkbox>
-                            )}
-                        </FormItem>
+                        <div style={styles.sectionCheck}>
+                            <FormItem>
+                                {getFieldDecorator('direct_contact', {
+                                    valuePropName: 'checked',
+                                    initialValue: true,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Checkbox
+                                        value={on}
+                                        onChange={handleChangeOn}
+                                    >
+                                        Contacto Directo?
+                                    </Checkbox>
+                                )}
 
-                        <FormItem>
-                            {getFieldDecorator('contact')(<Input maxLength={"13"} disabled={contacto}/>)}
-                        </FormItem>
+                            </FormItem>
+
+                            <div style={style}>
+                                <FormItem>
+                                    {getFieldDecorator('name_contact', {initialValue: "",})
+                                    (<Input disabled={on} hidden={on} placeholder={"Nombre Completo"} />)}
+                                </FormItem>
+
+                                <FormItem>
+                                    {getFieldDecorator('phone_contact', {initialValue: "",})
+                                    (<Input disabled={on} hidden={on} placeholder={"Telefono"} />)}
+                                </FormItem>
+
+                                <FormItem>
+                                    {getFieldDecorator('comments_contact', {initialValue: "",})
+                                    (<Input disabled={on} hidden={on} placeholder={"Comentarios"} />)}
+                                </FormItem>
+                            </div>
+
+                        </div>
 
                         <FormItem
                             label="RFC del Cliente"

@@ -1,16 +1,29 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
 import { Form, Input, Button, Select, InputNumber, Checkbox, Modal } from 'antd';
 
 
 const FormItem = Form.Item;
 const TextArea = Input;
-const InputGroup = Input.Group;
-const Option = Select.Option;
+
+const styles = {
+    form:{
+        display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
+
+    },
+    formSection:{
+        display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'
+    },
+    sectionCheck:{
+        display:'flex',justifyContent:'flex-end', flexWrap:'wrap'
+    },
+    buttonSave:{
+        borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'
+    }
+};
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura}=props;
+        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura,}=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -26,8 +39,7 @@ const FormIngreso = Form.create()(
                 ]}
             >
                 <Form >
-                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
-
+                    <div style={styles.form}>
                         <FormItem
                             label={"Razón Social"}
                         >
@@ -39,18 +51,13 @@ const FormIngreso = Form.create()(
                                     placeholder:'Selecciona un Cliente',
                                 }
                             })(
-
-
                                 <Select  placeholder={"Selecciona un Cliente"}>
                                     {options_clientes}
                                 </Select>
                             )}
-
                         </FormItem>
 
-                        <FormItem
-                            label={"Linea de negocio"}
-                        >
+                        <FormItem label={"Linea de negocio"}>
                             {getFieldDecorator('business_line', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
@@ -63,7 +70,6 @@ const FormIngreso = Form.create()(
                                     {options}
                                 </Select>
                             )}
-
                         </FormItem>
 
                         <FormItem
@@ -83,7 +89,7 @@ const FormIngreso = Form.create()(
                             )}
                         </FormItem>
 
-                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                        <div style={styles.formSection}>
                             <FormItem>
                                 {getFieldDecorator('sale_check', {
                                     valuePropName: 'checked',
@@ -102,12 +108,12 @@ const FormIngreso = Form.create()(
                             </FormItem>
 
                             <FormItem>
-                                {getFieldDecorator('no_scheck')(<Input disabled={!factura}/>)}
+                                {getFieldDecorator('no_scheck', {initialValue: ""})(<Input disabled={!factura}/>)}
                             </FormItem>
 
                         </div>
 
-                        <div style={{display:'flex',justifyContent:'flex-end'}}>
+                        <div style={styles.sectionCheck}>
 
                             <FormItem >
                                 {getFieldDecorator('paid', {
@@ -120,11 +126,11 @@ const FormIngreso = Form.create()(
                                     <Checkbox>Cobrado</Checkbox>
                                 )}
                             </FormItem>
-                        </div>
 
+                        </div>
                     </div>
                     <FormItem>
-                        <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                        <Button type="primary" onClick={onCreate} size="large" style={styles.buttonSave}>
                             Guardar
                         </Button>
                     </FormItem>
