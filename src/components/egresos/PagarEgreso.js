@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch, message, Popconfirm, Tag} from "antd";
+import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Divider} from "antd";
 import MainLoader from "../common/Main Loader";
 import moment from 'moment';
 import * as egresosActions from '../../redux/actions/egresosActions';
@@ -92,6 +92,12 @@ class PagarEgreso extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Egresos por pagar
+                </div>
+
                 <h1>Egresos * Pagar</h1>
 
                 <Table

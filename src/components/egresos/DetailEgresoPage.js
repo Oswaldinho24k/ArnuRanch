@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Card, Select} from 'antd';
+import {Card, Select, Divider} from 'antd';
 import InfoEgreso from "./InfoEgreso";
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
@@ -62,6 +63,15 @@ class DetailEgresoPage extends Component{
         let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
         let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
         return(
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    <Link to={`/admin/egresos/`} style={{color:'black'}} >Egresos</Link>
+                    <Divider type="vertical" />
+                    Egreso {egreso.id}
+                </div>
+
             <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(egreso.created).startOf(3, 'days').calendar()}</span>
@@ -76,6 +86,7 @@ class DetailEgresoPage extends Component{
 
                     />
                 </Card>
+            </div>
             </div>
         )
     }

@@ -175,6 +175,11 @@ class EgresosPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Egresos
+                </div>
                 <h1>Egresos Page</h1>
                 <Table
                     rowSelection={rowSelection}

@@ -155,6 +155,12 @@ class IngresosPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Ingresos
+                </div>
+
                 <h1>Ingresos Page</h1>
 
                 <Table

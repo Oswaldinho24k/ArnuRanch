@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Button, message, Popconfirm, Divider} from 'antd';
+import {Table, Button, message, Popconfirm, Divider, BackTop} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/clientesActions';
 import {connect} from 'react-redux';
@@ -43,6 +43,7 @@ class ClientePage extends Component {
             visible: false,
             selectedRowKeys:[],
             on:true,
+            //data,
         };
 
     showModal = () => {
@@ -148,7 +149,14 @@ class ClientePage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Clientes
+                </div>
+
                 <h1>Clientes</h1>
+                <BackTop visibilityHeight={100} />
 
                 <Table
                     rowSelection={rowSelection}

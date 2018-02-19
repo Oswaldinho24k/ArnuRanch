@@ -153,6 +153,12 @@ class ProovedorPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Proveedores
+                </div>
+
                 <h1>Proveedores</h1>
 
                 <Table

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Card} from 'antd';
+import {Card, Divider} from 'antd';
+import {Link} from 'react-router-dom';
 import ClientInfo from "./InfoClient";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -42,6 +43,14 @@ class DetailClientPage extends Component{
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
         return(
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    <Link to={`/admin/clientes/`} style={{color:'black'}} >Clientes</Link>
+                    <Divider type="vertical" />
+                    Cliente {cliente.id}
+                </div>
             <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <ClientInfo
@@ -53,6 +62,7 @@ class DetailClientPage extends Component{
                         phone={this.checkPhone}
                     />
                 </Card>
+            </div>
             </div>
         )
     }
