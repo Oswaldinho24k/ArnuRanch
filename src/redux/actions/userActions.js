@@ -26,10 +26,10 @@ export const logIn=(data)=>(dispatch, getState)=>{
     return api.logIn(data)
         .then(r=>{
             localStorage.setItem('userRanchoToken', JSON.stringify(r.token));
+            dispatch(checkIfUser());
         }).catch(e=>{
         throw e
     })
-
 };
 
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
