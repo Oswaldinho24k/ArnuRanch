@@ -83,13 +83,15 @@ class BatchPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/lotes/?q=';
         let url = basePath+this.state.searchText;
         console.log(url)
         this.props.loteActions.getLotes(url)
     };
     resetFilters=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/lotes/';
+        //let basePath = 'http://localhost:8000/api/ganado/lotes/';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/lotes/';
         this.props.loteActions.getLotes(basePath);
         this.setState({searchText:''});
     };
