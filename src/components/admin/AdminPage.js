@@ -39,8 +39,8 @@ class AdminPage extends Component {
 
     render() {
         let {user, fetched} = this.props;
-        console.log(this.props)
-        if(!fetched)return(<MainLoader/>)
+        console.log(this.props);
+        if(!fetched)return(<MainLoader/>);
         return (
             <Layout className={'leftside'}>
                 <Sider
@@ -48,13 +48,13 @@ class AdminPage extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo" >{!this.state.collapsed?'ADMINSITE':'ADMIN'}</div>
+                    <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'RADMIN'}</div>
                     <LeftSide/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Navbar
-                            user={user}
+                            {...user}
                             logOut={this.logOut}
                             collapsed={this.state.collapsed}
                             toggle={this.toggle}/>

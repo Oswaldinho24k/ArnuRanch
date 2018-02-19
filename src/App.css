@@ -1,6 +1,17 @@
+
 @import "./components/admin/admin.css";
 @import "./components/navbar/navbar.css";
 @import "./components/common/loader.css";
+
+*{
+  margin:0;
+  padding:0;
+}
+h1{
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
 }

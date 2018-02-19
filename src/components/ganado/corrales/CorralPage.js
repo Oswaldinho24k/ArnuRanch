@@ -52,7 +52,8 @@ class CorralPage extends Component {
     saveCorral=(v)=>{
         this.props.corralesActions.saveCorral(v)
             .then(r=>{
-                message.success('agregado con éxito')
+                message.success('agregado con éxito');
+                this.handleCancel()
             }).catch(e=>{
                 for (let i in e.response.data){
                     console.log(e.response.data[i])
@@ -66,7 +67,7 @@ class CorralPage extends Component {
         let {corrales} = this.props;
         return (
             <div>
-                <h1>Corrales</h1>
+                <h2>Listado de Corrales</h2>
                 <Table
                     pagination={false}
                     rowSelection={rowSelection}

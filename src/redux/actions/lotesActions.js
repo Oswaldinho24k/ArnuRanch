@@ -16,7 +16,7 @@ export function getAllDataSuccess(data){
 }
 
 export const getLotes=(url)=>(dispatch, getState)=>{
-    api.getLotes(url)
+    return api.getLotes(url)
         .then(r=>{
             dispatch(getLotesSuccess(r.results));
             dispatch(getAllDataSuccess(r));
@@ -36,7 +36,7 @@ export function saveLoteSuccess(batch){
 }
 
 export const saveLote=(batch)=>(dispatch, getState)=>{
-    api.newLote(batch)
+    return api.newLote(batch)
         .then(r=>{
             let corral = getState().corrales.list.find(c=>c.id===r.corral);
             r['corral']=corral;
@@ -57,7 +57,7 @@ export function editLoteSuccess(lote){
 }
 
 export const editLote=(lote)=>(dispatch, getState)=>{
-    api.editLote(lote)
+    return api.editLote(lote)
         .then(r=>{
             dispatch(editLoteSuccess(r))
         }).catch(e=>{

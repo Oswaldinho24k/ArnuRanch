@@ -23,7 +23,7 @@ class LoginContainer extends Component {
     logIn=(data)=>{
         this.props.userActions.logIn(data)
             .then(r=>{
-                this.props.history.push('/admin/estadisticas')
+                this.props.history.push('/admin/animals')
                 message.success('Welcome')
             }).catch(e=>{
                 console.log(e)

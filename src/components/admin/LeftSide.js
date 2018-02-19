@@ -13,7 +13,7 @@ const LeftSide = ({props}) => {
               //defaultSelectedKeys={['1']}
               //defaultOpenKeys={['sub1', 'sub2', 'sub3']}
         >
-            <SubMenu key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
+            <SubMenu disabled key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
                 <Menu.Item key="1">
                     <Link to={'/admin/estadisticas'} >Estadísticas</Link>
                 </Menu.Item>
@@ -56,13 +56,13 @@ const LeftSide = ({props}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="14">
+                <Menu.Item key="14" disabled>
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 
 
             </SubMenu>
-            <SubMenu key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
+            <SubMenu disabled key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
 
                 <Menu.Item key="15">
                     <Link to={paths.insumos}>Insumos</Link>

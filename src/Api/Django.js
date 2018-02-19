@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -21,7 +21,6 @@ let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
 let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
-
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 

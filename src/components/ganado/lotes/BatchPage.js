@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Table, Button, Modal, Input, Divider, Pagination} from 'antd';
+import {Table, Button, Modal, Input, Divider, Pagination, message} from 'antd';
 import * as lotesActions from '../../../redux/actions/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
@@ -28,14 +28,14 @@ const columns = [
         title: 'Corral ',
         dataIndex: 'corral',
         key:'corral',
-        render:val => <p>{val.no_corral}</p>,
+        render:val => <p>{val?val.no_corral:'No asignado'}</p>,
         width:150
     },
     {
         title: 'No. de Aretes',
         dataIndex:'animals',
         key:'animals',
-        render:val=><p>{val.length}</p>,
+        render:val=><p>{val?val.length:0}</p>,
         width:100
     },
     /*{
@@ -69,6 +69,14 @@ class BatchPage extends Component {
         this.setState({
             visible: false,
         });
+    };
+
+    saveLote=(lote)=>{
+        this.props.loteActions.saveLote(lote)
+            .then(r=>{
+                message.success('lote creado con éxito');
+                this.handleCancel()
+            })
     };
 
     handleSearch=(e)=>{
@@ -108,7 +116,7 @@ class BatchPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h1>Lotes</h1>
+                <h2>Listado de Lotes</h2>
                 {/*Search and filters*/}
                 <div style={{padding:'1% 0'}}>
                     <Input.Search
@@ -161,7 +169,7 @@ class BatchPage extends Component {
                            null,
                        ]}
                 >
-                    <BatchForm corrales={corrales} saveLote={loteActions.saveLote}/>
+                    <BatchForm corrales={corrales} saveLote={this.saveLote}/>
                 </Modal>
             </Fragment>
         );

@@ -54,9 +54,7 @@ class BatchForm extends Component {
                             label={"Corral"}
                         >
                             {getFieldDecorator('corral', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
+
                                 props:{
                                     placeholder:'Selecciona un Corral',
                                     defaultValue: 'Home'
