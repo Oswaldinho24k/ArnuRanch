@@ -233,8 +233,8 @@ class FormulasForm extends Component {
                                 min={1}
                                 max={10000000}
                                 placeholder="Cantidad en kg"
-                                formatter={value => `${value}%`}
-                                parser={value => value.replace("%", '')}
+                                formatter={value => `${value}Kg`}
+                                parser={value => value.replace("Kg", '')}
                             />
                         )}
                     </FormItem>

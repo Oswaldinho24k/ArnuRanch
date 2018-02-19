@@ -62,7 +62,7 @@ const LeftSide = ({props}) => {
 
 
             </SubMenu>
-            <SubMenu disabled key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
+            <SubMenu key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
 
                 <Menu.Item key="15">
                     <Link to={paths.insumos}>Insumos</Link>
