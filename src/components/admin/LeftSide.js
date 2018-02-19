@@ -10,8 +10,8 @@ const LeftSide = ({props}) => {
 
         <Menu theme="dark"
               mode="inline"
-              //defaultSelectedKeys={['1']}
-              //defaultOpenKeys={['sub1', 'sub2', 'sub3']}
+              defaultSelectedKeys={['12']}
+              defaultOpenKeys={['sub2']}
         >
             <SubMenu disabled key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
                 <Menu.Item key="1">
