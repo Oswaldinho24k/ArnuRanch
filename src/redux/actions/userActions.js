@@ -75,10 +75,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getClientes());
         dispatch(getPesadas());
         dispatch(getIngresos());
-
         dispatch(getFormulas());
         dispatch(getInsumos());
-
         dispatch(getEgresos());
 
     }

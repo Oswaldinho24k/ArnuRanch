@@ -15,16 +15,20 @@ const { Header, Sider, Content } = Layout;
 
 class AdminPage extends Component {
 
+    state = {
+        collapsed: false,
+        user:{}
+    };
+
     componentWillMount(){
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         if(!userToken){
-            this.props.history.push('/login')
+            this.props.history.push('/login');
+            this.setState({user:this.props.user})
         }
     }
 
-    state = {
-        collapsed: false,
-    };
+
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
