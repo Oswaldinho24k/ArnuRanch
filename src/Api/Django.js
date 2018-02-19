@@ -974,6 +974,9 @@ const api = {
         });
     },
 
+    //Final Items
+    /*******************Fin planta alimentos *********************/
+
     /*********EGRESOS API******/
 
     getEgresos:()=>{
@@ -1079,8 +1082,6 @@ const api = {
     },
 
 
-    //Final Items
-    /*******************Fin planta alimentos *********************/
 
 };
 
