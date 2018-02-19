@@ -9,15 +9,6 @@ import moment from 'moment';
 import * as egresosActions from '../../redux/actions/egresosActions';
 import FormEgreso from "./EgresoForm";
 
-//fecha ingresos cuentas por cobrar ............... DONE!!
-// razon social............... DONE!!
-// .............nombre cambiar por razon social.....=> DONE!!
-
-// check si es contacto directo o no con check e input => DONE!
-// datos de facturación
-
-// ...........en egreso si es costo o si es gasto.....
-// si es costo a que almacen se va
 const Option = Select.Option;
 const opciones = [{
     name :'Cerdos',
@@ -38,6 +29,17 @@ const opciones = [{
     {
         name:'Campo',
         id:5
+    },
+
+];
+
+const type = [{
+    name :'Gasto',
+    id: 1
+},
+    {
+        name:'Costo',
+        id:2
     },
 
 ];
@@ -167,6 +169,8 @@ class EgresosPage extends Component {
         };
         let {egresos, fetched} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+        //let type = type.map((a) => <Option key={a.name}>{a.name}</Option>);
+        let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
         let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         if(!fetched)return(<MainLoader/>);
         return (
@@ -190,6 +194,7 @@ class EgresosPage extends Component {
                     onCreate={this.handleCreate}
                     options_proveedores={options_proveedores}
                     options={options}
+                    type={tipo}
                     handleChange={this.handleChange}
                     handleChangeD={this.handleChangeD}
                     contacto={this.state.contacto_directo}

@@ -44,7 +44,7 @@ class ProovedorPage extends Component {
     state = {
         visible: false,
         selectedRowKeys:[],
-        contacto_directo:true,
+        on:true,
     };
 
     showModal = () => {
@@ -135,6 +135,12 @@ class ProovedorPage extends Component {
         })
     };
 
+    handleChangeOn = ()=>{
+        this.setState({
+            on: !this.state.on
+        })
+    };
+
 
     render() {
         const { visible, selectedRowKeys } = this.state;
@@ -169,7 +175,8 @@ class ProovedorPage extends Component {
                     rfc={this.checkRfc}
                     phone={this.checkPhone}
                     handleChange={this.handleChange}
-                    contacto={this.state.contacto_directo}
+                    on = {this.state.on}
+                    handleChangeOn={this.handleChangeOn}
 
                 />
 
