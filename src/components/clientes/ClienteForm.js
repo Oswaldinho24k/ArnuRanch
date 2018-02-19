@@ -30,7 +30,7 @@ const ClienteForm = Form.create()(
                 <Form >
                     <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
                         <FormItem
-                            label="Nombre del Cliente"
+                            label="Nombre del Cliente / Razón Social"
                         >
                             {getFieldDecorator('client', {
                                 rules: [{

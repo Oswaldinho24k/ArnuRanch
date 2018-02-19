@@ -36,6 +36,15 @@ if(!debug){
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
     animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
     pesadasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/pesadas/';
+    proveedoresUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/proveedores/';
+    clientesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/clientes/';
+    salesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/ingresos/';
+
+// planta_alimentos
+    insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
+    formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';
 
 }
 

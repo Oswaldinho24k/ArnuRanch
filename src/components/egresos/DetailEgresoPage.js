@@ -50,9 +50,9 @@ class DetailEgresoPage extends Component{
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
         return(
-            <div style={{width:'30%', margin: '0 auto'}} >
+            <div style={{width:'50%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
-                    <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(egreso.created).startOf(3, 'days').calendar()}</span>
+                    <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(egreso.created).format('LL')}</span>
                     <InfoEgreso
                         {...egreso}
                         editEgreso={this.props.egresoActions.editEgreso}

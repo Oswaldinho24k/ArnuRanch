@@ -7,6 +7,7 @@ import LeftSide from "./LeftSide";
 import Sections from "./Sections";
 import Navbar from "../navbar/Navbar";
 import * as userActions from '../../redux/actions/userActions';
+import MainLoader from "../common/Main Loader";
 
 const { Header, Sider, Content } = Layout;
 
@@ -39,7 +40,7 @@ class AdminPage extends Component {
     render() {
         let {user, fetched} = this.props;
         console.log(this.props)
-        if(!fetched)return(<p>loading</p>)
+        if(!fetched)return(<MainLoader/>)
         return (
             <Layout className={'leftside'}>
                 <Sider

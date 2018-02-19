@@ -113,7 +113,8 @@ class AnimalsPage extends Component {
     };
 
     filterByLote=(lote)=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/admin/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url)
         //this.setState({loteFilter:b.props.children})
@@ -122,13 +123,15 @@ class AnimalsPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/admin/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url)
     };
 
     resetFilters=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/admin/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };

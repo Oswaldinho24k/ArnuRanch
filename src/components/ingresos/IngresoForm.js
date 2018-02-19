@@ -117,7 +117,7 @@ const FormIngreso = Form.create()(
                                         required: true, message: 'Completa el campo!',
                                     }],
                                 })(
-                                    <Checkbox>Pagado</Checkbox>
+                                    <Checkbox>Cobrado</Checkbox>
                                 )}
                             </FormItem>
                         </div>
