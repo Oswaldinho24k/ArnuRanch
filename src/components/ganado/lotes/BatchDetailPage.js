@@ -123,7 +123,7 @@ class BatchDetailPage extends Component {
         };
         const disablebutton = selectedRowKeys.length > 0;
         let regEx = new RegExp(search, "i");
-        let animals = lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner));
+        let animals = lote.animals?lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner)):[];
         return (
             <Fragment>
                 <InfoBatch {...lote}

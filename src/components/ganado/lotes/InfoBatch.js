@@ -57,7 +57,7 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                         </FormItem>)}
                 </div>:
                 <div>
-                    <h2>Lote: {name} | Corral: {corral.no_corral} | Status: {status?'Activo':'Inactivo'}</h2>
+                    <h2>Lote: {name} | Corral: {corral?corral.no_corral:'No asignado aún'} | Status: {status?'Activo':'Inactivo'}</h2>
                 </div>}
                 {canEdit?
                     <Button htmlType="submit">Guardar</Button>:''}

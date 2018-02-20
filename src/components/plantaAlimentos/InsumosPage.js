@@ -93,7 +93,7 @@ class InsumosPage extends Component {
         };
         return (
             <div>
-                <h1>Insumos</h1>
+                <h2>Insumos</h2>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
