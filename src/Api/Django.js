@@ -47,13 +47,6 @@ if(!debug){
 
 }
 
-//functions
-let userTokenKey = 'userRanchoToken';
-const userToken = JSON.parse(localStorage.getItem(userTokenKey));
-const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Token ' + userToken
-};
 
 const api = {
     /*-----------------animals functions-----------------------*/
@@ -776,6 +769,12 @@ const api = {
     /*************** Planta Alimentos ************************/
     // Inicio Items
     getItems: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         itemsUrl = url ? url : itemsUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -793,6 +792,12 @@ const api = {
         });
     },
     newItem: item => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject ) => {
            const instance = axios.create({
                baseURL: itemsUrl,
@@ -809,6 +814,12 @@ const api = {
         });
     },
     updateItem : item => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: itemsUrl,
@@ -825,6 +836,12 @@ const api = {
         })
     },
     removeItem: idItem => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: itemsUrl,
@@ -843,6 +860,12 @@ const api = {
     //Final Items
     //  Insumos begin
     getInsumos: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         insumosUrl = url ? url : insumosUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -860,6 +883,12 @@ const api = {
         });
     },
     newInsumo: insumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( ( resolve, reject ) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -876,6 +905,12 @@ const api = {
         });
     },
     updateInsumo : insumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -892,6 +927,12 @@ const api = {
         })
     },
     removeInsumo: idInsumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -910,6 +951,12 @@ const api = {
     // Insumos end
     // Formulas begin
     getFormulas: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         formulasUrl = url ? url : formulasUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -927,6 +974,12 @@ const api = {
         });
     },
     newFormula: formula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject ) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
@@ -943,6 +996,12 @@ const api = {
         });
     },
     updateFormula : formula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
@@ -959,6 +1018,12 @@ const api = {
         })
     },
     removeFormula: idFormula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
