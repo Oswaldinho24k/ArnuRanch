@@ -23,11 +23,14 @@ class InsumosPage extends Component {
     };
 
     onSubmit = (insumo) => {
-        insumo.unit_price = parseFloat(insumo.unit_price.toPrecision(2));
-        insumo.freight = parseFloat(insumo.freight.toPrecision(2));
-        insumo.loading_maneuver = parseFloat(insumo.loading_maneuver.toPrecision(2));
-        insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
-        insumo.unit_price_total = parseFloat(insumo.unit_price_total.toPrecision(2));
+        try {
+            insumo.unit_price = parseFloat(parseFloat(insumo.unit_price).toFixed(2));
+            insumo.freight = parseFloat(parseFloat(insumo.freight).toFixed(2));
+            insumo.loading_maneuver = parseFloat(parseFloat(insumo.loading_maneuver).toFixed(2));
+            insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
+        } catch (e) {
+            console.log(e);
+        }
         console.log(insumo);
         if (insumo.id) {
             this.props.editInsumo(insumo)
