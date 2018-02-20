@@ -57,7 +57,7 @@ const columns = [
     {
       title: 'Registro',
       dataIndex: 'created',
-      render: created => moment(created).startOf(3, 'days').calendar()
+      render: created => moment(created).format('LL')
 
     },
     {

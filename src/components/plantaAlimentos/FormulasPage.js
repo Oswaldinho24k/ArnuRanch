@@ -80,7 +80,7 @@ class FormulasPage extends Component {
         };
         return (
             <div>
-                <h1>Fórmulas</h1>
+                <h2>Fórmulas</h2>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
@@ -96,7 +96,7 @@ class FormulasPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {
+                {/*
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -104,7 +104,7 @@ class FormulasPage extends Component {
                     >
                         Eliminar
                     </Button>
-                }
+                */}
                 <Switch>
                     <Route path={path} render={FormulasFormRender}/>
                 </Switch>

@@ -215,7 +215,7 @@ class FormulasForm extends Component {
 
                     </FormItem>
                     <FormItem
-                        label={index === 0 ? 'Cantidad (kg)' : ''}
+                        label={index === 0 ? 'Cantidad (Kg)' : ''}
                         required={true}
                         style={{width: '45%', marginRight: 8, boxSizing: 'border-box', padding: 10}}
                     >
@@ -224,7 +224,7 @@ class FormulasForm extends Component {
                             validateTrigger: ['onChange', 'onBlur'], //'onBlur'
                             rules: [{
                                 required: true,
-                                whitespace: true,
+                                //whitespace: true,
                                 message: "Debes ingresar un número válido",
                             }],
                         })(
@@ -233,8 +233,8 @@ class FormulasForm extends Component {
                                 min={1}
                                 max={10000000}
                                 placeholder="Cantidad en kg"
-                                formatter={value => `${value}kg`}
-                                parser={value => value.replace("kg", '')}
+                               // formatter={value => `${value}Kg`}
+                                //parser={value => value.replace("Kg", '')}
                             />
                         )}
                     </FormItem>

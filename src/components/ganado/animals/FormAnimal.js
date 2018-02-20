@@ -144,7 +144,7 @@ class FormAnimal extends Component {
                         </FormItem>
 
                         <FormItem
-                            label="Peso Entrada"
+                            label="Peso Entrada (Kg)"
                             style={{width:'150px'}}
                         >
                             {getFieldDecorator('peso_entrada', {
@@ -157,8 +157,8 @@ class FormAnimal extends Component {
                                     step={0.01}
                                     min={0}
                                     max={1000}
-                                    formatter={value => `${value}kg`}
-                                    parser={value => value.replace('kg', '')}
+                                    //formatter={value => `${value}kg`}
+                                    //parser={value => value.replace('kg', '')}
                                 />
                             )}
                         </FormItem>

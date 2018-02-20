@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -21,7 +21,6 @@ let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
 let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
-
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 
@@ -36,6 +35,15 @@ if(!debug){
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
     animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
     pesadasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/pesadas/';
+    proveedoresUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/proveedores/';
+    clientesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/clientes/';
+    salesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/ingresos/';
+
+// planta_alimentos
+    insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
+    formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';
 
 }
 
@@ -966,6 +974,9 @@ const api = {
         });
     },
 
+    //Final Items
+    /*******************Fin planta alimentos *********************/
+
     /*********EGRESOS API******/
 
     getEgresos:()=>{
@@ -1071,8 +1082,6 @@ const api = {
     },
 
 
-    //Final Items
-    /*******************Fin planta alimentos *********************/
 
 };
 

@@ -47,9 +47,9 @@ class DetailIngresoPage extends Component{
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let options_clients = clientes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.client}</Option>);
         return(
-            <div style={{width:'30%', margin: '0 auto'}} >
+            <div style={{width:'50%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
-                    <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(ingreso.created).startOf(3, 'days').calendar()}</span>
+                    <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(ingreso.created).format('LL')}</span>
                     <IngresoInfo
                         {...ingreso}
                         editIngreso={this.props.ingresoActions.editIngreso}
