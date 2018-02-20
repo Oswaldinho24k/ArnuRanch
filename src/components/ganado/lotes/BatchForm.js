@@ -33,7 +33,7 @@ class BatchForm extends Component {
         const {corrales} = this.props;
         let options_corral = corrales.filter(c=> c.lotes===null);
 
-        options_corral = options_corral.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.numero_serial}</Option>);
+        options_corral = options_corral.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.no_corral}</Option>);
         return (
 
                 <Form onSubmit={this.handleSubmit} >

@@ -13,6 +13,11 @@ const columns = [
         title: 'Numero de Corral',
         dataIndex: 'no_corral',
         width:200
+    },
+    {
+        title: 'Numero de Serial',
+        dataIndex: 'numero_serial',
+        width:200
     }, {
         title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',
