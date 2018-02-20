@@ -79,9 +79,15 @@ class FormulasForm extends Component {
                 console.log(values);
                 for (let unit of values['units']) {
                     if (unit) {
-                        let unitFloat = parseFloat(unit.replace('kg', ''));
-                        units[i++] = unitFloat;
-                        total_units += unitFloat;
+                        try {
+                            let unitFloat = parseFloat(unit.replace('kg', ''));
+                            console.log('Lol',unitFloat);
+                            units[i++] = parseFloat(unitFloat.toFixed(2));
+                            console.log('Lol',unitFloat);
+                            total_units += unitFloat;
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 }
                 let insumos = [];
@@ -90,8 +96,8 @@ class FormulasForm extends Component {
                     if (insumoId) {
                         let insumo = insumosObjs.find(insumo => insumo.id === insumoId);
                         let subtotal = insumo['unit_price_total'] * parseFloat(units[i]);
-                        subtotal = parseFloat(subtotal.toPrecision(2));
-                        total_price += parseFloat(subtotal.toPrecision(2));
+                        subtotal = parseFloat(subtotal.toFixed(2));
+                        total_price += parseFloat(subtotal.toFixed(2));
                         const formulaId = this.props.formula ? this.props.formula.id : 0;
                         let item = new Item(insumoId, formulaId, parseFloat(units[i]), subtotal);
                         insumos[i++] = insumoId;
