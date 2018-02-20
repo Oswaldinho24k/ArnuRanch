@@ -5,6 +5,7 @@ import {Button, Table} from "antd";
 import InsumosForm from "./InsumosForm";
 import {saveInsumo, editInsumo, deleteInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
 import {Link, Route, Switch} from "react-router-dom";
+import {message} from 'antd';
 
 const path = "/admin/planta_alimentos/insumos/:id";
 const absolutePath = "/admin/planta_alimentos/insumos/";
@@ -28,6 +29,7 @@ class InsumosPage extends Component {
             insumo.freight = parseFloat(parseFloat(insumo.freight).toFixed(2));
             insumo.loading_maneuver = parseFloat(parseFloat(insumo.loading_maneuver).toFixed(2));
             insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
+            insumo.unit_price_total = parseFloat(insumo.unit_price_total.toFixed(2));
         } catch (e) {
             console.log(e);
         }
@@ -36,18 +38,22 @@ class InsumosPage extends Component {
             this.props.editInsumo(insumo)
                 .then(r => {
                     console.log(r);
+                    message.success('Guardado')
                 })
                 .catch(e => {
                     console.log(e);
+                    message.error(e)
                 });
             this.closeModal();
         }else {
             this.props.saveInsumo(insumo)
                 .then(r => {
+                    message.success('Cambios guardados')
                     console.log(r);
                 })
                 .catch(e => {
                     console.log(e);
+                    message.error(e)
                 });
             this.closeModal();
         }
