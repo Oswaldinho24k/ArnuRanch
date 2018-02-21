@@ -7,6 +7,7 @@ import LeftSide from "./LeftSide";
 import Sections from "./Sections";
 import Navbar from "../navbar/Navbar";
 import * as userActions from '../../redux/actions/userActions';
+import MainLoader from "../common/Main Loader";
 
 const { Header, Sider, Content } = Layout;
 
@@ -14,16 +15,20 @@ const { Header, Sider, Content } = Layout;
 
 class AdminPage extends Component {
 
+    state = {
+        collapsed: false,
+        user:{}
+    };
+
     componentWillMount(){
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         if(!userToken){
-            this.props.history.push('/login')
+            this.props.history.push('/login');
+
         }
     }
 
-    state = {
-        collapsed: false,
-    };
+
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -38,8 +43,8 @@ class AdminPage extends Component {
 
     render() {
         let {user, fetched} = this.props;
-        console.log(this.props)
-        if(!fetched)return(<p>loading</p>)
+        console.log(this.props);
+        if(!fetched)return(<MainLoader/>);
         return (
             <Layout className={'leftside'}>
                 <Sider
@@ -47,13 +52,13 @@ class AdminPage extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo" >{!this.state.collapsed?'ADMINSITE':'ADMIN'}</div>
+                    <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'RADMIN'}</div>
                     <LeftSide/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Navbar
-                            user={user}
+                            {...user}
                             logOut={this.logOut}
                             collapsed={this.state.collapsed}
                             toggle={this.toggle}/>

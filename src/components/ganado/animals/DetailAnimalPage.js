@@ -27,10 +27,11 @@ const tabList = [{
 },{
     key:'Pesadas',
     tab:'Pesadas'
-},{
+},/*{
     key:'Reportes',
-    tab:'Reportes'
-}];
+    tab:'Reportes',
+
+}*/];
 
 
 class DetailAnimalPage extends Component {

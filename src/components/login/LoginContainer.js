@@ -17,16 +17,18 @@ class LoginContainer extends Component {
          let field = e.target.name;
          data[field] = e.target.value;
          this.setState({data});
-         console.log(data)
+
     };
 
     logIn=(data)=>{
         this.props.userActions.logIn(data)
             .then(r=>{
-                this.props.history.push('/admin/estadisticas')
+                this.props.history.push('/');
                 message.success('Welcome')
             }).catch(e=>{
-                console.log(e)
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
         })
     };
 

@@ -66,13 +66,26 @@ class FormulasPage extends Component {
                 this.setState({selectedRowsKeys:selectedRowKeys})
             }
         };
+
+        const expandedRowRender = (record, key) => {
+            const {columnsNestedTable} = metadata;
+            return (
+                <Table
+                    columns={columnsNestedTable}
+                    dataSource={record.items}
+                    rowKey={(record)=> record.id}
+                    pagination={false}
+                />
+            );
+        };
         return (
             <div>
-                <h1>Fórmulas</h1>
+                <h2>Fórmulas</h2>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={formulas}
+                    expandedRowRender={expandedRowRender}
                     rowKey={record => record.id}
                     scroll={{x: 650}}
                 />
@@ -83,7 +96,7 @@ class FormulasPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {
+                {/*
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -91,7 +104,7 @@ class FormulasPage extends Component {
                     >
                         Eliminar
                     </Button>
-                }
+                */}
                 <Switch>
                     <Route path={path} render={FormulasFormRender}/>
                 </Switch>

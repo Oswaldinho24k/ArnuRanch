@@ -47,7 +47,7 @@ const ProveedorForm = Form.create()(
                 <Form onSubmit={this.handleSubmit} >
                     <div style={styles.form}>
                         <FormItem
-                            label="Nombre del Proveedor"
+                            label="Nombre del Proveedor/Razón Social"
                         >
                             {getFieldDecorator('provider', {
                                 rules: [{

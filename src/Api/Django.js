@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -21,7 +21,6 @@ let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
 let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
-
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 
@@ -36,16 +35,18 @@ if(!debug){
     corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
     animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
     pesadasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/pesadas/';
+    proveedoresUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/proveedores/';
+    clientesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/clientes/';
+    salesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/ingresos/';
+
+// planta_alimentos
+    insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
+    formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';
 
 }
 
-//functions
-let userTokenKey = 'userRanchoToken';
-const userToken = JSON.parse(localStorage.getItem(userTokenKey));
-const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Token ' + userToken
-};
 
 const api = {
     /*-----------------animals functions-----------------------*/
@@ -768,6 +769,12 @@ const api = {
     /*************** Planta Alimentos ************************/
     // Inicio Items
     getItems: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         itemsUrl = url ? url : itemsUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -785,6 +792,12 @@ const api = {
         });
     },
     newItem: item => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject ) => {
            const instance = axios.create({
                baseURL: itemsUrl,
@@ -801,6 +814,12 @@ const api = {
         });
     },
     updateItem : item => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: itemsUrl,
@@ -817,6 +836,12 @@ const api = {
         })
     },
     removeItem: idItem => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: itemsUrl,
@@ -835,6 +860,12 @@ const api = {
     //Final Items
     //  Insumos begin
     getInsumos: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         insumosUrl = url ? url : insumosUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -852,6 +883,12 @@ const api = {
         });
     },
     newInsumo: insumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( ( resolve, reject ) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -868,6 +905,12 @@ const api = {
         });
     },
     updateInsumo : insumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -884,6 +927,12 @@ const api = {
         })
     },
     removeInsumo: idInsumo => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: insumosUrl,
@@ -902,6 +951,12 @@ const api = {
     // Insumos end
     // Formulas begin
     getFormulas: url => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         formulasUrl = url ? url : formulasUrl;
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
@@ -919,6 +974,12 @@ const api = {
         });
     },
     newFormula: formula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject ) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
@@ -935,6 +996,12 @@ const api = {
         });
     },
     updateFormula : formula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
@@ -951,6 +1018,12 @@ const api = {
         })
     },
     removeFormula: idFormula => {
+        let userTokenKey = 'userRanchoToken';
+        const userToken = JSON.parse(localStorage.getItem(userTokenKey));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + userToken
+        };
         return new Promise( (resolve, reject) => {
             const instance = axios.create({
                 baseURL: formulasUrl,
@@ -965,6 +1038,9 @@ const api = {
             });
         });
     },
+
+    //Final Items
+    /*******************Fin planta alimentos *********************/
 
     /*********EGRESOS API******/
 
@@ -1071,8 +1147,6 @@ const api = {
     },
 
 
-    //Final Items
-    /*******************Fin planta alimentos *********************/
 
 };
 

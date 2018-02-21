@@ -5,6 +5,7 @@ import {Button, Table} from "antd";
 import InsumosForm from "./InsumosForm";
 import {saveInsumo, editInsumo, deleteInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
 import {Link, Route, Switch} from "react-router-dom";
+import {message} from 'antd';
 
 const path = "/admin/planta_alimentos/insumos/:id";
 const absolutePath = "/admin/planta_alimentos/insumos/";
@@ -23,27 +24,36 @@ class InsumosPage extends Component {
     };
 
     onSubmit = (insumo) => {
-        insumo.unit_price = parseFloat(insumo.unit_price);
-        insumo.freight = parseFloat(insumo.freight);
-        insumo.loading_maneuver = parseFloat(insumo.loading_maneuver);
-        insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
+        try {
+            insumo.unit_price = parseFloat(parseFloat(insumo.unit_price).toFixed(2));
+            insumo.freight = parseFloat(parseFloat(insumo.freight).toFixed(2));
+            insumo.loading_maneuver = parseFloat(parseFloat(insumo.loading_maneuver).toFixed(2));
+            insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
+            insumo.unit_price_total = parseFloat(insumo.unit_price_total.toFixed(2));
+        } catch (e) {
+            console.log(e);
+        }
         console.log(insumo);
         if (insumo.id) {
             this.props.editInsumo(insumo)
                 .then(r => {
                     console.log(r);
+                    message.success('Guardado')
                 })
                 .catch(e => {
                     console.log(e);
+                    message.error(e)
                 });
             this.closeModal();
         }else {
             this.props.saveInsumo(insumo)
                 .then(r => {
+                    message.success('Cambios guardados')
                     console.log(r);
                 })
                 .catch(e => {
                     console.log(e);
+                    message.error(e)
                 });
             this.closeModal();
         }
@@ -92,7 +102,7 @@ class InsumosPage extends Component {
         };
         return (
             <div>
-                <h1>Insumos</h1>
+                <h2>Insumos</h2>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
@@ -107,7 +117,7 @@ class InsumosPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {
+                {/*
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -115,7 +125,7 @@ class InsumosPage extends Component {
                     >
                         Eliminar
                     </Button>
-                }
+                */}
 
                 <Switch>
                     <Route path={path} render={InsumosFormRender}/>

@@ -9,7 +9,7 @@ export function getClientesSuccess(clientes){
 }
 
 export const getClientes=()=>(dispatch, getState)=>{
-    api.getClientes()
+    return api.getClientes()
         .then(r=>{
             dispatch(getClientesSuccess(r))
         }).catch(e=>{
@@ -29,7 +29,7 @@ export function saveClienteSuccess(cliente){
 }
 
 export const saveCliente=(cliente)=>(dispatch, getState)=>{
-    api.newCliente(cliente)
+    return api.newCliente(cliente)
         .then(r=>{
             console.log(r);
             dispatch(saveClienteSuccess(r));

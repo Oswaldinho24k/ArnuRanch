@@ -4,20 +4,41 @@ import {Link} from "react-router-dom";
 export const metadata = {
     columns: [
         {
-            title: 'NOMBRE',
+            title: 'Nombre',
             dataIndex: 'name'
         },
         {
-            title: 'INSUMOS',
-            dataIndex: 'items',
-            render: array => <p>{array.length}</p>,
+            title: 'Unidades',
+            dataIndex: 'total_units',
+            render: total => `${total} kgs`,
+        },
+        {
+            title: 'Precio total',
+            dataIndex: 'total_price',
+            render: total => `$ ${total}`,
         },
         {
             title: 'ACTIONS',
             dataIndex: 'id',
-            fixed: 'right',
-            width: 100,
             render: text => <Link to={`/admin/planta_alimentos/formulas/${text}`} >Detalle</Link>,
+        },
+    ],
+
+    columnsNestedTable: [
+        {
+            title: 'Nombre',
+            dataIndex: 'insumo',
+            render: insumo => insumo.name
+        },
+        {
+            title: 'Cantidad',
+            dataIndex: 'unit',
+            render: unit => unit + 'kgs'
+        },
+        {
+            title: 'Subtotal',
+            dataIndex: 'subtotal',
+            render: subtotal =>  '$' + subtotal
         },
     ],
     rowSelection : {

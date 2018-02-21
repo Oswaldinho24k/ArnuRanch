@@ -10,7 +10,7 @@ export function getProveedoresSuccess(proveedores){
 }
 
 export const getProveedores=()=>(dispatch, getState)=>{
-    api.getProveedores()
+    return api.getProveedores()
         .then(r=>{
             dispatch(getProveedoresSuccess(r))
         }).catch(e=>{
@@ -30,7 +30,7 @@ export function saveProveedorSuccess(proveedor){
 }
 
 export const saveProveedor=(proveedor)=>(dispatch, getState)=>{
-    api.newProveedor(proveedor)
+    return api.newProveedor(proveedor)
         .then(r=>{
             console.log(r);
             dispatch(saveProveedorSuccess(r))

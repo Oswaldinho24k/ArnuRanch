@@ -28,7 +28,7 @@ class AnimalsPage extends Component {
         options:'',
         loteFilter:'',
         searchText:'',
-
+        canReset:false,
 
     };
 
@@ -113,22 +113,27 @@ class AnimalsPage extends Component {
     };
 
     filterByLote=(lote)=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?lote=';
         let url = basePath+lote;
-        this.props.animalActions.getAnimals(url)
+        this.props.animalActions.getAnimals(url);
+        this.setState({canReset:true})
         //this.setState({loteFilter:b.props.children})
     };
     handleSearch=(e)=>{
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
-        this.props.animalActions.getAnimals(url)
+        this.props.animalActions.getAnimals(url);
+        this.setState({canReset:true})
     };
 
     resetFilters=()=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/';
+        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };
@@ -153,7 +158,7 @@ class AnimalsPage extends Component {
     render() {
 
 
-        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, } = this.state;
+        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset} = this.state;
 
         const columns = [
             {
@@ -211,7 +216,7 @@ class AnimalsPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
-                <h1>Aretes</h1>
+                <h2>Listado de Aretes</h2>
                 {/*Search and filters*/}
                 <div style={{padding:'1% 0'}}>
                     <Input.Search
@@ -236,7 +241,10 @@ class AnimalsPage extends Component {
                     </Select>
                     <Divider
                         type={'vertical'}/>
-                    <Button type="primary" onClick={this.resetFilters}>Restablecer</Button>
+                    <Button
+                        type="primary"
+                        disabled={!canReset}
+                        onClick={this.resetFilters}>Restablecer</Button>
                 </div>
 
                 {/*table of animals*/}
@@ -251,7 +259,7 @@ class AnimalsPage extends Component {
                         total:animalsData.count,
                         onChange:this.handlePagination,
                         showTotal:total => `Total: ${total} aretes`}}
-                    scroll={{x:650, y:500}}/>
+                    scroll={{x:650, y:400}}/>
                 {/*<Pagination
                     pageSize={20}
                     total={animalsData.count}

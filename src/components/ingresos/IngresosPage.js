@@ -50,7 +50,6 @@ const opciones = [{
 
 ];
 
-
 class IngresosPage extends Component {
     state = {
         visible: false,
