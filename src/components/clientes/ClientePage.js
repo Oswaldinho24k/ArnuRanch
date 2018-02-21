@@ -179,6 +179,8 @@ class ClientePage extends Component {
     resetFilter = () => {
         this.setState({
             data:this.props.clientes,
+            filterDropdownVisible: false,
+            searchText: '',
             filtered: false,
         });
     };
@@ -201,16 +203,16 @@ class ClientePage extends Component {
                     <div style={style.customFilterDropdown}>
                         <Input
                             ref={ele => this.searchInput = ele}
-                            placeholder="Search name"
+                            placeholder="Buscar cliente"
                             value={this.state.searchText}
                             onChange={this.onInputChange}
                             onPressEnter={this.onSearch}
                             style={style.customFilterDropdownInput}
                         />
-                        <Button type="primary" onClick={this.onSearch}>Search</Button>
+                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
                     </div>
                 ),
-                filterIcon: (<Icon type="smile-o" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
+                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
                 ),
                 filterDropdownVisible: this.state.filterDropdownVisible,
                 onFilterDropdownVisibleChange: (visible) => {
@@ -244,9 +246,10 @@ class ClientePage extends Component {
             }
         ];
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filterDropdownVisible, filtered } = this.state;
+        console.log(filtered)
         const canDelete = selectedRowKeys.length > 0;
-        const filter = data.length > 0;
+        //const filter = data.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -306,7 +309,7 @@ class ClientePage extends Component {
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filter} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 
             </Fragment>
         );
