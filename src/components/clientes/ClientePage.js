@@ -185,11 +185,6 @@ class ClientePage extends Component {
         });
     };
 
-    /*handleChang = (pagination, filters, sorter) => {
-        console.log('Various parameters', pagination, filters, sorter);
-
-    };
-*/
 
 
 
@@ -246,7 +241,7 @@ class ClientePage extends Component {
             }
         ];
 
-        const { visible, selectedRowKeys, data, filterDropdownVisible, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered } = this.state;
         console.log(filtered)
         const canDelete = selectedRowKeys.length > 0;
         //const filter = data.length > 0;
@@ -256,6 +251,8 @@ class ClientePage extends Component {
         };
         let {clientes, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
+        console.log(clientes);
+        console.log(data);
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -304,7 +301,7 @@ class ClientePage extends Component {
                 <Divider type={'vertical'} />
 
                 <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />

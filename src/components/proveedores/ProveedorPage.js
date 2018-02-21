@@ -1,42 +1,27 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, message, Popconfirm, Divider} from 'antd';
+import {Table, Button, Modal, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
 import ProveedorForm from './ProveedorForm';
 import * as proveedoresActions from '../../redux/actions/proveedoresActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import MainLoader from "../common/Main Loader";
 
-const columns = [
-    {
-        title: 'Proveedor',
-        dataIndex: 'provider',
-    },
-    {
-        title: 'Dirección',
-        dataIndex: 'address',
-    },
-    {
-      title: 'E-mail',
-        dataIndex: 'email'
-    },
-    {
-        title: 'RFC',
-        dataIndex: 'rfc'
-    },
-    {
-        title: 'Actions',
-        key: 'action',
-        fixed:'right',
-        width:100,
-        render: (text, record) => (
-            <span>
-              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
-            </span>
-        ),
-    }
-];
+import TablePageB from "../clientes/TablePageB";
 
+const style={
+    customFilterDropdown: {
+        padding: 8,
+        borderRadius: 6,
+        backgroundColor: 'white',
+        boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
+    },
+
+    customFilterDropdownInput: {
+        width: 130,
+        marginRight: 8,
+    }
+};
 
 
 class ProovedorPage extends Component {
@@ -45,6 +30,11 @@ class ProovedorPage extends Component {
         visible: false,
         selectedRowKeys:[],
         on:true,
+
+        data:[],
+        filterDropdownVisible: false,
+        searchText: '',
+        filtered: false,
     };
 
     showModal = () => {
@@ -141,9 +131,114 @@ class ProovedorPage extends Component {
         })
     };
 
+    onInputChange = (e) => {
+        this.setState({ searchText: e.target.value });
+        console.log(e.target.value)
+    };
+
+    onSearch = () => {
+        const { searchText } = this.state;
+        console.log(searchText);
+        const reg = new RegExp(searchText, 'gi');
+        console.log(reg)
+        console.log(this.props.proveedores)
+        this.setState({
+            filterDropdownVisible: false,
+            filtered: !!searchText,
+            data: this.props.proveedores.map((record) => {
+                const match = record.provider.match(reg);
+                console.log(record)
+                if (!match) {
+                    return null;
+                    console.log(match)
+                }
+                console.log(record)
+                console.log(match)
+                return {
+                    ...record,
+                    provider: (
+                        <span>
+              {record.provider.split(reg).map((provider, i) => (
+                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, provider] : provider
+              ))}
+            </span>
+                    ),
+                };
+            }).filter(record => !!record),
+        });
+    };
+
+    componentWillMount(){
+        this.setState({
+            data:this.props.proveedores
+        });
+    }
+
+    resetFilter = () => {
+        this.setState({
+            data:this.props.proveedores,
+            filterDropdownVisible: false,
+            searchText: '',
+            filtered: false,
+        });
+    };
+
 
     render() {
-        const { visible, selectedRowKeys } = this.state;
+
+        const columns = [
+            {
+                title: 'Proveedor',
+                dataIndex: 'provider',
+                key:'provider',
+                filterDropdown: (
+                    <div style={style.customFilterDropdown}>
+                        <Input
+                            ref={ele => this.searchInput = ele}
+                            placeholder="Buscar proveedor"
+                            value={this.state.searchText}
+                            onChange={this.onInputChange}
+                            onPressEnter={this.onSearch}
+                            style={style.customFilterDropdownInput}
+                        />
+                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
+                    </div>
+                ),
+                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
+                ),
+                filterDropdownVisible: this.state.filterDropdownVisible,
+                onFilterDropdownVisibleChange: (visible) => {
+                    this.setState({
+                        filterDropdownVisible: visible,
+                    }, () => this.searchInput && this.searchInput.focus());
+                },
+            },
+            {
+                title: 'Dirección',
+                dataIndex: 'address',
+            },
+            {
+                title: 'E-mail',
+                dataIndex: 'email'
+            },
+            {
+                title: 'RFC',
+                dataIndex: 'rfc'
+            },
+            {
+                title: 'Actions',
+                key: 'action',
+                fixed:'right',
+                width:100,
+                render: (text, record) => (
+                    <span>
+              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
+            </span>
+                ),
+            }
+        ];
+
+        const { visible, selectedRowKeys, data, filtered } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -160,8 +255,13 @@ class ProovedorPage extends Component {
                 </div>
 
                 <h1>Proveedores</h1>
+                <BackTop visibilityHeight={100} />
 
-                <Table
+                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
+                    :<TablePageB data={proveedores} columns={columns} rowSelection={rowSelection}/>
+                }
+
+               {/* <Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={proveedores}
@@ -169,7 +269,7 @@ class ProovedorPage extends Component {
                     scroll={{x:650}}
                     pagination={false}
                     style={{marginBottom:10}}
-                />
+                />*/}
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
 
@@ -190,8 +290,12 @@ class ProovedorPage extends Component {
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this proveedor?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                    <Button hidden={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
+
+                <Divider type={'vertical'} />
+
+                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 
                </Fragment>
         );
