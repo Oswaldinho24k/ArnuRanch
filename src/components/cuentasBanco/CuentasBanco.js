@@ -1,50 +1,36 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch, message, Popconfirm, Tag} from "antd";
+import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Input, Icon, BackTop} from "antd";
 import MainLoader from "../common/Main Loader";
 import moment from 'moment';
 import * as egresosActions from '../../redux/actions/egresosActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import TablePageB from "../clientes/TablePageB";
 
-const columns = [
-    {
-        title: 'Razón Social',
-        dataIndex: 'provider',
-        render: provider=>provider && provider !== null ?provider.provider:'No Provider'
+const style={
+    customFilterDropdown: {
+        padding: 8,
+        borderRadius: 6,
+        backgroundColor: 'white',
+        boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
     },
-    {
-        title: 'Linea de negocio',
-        dataIndex: 'business_line',
-    },
-    {
-        title: 'No. Factura',
-        dataIndex: 'no_check',
-        render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
-    },
-    {
-        title: 'Tipo',
-        dataIndex:'type',
-        render:type=><span>{type?<Tag color="#2db7f5" style={{width:70, textAlign:'center'}}>Gasto</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>GastoFail</Tag>}</span>
-    },
-    {
-        title: 'Registro',
-        dataIndex: 'created',
-        render: created => moment(created).startOf('day').fromNow()
 
-    },
-    {
-        title: 'Actions',
-        dataIndex: 'id',
-        render: id => <Link to={`/admin/egresos/${id}`} >Detalle</Link>,
-        fixed:'right',
-        width:100
-    },
-];
+    customFilterDropdownInput: {
+        width: 130,
+        marginRight: 8,
+    }
+};
+
 
 class CuentasBanco extends Component {
     state = {
-        selectedRowKeys:[]
+        selectedRowKeys:[],
+
+        data:[],
+        filterDropdownVisible: false,
+        searchText: '',
+        filtered: false,
     };
 
     showModal = () => {
@@ -79,9 +65,117 @@ class CuentasBanco extends Component {
         this.setState({ selectedRowKeys });
     };
 
+    onInputChange = (e) => {
+        this.setState({ searchText: e.target.value });
+
+    };
+
+    onSearch = () => {
+        let filtrados = this.props.egresos.filter(f=>{return f.type==="Gasto" });
+        const { searchText } = this.state;
+        const reg = new RegExp(searchText, 'gi');
+        this.setState({
+            filterDropdownVisible: false,
+            filtered: !!searchText,
+            data: filtrados.map((record) => {
+                const match = record.provider.provider.match(reg);
+                if (!match) {
+                    return null;
+                }
+                return {
+                    ...record,
+                    provider: (
+                        <span >
+              {record.provider.provider.split(reg).map((provider, i) => (
+                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, provider] : provider
+
+              ))}
+            </span>
+                    ),
+                };
+            }).filter(record => !!record),
+        });
+    };
+
+    componentWillMount(){
+        this.setState({
+            data:this.props.egresos.filter(f=>{return f.type==="Gasto" })
+        });
+    }
+
+    resetFilter = () => {
+        this.setState({
+            data:this.props.egresos.filter(f=>{return f.type==="Gasto" }),
+            filterDropdownVisible: false,
+            searchText: '',
+            filtered: false,
+        });
+    };
+
 
     render() {
-        const { selectedRowKeys } = this.state;
+
+        const columns = [
+            {
+                title: 'Razón Social',
+                dataIndex: 'provider',
+                render: provider => provider && provider !== null ? provider.provider || provider: "No Proveedor",
+
+
+                key:'provider',
+                filterDropdown: (
+                    <div style={style.customFilterDropdown}>
+                        <Input
+                            ref={ele => this.searchInput = ele}
+                            placeholder="Buscar proveedor"
+                            value={this.state.searchText}
+                            onChange={this.onInputChange}
+                            onPressEnter={this.onSearch}
+                            style={style.customFilterDropdownInput}
+                        />
+                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
+                    </div>
+                ),
+                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
+                ),
+                filterDropdownVisible: this.state.filterDropdownVisible,
+                onFilterDropdownVisibleChange: (visible) => {
+                    this.setState({
+                        filterDropdownVisible: visible,
+                    }, () => this.searchInput && this.searchInput.focus());
+                },
+            },
+            {
+                title: 'Linea de negocio',
+                dataIndex: 'business_line',
+            },
+            {
+                title: 'No. Factura',
+                dataIndex: 'no_check',
+                render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
+            },
+            {
+                title: 'Tipo',
+                dataIndex:'type',
+                render:type=><span>{type && type !==null ?<Tag color="#2db7f5" style={{width:70, textAlign:'center'}}>Gasto</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>GastoFail</Tag>}</span>
+            },
+            {
+                title: 'Registro',
+                dataIndex: 'created',
+                render: created => moment(created).startOf(3, 'days').calendar()
+
+            },
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: id => <Link to={`/admin/egresos/${id}`} >Detalle</Link>,
+                fixed:'right',
+                width:100
+            },
+        ];
+
+
+        const { selectedRowKeys, data, filtered } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -94,7 +188,9 @@ class CuentasBanco extends Component {
             <Fragment>
                 <h1>Cuentas Banco tipo gasto</h1>
 
-                <Table
+                <BackTop visibilityHeight={100} />
+
+                {/*<Table
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={filtrados}
@@ -102,11 +198,17 @@ class CuentasBanco extends Component {
                     scroll={{x:650}}
                     pagination={false}
                     style={{marginBottom:10}}
-                />
+                />*/}
+
+                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
+                    :<TablePageB data={filtrados} columns={columns} rowSelection={rowSelection}/>
+                }
 
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
+                    <Button hidden={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
+
+                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 
             </Fragment>
         );

@@ -57,7 +57,7 @@ const ClienteForm = Form.create()(
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input />
+                                <Input placeholder={"Nombre del cliente"} />
                             )}
                         </FormItem>
 
@@ -109,7 +109,7 @@ const ClienteForm = Form.create()(
                                     {validator: rfc}
                                 ],
                             })(
-                                <Input minLength={"13"} maxLength={"13"}  />
+                                <Input minLength={"13"} maxLength={"13"} placeholder={" RFC a trece dígitos"}  />
                             )}
                         </FormItem>
 
@@ -122,7 +122,7 @@ const ClienteForm = Form.create()(
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input />
+                                <Input placeholder={"Dirección del cliente"} />
                             )}
                         </FormItem>
 
@@ -136,7 +136,7 @@ const ClienteForm = Form.create()(
                                     required: true, message: 'Ingresa un E-mail!',
                                 }],
                             })(
-                                <Input />
+                                <Input placeholder={"correo@gmail.com"}/>
                             )}
                         </FormItem>
 
@@ -150,7 +150,7 @@ const ClienteForm = Form.create()(
                                     {validator: phone}
                                 ],
                             })(
-                                <Input minLength={"10"} maxLength={"10"}  />
+                                <Input minLength={"10"} maxLength={"10"}  placeholder={"Teléfono a 10 dígitos"}/>
                             )}
                         </FormItem>
 
