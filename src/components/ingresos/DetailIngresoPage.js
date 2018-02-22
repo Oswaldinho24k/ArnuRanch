@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Card, Select} from 'antd';
+import {Card, Select, Divider} from 'antd';
+import {Link} from 'react-router-dom';
 import IngresoInfo from "./InfoIngreso";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -47,7 +48,18 @@ class DetailIngresoPage extends Component{
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let options_clients = clientes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.client}</Option>);
         return(
-            <div style={{width:'50%', margin: '0 auto'}} >
+
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    <Link to={`/admin/ingresos/`} style={{color:'black'}} >Ingresos</Link>
+                    <Divider type="vertical" />
+                    Ingreso {ingreso.id}
+                </div>
+
+            <div style={{width:'30%', margin: '0 auto'}} >
+
                 <Card title={"Detalle"}>
                     <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(ingreso.created).format('LL')}</span>
                     <IngresoInfo
@@ -59,6 +71,7 @@ class DetailIngresoPage extends Component{
                         clientes={options_clients}
                     />
                 </Card>
+            </div>
             </div>
         )
     }

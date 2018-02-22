@@ -52,10 +52,12 @@ const piedata = [
 
 const MainCards = ({props}) => {
     return (
-        <div className={'admin-main-cards'}>
-            <Row>
-                <Col span={12}>
+        <div>
+        <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}} >
+
+
                     <ChartCard
+                        style={{display: 'flex', flex: 1}}
                         title="Ganado"
                         avatar={
                             <img
@@ -68,9 +70,10 @@ const MainCards = ({props}) => {
                         footer={<Field label="Promedio" value={"$ "+numeral(12423).format('0,0')} />}
                     />
 
-                </Col>
-                <Col span={12}>
+
+
                     <ChartCard
+                        style={{display: 'flex', flex: 1}}
                         title="Granos"
                         avatar={
                             <img
@@ -82,8 +85,14 @@ const MainCards = ({props}) => {
                         total={"$ "+(10560)}
                         footer={<Field label="Promedio" value={"$ "+numeral(9423).format('0,0')} />}
                     />
-                </Col>
 
+
+
+
+        </div>
+
+        <div>
+            <Row>
                 <Col span={24}>
                     <ChartCard >
                         <Pie
@@ -96,7 +105,10 @@ const MainCards = ({props}) => {
                         />
                     </ChartCard>
                 </Col>
+
             </Row>
+
+        </div>
         </div>
     )
 };

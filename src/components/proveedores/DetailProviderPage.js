@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Card} from 'antd';
+import {Card, Divider} from 'antd';
+import {Link} from 'react-router-dom';
 import ProveedorInfo from "./InfoProveedor";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -42,6 +43,15 @@ class DetailProviderPage extends Component{
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
         return(
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    <Link to={`/admin/proveedores/`} style={{color:'black'}} >Proveedores</Link>
+                    <Divider type="vertical" />
+                    Proveedor {proveedor.id}
+                </div>
+
             <div style={{width:'30%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <ProveedorInfo
@@ -53,6 +63,7 @@ class DetailProviderPage extends Component{
                         phone={this.checkPhone}
                     />
                 </Card>
+            </div>
             </div>
         )
     }
