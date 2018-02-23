@@ -88,11 +88,17 @@ class ClientePage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.clientesActions.saveCliente(values);
-                message.success('Guardado con éxito');
+                this.props.clientesActions.saveCliente(values)
+                    .then(r=>{
+                        message.success('Guardado con éxito');
 
-                form.resetFields();
-                this.setState({ visible: false });
+                        form.resetFields();
+                        this.setState({ visible: false });
+                        })
+                    .catch(r=>{
+                        message.error('El RFC ingresado ya existe!')
+                        console.log(values)
+                    })
             }else{message.error('Algo fallo, verifica los campos');}
 
         });

@@ -35,7 +35,8 @@ export const saveProveedor=(proveedor)=>(dispatch, getState)=>{
             console.log(r);
             dispatch(saveProveedorSuccess(r))
         }).catch(e=>{
-        console.log(e)
+        throw e
+            console.log(e)
     })
 };
 

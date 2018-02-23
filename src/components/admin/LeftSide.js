@@ -13,7 +13,7 @@ const LeftSide = ({props}) => {
               defaultSelectedKeys={['12']}
               defaultOpenKeys={['sub2']}
         >
-            <SubMenu disabled key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
+            <SubMenu  key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
                 <Menu.Item key="1">
                     <Link to={'/admin/estadisticas'} >Estadísticas</Link>
                 </Menu.Item>

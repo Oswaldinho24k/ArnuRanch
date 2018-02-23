@@ -35,6 +35,7 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
             dispatch(saveClienteSuccess(r));
         }).catch(e=>{
         console.log(e)
+            throw e
     })
 };
 
