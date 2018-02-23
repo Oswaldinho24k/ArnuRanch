@@ -51,7 +51,6 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
         })
         .catch(e=>{
             throw e;
-
         })
 };
 
