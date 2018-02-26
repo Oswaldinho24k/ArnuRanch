@@ -80,11 +80,11 @@ class FormulasForm extends Component {
                 for (let unit of values['units']) {
                     if (unit) {
                         try {
-                            let unitFloat = parseFloat(unit.replace('kg', ''));
-                            console.log('Lol',unitFloat);
-                            units[i++] = parseFloat(unitFloat.toFixed(2));
-                            console.log('Lol',unitFloat);
-                            total_units += unitFloat;
+                            //let unitFloat = parseFloat(unit.replace('kg', ''));
+                            units[i++] = parseFloat(parseFloat(unit).toFixed(2));
+                            total_units += parseFloat(unit);
+                            total_units = parseFloat(total_units.toFixed(2));
+
                         } catch (e) {
                             console.log(e);
                         }
@@ -98,6 +98,7 @@ class FormulasForm extends Component {
                         let subtotal = insumo['unit_price_total'] * parseFloat(units[i]);
                         subtotal = parseFloat(subtotal.toFixed(2));
                         total_price += parseFloat(subtotal.toFixed(2));
+                        total_price = parseFloat(total_price.toFixed(2));
                         const formulaId = this.props.formula ? this.props.formula.id : 0;
                         let item = new Item(insumoId, formulaId, parseFloat(units[i]), subtotal);
                         insumos[i++] = insumoId;
@@ -127,12 +128,16 @@ class FormulasForm extends Component {
                                 item.formula = r.id;
                                 this.props.saveItem(item)
                                     .then(r => {
-                                        console.log(r);
+                                        item.id = r.id;
+                                        console.log('Item guardado',r);
                                     })
                                     .catch(e => {
                                         console.log(e);
                                     });
                             }
+                            formula.id = r.id;
+                            console.log('La frmula editada',formula);
+                            this.props.editFormula(formula).then( r => console.log(r)).catch( e => console.error(e));
                         })
                         .catch(e => {
                             console.log(e);
