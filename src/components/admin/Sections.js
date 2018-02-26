@@ -25,6 +25,7 @@ import CuentasBanco from "../cuentasBanco/CuentasBanco";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
 import Company from "../empresas/Company";
+import DetailCompany from "../empresas/DetailCompany";
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -44,6 +45,7 @@ const Sections = ({props}) => {
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
+                <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
                 <Route path={'/admin/empresas'} component={Company}/>
 
                 <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />

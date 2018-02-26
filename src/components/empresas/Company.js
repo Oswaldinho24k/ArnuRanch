@@ -225,7 +225,7 @@ class Company extends Component {
             },
             {
                 title: 'E-mail',
-                dataIndex: 'email'
+                dataIndex: 'email_comp'
             },
             {
                 title: 'RFC',
@@ -233,15 +233,11 @@ class Company extends Component {
             },
             {
                 title: 'Actions',
+                dataIndex: 'id',
+                render: id => <Link to={`/admin/empresas/${id}`} >Detalle</Link>,
                 fixed:'right',
-                width:100,
-                key: 'action',
-                render: (text, record) => (
-                    <span>
-              <Link to={`/admin/empresas/${record.id}`}>Detalle</Link>
-            </span>
-                ),
-            }
+                width:100
+            },
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
