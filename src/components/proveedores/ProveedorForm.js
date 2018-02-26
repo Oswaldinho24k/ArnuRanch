@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Form, Input, Button, Modal, Checkbox } from 'antd';
 
 
 const FormItem = Form.Item;
-const TextArea = Input;
-const InputGroup = Input.Group;
 
 const styles = {
     form:{
@@ -25,7 +23,7 @@ const styles = {
 
 const ProveedorForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, rfc, phone, handleChange, contacto, on, handleChangeOn} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, on, handleChangeOn} = props;
         const{getFieldDecorator} = form;
 
         const style = {
@@ -79,18 +77,15 @@ const ProveedorForm = Form.create()(
 
                             <div style={style}>
                                 <FormItem>
-                                    {getFieldDecorator('name_contact', {initialValue: "",})
-                                    (<Input disabled={on} hidden={on} placeholder={"Nombre Completo"} />)}
+                                    {getFieldDecorator('name_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Nombre Completo"} />)}
                                 </FormItem>
 
                                 <FormItem>
-                                    {getFieldDecorator('phone_contact', {initialValue: "",})
-                                    (<Input disabled={on} hidden={on} placeholder={"Telefono"} />)}
+                                    {getFieldDecorator('phone_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Telefono"} />)}
                                 </FormItem>
 
                                 <FormItem>
-                                    {getFieldDecorator('comments_contact', {initialValue: "",})
-                                    (<Input disabled={on} hidden={on} placeholder={"Comentarios"} />)}
+                                    {getFieldDecorator('comments_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Comentarios"} />)}
                                 </FormItem>
                             </div>
 

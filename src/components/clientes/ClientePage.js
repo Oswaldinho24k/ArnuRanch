@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
+import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/clientesActions';
 import {connect} from 'react-redux';
@@ -146,22 +146,15 @@ class ClientePage extends Component {
 
     onSearch = () => {
         const { searchText } = this.state;
-        console.log(searchText);
         const reg = new RegExp(searchText, 'gi');
-        console.log(reg)
-        console.log(this.props.clientes)
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
             data: this.props.clientes.map((record) => {
                 const match = record.client.match(reg);
-                console.log(record)
                 if (!match) {
                     return null;
-                    console.log(match)
                 }
-                console.log(record)
-                console.log(match)
                 return {
                     ...record,
                     client: (
