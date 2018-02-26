@@ -1,0 +1,77 @@
+import api from "../../Api/Django";
+
+export const GET_EMPRESAS_SUCCESS = 'GET_EMPRESAS_SUCCESS';
+
+export function getEmpresasSuccess(empresas){
+    return{
+        type:GET_EMPRESAS_SUCCESS, empresas
+    }
+}
+
+export const getEmpresas=()=>(dispatch, getState)=>{
+    return api.getEmpresas()
+        .then(r=>{
+            dispatch(getEmpresasSuccess(r))
+        }).catch(e=>{
+            console.log(e)
+        })
+};
+
+
+/*FORM CLIENTE SAVE*/
+
+export const SAVE_EMPRESA_SUCCESS = 'SAVE_EMPRESA_SUCCESS';
+
+export function saveEmpresaSuccess(empresa){
+    return{
+        type:SAVE_EMPRESA_SUCCESS, empresa
+    }
+}
+
+export const saveEmpresa=(empresa)=>(dispatch, getState)=>{
+    return api.newEmpresa(empresa)
+        .then(r=>{
+            console.log(r);
+            dispatch(saveEmpresaSuccess(r));
+        }).catch(e=>{
+            console.log(e)
+            throw e
+        })
+};
+
+/*EDIT CLIENTE*/
+
+export const EDIT_EMPRESA_SUCCESS = 'EDIT_EMPRESA_SUCCESS';
+export function editEmpresaSucces(empresa) {
+    return{
+        type: EDIT_EMPRESA_SUCCESS, empresa
+    }
+}
+
+export const editEmpresa=(empresa)=>(dispatch, getState)=>{
+    return api.editEmpresa(empresa)
+        .then(r=>{
+            dispatch(editEmpresaSucces(r))
+        }).catch(e=>{
+            console.log(e)
+        })
+};
+
+/*DELETE CLIENTE*/
+
+export const DELETE_EMPRESA_SUCCESS = 'DELETE_EMPRESA_SUCCESS';
+
+export function deleteEmpresaSuccess(empresaId){
+    return {
+        type:DELETE_EMPRESA_SUCCESS, empresaId
+    }
+}
+
+export const deleteEmpresa=(empresaId)=>(dispatch, getState)=>{
+    return api.deleteEmpresa(empresaId)
+        .then(r=>{
+            dispatch(deleteEmpresaSuccess(empresaId))
+        }).catch(e=>{
+            console.log(e)
+        })
+};

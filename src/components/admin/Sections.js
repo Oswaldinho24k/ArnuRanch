@@ -24,6 +24,7 @@ import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasBanco";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
+import Company from "../empresas/Company";
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -42,6 +43,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
+
+                <Route path={'/admin/empresas'} component={Company}/>
 
                 <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
                 <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>

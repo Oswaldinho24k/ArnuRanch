@@ -44,19 +44,22 @@ const LeftSide = ({props}) => {
                 <Menu.Item key="10">
                     <Link to='/admin/usuarios'>  Usuarios </Link>
                 </Menu.Item>
+                <Menu.Item key="11">
+                    <Link to='/admin/empresas'> Empresas </Link>
+                </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" title={<span className={'my-icon'}>🐮<Icon /><span>Ganado</span></span>}>
-                <Menu.Item key="11">
+                <Menu.Item key="12">
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
-                <Menu.Item key="12">
+                <Menu.Item key="13">
                     <Link to={'/admin/animals'}>Animales</Link>
                 </Menu.Item>
-                <Menu.Item key="13">
+                <Menu.Item key="14">
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="14" disabled>
+                <Menu.Item key="15" disabled>
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 

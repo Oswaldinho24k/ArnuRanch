@@ -1,43 +1,66 @@
 import React, {Component, Fragment} from 'react';
-import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
-import ClienteForm from './ClienteForm';
-import * as clientesActions from '../../redux/actions/clientesActions';
+import {Button, message, Popconfirm, Divider, BackTop, Input,Icon, Select} from 'antd';
 import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
+import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
+import * as empresasActions from '../../redux/actions/empresasActions';
 
-import TablePageB from "./TablePageB";
+import CompanyForm from './CompanyForm';
+import TablePageB from "../clientes/TablePageB";
 
+const Option = Select.Option;
 
 const style={
     customFilterDropdown: {
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: 'white',
-    boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
-},
+        padding: 8,
+        borderRadius: 6,
+        backgroundColor: 'white',
+        boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
+    },
 
-customFilterDropdownInput: {
-    width: 130,
-    marginRight: 8,
-}
+    customFilterDropdownInput: {
+        width: 130,
+        marginRight: 8,
+    }
 };
 
+const opciones = [{
+    name :'Cerdos',
+    id: 1
+},
+    {
+        name:'Ganado',
+        id:2
+    },
+    {
+        name:'Granos',
+        id:3
+    },
+    {
+        name:'Planta de alimentos',
+        id:4
+    },
+    {
+        name:'Campo',
+        id:5
+    },
 
+];
 
-class ClientePage extends Component {
+class Company extends Component {
+
     state = {
-            visible: false,
-            selectedRowKeys:[],
-            on:true,
-            data:[],
+        visible: false,
+        selectedRowKeys:[],
+        on:true,
+        data:[],
 
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+        filterDropdownVisible: false,
+        searchText: '',
+        filtered: false,
 
-        };
+    };
 
 
     showModal = () => {
@@ -52,10 +75,10 @@ class ClientePage extends Component {
         });
     };
 
-    deleteCliente=()=>{
+    deleteEmpresa=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.clientesActions.deleteCliente(keys[i])
+            this.props.empresasActions.deleteEmpresa(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -66,7 +89,7 @@ class ClientePage extends Component {
     };
     confirm=(e)=> {
         console.log(e);
-        this.deleteCliente();
+        this.deleteEmpresa();
         message.success('Deleted successfully');
     };
 
@@ -88,13 +111,13 @@ class ClientePage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.clientesActions.saveCliente(values)
+                this.props.empresasActions.saveEmpresa(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
 
                         form.resetFields();
                         this.setState({ visible: false });
-                        })
+                    })
                     .catch(r=>{
                         message.error('El RFC ingresado ya existe!')
                         console.log(values)
@@ -126,19 +149,6 @@ class ClientePage extends Component {
         }
     };
 
-    handleChange = e => {
-        this.setState({
-            contacto_directo: e.target.checked
-        })
-    };
-
-    handleChangeOn = ()=>{
-        this.setState({
-            on: !this.state.on
-        })
-    };
-
-
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
         console.log(e.target.value)
@@ -150,17 +160,17 @@ class ClientePage extends Component {
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
-            data: this.props.clientes.map((record) => {
-                const match = record.client.match(reg);
+            data: this.props.empresas.map((record) => {
+                const match = record.company.match(reg);
                 if (!match) {
                     return null;
                 }
                 return {
                     ...record,
-                    client: (
+                    company: (
                         <span>
-              {record.client.split(reg).map((client, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, client] : client
+              {record.company.split(reg).map((company, i) => (
+                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, company] : company
               ))}
             </span>
                     ),
@@ -171,13 +181,13 @@ class ClientePage extends Component {
 
     componentWillMount(){
         this.setState({
-            data:this.props.clientes
+            data:this.props.empresas
         });
     }
 
     resetFilter = () => {
         this.setState({
-            data:this.props.clientes,
+            data:this.props.empresas,
             filterDropdownVisible: false,
             searchText: '',
             filtered: false,
@@ -185,19 +195,17 @@ class ClientePage extends Component {
     };
 
 
-
-
-    render() {
+    render(){
         const columns = [
             {
-                title: 'Cliente',
-                dataIndex: 'client',
-                key:'client',
+                title: 'Empresa',
+                dataIndex: 'company',
+                key:'company',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
                         <Input
                             ref={ele => this.searchInput = ele}
-                            placeholder="Buscar cliente"
+                            placeholder="Buscar empresa"
                             value={this.state.searchText}
                             onChange={this.onInputChange}
                             onPressEnter={this.onSearch}
@@ -216,16 +224,12 @@ class ClientePage extends Component {
                 },
             },
             {
-                title: 'Dirección',
-                dataIndex: 'address',
-            },
-            {
                 title: 'E-mail',
                 dataIndex: 'email'
             },
             {
                 title: 'RFC',
-                dataIndex: 'rfc'
+                dataIndex: 'rfc_comp'
             },
             {
                 title: 'Actions',
@@ -234,72 +238,49 @@ class ClientePage extends Component {
                 key: 'action',
                 render: (text, record) => (
                     <span>
-              <Link to={`/admin/clientes/${record.id}`}>Detalle</Link>
+              <Link to={`/admin/empresas/${record.id}`}>Detalle</Link>
             </span>
                 ),
             }
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
-        console.log(filtered)
         const canDelete = selectedRowKeys.length > 0;
-        //const filter = data.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {clientes, fetched} = this.props;
+        let {empresas, fetched} = this.props;
+        let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         if(!fetched)return(<MainLoader/>);
-        console.log(clientes);
-        console.log(data);
-        return (
-            <Fragment>
-                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
-                    Administración
-                    <Divider type="vertical" />
-                    Clientes
-                </div>
 
-                <h2>Clientes</h2>
+
+        return(
+            <Fragment>
+
+                <h2>Empresas Arnulfo</h2>
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={clientes}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                    onChange={this.handleChang}
-                />*/}
-
                 {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                :<TablePageB data={clientes} columns={columns} rowSelection={rowSelection}/>
+                    :<TablePageB data={empresas} columns={columns} rowSelection={rowSelection}/>
                 }
 
-
-
-
-
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <ClienteForm
+                <CompanyForm
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
+                    options={options}
                     rfc={this.checkRfc}
                     phone={this.checkPhone}
                     handleChange={this.handleChange}
-                    on = {this.state.on}
-                    handleChangeOn={this.handleChangeOn}
 
                 />
 
-
                 <Divider type={'vertical'} />
 
-                <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                <Popconfirm title="Are you sure delete this company?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button hidden={!canDelete} type="primary" >Borrar</Button>
                 </Popconfirm>
 
@@ -307,26 +288,27 @@ class ClientePage extends Component {
 
                 <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 
+
+
+
             </Fragment>
-        );
+
+        )
     }
 }
 
-
-
-
 function mapStateToProps(state, ownProps) {
-    return {
-        clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined && state.clientes.list.length>0,
+    return{
+        empresas: state.empresas.list,
+        fetched: state.empresas.list !== undefined && state.empresas.list.length>0,
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        clientesActions:bindActionCreators(clientesActions, dispatch)
+    return{
+       empresasActions: bindActionCreators(empresasActions, dispatch)
     }
 }
 
-ClientePage = connect(mapStateToProps,mapDispatchToProps)(ClientePage);
-export default ClientePage;
+Company = connect(mapStateToProps, mapDispatchToProps)(Company);
+export default Company;
