@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = false;
+let debug = true;
 
 //Localhost urls
 
