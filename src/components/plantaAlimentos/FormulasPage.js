@@ -6,6 +6,16 @@ import {Link, Route, Switch} from "react-router-dom";
 import FormulasForm from "./FormulasForm";
 import {deleteFormula} from '../../redux/actions/plantaAlimentos/formulasActions';
 
+export const showMessage = (message, style) => {
+    setTimeout(
+        console.log.bind(
+            console,
+            `%c ${message} %c`,
+            style,
+            ""
+        )
+    );
+};
 const path = "/admin/planta_alimentos/formulas/:id";
 const absolutePath = "/admin/planta_alimentos/formulas/";
 
@@ -15,6 +25,16 @@ class FormulasPage extends Component {
         this.state = {
             selectedRowsKeys: []
         };
+    }
+
+    componentWillMount(){
+        showMessage("Detente", "color:red;font-size:40px;");
+        showMessage(
+            "El uso de la consola es para fines de " +
+            "desarrollo, cualquier actividad distinta a " +
+            "ésta es considerda un delito",
+            "color:white;font-size:15px;text-align:justify;"
+        );
     }
 
     closeModal = () => {
@@ -115,7 +135,8 @@ class FormulasPage extends Component {
 
 const
     mapStateToProps = state => ({
-        formulas: state.formulas.list
+        formulas: state.formulas.list,
+        items: state.items.list
     });
 
 FormulasPage = connect(mapStateToProps, {deleteFormula})(FormulasPage);
