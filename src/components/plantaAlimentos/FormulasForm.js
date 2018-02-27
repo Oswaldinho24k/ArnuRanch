@@ -322,7 +322,6 @@ const mapStateToProps = (state, ownProps) => {
         formula = (state.formulas.list.filter(formula => formula.id == id)[0]);
     }
     let items = [];
-    console.log(state.items.list);
     if (formula) {
         items = (state.items.list.filter(item => item.formula == formula.id));
     }

@@ -33,7 +33,7 @@ class FormulasPage extends Component {
             "El uso de la consola es para fines de " +
             "desarrollo, cualquier actividad distinta a " +
             "ésta es considerda un delito",
-            "color:white;font-size:15px;text-align:justify;"
+            "color:#8F939F;font-size:15px;text-align:justify;"
         );
     }
 
