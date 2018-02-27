@@ -10,7 +10,7 @@ const piedata = [
         y: 100,
     },
     {
-        x: 'Vacunas',
+        x: 'vacunas',
         y: 120,
     },
     {

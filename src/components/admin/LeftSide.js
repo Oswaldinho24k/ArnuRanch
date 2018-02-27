@@ -74,6 +74,12 @@ const LeftSide = ({props}) => {
                     <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
             </SubMenu>
+
+            <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
+                <Menu.Item key="17">
+                    <Link to={"/admin/vacunas"}>Vacunas</Link>
+                </Menu.Item>
+            </SubMenu>
         </Menu>
     )
 };

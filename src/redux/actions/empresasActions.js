@@ -18,7 +18,7 @@ export const getEmpresas=()=>(dispatch, getState)=>{
 };
 
 
-/*FORM CLIENTE SAVE*/
+/*FORM EMPRESA SAVE*/
 
 export const SAVE_EMPRESA_SUCCESS = 'SAVE_EMPRESA_SUCCESS';
 
@@ -39,7 +39,7 @@ export const saveEmpresa=(empresa)=>(dispatch, getState)=>{
         })
 };
 
-/*EDIT CLIENTE*/
+/*EDIT EMPRESA*/
 
 export const EDIT_EMPRESA_SUCCESS = 'EDIT_EMPRESA_SUCCESS';
 export function editEmpresaSucces(empresa) {
@@ -57,7 +57,7 @@ export const editEmpresa=(empresa)=>(dispatch, getState)=>{
         })
 };
 
-/*DELETE CLIENTE*/
+/*DELETE EMPRESA*/
 
 export const DELETE_EMPRESA_SUCCESS = 'DELETE_EMPRESA_SUCCESS';
 

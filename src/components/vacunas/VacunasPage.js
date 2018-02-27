@@ -1,43 +1,42 @@
 import React, {Component, Fragment} from 'react';
 import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
-import ClienteForm from './ClienteForm';
-import * as clientesActions from '../../redux/actions/clientesActions';
+import * as vacunasActions from '../../redux/actions/vacunasActions';
+import VacunaForm from './VacunaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-
-import TablePageB from "./TablePageB";
+import TablePageB from "../clientes/TablePageB";
 
 
 const style={
     customFilterDropdown: {
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: 'white',
-    boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
-},
+        padding: 8,
+        borderRadius: 6,
+        backgroundColor: 'white',
+        boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
+    },
 
-customFilterDropdownInput: {
-    width: 130,
-    marginRight: 8,
-}
+    customFilterDropdownInput: {
+        width: 130,
+        marginRight: 8,
+    }
 };
 
 
 
-class ClientePage extends Component {
+class VacunasPage extends Component {
     state = {
-            visible: false,
-            selectedRowKeys:[],
-            on:true,
-            data:[],
+        visible: false,
+        selectedRowKeys:[],
+        on:true,
+        data:[],
 
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+        filterDropdownVisible: false,
+        searchText: '',
+        filtered: false,
 
-        };
+    };
 
 
     showModal = () => {
@@ -52,10 +51,10 @@ class ClientePage extends Component {
         });
     };
 
-    deleteCliente=()=>{
+    deleteVacuna=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.clientesActions.deleteCliente(keys[i])
+            this.props.vacunasActions.deleteVacuna(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -66,7 +65,7 @@ class ClientePage extends Component {
     };
     confirm=(e)=> {
         console.log(e);
-        this.deleteCliente();
+        this.deleteVacuna();
         message.success('Deleted successfully');
     };
 
@@ -88,13 +87,13 @@ class ClientePage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.clientesActions.saveCliente(values)
+                this.props.vacunasActions.saveVacuna(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
 
                         form.resetFields();
                         this.setState({ visible: false });
-                        })
+                    })
                     .catch(r=>{
                         message.error('El RFC ingresado ya existe!')
                         console.log(values)
@@ -103,41 +102,6 @@ class ClientePage extends Component {
 
         });
     };
-
-    checkRfc = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('Verifica el RFC ingresado');
-        } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
-            }
-            callback()
-        }
-    };
-
-    checkPhone = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('El número ingresa debe contener 10 dígitos.');
-        } else {
-            if(value.length < 10){
-                callback('Ingresa un número de 10 dígitos');
-            }
-            callback()
-        }
-    };
-
-    handleChange = e => {
-        this.setState({
-            contacto_directo: e.target.checked
-        })
-    };
-
-    handleChangeOn = ()=>{
-        this.setState({
-            on: !this.state.on
-        })
-    };
-
 
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
@@ -150,17 +114,17 @@ class ClientePage extends Component {
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
-            data: this.props.clientes.map((record) => {
-                const match = record.client.match(reg);
+            data: this.props.vacunas.map((record) => {
+                const match = record.vaccine.match(reg);
                 if (!match) {
                     return null;
                 }
                 return {
                     ...record,
-                    client: (
+                    vaccine: (
                         <span>
-              {record.client.split(reg).map((client, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, client] : client
+              {record.vaccine.split(reg).map((vaccine, i) => (
+                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, vaccine] : vaccine
               ))}
             </span>
                     ),
@@ -171,13 +135,13 @@ class ClientePage extends Component {
 
     componentWillMount(){
         this.setState({
-            data:this.props.clientes
+            data:this.props.vacunas
         });
     }
 
     resetFilter = () => {
         this.setState({
-            data:this.props.clientes,
+            data:this.props.vacunas,
             filterDropdownVisible: false,
             searchText: '',
             filtered: false,
@@ -190,14 +154,14 @@ class ClientePage extends Component {
     render() {
         const columns = [
             {
-                title: 'Cliente',
-                dataIndex: 'client',
-                key:'client',
+                title: 'Nombre de Vacuna',
+                dataIndex: 'vaccine',
+                key:'vaccine',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
                         <Input
                             ref={ele => this.searchInput = ele}
-                            placeholder="Buscar cliente"
+                            placeholder="Buscar vacuna"
                             value={this.state.searchText}
                             onChange={this.onInputChange}
                             onPressEnter={this.onSearch}
@@ -216,16 +180,13 @@ class ClientePage extends Component {
                 },
             },
             {
-                title: 'Dirección',
-                dataIndex: 'address',
+                title: 'Tipo de Vacuna',
+                dataIndex: 'type',
             },
             {
-                title: 'E-mail',
-                dataIndex: 'email'
-            },
-            {
-                title: 'RFC',
-                dataIndex: 'rfc'
+                title: 'Dosis por animal',
+                dataIndex: 'dose',
+                render: dose => `${dose} ml`,
             },
             {
                 title: 'Actions',
@@ -234,7 +195,7 @@ class ClientePage extends Component {
                 key: 'action',
                 render: (text, record) => (
                     <span>
-              <Link to={`/admin/clientes/${record.id}`}>Detalle</Link>
+              <Link to={`/admin/vacunas/${record.id}`}>Detalle</Link>
             </span>
                 ),
             }
@@ -248,34 +209,21 @@ class ClientePage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {clientes, fetched} = this.props;
+        let {vacunas, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
-        console.log(clientes);
-        console.log(data);
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    Clientes
+                    Vacunas
                 </div>
 
-                <h2>Clientes</h2>
+                <h2>Vacunas</h2>
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={clientes}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                    onChange={this.handleChang}
-                />*/}
-
                 {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                :<TablePageB data={clientes} columns={columns} rowSelection={rowSelection}/>
+                    :<TablePageB data={vacunas} columns={columns} rowSelection={rowSelection}/>
                 }
 
 
@@ -283,16 +231,13 @@ class ClientePage extends Component {
 
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <ClienteForm
+                <VacunaForm
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    rfc={this.checkRfc}
-                    phone={this.checkPhone}
                     handleChange={this.handleChange}
-                    on = {this.state.on}
-                    handleChangeOn={this.handleChangeOn}
+
 
                 />
 
@@ -317,16 +262,16 @@ class ClientePage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined ,
+        vacunas:state.vacunas.list,
+        fetched:state.vacunas.list!==undefined,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        clientesActions:bindActionCreators(clientesActions, dispatch)
+        vacunasActions:bindActionCreators(vacunasActions, dispatch)
     }
 }
 
-ClientePage = connect(mapStateToProps,mapDispatchToProps)(ClientePage);
-export default ClientePage;
+VacunasPage = connect(mapStateToProps,mapDispatchToProps)(VacunasPage);
+export default VacunasPage;

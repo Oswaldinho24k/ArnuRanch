@@ -254,6 +254,12 @@ class Company extends Component {
         return(
             <Fragment>
 
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Empresas
+                </div>
+
                 <h2>Empresas Arnulfo</h2>
                 <BackTop visibilityHeight={100} />
 
@@ -296,7 +302,7 @@ class Company extends Component {
 function mapStateToProps(state, ownProps) {
     return{
         empresas: state.empresas.list,
-        fetched: state.empresas.list !== undefined && state.empresas.list.length>0,
+        fetched: state.empresas.list !== undefined,
     }
 }
 
