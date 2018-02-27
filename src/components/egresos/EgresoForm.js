@@ -1,12 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import { Form, Input, Button, Select, InputNumber, Checkbox, message, Modal } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Select, InputNumber, Checkbox, Modal } from 'antd';
 
 
 const FormItem = Form.Item;
-const TextArea = Input;
-const InputGroup = Input.Group;
-const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {

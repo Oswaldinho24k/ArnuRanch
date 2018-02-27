@@ -11,6 +11,8 @@ import {getFormulas} from "./plantaAlimentos/formulasActions";
 import {getInsumos} from "./plantaAlimentos/insumosActions";
 
 import {getEgresos} from "./egresosActions";
+import {getEmpresas} from "./empresasActions";
+import {getVacunas} from "./vacunasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -78,6 +80,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getFormulas());
         dispatch(getInsumos());
         dispatch(getEgresos());
+        dispatch(getEmpresas());
+        dispatch(getVacunas());
 
     }
 };

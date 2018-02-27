@@ -1,6 +1,5 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import MainCards from "../ingresos/MainCards";
-import {Link} from 'react-router-dom';
 import {Divider} from 'antd';
 
 
