@@ -10,12 +10,7 @@ class FormGasto extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(this.props);
-
                 this.props.saveGasto(values)
-
-
-
             }
             if (Array.isArray(e)) {
                 return e;

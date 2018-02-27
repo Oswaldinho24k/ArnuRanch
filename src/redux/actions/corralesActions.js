@@ -30,7 +30,6 @@ export function saveCorralSuccess(corral){
 export const saveCorral=(corral)=>(dispatch, getState)=>{
     return api.newCorral(corral)
         .then(r=>{
-            console.log(r);
             dispatch(saveCorralSuccess(r))
         })
         .catch(e=>{

@@ -22,7 +22,7 @@ export function getAllDataSuccess(data){
 export const getAnimals=(url)=>(dispatch, getState)=>{
     return api.getAnimals(url)
         .then(r=>{
-            //console.log(r.results)
+
             dispatch(getAnimalsSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
@@ -45,8 +45,7 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
     return api.newAnimal(animal)
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            r['lote'] = lote;
-            console.log(r);
+            r['lote'] = lote
             dispatch(saveAnimalSuccess(r))
         })
         .catch(e=>{
@@ -69,8 +68,7 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
             r['lote'] = lote;
-            dispatch(editAnimalSuccess(r));
-            console.log(r)
+            dispatch(editAnimalSuccess(r))
         }).catch(e=>{
             throw e;
     })

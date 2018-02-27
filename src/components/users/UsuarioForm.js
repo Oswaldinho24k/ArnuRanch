@@ -44,9 +44,20 @@ const UsuarioForm = Form.create()(
                 <Form onSubmit={this.handleSubmit} >
                     <div style={styles.form}>
                         <FormItem
-                            label="Usuario"
+                            label="Nombre de Usuario"
                         >
-                            {getFieldDecorator('user_name', {
+                            {getFieldDecorator('username', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Email de Usuario"
+                        >
+                            {getFieldDecorator('email', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -58,7 +69,7 @@ const UsuarioForm = Form.create()(
                         <FormItem
                             label="Contraseña"
                         >
-                            {getFieldDecorator('user_pass', {
+                            {getFieldDecorator('password', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -68,7 +79,7 @@ const UsuarioForm = Form.create()(
                         </FormItem>
 
                         <FormItem
-                            label={"Permiso"}
+                            label={"Sección de Trabajo"}
                         >
                             {getFieldDecorator('permiso', {
                                 rules: [{
@@ -76,17 +87,12 @@ const UsuarioForm = Form.create()(
                                 }],
 
                             })(
-
-
                                 <Select  placeholder={"Selecciona un Permiso"}>
                                     {options_permisos}
                                 </Select>
                             )}
 
                         </FormItem>
-
-
-
 
 
                     </div>

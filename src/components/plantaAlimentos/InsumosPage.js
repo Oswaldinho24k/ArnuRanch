@@ -117,7 +117,7 @@ class InsumosPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {/*
+                {
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -125,7 +125,7 @@ class InsumosPage extends Component {
                     >
                         Eliminar
                     </Button>
-                */}
+                }
 
                 <Switch>
                     <Route path={path} render={InsumosFormRender}/>

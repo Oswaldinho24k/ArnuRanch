@@ -23,7 +23,6 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         handleEditMode()
                     }).catch(e=>{
                     for (let i in e.response.data){
-                        console.log(e.response.data[i])
                         message.error(e.response.data[i])
                     }
                 })

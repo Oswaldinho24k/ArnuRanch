@@ -14,11 +14,11 @@ const columns = [
         dataIndex: 'no_corral',
         width:200
     },
-    {
+    /*{
         title: 'Numero de Serial',
         dataIndex: 'numero_serial',
         width:200
-    }, {
+    },*/ {
         title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',
         render:val=><p>{moment(val).format('LL')}</p>,

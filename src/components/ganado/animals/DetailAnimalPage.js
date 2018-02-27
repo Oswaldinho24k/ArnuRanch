@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, Modal, Form, message, Select} from "antd";
+import {Card, Modal, message, Select} from "antd";
 import {bindActionCreators} from 'redux';
 import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
@@ -47,15 +47,13 @@ class DetailAnimalPage extends Component {
 
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
     onSelectChange2 = (selectedRowKeys2) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys2);
         this.setState({ selectedRowKeys2 });
     };
     onTabChange = (key, type) => {
-        //console.log(key, type);
+
         this.setState({ [type]: key });
     };
 
@@ -88,7 +86,9 @@ class DetailAnimalPage extends Component {
             this.handleCancel();
             message.success('Gasto agregado con éxito')
         }).catch(e=>{
-            console.log(e)
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
         })
     };
     savePesada=(pesada)=>{
@@ -98,7 +98,9 @@ class DetailAnimalPage extends Component {
                 this.handleCancel();
                 message.success('Pesada agregado con éxito')
             }).catch(e=>{
-            console.log(e)
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
         })
     };
 
@@ -106,7 +108,7 @@ class DetailAnimalPage extends Component {
 
     render() {
         const {animal, fetched} = this.props;
-        const {selectedRowKeys, visible, ModalText, editMode, visible2, selectedRowKeys2} = this.state;
+        const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2} = this.state;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -185,6 +187,7 @@ class DetailAnimalPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.key;
+
     let animal = state.animals.list.filter(a=>{
         return id == a.id;
     });

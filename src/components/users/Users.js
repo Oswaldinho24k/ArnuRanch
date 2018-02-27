@@ -5,40 +5,39 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import MainLoader from "../common/Main Loader";
 import UsuarioForm from "./UsuarioForm";
+import * as usuariosActions from '../../redux/actions/usersActions';
 
 const Option = Select.Option;
 
 const columns = [
     {
         title: 'Usuario',
-        dataIndex: 'name',
+        dataIndex: 'username',
+        render: (v,o)=> <Link to={`/admin/usuarios/${o.id}`} >{v}</Link>,
     },
     {
         title: 'Permiso',
-        dataIndex: 'permiso',
+        dataIndex: 'id',
+        render:(v,o)=><p>{o.is_superuser?'SuperUsuario':o.profile?o.profile.admin?'Administración':'Ganado':'No asignado'}</p>
     },
-    {
+    /*{
         title: 'Actions',
         dataIndex: 'id',
         render: id => <Link to={`/admin/usuarios/${id}`} >Detalle</Link>,
         fixed:'right',
         width:100
-    },
+    },*/
 
 ];
 
 const options_permisos = [
     {
-        name:"Ganadero",
-        id:1
-    },
-    {
-        name:"Super Usuario",
-        id:2
+        name:"Ganado",
+        value:'ganado'
     },
     {
         name:"Administración",
-        id:3
+        value:'admin'
     },
 ];
 
@@ -66,7 +65,7 @@ class Users extends Component {
     deleteUsuario=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.usuariosActions.deleteUsuario(keys[i])
+            this.props.usuariosActions.deleteUser(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -77,7 +76,7 @@ class Users extends Component {
     };
     confirm=(e)=> {
         console.log(e);
-        //this.deleteUsuario();
+        this.deleteUsuario();
         console.log("Eliminado")
         message.success('Deleted successfully');
     };
@@ -101,10 +100,17 @@ class Users extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                //this.props.usuariosActions.saveUsuario(values);
-                message.success('Guardado con éxito');
+                this.props.usuariosActions.newUser(values)
+                    .then(r=>{
+                        console.log(r);
+                        message.success('Guardado con éxito');
+                        form.resetFields();
+                    }).catch(e=>{
+                    for (let i in e.response.data){
+                        message.error(e.response.data[i])
+                    }
+                });
 
-                form.resetFields();
                 this.setState({ visible: false });
             }else{message.error('Algo fallo, verifica los campos');}
 
@@ -114,33 +120,6 @@ class Users extends Component {
 
 
     render() {
-        const data = [{
-            name :'Cerdos',
-            permiso: 'administración',
-            id:1,
-        },
-            {
-                name:'Ganado',
-                permiso:'staff',
-                id:2,
-            },
-            {
-                name:'Granos',
-                permiso:'ganadero',
-                id:3,
-            },
-            {
-                name:'Planta de alimentos',
-                permiso:'super usuario',
-                id:4,
-            },
-            {
-                name:'Campo',
-                permiso:'staff',
-                id:5,
-            },
-
-        ];
         const { visible, selectedRowKeys } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
@@ -148,17 +127,17 @@ class Users extends Component {
             onChange: this.onSelectChange,
         };
         //let options_permisos = options_permisos.map((a) => <Option key={a.name}>{a.name}</Option>);
-        let options = options_permisos.map((a)=><Option key={a.name}>{a.name}</Option>)
-        //let {clientes, fetched} = this.props;
-        //if(!fetched)return(<MainLoader/>);
+        let options = options_permisos.map((a)=><Option key={a.value}>{a.name}</Option>);
+        let {users, fetched} = this.props;
+        if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h1>Clientes List</h1>
+                <h2>Lista de Usuarios</h2>
 
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={data}
+                    dataSource={users}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={false}
@@ -194,14 +173,14 @@ class Users extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        /*usuarios:state.usuarios.list,
-        fetched:state.usuarios.list!==undefined,*/
+        users:state.users.list,
+        fetched:state.users.list!==undefined,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        /*usuariosActions:bindActionCreators(usuariosActions, dispatch)*/
+        usuariosActions:bindActionCreators(usuariosActions, dispatch)
     }
 }
 

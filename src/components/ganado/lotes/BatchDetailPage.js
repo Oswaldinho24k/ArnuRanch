@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Divider, Button, Modal, message, Switch, Icon, Input} from 'antd';
+import {Table, Divider, Button, Modal, message, Input, Select} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
@@ -10,6 +10,8 @@ import * as lotesActions from '../../../redux/actions/lotesActions';
 import {bindActionCreators} from "redux";
 
 
+
+const Option = Select.Option;
 
 const columns = [
     {
@@ -55,7 +57,6 @@ class BatchDetailPage extends Component {
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -78,18 +79,18 @@ class BatchDetailPage extends Component {
         let parcialAmount = gasto.costo/keys.length;
         let parcialQuantity = gasto.cantidad/keys.length;
         for(let i in keys){
-            console.log(keys[i]);
             let animalId = keys[i];
             gasto['animal']=animalId;
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
-            console.log(toSend);
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+                for (let i in e.response.data){
+                    message.error(e.response.data[i])
+                }
             })
         }
         this.setState({loading:false});
@@ -106,21 +107,31 @@ class BatchDetailPage extends Component {
     handleEdit=()=>{
         this.setState({canEdit:!this.state.canEdit})
     };
-    edit=()=>{
-        this.setState({canEdit:!this.state.canEdit})
+    edit=(lote)=>{
+        console.log(lote);
+        if(lote.corral===undefined)delete lote['corral'];
+      this.props.lotesActions.editLote(lote)
+          .then(r=>{
+              message.success('editado con éxito')
+          }).catch(e=>{
+              console.log(e.response.data)
+      })
     };
+
     handleSearch=(e)=>{
         this.setState({search:e.target.value})
     };
 
     render() {
-        let {fetched, lote} = this.props;
+        let {fetched, lote, corrales} = this.props;
         let {visible, selectedRowKeys, loading, canEdit, search} = this.state;
         if(!fetched)return(<MainLoader/>);
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
+
+        let option_corrales = corrales.map((a, key)=><Option value={a.id} key={key}>{a.no_corral}</Option>);
         const disablebutton = selectedRowKeys.length > 0;
         let regEx = new RegExp(search, "i");
         let animals = lote.animals?lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner)):[];
@@ -129,7 +140,8 @@ class BatchDetailPage extends Component {
                 <InfoBatch {...lote}
                            canEdit={canEdit}
                            handleEdit={this.handleEdit}
-                            edit={this.edit}/>
+                           option_corrales={option_corrales}
+                           edit={this.edit}/>
 
 
                 {loading?<MainLoader/>:''}
@@ -137,7 +149,6 @@ class BatchDetailPage extends Component {
                 <h4>Aretes de este Lote:</h4>
 
                 <Input.Search
-
                     onChange={this.handleSearch}
                     value={search}
                     style={{ width: 400 , margin:'1% 0'}}
@@ -171,6 +182,9 @@ class BatchDetailPage extends Component {
 
 
 function mapStateToProps (state, ownProps) {
+    let corrales = state.corrales.list.filter(c=>{
+        return c.lotes===null
+    });
     let loteId = ownProps.match.params.id;
     let lote = state.lotes.list.filter(l => {
         return loteId == l.id;
@@ -179,7 +193,8 @@ function mapStateToProps (state, ownProps) {
     lote = lote[0];
     return {
         lote,
-        fetched: lote !== undefined
+        corrales,
+        fetched: lote !== undefined && corrales !==undefined,
     }
 }
  function mapDispatchToProps(dispatch){

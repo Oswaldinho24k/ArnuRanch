@@ -6,11 +6,10 @@ import {getProveedores} from "./proveedoresActions";
 import {getClientes} from "./clientesActions";
 import {getPesadas} from "./pesadasActions";
 import {getIngresos} from "./ingresosActions";
-
 import {getFormulas} from "./plantaAlimentos/formulasActions";
 import {getInsumos} from "./plantaAlimentos/insumosActions";
-
 import {getEgresos} from "./egresosActions";
+import {getAllUsers} from "./usersActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -68,6 +67,7 @@ export const checkIfUser=()=>(dispatch, getState)=>{
     if(userToken){
         //dispatch the functions
         dispatch(getUser());
+        dispatch(getAllUsers());
         dispatch(getAnimals());
         dispatch(getLotes());
         dispatch(getCorrales());

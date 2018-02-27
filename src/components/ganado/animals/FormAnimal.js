@@ -32,14 +32,14 @@ class FormAnimal extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+
             values['status']=true;
             if (!err) {
                 if(!values.lote){
                     delete values.lote
                 }
                 this.props.saveAnimal(values);
-                //this.props.form.resetFields()
+                this.props.form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;

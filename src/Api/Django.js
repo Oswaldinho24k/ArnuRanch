@@ -16,11 +16,12 @@ let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
 let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
-
+let allUsersUrl = 'http://localhost:8000/api/auth/users/';
+let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
 // planta_alimentos
-let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
-let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
-let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
+let insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
+let itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
+let formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 
@@ -28,7 +29,28 @@ let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 //heroku urls
 if(!debug){
-    animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
+
+    /******************************AWS Urls********************************/
+    animalsUrl = 'http://54.201.124.163/api/ganado/animals/';
+    tokenUrl = 'http://54.201.124.163/api/auth/token-auth/';
+    userUrl = 'http://54.201.124.163/api/auth/me/';
+    lotesUrl = 'http://54.201.124.163/api/ganado/lotes/';
+    corralesUrl = 'http://54.201.124.163/api/ganado/corrales/';
+    animalGastoUrl = 'http://54.201.124.163/api/ganado/alimentos/';
+    pesadasUrl = 'http://54.201.124.163/api/ganado/pesadas/';
+    proveedoresUrl = 'http://54.201.124.163/api/egresos/proveedores/';
+    clientesUrl = 'http://54.201.124.163/api/ingresos/clientes/';
+    salesUrl = 'http://54.201.124.163/api/ingresos/ingresos/';
+    allUsersUrl = 'http://54.201.124.163/api/auth/users/';
+    profilesUrl = 'http://54.201.124.163/api/auth/profiles/';
+// planta_alimentos
+    insumosUrl = 'http://54.201.124.163/api/planta_alimentos/insumos/';
+    itemsUrl = 'http://54.201.124.163/api/planta_alimentos/items/';
+    formulasUrl = 'http://54.201.124.163/api/planta_alimentos/formulas/';
+    egresosUrl = 'http://54.201.124.163/api/egresos/egresos/';
+
+    /******************************Heroku Urls********************************/
+    /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
     tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
     userUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/me/';
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
@@ -43,12 +65,101 @@ if(!debug){
     insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
     itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
     formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
-    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';
-
+    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';*/
 }
 
 
+
+
+
 const api = {
+    /*-----------------Users functions-----------------------*/
+    getAllUsers:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response.data);
+                    reject(error);
+                });
+        })
+    },
+    newUser:(user)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', user)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+    },
+
+    deleteUser:(user)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(user+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    saveProfile:(profile)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: profilesUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', profile)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+    },
+
     /*-----------------animals functions-----------------------*/
     //Get all animals
     getAnimals:(url)=>{
@@ -73,8 +184,6 @@ const api = {
                     console.log('el error: ', error.response);
                     reject(error);
                 });
-
-
         });
     },
     newAnimal:(animal)=>{

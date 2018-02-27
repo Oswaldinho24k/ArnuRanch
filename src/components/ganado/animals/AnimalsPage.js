@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input, Pagination} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
@@ -11,8 +11,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../../common/Main Loader";
 
-const Option = Select.Option;
 
+const Option = Select.Option;
 
 
 
@@ -59,7 +59,6 @@ class AnimalsPage extends Component {
                 message.success('Arete añadido con éxito!')
             }).catch(e=>{
             for (let i in e.response.data){
-                console.log(e.response.data[i])
                 message.error(e.response.data[i])
             }
         })
@@ -72,7 +71,7 @@ class AnimalsPage extends Component {
                   console.log(r)
                   message.success('Deleted successfully');
               }).catch(e=>{
-                console.log(e.response)
+
                 message.error('No puedes eliminar aretes con gastos registrados')
               /*for (let i in this.props.errors){
                   console.log(this.props.errors[i])
@@ -84,18 +83,19 @@ class AnimalsPage extends Component {
         this.setState({selectedRowKeys:[]})
     };
     changeLote=(animal)=>{
-        console.log(animal)
+
         let keys = this.state.selectedRowKeys;
         for(let j in keys){
             animal['id']=keys[j];
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
+
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
-                    console.log(r);
                     message.success('Modificado con éxito')
                 }).catch(e => {
-                    console.log(e)
+               for (let i in e.response.data){
+                   message.error(e.response.data[i])
+               }
             })
         }
     };
@@ -109,12 +109,12 @@ class AnimalsPage extends Component {
 
     handleChange=(loteFilter)=>{
         this.setState({loteFilter});
-        console.log(this.state.loteFilter)
+
     };
 
     filterByLote=(lote)=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?lote=';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -125,7 +125,7 @@ class AnimalsPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?q=';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -133,7 +133,7 @@ class AnimalsPage extends Component {
 
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };
@@ -145,11 +145,10 @@ class AnimalsPage extends Component {
             newUrl=newUrl.slice(0,newUrl.length-nextLength);
             newUrl=newUrl+pagina;
             this.props.animalActions.getAnimals(newUrl);
-            console.log(newUrl)
         }else{
             newUrl = this.props.animalsData.previous;
             this.props.animalActions.getAnimals(newUrl);
-            console.log(newUrl)
+
         }
 
     };

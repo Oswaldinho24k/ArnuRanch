@@ -5,15 +5,16 @@ import {paths} from './Sections';
 
 const SubMenu = Menu.SubMenu;
 
-const LeftSide = ({props}) => {
+const LeftSide = ({onOpenChange}) => {
     return (
 
         <Menu theme="dark"
               mode="inline"
               defaultSelectedKeys={['12']}
               defaultOpenKeys={['sub2']}
+              onOpenChange={onOpenChange}
         >
-            <SubMenu disabled key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
+            <SubMenu  key="sub1" title={<span className={'my-icon'}><Icon type="global" /><span>Admin</span></span>}>
                 <Menu.Item key="1">
                     <Link to={'/admin/estadisticas'} >Estadísticas</Link>
                 </Menu.Item>
@@ -45,7 +46,7 @@ const LeftSide = ({props}) => {
                     <Link to='/admin/usuarios'>  Usuarios </Link>
                 </Menu.Item>
             </SubMenu>
-            <SubMenu key="sub2" title={<span className={'my-icon'}>🐮<Icon /><span>Ganado</span></span>}>
+            <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>
                 <Menu.Item key="11">
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
@@ -56,13 +57,13 @@ const LeftSide = ({props}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="14" disabled>
+                <Menu.Item key="14" >
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 
 
             </SubMenu>
-            <SubMenu key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
+            <SubMenu key="sub3" title={<span className={'my-icon'}><Icon type="apple" /><Icon /><span>Alimentos</span></span>}>
 
                 <Menu.Item key="15">
                     <Link to={paths.insumos}>Insumos</Link>
