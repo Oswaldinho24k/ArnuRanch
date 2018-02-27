@@ -60,7 +60,9 @@ export const editFormula = formula => (dispatch, getState) => {
     return api.updateFormula(formula)
         .then( r => {
             r['items'] = formula['items'];
+            console.log('R normal',r);
             let rForRedux = JSON.parse(JSON.stringify(r));
+            console.log('R clonado',rForRedux);
             for(let item of rForRedux.items){
                 item.insumo = getState().insumos.list.find( insumo => insumo.id == item.insumo);
             }
