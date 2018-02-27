@@ -1,18 +1,17 @@
 import {combineReducers} from 'redux';
-import animalsReducer from "./animalsReducer";
+import animalsReducer from "./ganado/animalsReducer";
 import userReducer from './userReducer';
-import lotesReducer from "./lotesReducer";
-import corralesReducer from './corralesReducer';
-import proveedoresReducer from "./proveedoresReducer";
-import clientesReducer from "./clientesReducer";
-import pesadasReducer from "./pesadasReducer";
-import ingresosReducer from "./ingresosReducer";
-
+import lotesReducer from "./ganado/lotesReducer";
+import corralesReducer from './ganado/corralesReducer';
+import proveedoresReducer from "./administracion/proveedoresReducer";
+import clientesReducer from "./administracion/clientesReducer";
+import pesadasReducer from "./ganado/pesadasReducer";
+import ingresosReducer from "./administracion/ingresosReducer";
 import formulasReducer from "./plantaAlimentos/formulasReducer";
 import insumosReducer from "./plantaAlimentos/insumosReducer";
-
-import egresosReducer from "./egresosReducer";
+import egresosReducer from "./administracion/egresosReducer";
 import usersReducer from "./usersReducer";
+import razasReducer from "./ganado/razasReducer";
 
 
 
@@ -28,7 +27,7 @@ const rootReducer = combineReducers({
     users:usersReducer,
     formulas:formulasReducer,
     insumos:insumosReducer,
-
+    razas:razasReducer,
     egresos:egresosReducer,
 
 });

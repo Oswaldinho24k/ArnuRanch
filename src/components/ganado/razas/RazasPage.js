@@ -1,44 +1,31 @@
 import React, {Component, Fragment} from 'react';
-import {Link} from 'react-router-dom';
-import {Table, Button, Modal, message, Popconfirm, Divider, Select} from 'antd';
+import RazasForm from './RazasForm';
 import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
-import MainLoader from "../common/Main Loader";
-import UsuarioForm from "./UsuarioForm";
-import * as usuariosActions from '../../redux/actions/administracion/usersActions';
+import {bindActionCreators} from 'redux';
+import {Table, Button, message, Divider, Popconfirm} from 'antd';
+import * as razasActions from '../../../redux/actions/ganado/razasActions';
 
-const Option = Select.Option;
-
-
-
-const options_permisos = [
+const columns = [
     {
-        name:"Ganado",
-        value:'ganado'
+        title: 'Nombre',
+        dataIndex: 'name',
+
     },
-    {
-        name:"Administración",
-        value:'admin'
-    },
-    {
-        name:"SuperUsuario",
-        value:'super'
-    }
+
+
+
 ];
 
-
-class Users extends Component {
-
+class RazasPage extends Component {
     state = {
-        visible: false,
+        visible:false,
         selectedRowKeys:[],
-        user:{},
-        canEdit:false,
     };
+
 
     showModal = () => {
         this.setState({
-            visible: true,user:{}, canEdit:false
+            visible: true,user:{}
         });
     };
 
@@ -52,7 +39,7 @@ class Users extends Component {
     deleteUsuario=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.usuariosActions.deleteUser(keys[i])
+            this.props.razasActions.deleteRaza(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -87,7 +74,7 @@ class Users extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.usuariosActions.newUser(values)
+                this.props.razasActions.newRaza(values)
                     .then(r=>{
                         console.log(r);
                         message.success('Guardado con éxito');
@@ -104,97 +91,57 @@ class Users extends Component {
         });
     };
 
-    editar=(user)=>{
-        this.showModal();
-        this.setState({user, canEdit:true});
-
-    };
 
     render() {
-        const { visible, selectedRowKeys , user, canEdit} = this.state;
+        let {razas} = this.props;
+        let {visible, selectedRowKeys} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        const columns = [
-            {
-                title: 'Usuario',
-                dataIndex: 'username',
-                render: (v,o)=> <Link to={`/admin/usuarios/${o.id}`} >{v}</Link>,
-            },
-            {
-                title: 'Permiso',
-                dataIndex: 'is_superuser',
-                render:(v,o)=><p>{o.is_superuser?'SuperUsuario':o.profile?o.profile.admin?'Administración':'Ganado':'No asignado'}</p>
-            },
-            {
-                title: 'Actions',
-                dataIndex: 'id',
-                render: (id, obj) => <p onClick={()=>this.editar(obj)}>Detalle</p>,
-                fixed:'right',
-                width:100
-            },
-
-        ];
-        let options = options_permisos.map((a)=><Option key={a.value}>{a.name}</Option>);
-        let {users, fetched} = this.props;
-        if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h2>Lista de Usuarios</h2>
-
+                <h2>Razas</h2>
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={users}
+                    dataSource={razas}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={false}
                     style={{marginBottom:10}}
                 />
-
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <UsuarioForm
-                    user={user}
+                <RazasForm
+
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
-                    options_permisos={options}
-                    canEdit={canEdit}
-
-                />
-
-
-
+                    onCreate={this.handleCreate}/>
                 <Divider
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this user?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
-
             </Fragment>
         );
     }
 }
 
 
-
-
 function mapStateToProps(state, ownProps) {
     return {
-        users:state.users.list,
-        fetched:state.users.list!==undefined,
+        razas: state.razas.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        usuariosActions:bindActionCreators(usuariosActions, dispatch)
+        razasActions: bindActionCreators(razasActions, dispatch)
     }
 }
 
-Users = connect(mapStateToProps,mapDispatchToProps)(Users);
-export default Users;
+RazasPage = connect(mapStateToProps, mapDispatchToProps)(RazasPage);
+export default RazasPage;

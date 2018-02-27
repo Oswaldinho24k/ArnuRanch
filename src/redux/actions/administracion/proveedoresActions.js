@@ -1,5 +1,5 @@
-import api from "../../Api/Django";
-import {editAnimalSuccess} from "./animalsActions";
+import api from "../../../Api/Django";
+import {editAnimalSuccess} from "../ganado/animalsActions";
 
 export const GET_PROVEEDORES_SUCCESS = 'GET_PROVEEDORES_SUCCESS';
 

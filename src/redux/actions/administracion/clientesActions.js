@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_CLIENTES_SUCCESS = 'GET_CLIENTES_SUCCESS';
 

@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import {GET_LOTES_DATA_SUCCESS, GET_LOTES_SUCCESS, SAVE_LOTE_SUCCESS, EDIT_LOTE_SUCCESS} from "../actions/lotesActions";
-import {DELETE_ANIMAL_SUCCESS} from "../actions/animalsActions";
+import {GET_LOTES_DATA_SUCCESS, GET_LOTES_SUCCESS, SAVE_LOTE_SUCCESS, EDIT_LOTE_SUCCESS} from "../../actions/ganado/lotesActions";
+import {DELETE_ANIMAL_SUCCESS} from "../../actions/ganado/animalsActions";
 
 
 

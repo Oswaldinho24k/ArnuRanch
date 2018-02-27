@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Table, Button, Modal, Input, Divider, message} from 'antd';
-import * as lotesActions from '../../../redux/actions/lotesActions';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
 import MainLoader from "../../common/Main Loader";

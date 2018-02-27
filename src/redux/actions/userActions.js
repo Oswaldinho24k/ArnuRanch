@@ -1,15 +1,16 @@
 import api from "../../Api/Django";
-import {getAnimals} from "./animalsActions";
-import {getLotes} from "./lotesActions";
-import {getCorrales} from './corralesActions';
-import {getProveedores} from "./proveedoresActions";
-import {getClientes} from "./clientesActions";
-import {getPesadas} from "./pesadasActions";
-import {getIngresos} from "./ingresosActions";
+import {getAnimals} from "./ganado/animalsActions";
+import {getLotes} from "./ganado/lotesActions";
+import {getCorrales} from './ganado/corralesActions';
+import {getProveedores} from "./administracion/proveedoresActions";
+import {getClientes} from "./administracion/clientesActions";
+import {getPesadas} from "./ganado/pesadasActions";
+import {getIngresos} from "./administracion/ingresosActions";
 import {getFormulas} from "./plantaAlimentos/formulasActions";
 import {getInsumos} from "./plantaAlimentos/insumosActions";
-import {getEgresos} from "./egresosActions";
-import {getAllUsers} from "./usersActions";
+import {getEgresos} from "./administracion/egresosActions";
+import {getAllUsers} from "./administracion/usersActions";
+import {getRazas} from "./ganado/razasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -70,6 +71,7 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getAllUsers());
         dispatch(getAnimals());
         dispatch(getLotes());
+        dispatch(getRazas());
         dispatch(getCorrales());
         dispatch(getProveedores());
         dispatch(getClientes());

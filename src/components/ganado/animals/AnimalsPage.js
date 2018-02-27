@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
 
-import * as animalActions from '../../../redux/actions/animalsActions';
-import * as lotesActions from '../../../redux/actions/lotesActions';
+import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -208,7 +208,8 @@ class AnimalsPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {animals, fetched, lotes, animalsData} = this.props;
+        let {animals, fetched, lotes, animalsData, razas} = this.props;
+
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
 
@@ -277,7 +278,7 @@ class AnimalsPage extends Component {
                            null,
                        ]}
                 >
-                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel}/>
+                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel} razas={razas}/>
                 </Modal>
                 <Divider
                     type={'vertical'}/>
@@ -312,7 +313,8 @@ function mapStateToProps(state, ownProps) {
         animalsData:state.animals.allData,
         animals: state.animals.list,
         lotes:state.lotes.list,
-        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined,
+        razas:state.razas.list,
+        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined && state.razas.list!==undefined,
     }
 }
 

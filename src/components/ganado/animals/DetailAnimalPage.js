@@ -5,9 +5,9 @@ import {bindActionCreators} from 'redux';
 import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
 import FormGasto from "./FormGasto";
-import * as animalGastoActions from '../../../redux/actions/gastoAnimalActions';
-import * as animalActions from '../../../redux/actions/animalsActions';
-import * as pesadasActions from '../../../redux/actions/pesadasActions';
+import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
+import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as pesadasActions from '../../../redux/actions/ganado/pesadasActions';
 import MainLoader from "../../common/Main Loader";
 import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
@@ -107,7 +107,7 @@ class DetailAnimalPage extends Component {
 
 
     render() {
-        const {animal, fetched} = this.props;
+        const {animal, fetched, razas, lotes} = this.props;
         const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2} = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -123,14 +123,16 @@ class DetailAnimalPage extends Component {
 
             onSelection: this.onSelection,
         };
-        let options_lote = this.props.lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+        let options_lote = lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+        let options_raza = razas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
         let contentList = {
             Detalle: <BasicInfoAndEdit
                  {...animal}
                 editAnimal={this.props.animalActions.editAnimal}
                 handleEditMode={this.handleEditMode}
                 editMode={editMode}
-                options={options_lote}/>,
+                options={options_lote}
+                 options_raza={options_raza}/>,
             Gastos: <GastosComponent
 
                 animal={animal}
@@ -196,6 +198,7 @@ function mapStateToProps(state, ownProps) {
     return {
         animal,
         lotes:state.lotes.list,
+        razas:state.razas.list,
         fetched:animal!==undefined&&state.lotes.list!==undefined,
     }
 }

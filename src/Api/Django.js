@@ -18,6 +18,7 @@ let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 let allUsersUrl = 'http://localhost:8000/api/auth/users/';
 let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
+let razasUrl = 'http://localhost:8000/api/ganado/razas/';
 // planta_alimentos
 let insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
@@ -43,6 +44,7 @@ if(!debug){
     salesUrl = 'http://54.201.124.163/api/ingresos/ingresos/';
     allUsersUrl = 'http://54.201.124.163/api/auth/users/';
     profilesUrl = 'http://54.201.124.163/api/auth/profiles/';
+    razasUrl = 'http://54.201.124.163/api/ganado/razas/';
 // planta_alimentos
     insumosUrl = 'http://54.201.124.163/api/planta_alimentos/insumos/';
     itemsUrl = 'http://54.201.124.163/api/planta_alimentos/items/';
@@ -1254,7 +1256,76 @@ const api = {
 
         });
     },
+    /**************************Razas***************************************/
+    getRazas:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
 
+
+        });
+    },
+    newRaza:(raza)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', raza)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteRaza:(raza)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(raza+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
 
 
 };

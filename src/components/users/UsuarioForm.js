@@ -25,7 +25,7 @@ const styles = {
 
 const UsuarioForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_permisos } = props;
+        const{visible, onCancel, onCreate, form, options_permisos, user ,canEdit} = props;
         const{getFieldDecorator} = form;
 
 
@@ -41,7 +41,7 @@ const UsuarioForm = Form.create()(
                     null,
                 ]}
             >
-                <Form onSubmit={this.handleSubmit} >
+                <Form onSubmit={onCreate} >
                     <div style={styles.form}>
                         <FormItem
                             label="Nombre de Usuario"
@@ -50,8 +50,9 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                                initialValue:user.username
                             })(
-                                <Input />
+                                <Input disabled={canEdit}/>
                             )}
                         </FormItem>
                         <FormItem
@@ -60,9 +61,11 @@ const UsuarioForm = Form.create()(
                             {getFieldDecorator('email', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
+                                    type: 'email', message: 'The input is not valid E-mail!',
                                 }],
+                                initialValue:user.email
                             })(
-                                <Input />
+                                <Input type={'email'} disabled={canEdit}/>
                             )}
                         </FormItem>
 
@@ -73,8 +76,9 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                                initialValue:canEdit?'********':''
                             })(
-                                <Input />
+                                <Input type={'password'} disabled={canEdit}/>
                             )}
                         </FormItem>
 
@@ -85,9 +89,10 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                           initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
 
                             })(
-                                <Select  placeholder={"Selecciona un Permiso"}>
+                                <Select  placeholder={"Selecciona un Permiso"} disabled={canEdit}>
                                     {options_permisos}
                                 </Select>
                             )}
@@ -96,11 +101,12 @@ const UsuarioForm = Form.create()(
 
 
                     </div>
-                    <FormItem>
-                        <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                    {!canEdit?<FormItem>
+                        <Button type="primary" htmlType={'submit'} size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                             Guardar
                         </Button>
-                    </FormItem>
+                    </FormItem>:''}
+                    {/*canEdit?<Button type="primary" size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>Editar</Button >:''*/}
 
 
 

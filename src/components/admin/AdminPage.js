@@ -65,7 +65,7 @@ class AdminPage extends Component {
                     collapsed={this.state.collapsed}
                 >
                     <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'ADMIN'}</div>
-                    <LeftSide onOpenChange={this.onOpenChange}/>
+                    <LeftSide onOpenChange={this.onOpenChange} user={user}/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import ProveedorInfo from "./InfoProveedor";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as proveedorActions from '../../redux/actions/proveedoresActions';
+import * as proveedorActions from '../../redux/actions/administracion/proveedoresActions';
 import MainLoader from "../common/Main Loader";
 
 class DetailProviderPage extends Component{

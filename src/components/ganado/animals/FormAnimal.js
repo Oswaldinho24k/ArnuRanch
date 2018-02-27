@@ -59,6 +59,7 @@ class FormAnimal extends Component {
         const { getFieldDecorator, getFieldValue } = this.props.form;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
+        let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.name}</Option>);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
@@ -228,7 +229,9 @@ class FormAnimal extends Component {
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input />
+                               <Select  style={{width:'150px'}}>
+                                   {options_raza}
+                               </Select>
                             )}
                         </FormItem>
 

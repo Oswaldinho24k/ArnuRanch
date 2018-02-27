@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_LOTES_SUCCESS = 'GET_LOTES_SUCCESS';
 

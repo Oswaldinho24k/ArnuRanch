@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import MainLoader from "../../common/Main Loader";
 import InfoBatch from "./InfoBatch";
 import FormGasto from "../animals/FormGasto";
-import * as animalGastoActions from "../../../redux/actions/gastoAnimalActions";
-import * as lotesActions from '../../../redux/actions/lotesActions';
+import * as animalGastoActions from "../../../redux/actions/ganado/gastoAnimalActions";
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 
 

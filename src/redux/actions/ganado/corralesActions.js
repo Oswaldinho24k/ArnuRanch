@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_CORRALES_SUCCESS = 'GET_CORRALES_SUCCESS';
 

@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import {GET_CORRALES_SUCCESS, SAVE_CORRAL_SUCCESS} from "../actions/corralesActions";
-import {SAVE_LOTE_SUCCESS} from "../actions/lotesActions";
+import {GET_CORRALES_SUCCESS, SAVE_CORRAL_SUCCESS} from "../../actions/ganado/corralesActions";
+import {SAVE_LOTE_SUCCESS} from "../../actions/ganado/lotesActions";
 
 
 

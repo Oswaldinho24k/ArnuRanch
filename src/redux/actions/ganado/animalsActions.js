@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 
 
@@ -45,7 +45,9 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
     return api.newAnimal(animal)
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            r['lote'] = lote
+            let raza = getState().razas.list.find(r=>r.id===r.raza);
+            r['raza'] = raza;
+            r['lote'] = lote;
             dispatch(saveAnimalSuccess(r))
         })
         .catch(e=>{
@@ -67,6 +69,8 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
     return api.editAnimal(animal)
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
+            let raza = getState().razas.list.find(r=>r.id===r.raza);
+            r['raza'] = raza;
             r['lote'] = lote;
             dispatch(editAnimalSuccess(r))
         }).catch(e=>{

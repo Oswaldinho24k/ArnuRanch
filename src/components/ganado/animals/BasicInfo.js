@@ -10,7 +10,9 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -202,11 +204,14 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                     <FormItem
                         label="Raza">
                         {form.getFieldDecorator('raza', {
-                                    initialValue:raza
+                                    initialValue:raza?raza.name:''
                             })(
-                            <Input
+                            <Select
+                                style={{width:'150px'}}
                                 disabled={!editMode}
-                                />
+                            >
+                                {options_raza}
+                            </Select>
                                                     )}
                     </FormItem>
                     <FormItem

@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {Table, Button, Modal, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
 import ProveedorForm from './ProveedorForm';
-import * as proveedoresActions from '../../redux/actions/proveedoresActions';
+import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import MainLoader from "../common/Main Loader";
