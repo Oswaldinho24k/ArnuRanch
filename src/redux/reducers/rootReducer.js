@@ -12,6 +12,8 @@ import formulasReducer from "./plantaAlimentos/formulasReducer";
 import insumosReducer from "./plantaAlimentos/insumosReducer";
 
 import egresosReducer from "./egresosReducer";
+import empresasReducer from "./empresasReducer";
+import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 
 
@@ -28,7 +30,6 @@ const rootReducer = combineReducers({
 
     formulas:formulasReducer,
     insumos:insumosReducer,
-    items:itemsReducer,
 
     egresos:egresosReducer,
 

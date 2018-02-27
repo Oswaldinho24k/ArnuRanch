@@ -1,32 +1,8 @@
 import React from 'react';
-import { ChartCard, MiniBar, MiniArea, Field, Pie } from 'ant-design-pro/lib/Charts';
-import NumberInfo from 'ant-design-pro/lib/NumberInfo';
+import { ChartCard, Field, Pie } from 'ant-design-pro/lib/Charts';
 import numeral from 'numeral';
-import {Row, Col, Card, Icon, Avatar, Tooltip} from 'antd';
-import graph from '../../descarga.png';
+import {Row, Col, } from 'antd';
 
-
-
-const { Meta } = Card;
-
-const visitData = [
-    {
-        x: '2017-09-01',
-        y: 100,
-    },
-    {
-        x: '2017-09-02',
-        y: 120,
-    },
-    {
-        x: '2017-09-03',
-        y: 88,
-    },
-    {
-        x: '2017-09-04',
-        y: 65,
-    },
-];
 
 const piedata = [
     {
@@ -34,7 +10,7 @@ const piedata = [
         y: 100,
     },
     {
-        x: 'Vacunas',
+        x: 'vacunas',
         y: 120,
     },
     {

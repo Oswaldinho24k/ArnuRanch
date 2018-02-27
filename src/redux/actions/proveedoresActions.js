@@ -1,5 +1,4 @@
 import api from "../../Api/Django";
-import {editAnimalSuccess} from "./animalsActions";
 
 export const GET_PROVEEDORES_SUCCESS = 'GET_PROVEEDORES_SUCCESS';
 
@@ -32,10 +31,9 @@ export function saveProveedorSuccess(proveedor){
 export const saveProveedor=(proveedor)=>(dispatch, getState)=>{
     return api.newProveedor(proveedor)
         .then(r=>{
-            console.log(r);
             dispatch(saveProveedorSuccess(r))
         }).catch(e=>{
-        console.log(e)
+        throw e
     })
 };
 

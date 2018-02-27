@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
+import {Button, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
 import ProveedorForm from './ProveedorForm';
 import * as proveedoresActions from '../../redux/actions/proveedoresActions';
 import {connect} from 'react-redux';
@@ -87,11 +87,18 @@ class ProovedorPage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.proveedoresActions.saveProveedor(values);
-                message.success('Guardado con éxito');
+                this.props.proveedoresActions.saveProveedor(values)
+                    .then(r=>{
+                        message.success('Guardado con éxito');
 
-                form.resetFields();
-                this.setState({ visible: false });
+                        form.resetFields();
+                        this.setState({ visible: false });
+                    })
+                    .catch(r=>{
+                        message.error('El RFC ingresado ya existe!')
+                        console.log(values)
+                    })
+
             }else{message.error('Algo fallo, verifica los campos');}
 
         });
@@ -138,22 +145,15 @@ class ProovedorPage extends Component {
 
     onSearch = () => {
         const { searchText } = this.state;
-        console.log(searchText);
         const reg = new RegExp(searchText, 'gi');
-        console.log(reg)
-        console.log(this.props.proveedores)
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
             data: this.props.proveedores.map((record) => {
                 const match = record.provider.match(reg);
-                console.log(record)
                 if (!match) {
                     return null;
-                    console.log(match)
                 }
-                console.log(record)
-                console.log(match)
                 return {
                     ...record,
                     provider: (

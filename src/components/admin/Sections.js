@@ -24,6 +24,10 @@ import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasBanco";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
+import Company from "../empresas/Company";
+import DetailCompany from "../empresas/DetailCompany";
+import VacunasPage from "../vacunas/VacunasPage";
+import DetailVacuna from "../vacunas/DetailVacuna";
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -42,6 +46,9 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
+
+                <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
+                <Route path={'/admin/empresas'} component={Company}/>
 
                 <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
                 <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>
@@ -68,6 +75,9 @@ const Sections = ({props}) => {
                 <Route path={paths.formulas} component={FormulasPage}/>
                 <Route path={paths.insumos} component={InsumosPage}/>
                 {/* Planta alimentos routes end*/}
+
+                <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
+                <Route path={'/admin/vacunas'} component={VacunasPage}/>
 
             </Switch>
 

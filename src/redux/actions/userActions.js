@@ -12,6 +12,8 @@ import {getInsumos} from "./plantaAlimentos/insumosActions";
 import {getItems} from "./plantaAlimentos/itemsActions";
 
 import {getEgresos} from "./egresosActions";
+import {getEmpresas} from "./empresasActions";
+import {getVacunas} from "./vacunasActions";
 
 
 
@@ -81,6 +83,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getItems());
         dispatch(getInsumos());
         dispatch(getEgresos());
+        dispatch(getEmpresas());
+        dispatch(getVacunas());
 
     }
 };

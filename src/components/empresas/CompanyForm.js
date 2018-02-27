@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Modal, Checkbox } from 'antd';
+import { Form, Input, Button, Modal, Select } from 'antd';
 
 
 const FormItem = Form.Item;
@@ -21,19 +21,15 @@ const styles = {
 };
 
 
-const ClienteForm = Form.create()(
+const CompanyForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, rfc, phone, on, handleChangeOn} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, options} = props;
         const {getFieldDecorator} = form;
-
-        const style = {
-            display: on ? 'none' : 'block',
-        };
 
         return(
             <Modal
                 visible={visible}
-                title={"Nuevo Cliente"}
+                title={"Nueva Empresa"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}
@@ -43,58 +39,44 @@ const ClienteForm = Form.create()(
                 ]}
             >
                 <Form >
-                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
+                    <div style={styles.form}>
                         <FormItem
-                            label="Nombre del Cliente / Razón Social"
+                            label="Nombre de la Empresa / Razón Social"
                         >
-                            {getFieldDecorator('client', {
+                            {getFieldDecorator('company', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input placeholder={"Nombre del cliente"} />
+                                <Input placeholder={"Nombre de la empresa"} />
                             )}
                         </FormItem>
 
-                        <div style={styles.sectionCheck}>
-                            <FormItem>
-                                {getFieldDecorator('direct_contact', {
-                                    valuePropName: 'checked',
-                                    initialValue: true,
-                                    rules: [{
-                                        required: true, message: 'Completa el campo!',
-                                    }],
-                                })(
-                                    <Checkbox
-                                        value={on}
-                                        onChange={handleChangeOn}
-                                    >
-                                        Contacto Directo?
-                                    </Checkbox>
-                                )}
+                        <FormItem
+                            label={"Linea de negocio"}
+                        >
+                            {getFieldDecorator('line_comp', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                                props:{
+                                    placeholder:'Linea de Negocio',
+                                }
+                            })(
 
-                            </FormItem>
 
-                            <div style={style}>
-                                <FormItem>
-                                    {getFieldDecorator('name_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Nombre Completo"} />)}
-                                </FormItem>
+                                <Select  placeholder={"Linea de Negocio"}>
 
-                                <FormItem>
-                                    {getFieldDecorator('phone_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Telefono"} />)}
-                                </FormItem>
+                                    {options}
+                                </Select>
+                            )}
 
-                                <FormItem>
-                                    {getFieldDecorator('comments_contact', {initialValue: "",})(<Input disabled={on} hidden={on} placeholder={"Comentarios"} />)}
-                                </FormItem>
-                            </div>
-
-                        </div>
+                        </FormItem>
 
                         <FormItem
-                            label="RFC del Cliente"
+                            label="RFC de la Empresa"
                         >
-                            {getFieldDecorator('rfc', {
+                            {getFieldDecorator('rfc_comp', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
@@ -105,23 +87,10 @@ const ClienteForm = Form.create()(
                             )}
                         </FormItem>
 
-
-                        <FormItem
-                            label="Dirección"
-                        >
-                            {getFieldDecorator('address', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Input placeholder={"Dirección del cliente"} />
-                            )}
-                        </FormItem>
-
                         <FormItem
                             label="Correo electrónico"
                         >
-                            {getFieldDecorator('email', {
+                            {getFieldDecorator('email_comp', {
                                 rules: [{
                                     type: 'email', message: 'No es una dirección de correo válida!',
                                 }, {
@@ -135,7 +104,7 @@ const ClienteForm = Form.create()(
                         <FormItem
                             label="Teléfono"
                         >
-                            {getFieldDecorator('phone_number', {
+                            {getFieldDecorator('phone_compa', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
@@ -165,4 +134,4 @@ const ClienteForm = Form.create()(
     }
 );
 
-export default ClienteForm
+export default CompanyForm
