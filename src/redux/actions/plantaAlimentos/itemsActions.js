@@ -12,8 +12,7 @@ export const getItemsSuccess = items => ({
 export const getItems = url => (dispatch, getState) => {
     api.getItems( url )
         .then( r => {
-            //console.log(r);
-            dispatch(getItemsSuccess(r.results));
+            dispatch(getItemsSuccess(r));
         }).catch( e => {
         console.log( e );
     });

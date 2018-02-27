@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import {GET_ITEMS_SUCCESS, SAVE_ITEM_SUCCESS, EDIT_ITEM_SUCCESS, DELETE_ITEM_SUCCESS} from "../../actions/plantaAlimentos/itemsActions";
 
 
-const list = (state=[], action) => {
+const list = (state = [], action) => {
     switch(action.type){
         case GET_ITEMS_SUCCESS:
             return action.items;
