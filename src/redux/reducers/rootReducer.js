@@ -30,8 +30,11 @@ const rootReducer = combineReducers({
 
     formulas:formulasReducer,
     insumos:insumosReducer,
+    items: itemsReducer,
 
     egresos:egresosReducer,
+    empresas:empresasReducer,
+    vacunas: vacunasReducer,
 
 });
 
