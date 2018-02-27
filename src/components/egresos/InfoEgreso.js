@@ -149,6 +149,8 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             <InputNumber
                                 disabled={!editMode}
                                 step={0.01}
+                                min={0}
+                                style={{width:'100%'}}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             />

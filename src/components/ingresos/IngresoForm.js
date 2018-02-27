@@ -81,6 +81,7 @@ const FormIngreso = Form.create()(
                                 }],
                             })(
                                 <InputNumber
+                                    min={0}
                                     style={{width:'100%'}}
                                     step={0.01}
                                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}

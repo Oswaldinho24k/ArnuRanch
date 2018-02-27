@@ -65,9 +65,12 @@ const VacunaForm = Form.create()(
                             )}
                         </FormItem>
 
+                        <div style={styles.formSection}>
+
+
                         <FormItem
                             label="Dosis ml"
-                            style={{width:'150px'}}
+                            style={{width:'50%'}}
                         >
                             {getFieldDecorator('dose', {
                                 rules: [{
@@ -75,7 +78,8 @@ const VacunaForm = Form.create()(
                                 }],
                             })(
                                 <InputNumber
-                                    style={{width:'150px'}}
+                                    min={0}
+                                    style={{width:'90%'}}
                                     step={0.01}
                                     formatter={value => `${value}ml`}
                                     parser={value => value.replace('ml', '')}
@@ -85,7 +89,7 @@ const VacunaForm = Form.create()(
 
                         <FormItem
                             label="Contenido ml"
-                            style={{width:'150px'}}
+                            style={{width:'50%'}}
                         >
                             {getFieldDecorator('content', {
                                 rules: [{
@@ -93,7 +97,8 @@ const VacunaForm = Form.create()(
                                 }],
                             })(
                                 <InputNumber
-                                    style={{width:'150px'}}
+                                    min={0}
+                                    style={{width:'90%'}}
                                     step={0.01}
                                     formatter={value => `${value}ml`}
                                     parser={value => value.replace('ml', '')}
@@ -103,7 +108,7 @@ const VacunaForm = Form.create()(
 
                         <FormItem
                             label="Concentración ml"
-                            style={{width:'150px'}}
+                            style={{width:'50%'}}
                         >
                             {getFieldDecorator('concentration', {
                                 rules: [{
@@ -111,7 +116,8 @@ const VacunaForm = Form.create()(
                                 }],
                             })(
                                 <InputNumber
-                                    style={{width:'150px'}}
+                                    min={0}
+                                    style={{width:'90%'}}
                                     step={0.01}
                                     formatter={value => `${value}ml`}
                                     parser={value => value.replace('ml', '')}
@@ -121,7 +127,7 @@ const VacunaForm = Form.create()(
 
                         <FormItem
                             label="Costo"
-                            style={{width:'150px'}}
+                            style={{width:'50%'}}
                         >
                             {getFieldDecorator('cost', {
                                 rules: [{
@@ -129,13 +135,15 @@ const VacunaForm = Form.create()(
                                 }],
                             })(
                                 <InputNumber
-                                    style={{width:'150px'}}
+                                    min={0}
+                                    style={{width:'90%'}}
                                     step={0.01}
                                     formatter={value => `${value}$`}
                                     parser={value => value.replace('$', '')}
                                 />
                             )}
                         </FormItem>
+                    </div>
 
 
 

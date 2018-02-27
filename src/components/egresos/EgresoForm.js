@@ -95,6 +95,7 @@ const FormEgreso = Form.create()(
                             })(
                                 <InputNumber
                                     style={{width:'100%'}}
+                                    min={0}
                                     step={0.01}
                                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
