@@ -1,13 +1,13 @@
 import React, {Component, Fragment} from 'react';
-import {Link} from 'react-router-dom';
-import {Button, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
-import ProveedorForm from './ProveedorForm';
-import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
+import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
+import * as vacunasActions from '../../redux/actions/vacunasActions';
+import VacunaForm from './VacunaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
+import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-
 import TablePageB from "../clientes/TablePageB";
+
 
 const style={
     customFilterDropdown: {
@@ -24,18 +24,20 @@ const style={
 };
 
 
-class ProovedorPage extends Component {
 
+class VacunasPage extends Component {
     state = {
         visible: false,
         selectedRowKeys:[],
         on:true,
-
         data:[],
+
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+
     };
+
 
     showModal = () => {
         this.setState({
@@ -49,11 +51,10 @@ class ProovedorPage extends Component {
         });
     };
 
-
-    deleteProveedor=()=>{
+    deleteVacuna=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.proveedoresActions.deleteProveedor(keys[i])
+            this.props.vacunasActions.deleteVacuna(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -64,7 +65,7 @@ class ProovedorPage extends Component {
     };
     confirm=(e)=> {
         console.log(e);
-        this.deleteProveedor();
+        this.deleteVacuna();
         message.success('Deleted successfully');
     };
 
@@ -76,7 +77,6 @@ class ProovedorPage extends Component {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
-
     saveFormRef = (form) => {
         this.form = form;
     };
@@ -87,7 +87,7 @@ class ProovedorPage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.proveedoresActions.saveProveedor(values)
+                this.props.vacunasActions.saveVacuna(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
 
@@ -98,44 +98,9 @@ class ProovedorPage extends Component {
                         message.error('El RFC ingresado ya existe!')
                         console.log(values)
                     })
-
             }else{message.error('Algo fallo, verifica los campos');}
 
         });
-    };
-
-    checkRfc = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('Verifica el RFC ingresado');
-        } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
-            }
-            callback()
-        }
-    };
-
-    checkPhone = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('El número ingresa debe contener 10 dígitos.');
-        } else {
-            if(value.length < 10){
-                callback('Ingresa un número de 10 dígitos');
-            }
-            callback()
-        }
-    };
-
-    handleChange = e => {
-        this.setState({
-            contacto_directo: e.target.checked
-        })
-    };
-
-    handleChangeOn = ()=>{
-        this.setState({
-            on: !this.state.on
-        })
     };
 
     onInputChange = (e) => {
@@ -149,17 +114,17 @@ class ProovedorPage extends Component {
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
-            data: this.props.proveedores.map((record) => {
-                const match = record.provider.match(reg);
+            data: this.props.vacunas.map((record) => {
+                const match = record.vaccine.match(reg);
                 if (!match) {
                     return null;
                 }
                 return {
                     ...record,
-                    provider: (
+                    vaccine: (
                         <span>
-              {record.provider.split(reg).map((provider, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, provider] : provider
+              {record.vaccine.split(reg).map((vaccine, i) => (
+                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, vaccine] : vaccine
               ))}
             </span>
                     ),
@@ -170,13 +135,13 @@ class ProovedorPage extends Component {
 
     componentWillMount(){
         this.setState({
-            data:this.props.proveedores
+            data:this.props.vacunas
         });
     }
 
     resetFilter = () => {
         this.setState({
-            data:this.props.proveedores,
+            data:this.props.vacunas,
             filterDropdownVisible: false,
             searchText: '',
             filtered: false,
@@ -184,18 +149,19 @@ class ProovedorPage extends Component {
     };
 
 
-    render() {
 
+
+    render() {
         const columns = [
             {
-                title: 'Proveedor',
-                dataIndex: 'provider',
-                key:'provider',
+                title: 'Nombre de Vacuna',
+                dataIndex: 'vaccine',
+                key:'vaccine',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
                         <Input
                             ref={ele => this.searchInput = ele}
-                            placeholder="Buscar proveedor"
+                            placeholder="Buscar vacuna"
                             value={this.state.searchText}
                             onChange={this.onInputChange}
                             onPressEnter={this.onSearch}
@@ -214,90 +180,79 @@ class ProovedorPage extends Component {
                 },
             },
             {
-                title: 'Dirección',
-                dataIndex: 'address',
+                title: 'Tipo de Vacuna',
+                dataIndex: 'type',
             },
             {
-                title: 'E-mail',
-                dataIndex: 'email'
-            },
-            {
-                title: 'RFC',
-                dataIndex: 'rfc'
+                title: 'Dosis por animal',
+                dataIndex: 'dose',
+                render: dose => `${dose} ml`,
             },
             {
                 title: 'Actions',
-                key: 'action',
                 fixed:'right',
                 width:100,
+                key: 'action',
                 render: (text, record) => (
                     <span>
-              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
+              <Link to={`/admin/vacunas/${record.id}`}>Detalle</Link>
             </span>
                 ),
             }
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
+        console.log(filtered)
         const canDelete = selectedRowKeys.length > 0;
+        //const filter = data.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {proveedores, fetched} = this.props;
+        let {vacunas, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    Proveedores
+                    Vacunas
                 </div>
 
-                <h1>Proveedores</h1>
+                <h2>Vacunas</h2>
                 <BackTop visibilityHeight={100} />
 
                 {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={proveedores} columns={columns} rowSelection={rowSelection}/>
+                    :<TablePageB data={vacunas} columns={columns} rowSelection={rowSelection}/>
                 }
 
-               {/* <Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={proveedores}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                />*/}
+
+
+
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
-
-                <ProveedorForm
+                <VacunaForm
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    rfc={this.checkRfc}
-                    phone={this.checkPhone}
                     handleChange={this.handleChange}
-                    on = {this.state.on}
-                    handleChangeOn={this.handleChangeOn}
+
 
                 />
 
-                <Divider
-                    type={'vertical'}/>
 
-                <Popconfirm title="Are you sure delete this proveedor?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                <Divider type={'vertical'} />
+
+                <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />
 
                 <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 
-               </Fragment>
+            </Fragment>
         );
     }
 }
@@ -307,16 +262,16 @@ class ProovedorPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        proveedores:state.proveedores.list,
-        fetched:state.proveedores.list!==undefined,
+        vacunas:state.vacunas.list,
+        fetched:state.vacunas.list!==undefined,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        proveedoresActions:bindActionCreators(proveedoresActions, dispatch)
+        vacunasActions:bindActionCreators(vacunasActions, dispatch)
     }
 }
 
-ProovedorPage = connect(mapStateToProps,mapDispatchToProps)(ProovedorPage);
-export default ProovedorPage;
+VacunasPage = connect(mapStateToProps,mapDispatchToProps)(VacunasPage);
+export default VacunasPage;

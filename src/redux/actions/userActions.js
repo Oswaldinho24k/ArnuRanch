@@ -8,9 +8,18 @@ import {getPesadas} from "./ganado/pesadasActions";
 import {getIngresos} from "./administracion/ingresosActions";
 import {getFormulas} from "./plantaAlimentos/formulasActions";
 import {getInsumos} from "./plantaAlimentos/insumosActions";
+<<<<<<< HEAD
 import {getEgresos} from "./administracion/egresosActions";
 import {getAllUsers} from "./administracion/usersActions";
 import {getRazas} from "./ganado/razasActions";
+=======
+import {getItems} from "./plantaAlimentos/itemsActions";
+
+import {getEgresos} from "./egresosActions";
+import {getEmpresas} from "./empresasActions";
+import {getVacunas} from "./vacunasActions";
+
+>>>>>>> fee88d5bf44b82701bf4347f032a16ee34152e78
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -78,8 +87,11 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getPesadas());
         dispatch(getIngresos());
         dispatch(getFormulas());
+        dispatch(getItems());
         dispatch(getInsumos());
         dispatch(getEgresos());
+        dispatch(getEmpresas());
+        dispatch(getVacunas());
 
     }
 };

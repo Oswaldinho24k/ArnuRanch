@@ -7,6 +7,7 @@ import {bindActionCreators} from "redux";
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 
+
 const TablePageB = ({data, columns, rowSelection})=>{
 
     return(

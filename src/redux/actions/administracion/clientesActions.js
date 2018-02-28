@@ -33,6 +33,10 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(saveClienteSuccess(r));
         }).catch(e=>{
+<<<<<<< HEAD:src/redux/actions/administracion/clientesActions.js
+=======
+        console.log(e)
+>>>>>>> fee88d5bf44b82701bf4347f032a16ee34152e78:src/redux/actions/clientesActions.js
             throw e
     })
 };

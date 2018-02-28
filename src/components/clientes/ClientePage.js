@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Table, Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
+import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import {connect} from 'react-redux';
@@ -88,11 +88,17 @@ class ClientePage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.clientesActions.saveCliente(values);
-                message.success('Guardado con éxito');
+                this.props.clientesActions.saveCliente(values)
+                    .then(r=>{
+                        message.success('Guardado con éxito');
 
-                form.resetFields();
-                this.setState({ visible: false });
+                        form.resetFields();
+                        this.setState({ visible: false });
+                        })
+                    .catch(r=>{
+                        message.error('El RFC ingresado ya existe!')
+                        console.log(values)
+                    })
             }else{message.error('Algo fallo, verifica los campos');}
 
         });
@@ -140,22 +146,15 @@ class ClientePage extends Component {
 
     onSearch = () => {
         const { searchText } = this.state;
-        console.log(searchText);
         const reg = new RegExp(searchText, 'gi');
-        console.log(reg)
-        console.log(this.props.clientes)
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
             data: this.props.clientes.map((record) => {
                 const match = record.client.match(reg);
-                console.log(record)
                 if (!match) {
                     return null;
-                    console.log(match)
                 }
-                console.log(record)
-                console.log(match)
                 return {
                     ...record,
                     client: (
@@ -261,7 +260,7 @@ class ClientePage extends Component {
                     Clientes
                 </div>
 
-                <h1>Clientes</h1>
+                <h2>Clientes</h2>
                 <BackTop visibilityHeight={100} />
 
                 {/*<Table
@@ -319,7 +318,7 @@ class ClientePage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined && state.clientes.list.length>0,
+        fetched:state.clientes.list!==undefined ,
     }
 }
 

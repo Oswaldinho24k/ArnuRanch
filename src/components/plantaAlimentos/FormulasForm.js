@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Form, Modal, Select, Input, InputNumber, Icon} from 'antd';
+import {Button, Form, Modal, Select, Input, InputNumber, Icon, message} from 'antd';
 import {connect} from 'react-redux';
 import './FormulasStyles.css';
 import {saveItem, editItem, deleteItem} from '../../redux/actions/plantaAlimentos/itemsActions';
@@ -80,11 +80,11 @@ class FormulasForm extends Component {
                 for (let unit of values['units']) {
                     if (unit) {
                         try {
-                            let unitFloat = parseFloat(unit.replace('kg', ''));
-                            console.log('Lol',unitFloat);
-                            units[i++] = parseFloat(unitFloat.toFixed(2));
-                            console.log('Lol',unitFloat);
-                            total_units += unitFloat;
+                            //let unitFloat = parseFloat(unit.replace('kg', ''));
+                            units[i++] = parseFloat(parseFloat(unit).toFixed(2));
+                            total_units += parseFloat(unit);
+                            total_units = parseFloat(total_units.toFixed(2));
+
                         } catch (e) {
                             console.log(e);
                         }
@@ -98,6 +98,7 @@ class FormulasForm extends Component {
                         let subtotal = insumo['unit_price_total'] * parseFloat(units[i]);
                         subtotal = parseFloat(subtotal.toFixed(2));
                         total_price += parseFloat(subtotal.toFixed(2));
+                        total_price = parseFloat(total_price.toFixed(2));
                         const formulaId = this.props.formula ? this.props.formula.id : 0;
                         let item = new Item(insumoId, formulaId, parseFloat(units[i]), subtotal);
                         insumos[i++] = insumoId;
@@ -127,19 +128,24 @@ class FormulasForm extends Component {
                                 item.formula = r.id;
                                 this.props.saveItem(item)
                                     .then(r => {
-                                        console.log(r);
+                                        item.id = r.id;
                                     })
                                     .catch(e => {
                                         console.log(e);
                                     });
                             }
+                            formula.id = r.id;
+                            message.success("Formula guardada");
+                            this.props.editFormula(formula).then( r => console.log(r)).catch( e => console.error(e));
                         })
                         .catch(e => {
                             console.log(e);
+                            message.error("Ups algo salió mal, contacta al administrador");
                         });
                 } else {
                     formula['id'] = this.props.formula.id;
-                    for(let item of this.props.formula.items){
+                    console.log('Estos son mis items',this.props.items);
+                    for(let item of this.props.items){
                         this.props.deleteItem(item.id).then(r => console.log(r)).catch( e => console.log(e));
                     }
                     this.props.editFormula(formula)
@@ -154,8 +160,10 @@ class FormulasForm extends Component {
                                         console.log(e);
                                     });
                             }
+                            message.success("Formula editada exitosamente");
                         }).catch( e => {
                             console.log(e);
+                            message.error("Ups algo salió mal, contacta al administrador");
                     });
                 }
                 this.props.onSubmit(e);
@@ -236,7 +244,7 @@ class FormulasForm extends Component {
                         })(
                             <InputNumber
                                 style={{width: '100%'}}
-                                min={1}
+                                min={0.1}
                                 max={10000000}
                                 placeholder="Cantidad en kg"
                                // formatter={value => `${value}Kg`}
@@ -264,7 +272,7 @@ class FormulasForm extends Component {
                 visible={true}
                 width={width}
                 maskClosable={true}
-                footer={[<Button form='formula' key='f' type="primary" htmlType="submit">Guardar</Button>, null]}
+                footer={[<Button disabled={uuid === 0} form='formula' key='f' type="primary" htmlType="submit">Guardar</Button>, null]}
                 onCancel={onCancel}
                 style={{height: '70vh'}}
             >
@@ -313,10 +321,14 @@ const mapStateToProps = (state, ownProps) => {
     if (id !== 'add') {
         formula = (state.formulas.list.filter(formula => formula.id == id)[0]);
     }
-    console.log(formula);
+    let items = [];
+    if (formula) {
+        items = (state.items.list.filter(item => item.formula == formula.id));
+    }
     return {
         formula,
-        insumos: state.insumos.list
+        insumos: state.insumos.list,
+        items
     }
 };
 

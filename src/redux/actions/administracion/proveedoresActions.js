@@ -1,5 +1,9 @@
+<<<<<<< HEAD:src/redux/actions/administracion/proveedoresActions.js
 import api from "../../../Api/Django";
 import {editAnimalSuccess} from "../ganado/animalsActions";
+=======
+import api from "../../Api/Django";
+>>>>>>> fee88d5bf44b82701bf4347f032a16ee34152e78:src/redux/actions/proveedoresActions.js
 
 export const GET_PROVEEDORES_SUCCESS = 'GET_PROVEEDORES_SUCCESS';
 
@@ -32,10 +36,9 @@ export function saveProveedorSuccess(proveedor){
 export const saveProveedor=(proveedor)=>(dispatch, getState)=>{
     return api.newProveedor(proveedor)
         .then(r=>{
-            console.log(r);
             dispatch(saveProveedorSuccess(r))
         }).catch(e=>{
-        console.log(e)
+        throw e
     })
 };
 

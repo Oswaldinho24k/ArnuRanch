@@ -9,9 +9,17 @@ import pesadasReducer from "./ganado/pesadasReducer";
 import ingresosReducer from "./administracion/ingresosReducer";
 import formulasReducer from "./plantaAlimentos/formulasReducer";
 import insumosReducer from "./plantaAlimentos/insumosReducer";
+<<<<<<< HEAD
 import egresosReducer from "./administracion/egresosReducer";
 import usersReducer from "./usersReducer";
 import razasReducer from "./ganado/razasReducer";
+=======
+
+import egresosReducer from "./egresosReducer";
+import empresasReducer from "./empresasReducer";
+import vacunasReducer from "./vacunasReducer";
+import itemsReducer from "./plantaAlimentos/itemsReducer";
+>>>>>>> fee88d5bf44b82701bf4347f032a16ee34152e78
 
 
 
@@ -27,8 +35,15 @@ const rootReducer = combineReducers({
     users:usersReducer,
     formulas:formulasReducer,
     insumos:insumosReducer,
+<<<<<<< HEAD
     razas:razasReducer,
+=======
+    items: itemsReducer,
+
+>>>>>>> fee88d5bf44b82701bf4347f032a16ee34152e78
     egresos:egresosReducer,
+    empresas:empresasReducer,
+    vacunas: vacunasReducer,
 
 });
 

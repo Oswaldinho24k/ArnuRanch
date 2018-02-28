@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Modal, Switch, message, Popconfirm, Tag, Divider, Input, Icon, BackTop} from "antd";
+import {Button, message, Popconfirm, Tag, Divider, Input, Icon, BackTop} from "antd";
 import MainLoader from "../common/Main Loader";
 import moment from 'moment';
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
