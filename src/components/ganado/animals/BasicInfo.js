@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message} from 'antd';
+import {Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message, Switch} from 'antd';
 import moment from 'moment';
 
 const Option = Select.Option;
@@ -10,7 +10,7 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
 
 
     const handleSubmit = (e) => {
@@ -52,6 +52,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza,
     ];
 
     let tipos = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+
 
     return (
         <Fragment>
@@ -113,17 +114,35 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza,
                         )}
 
                     </FormItem>
-                    <FormItem
-                        label="Owner">
+                    <FormItem label={'Empresa?'}>
+                        <Switch  disabled={!editMode} defaultChecked={wEmpresa} onChange={handleEmpresa} checkedChildren="E" unCheckedChildren="P"/>
+                    </FormItem>
+                    {!wEmpresa?
+                        <FormItem
+                        label="Propietario">
                         {form.getFieldDecorator('owner', {
                                     initialValue:owner
 
                             })(
                         <Input
+                            style={{widht:'200px'}}
+
                             disabled={!editMode}
                             />
                         )}
-                    </FormItem>
+                    </FormItem>:
+                    <FormItem label={'Empresa'}>
+                        {form.getFieldDecorator('empresa', {
+                            initialValue:empresa?empresa.id:'',
+
+                        })(
+                        <Select
+                            disabled={!editMode}
+                            style={{width:'200px'}}>
+                            {options_empresa}
+                        </Select>
+                        )}
+                    </FormItem>}
                     <FormItem
                         label="Factura Inicial"
                         style={{width:'200px'}}>
@@ -204,7 +223,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza,
                     <FormItem
                         label="Raza">
                         {form.getFieldDecorator('raza', {
-                                    initialValue:raza?raza.name:''
+                                    initialValue:raza?raza.id:''
                             })(
                             <Select
                                 style={{width:'150px'}}
@@ -224,12 +243,12 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza,
                             />
                                                         )}
                     </FormItem>
-                    {lote?
+
                         <FormItem
                             label={"Lote"}
                             style={{width:'40%'}}>
                             {form.getFieldDecorator('lote',{
-                                initialValue:lote.id
+                                initialValue:lote?lote.id:''
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -237,21 +256,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, options_raza,
                                     {options}
                                 </Select>
                             )}
-                        </FormItem>:
-                        <FormItem
-                            label={"Lote"}
-                            style={{width:'40%'}}>
-                            {form.getFieldDecorator('lote',{
-
-                            })(
-                                <Select
-                                    disabled={!editMode}
-
-                                    placeholder={"Selecciona un Lote"}>
-                                    {options}
-                                </Select>
-                            )}
-                        </FormItem>}
+                        </FormItem>
 
                     <FormItem
                         label="Descripción"

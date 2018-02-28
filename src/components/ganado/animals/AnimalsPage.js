@@ -179,9 +179,10 @@ class AnimalsPage extends Component {
                 width:150
 
             }, {
-                title: 'Owner',
+                title: 'Propietario',
                 dataIndex: 'owner',
                 key:'owner',
+                render:(v,o)=><p>{o.empresa?o.empresa.company:v}</p>,
                 width:150
 
             },
@@ -208,7 +209,7 @@ class AnimalsPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {animals, fetched, lotes, animalsData, razas} = this.props;
+        let {animals, fetched, lotes, animalsData, razas, empresas} = this.props;
 
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
@@ -278,7 +279,7 @@ class AnimalsPage extends Component {
                            null,
                        ]}
                 >
-                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel} razas={razas}/>
+                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel} razas={razas} empresas={empresas}/>
                 </Modal>
                 <Divider
                     type={'vertical'}/>
@@ -310,11 +311,12 @@ class AnimalsPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        empresas:state.empresas.list,
         animalsData:state.animals.allData,
         animals: state.animals.list,
         lotes:state.lotes.list,
         razas:state.razas.list,
-        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined && state.razas.list!==undefined,
+        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined && state.razas.list!==undefined&& state.empresas.list!==undefined,
     }
 }
 

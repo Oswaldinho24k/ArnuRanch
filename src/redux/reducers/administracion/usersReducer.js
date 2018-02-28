@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_USERS_SUCCESS, NEW_USER_SUCCESS, SAVE_USER_PROFILE, DELETE_USER_SUCCESS} from "../actions/administracion/usersActions";
+import {GET_USERS_SUCCESS, NEW_USER_SUCCESS, SAVE_USER_PROFILE, DELETE_USER_SUCCESS} from "../../actions/administracion/usersActions";
 
 
 

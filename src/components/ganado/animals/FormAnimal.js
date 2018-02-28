@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select} from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select, Switch} from 'antd';
 import './detailAnimal.css';
 
 const MonthPicker = DatePicker.MonthPicker;
@@ -29,6 +29,9 @@ const opciones = [{
 ];
 
 class FormAnimal extends Component {
+    state={
+        wEmpresa:true
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -47,6 +50,9 @@ class FormAnimal extends Component {
             return e && e.fileList;
         });
     };
+    handleEmpresa=(e)=>{
+      this.setState({wEmpresa:e})
+    };
 
     normFile = (e) => {
         if (Array.isArray(e)) {
@@ -57,9 +63,11 @@ class FormAnimal extends Component {
 
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
+        let {wEmpresa} = this.state;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
         let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.name}</Option>);
+        let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.company}</Option>);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
@@ -99,7 +107,7 @@ class FormAnimal extends Component {
 
                         <FormItem
                             label={"Tipo"}
-                            style={{width:'200px'}}
+                            style={{width:'150px'}}
                         >
                             {getFieldDecorator('tipo_animal', {
                                 rules: [{
@@ -118,18 +126,34 @@ class FormAnimal extends Component {
                             )}
 
                         </FormItem>
-
+                        <FormItem label={'A empresa?'}>
+                            <Switch  defaultChecked={wEmpresa} onChange={this.handleEmpresa} checkedChildren="E" unCheckedChildren="P"/>
+                        </FormItem>
+                        {!wEmpresa?
                         <FormItem
-                            label="Owner"
+                            label="Propietario"
                         >
                             {getFieldDecorator('owner', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input />
+                                <Input style={{width:'200px'}}/>
                             )}
-                        </FormItem>
+                        </FormItem>:
+                        <FormItem
+                            label="Empresa"
+                        >
+                            {getFieldDecorator('empresa', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select style={{width:'200px'}}>
+                                    {options_empresa}
+                                </Select>
+                            )}
+                        </FormItem>}
 
                         <FormItem
                             label="Factura Inicial"

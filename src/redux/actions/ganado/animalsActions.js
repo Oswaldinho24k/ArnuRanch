@@ -45,7 +45,7 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
     return api.newAnimal(animal)
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            let raza = getState().razas.list.find(r=>r.id===r.raza);
+            let raza = getState().razas.list.find(ra=>ra.id===r.raza);
             r['raza'] = raza;
             r['lote'] = lote;
             dispatch(saveAnimalSuccess(r))
@@ -69,7 +69,7 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
     return api.editAnimal(animal)
         .then(r=>{
             let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            let raza = getState().razas.list.find(r=>r.id===r.raza);
+            let raza = getState().razas.list.find(ra=>ra.id===r.raza);
             r['raza'] = raza;
             r['lote'] = lote;
             dispatch(editAnimalSuccess(r))
