@@ -54,7 +54,7 @@ if(!debug){
     itemsUrl = 'https://rancho.fixter.org/api/planta_alimentos/items/';
     formulasUrl = 'https://rancho.fixter.org/api/planta_alimentos/formulas/';
     egresosUrl = 'https://rancho.fixter.org/api/egresos/egresos/';
-    empresasUrl = 'https://rancho.fixter.org/api/api/ingresos/empresas/';
+    empresasUrl = 'https://rancho.fixter.org/api/ingresos/empresas/';
     vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
 
     /******************************Heroku Urls********************************/
