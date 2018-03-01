@@ -36,24 +36,24 @@ let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 if(!debug){
 
     /******************************AWS Urls********************************/
-    animalsUrl = 'http://54.201.124.163/api/ganado/animals/';
-    tokenUrl = 'http://54.201.124.163/api/auth/token-auth/';
-    userUrl = 'http://54.201.124.163/api/auth/me/';
-    lotesUrl = 'http://54.201.124.163/api/ganado/lotes/';
-    corralesUrl = 'http://54.201.124.163/api/ganado/corrales/';
-    animalGastoUrl = 'http://54.201.124.163/api/ganado/alimentos/';
-    pesadasUrl = 'http://54.201.124.163/api/ganado/pesadas/';
-    proveedoresUrl = 'http://54.201.124.163/api/egresos/proveedores/';
-    clientesUrl = 'http://54.201.124.163/api/ingresos/clientes/';
-    salesUrl = 'http://54.201.124.163/api/ingresos/ingresos/';
-    allUsersUrl = 'http://54.201.124.163/api/auth/users/';
-    profilesUrl = 'http://54.201.124.163/api/auth/profiles/';
-    razasUrl = 'http://54.201.124.163/api/ganado/razas/';
+    animalsUrl = 'https://rancho.fixter.org/api/ganado/animals/';
+    tokenUrl = 'https://rancho.fixter.org/api/auth/token-auth/';
+    userUrl = 'https://rancho.fixter.org/api/auth/me/';
+    lotesUrl = 'https://rancho.fixter.org/api/ganado/lotes/';
+    corralesUrl = 'https://rancho.fixter.org/api/ganado/corrales/';
+    animalGastoUrl = 'https://rancho.fixter.org/api/ganado/alimentos/';
+    pesadasUrl = 'https://rancho.fixter.org/api/ganado/pesadas/';
+    proveedoresUrl = 'https://rancho.fixter.org/api/egresos/proveedores/';
+    clientesUrl = 'https://rancho.fixter.org/api/ingresos/clientes/';
+    salesUrl = 'https://rancho.fixter.org/api/ingresos/ingresos/';
+    allUsersUrl = 'https://rancho.fixter.org/api/auth/users/';
+    profilesUrl = 'https://rancho.fixter.org/api/auth/profiles/';
+    razasUrl = 'https://rancho.fixter.org/api/ganado/razas/';
 // planta_alimentos
-    insumosUrl = 'http://54.201.124.163/api/planta_alimentos/insumos/';
-    itemsUrl = 'http://54.201.124.163/api/planta_alimentos/items/';
-    formulasUrl = 'http://54.201.124.163/api/planta_alimentos/formulas/';
-    egresosUrl = 'http://54.201.124.163/api/egresos/egresos/';
+    insumosUrl = 'https://rancho.fixter.org/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://rancho.fixter.org/api/planta_alimentos/items/';
+    formulasUrl = 'https://rancho.fixter.org/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://rancho.fixter.org/api/egresos/egresos/';
 
     /******************************Heroku Urls********************************/
     /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
