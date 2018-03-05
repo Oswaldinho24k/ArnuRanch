@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Switch, Route} from 'react-router-dom';
 import {Table, Button, Modal, message, Popconfirm, Divider, Select} from 'antd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import MainLoader from "../common/Main Loader";
 import UsuarioForm from "./UsuarioForm";
 import * as usuariosActions from '../../redux/actions/administracion/usersActions';
+
 
 const Option = Select.Option;
 
@@ -174,6 +175,8 @@ class Users extends Component {
                 <Popconfirm title="Are you sure delete this user?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canDelete} type="primary" >Delete</Button>
                 </Popconfirm>
+
+
 
             </Fragment>
         );

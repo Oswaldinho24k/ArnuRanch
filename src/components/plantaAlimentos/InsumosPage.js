@@ -48,7 +48,7 @@ class InsumosPage extends Component {
         }else {
             this.props.saveInsumo(insumo)
                 .then(r => {
-                    message.success('Cambios guardados')
+                    message.success('Cambios guardados');
                     console.log(r);
                 })
                 .catch(e => {
