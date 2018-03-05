@@ -109,7 +109,9 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             }],
                         })(
                             <InputNumber
+                                min={0}
                                 disabled={!editMode}
+                                style={{width:'100%'}}
                                 step={0.01}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}

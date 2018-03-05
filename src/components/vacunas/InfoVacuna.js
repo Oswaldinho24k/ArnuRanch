@@ -59,8 +59,12 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                         )}
                     </FormItem>
 
+                    <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'}}>
+
                     <FormItem
-                        label="Dosis ml">
+                        label="Dosis ml"
+                        style={{width:'50%'}}
+                    >
                         {form.getFieldDecorator('dose', {
                             initialValue:dose,
                             rules: [{
@@ -68,6 +72,8 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                             }],
                         })(
                             <InputNumber
+                                min={0}
+                                style={{width:'90%'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 formatter={value => `${value}ml`}
@@ -77,7 +83,9 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     </FormItem>
 
                     <FormItem
-                        label="Contenido ml">
+                        label="Contenido ml"
+                        style={{width:'50%'}}
+                    >
                         {form.getFieldDecorator('content', {
                             initialValue:content,
                             rules: [{
@@ -85,6 +93,8 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                             }],
                         })(
                             <InputNumber
+                                min={0}
+                                style={{width:'90%'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 formatter={value => `${value}ml`}
@@ -94,7 +104,9 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     </FormItem>
 
                     <FormItem
-                        label="Concentración ml">
+                        label="Concentración ml"
+                        style={{width:'50%'}}
+                    >
                         {form.getFieldDecorator('concentration', {
                             initialValue:concentration,
                             rules: [{
@@ -102,6 +114,8 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                             }],
                         })(
                             <InputNumber
+                                min={0}
+                                style={{width:'90%'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 formatter={value => `${value}ml`}
@@ -111,7 +125,9 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     </FormItem>
 
                     <FormItem
-                        label="Costo">
+                        label="Costo"
+                        style={{width:'50%'}}
+                    >
                         {form.getFieldDecorator('cost', {
                             initialValue:cost,
                             rules: [{
@@ -119,6 +135,8 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                             }],
                         })(
                             <InputNumber
+                                min={0}
+                                style={{width:'90%'}}
                                 disabled={!editMode}
                                 step={0.01}
                                 formatter={value => `${value}$`}
@@ -126,6 +144,7 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                             />
                         )}
                     </FormItem>
+                    </div>
 
 
 
