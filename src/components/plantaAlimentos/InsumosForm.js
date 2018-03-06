@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+    import React, {Component} from "react";
 import {Button, Form, Input, InputNumber, Modal, Select} from 'antd';
 import {connect} from 'react-redux';
 import DetailEgresoPage from "../egresos/DetailEgresoPage";
@@ -53,7 +53,7 @@ class InsumosForm extends Component{
         let unit_price = insumo ? insumo.unit_price : 0;
         let freight = insumo ? insumo.freight : 0;
         let loading_maneuver = insumo ? insumo.loading_maneuver : 0;
-        let provider = insumo.provider ? insumo.provider.id : '';
+        let provider = insumo ? insumo.provider ? insumo.provider.id : '':'';
         let providers_options = this.props.providers || [];
         providers_options = providers_options.map ( provider =>
             <Option

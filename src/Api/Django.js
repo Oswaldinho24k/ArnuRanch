@@ -196,10 +196,14 @@ const api = {
     },
     newAnimal:(animal)=>{
         let data = new FormData();
+        let date;
         for ( var key in animal ) {
             data.append(key, animal[key]);
         }
-        let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+        if (animal.fecha_entrada){
+            date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+            data.append('fecha_entrada', date);
+        }
         //data.append('fierro_original', animal.fierro_original[0].originFileObj);
         //data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
 
@@ -216,7 +220,7 @@ const api = {
             data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
         }
 
-        data.append('fecha_entrada', date);
+
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));

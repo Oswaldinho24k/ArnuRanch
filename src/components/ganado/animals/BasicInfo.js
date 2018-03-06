@@ -64,7 +64,10 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         label="Arete Rancho"
                         style={{width:'250px'}}>
                         {form.getFieldDecorator('arete_rancho', {
-                            initialValue:arete_rancho
+                            initialValue:arete_rancho,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Input
                                 disabled={!editMode}
@@ -75,7 +78,10 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         label="Arete Siniga"
                         style={{width:'200px'}}>
                         {form.getFieldDecorator('arete_siniga', {
-                            initialValue:arete_siniga
+                            initialValue:arete_siniga,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Input
                                 disabled={!editMode}
@@ -99,7 +105,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         {form.getFieldDecorator('tipo_animal', {
                             initialValue:tipo_animal,
                             rules: [{
-                                required: true, message: 'Completa el campo!',
+                                required: false, message: 'Completa el campo!',
                             }],
                             props:{
                                 placeholder:'Selecciona un tipo',
@@ -194,7 +200,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         label="Costo Inicial"
                         style={{width:'150px'}}>
                         {form.getFieldDecorator('costo_inicial', {
-                            initialValue:costo_inicial
+                            initialValue:(form.getFieldValue('costo_kilo')*form.getFieldValue('peso_entrada')).toFixed(2),
                         })(
                             <InputNumber
                                 style={{width:'150px'}}

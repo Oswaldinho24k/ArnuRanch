@@ -58,7 +58,7 @@ const LeftSide = ({onOpenChange, user}) => {
                 </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>
-                <Menu.Item key="11" disabled={false}>
+                <Menu.Item key="15" disabled={false}>
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
                 <Menu.Item key="12" disabled={false}>
