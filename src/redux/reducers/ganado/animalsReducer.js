@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS} from "../actions/animalsActions";
-import {SAVE_ANIMAL_GASTO_SUCCESS} from '../actions/gastoAnimalActions';
-import {SAVE_PESADA_SUCCESS} from "../actions/pesadasActions";
+import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS} from "../../actions/ganado/animalsActions";
+import {SAVE_ANIMAL_GASTO_SUCCESS} from '../../actions/ganado/gastoAnimalActions';
+import {SAVE_PESADA_SUCCESS} from "../../actions/ganado/pesadasActions";
 
 
 function list(state=[], action){

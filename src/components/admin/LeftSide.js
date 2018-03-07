@@ -5,78 +5,89 @@ import {paths} from './Sections';
 
 const SubMenu = Menu.SubMenu;
 
-const LeftSide = ({props}) => {
+const LeftSide = ({onOpenChange, user}) => {
+
     return (
 
         <Menu theme="dark"
               mode="inline"
               defaultSelectedKeys={['12']}
               defaultOpenKeys={['sub2']}
+              onOpenChange={onOpenChange}
         >
-            <SubMenu  key="sub1" title={<span className={'my-icon'}>💼<Icon /><span>Administración</span></span>}>
-                <Menu.Item key="1">
-                    <Link to={'/admin/estadisticas'} >Estadísticas</Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                    <Link to={'/admin/ingresos'} >Ingresos</Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                    <Link to={'/admin/ingresos/cobrar'} >Cuentas por Cobrar</Link>
-                </Menu.Item>
-                <Menu.Item key="4">
-                    <Link to={'/admin/egresos'}>Egresos</Link>
-                </Menu.Item>
-                <Menu.Item key="5">
-                    <Link to={'/admin/egresos/pagar'} >Cuentas por Pagar</Link>
-                </Menu.Item>
-                <Menu.Item key="6">
-                    <Link to={'/admin/clientes'}>Clientes</Link>
-                </Menu.Item>
-                <Menu.Item key="7">
-                    <Link to={'/admin/proveedores'}>Proovedores</Link>
-                </Menu.Item>
-                <Menu.Item key="8">
-                    <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
-                </Menu.Item>
-                <Menu.Item key="9">
-                    <Link to={'/admin/inventario'}>Inventario</Link>
-                </Menu.Item>
-                <Menu.Item key="10">
+
+
+            {user.is_superuser?<SubMenu  key="sub5" title={<span className={'my-icon'}><Icon type="user" /><span>Usuarios</span></span>}>
+                <Menu.Item key="10" disabled={false}>
                     <Link to='/admin/usuarios'>  Usuarios </Link>
                 </Menu.Item>
-                <Menu.Item key="11">
-                    <Link to='/admin/empresas'> Empresas </Link>
-                </Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub2" title={<span className={'my-icon'}>🐮<Icon /><span>Ganado</span></span>}>
-                <Menu.Item key="12">
+            </SubMenu>:''}
+            {(user.profile&&user.profile.admin)|| user.is_superuser?
+                <SubMenu  key="sub1" title={<span className={'my-icon'}><Icon type="global" /><span>Admin</span></span>}>
+                    <Menu.Item key="1" disabled={true}>
+                        <Link to={'/admin/estadisticas'} >Estadísticas</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2" disabled={true}>
+                        <Link to={'/admin/ingresos'} >Ingresos</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" disabled={true}>
+                        <Link to={'/admin/ingresos/cobrar'} >Cuentas por Cobrar</Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" disabled={true}>
+                        <Link to={'/admin/egresos'}>Egresos</Link>
+                    </Menu.Item>
+                    <Menu.Item key="5" disabled={true}>
+                        <Link to={'/admin/egresos/pagar'} >Cuentas por Pagar</Link>
+                    </Menu.Item>
+                    <Menu.Item key="6" disabled={false}>
+                        <Link to={'/admin/clientes'}>Clientes</Link>
+                    </Menu.Item>
+                    <Menu.Item key="7" disabled={false}>
+                        <Link to={'/admin/proveedores'}>Proovedores</Link>
+                    </Menu.Item>
+                    <Menu.Item key="8" disabled={true}>
+                        <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
+                    </Menu.Item>
+                    <Menu.Item key="9" disabled={true}>
+                        <Link to={'/admin/inventario'}>Inventario</Link>
+                    </Menu.Item>
+                    <Menu.Item key="11">
+                        <Link to='/admin/empresas'> Empresas </Link>
+                    </Menu.Item>
+
+                </SubMenu>:''}
+            {(user.profile&&user.profile.ganado)|| user.is_superuser?
+            <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>
+                <Menu.Item key="15" disabled={false}>
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
-                <Menu.Item key="13">
+                <Menu.Item key="12" disabled={false}>
                     <Link to={'/admin/animals'}>Animales</Link>
                 </Menu.Item>
-                <Menu.Item key="14">
+                <Menu.Item key="13" disabled={false}>
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="15" disabled>
-                    <Link to='/admin/reportes'>  Reportes </Link>
+                <Menu.Item key="14" disabled={false}>
+                    <Link to='/admin/razas'>  Razas </Link>
                 </Menu.Item>
 
 
-            </SubMenu>
-            <SubMenu key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
+            </SubMenu>:''}
+            {(user.profile&&user.profile.ganado)|| user.is_superuser?
+            <SubMenu key="sub3" title={<span className={'my-icon'}><Icon type="apple" /><span>Alimentos</span></span>}>
 
-                <Menu.Item key="15">
+                <Menu.Item key="16" disabled={false}>
                     <Link to={paths.insumos}>Insumos</Link>
                 </Menu.Item>
-                <Menu.Item key="16">
+                <Menu.Item key="17" disabled={false}>
                     <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
-            </SubMenu>
 
-            <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
-                <Menu.Item key="17">
+            </SubMenu>:''}
+
+            <SubMenu key="sub4" title={<span className={'my-icon'}><Icon type={'pushpin'} /><span>Vacunas</span></span>}>
+                <Menu.Item key="18">
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
             </SubMenu>

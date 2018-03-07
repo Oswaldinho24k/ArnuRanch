@@ -48,7 +48,7 @@ class InsumosPage extends Component {
         }else {
             this.props.saveInsumo(insumo)
                 .then(r => {
-                    message.success('Cambios guardados')
+                    message.success('Cambios guardados');
                     console.log(r);
                 })
                 .catch(e => {
@@ -117,7 +117,7 @@ class InsumosPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {/*
+                {
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -125,7 +125,7 @@ class InsumosPage extends Component {
                     >
                         Eliminar
                     </Button>
-                */}
+                }
 
                 <Switch>
                     <Route path={path} render={InsumosFormRender}/>

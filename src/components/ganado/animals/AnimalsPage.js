@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input, Pagination} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
 
-import * as animalActions from '../../../redux/actions/animalsActions';
-import * as lotesActions from '../../../redux/actions/lotesActions';
+import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../../common/Main Loader";
 
-const Option = Select.Option;
 
+const Option = Select.Option;
 
 
 
@@ -59,7 +59,6 @@ class AnimalsPage extends Component {
                 message.success('Arete añadido con éxito!')
             }).catch(e=>{
             for (let i in e.response.data){
-                console.log(e.response.data[i])
                 message.error(e.response.data[i])
             }
         })
@@ -72,7 +71,7 @@ class AnimalsPage extends Component {
                   console.log(r)
                   message.success('Deleted successfully');
               }).catch(e=>{
-                console.log(e.response)
+
                 message.error('No puedes eliminar aretes con gastos registrados')
               /*for (let i in this.props.errors){
                   console.log(this.props.errors[i])
@@ -84,18 +83,19 @@ class AnimalsPage extends Component {
         this.setState({selectedRowKeys:[]})
     };
     changeLote=(animal)=>{
-        console.log(animal)
+
         let keys = this.state.selectedRowKeys;
         for(let j in keys){
             animal['id']=keys[j];
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
+
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
-                    console.log(r);
                     message.success('Modificado con éxito')
                 }).catch(e => {
-                    console.log(e)
+               for (let i in e.response.data){
+                   message.error(e.response.data[i])
+               }
             })
         }
     };
@@ -109,12 +109,12 @@ class AnimalsPage extends Component {
 
     handleChange=(loteFilter)=>{
         this.setState({loteFilter});
-        console.log(this.state.loteFilter)
+
     };
 
     filterByLote=(lote)=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?lote=';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -125,7 +125,7 @@ class AnimalsPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/?q=';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -133,7 +133,7 @@ class AnimalsPage extends Component {
 
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
+        let basePath = 'http://54.201.124.163//api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };
@@ -145,11 +145,10 @@ class AnimalsPage extends Component {
             newUrl=newUrl.slice(0,newUrl.length-nextLength);
             newUrl=newUrl+pagina;
             this.props.animalActions.getAnimals(newUrl);
-            console.log(newUrl)
         }else{
             newUrl = this.props.animalsData.previous;
             this.props.animalActions.getAnimals(newUrl);
-            console.log(newUrl)
+
         }
 
     };
@@ -180,9 +179,10 @@ class AnimalsPage extends Component {
                 width:150
 
             }, {
-                title: 'Owner',
+                title: 'Propietario',
                 dataIndex: 'owner',
                 key:'owner',
+                render:(v,o)=><p>{o.empresa?o.empresa.company:v}</p>,
                 width:150
 
             },
@@ -209,7 +209,8 @@ class AnimalsPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {animals, fetched, lotes, animalsData} = this.props;
+        let {animals, fetched, lotes, animalsData, razas, empresas} = this.props;
+
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
 
@@ -278,7 +279,7 @@ class AnimalsPage extends Component {
                            null,
                        ]}
                 >
-                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel}/>
+                    <FormAnimal saveAnimal={this.saveAnimal} lotes={lotes} handleCancel={this.handleCancel} razas={razas} empresas={empresas}/>
                 </Modal>
                 <Divider
                     type={'vertical'}/>
@@ -310,10 +311,12 @@ class AnimalsPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        empresas:state.empresas.list,
         animalsData:state.animals.allData,
         animals: state.animals.list,
         lotes:state.lotes.list,
-        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined,
+        razas:state.razas.list,
+        fetched:state.lotes.list!==undefined && state.animals.list!==undefined && state.animals.allData!==undefined && state.razas.list!==undefined&& state.empresas.list!==undefined,
     }
 }
 

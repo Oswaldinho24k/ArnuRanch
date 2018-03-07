@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_PESADAS_SUCCESS} from "../actions/pesadasActions";
+import {GET_PESADAS_SUCCESS} from "../../actions/ganado/pesadasActions";
 
 
 function list(state=[], action){
