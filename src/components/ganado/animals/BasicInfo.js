@@ -17,6 +17,16 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
+                if(!values.lote_id) delete values.lote_id;
+                if(!values.raza_id) delete values.raza_id;
+                if(!values.empresa_id) delete values.empresa_id;
+                /*if(!values.lote_id) values['lote_id'] = null;
+                if(!values.raza_id) values['raza_id'] = null;
+                if(!values.empresa_id) values['empresa_id'] = null;*/
+                if(!values.tipo_animal) delete values.tipo_animal;
+                /* if(!values.costo_inicial) delete values.costo_inicial;
+                 if(!values.costo_kilo) delete values.costo_kilo;
+                 if(!values.peso_entrada) delete values.peso_entrada;*/
                 console.log(values);
                 values['id']=id;
                 editAnimal(values)

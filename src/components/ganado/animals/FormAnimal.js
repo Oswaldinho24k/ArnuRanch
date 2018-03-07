@@ -37,13 +37,17 @@ class FormAnimal extends Component {
 
             values['status']=true;
             if (!err) {
-                if(!values.lote) delete values.lote;
-                if(!values.empresa) delete values.empresa;
+                if(!values.lote_id) delete values.lote_id;
+                if(!values.raza_id) delete values.raza_id;
+                if(!values.empresa_id) delete values.empresa_id;
+                /*if(!values.lote_id) values['lote_id'] = null;
+                if(!values.raza_id) values['raza_id'] = null;
+                if(!values.empresa_id) values['empresa_id'] = null;*/
                 if(!values.tipo_animal) delete values.tipo_animal;
-                if(!values.costo_inicial) delete values.costo_inicial;
+               /* if(!values.costo_inicial) delete values.costo_inicial;
                 if(!values.costo_kilo) delete values.costo_kilo;
-                if(!values.peso_entrada) delete values.peso_entrada;
-                if(!values.raza) delete values.raza;
+                if(!values.peso_entrada) delete values.peso_entrada;*/
+
                 console.log(values)
                 this.props.saveAnimal(values);
                 this.props.form.resetFields()
@@ -156,11 +160,8 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Empresa"
                         >
-                            {getFieldDecorator('empresa', {
-                                initialValue:null,
-                                rules: [{
+                            {getFieldDecorator('empresa_id', {
 
-                                }],
                             })(
                                 <Select style={{width:'200px'}}>
                                     {options_empresa}
@@ -265,11 +266,8 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Raza"
                         >
-                            {getFieldDecorator('raza', {
-                                initialValue:null,
-                                rules: [{
+                            {getFieldDecorator('raza_id', {
 
-                                }],
                             })(
                                <Select  style={{width:'150px'}}>
                                    {options_raza}
@@ -294,15 +292,13 @@ class FormAnimal extends Component {
                             label={"Lote"}
                             style={{width:'30%'}}
                         >
-                            {getFieldDecorator('lote', {
+                            {getFieldDecorator('lote_id', {
                                 props:{
                                     placeholder:'Selecciona un Lote',
                                 }
                             })(
                                 <Select  placeholder={"Selecciona un Lote"}>
-
                                     {options_lote}
-
                                 </Select>
                             )}
                         </FormItem>
