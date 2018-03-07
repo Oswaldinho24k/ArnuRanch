@@ -59,7 +59,7 @@ const LeftSide = ({props}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="15" disabled>
+                <Menu.Item key="16" disabled>
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 
@@ -67,16 +67,16 @@ const LeftSide = ({props}) => {
             </SubMenu>
             <SubMenu key="sub3" title={<span className={'my-icon'}>🌽<Icon /><span>Alimentos</span></span>}>
 
-                <Menu.Item key="15">
+                <Menu.Item key="17">
                     <Link to={paths.insumos}>Insumos</Link>
                 </Menu.Item>
-                <Menu.Item key="16">
+                <Menu.Item key="18">
                     <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
             </SubMenu>
 
             <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
-                <Menu.Item key="17">
+                <Menu.Item key="19">
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
             </SubMenu>
