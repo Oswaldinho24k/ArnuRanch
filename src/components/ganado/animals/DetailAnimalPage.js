@@ -48,7 +48,7 @@ class DetailAnimalPage extends Component {
 
     componentDidMount(){
         if(this.props.animal){
-            this.props.animal.empresa?this.setState({wEmpresa:true}):this.setState({wEmpresa:false})
+            this.props.animal.empresa?this.setState({wEmpresa:true}):this.props.animal.empresa===null? this.setState({wEmpresa:true}):this.setState({wEmpresa:false})
         }
     }
 

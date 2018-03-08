@@ -86,11 +86,12 @@ const LeftSide = ({onOpenChange, user}) => {
 
             </SubMenu>:''}
 
+            {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub4" title={<span className={'my-icon'}><Icon type={'pushpin'} /><span>Vacunas</span></span>}>
                 <Menu.Item key="18">
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
-            </SubMenu>
+            </SubMenu>:''}
         </Menu>
     )
 };

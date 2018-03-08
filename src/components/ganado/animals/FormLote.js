@@ -25,7 +25,7 @@ const FormLote = ({form, lotes, changeLote}) => {
         <div>
             <Form onSubmit={handleSubmit}>
                 <Form.Item>
-                    {form.getFieldDecorator('lote', {
+                    {form.getFieldDecorator('lote_id', {
                     })(
                         <Select>
                             {lotes.map((a, key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>)}

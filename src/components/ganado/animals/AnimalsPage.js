@@ -70,9 +70,10 @@ class AnimalsPage extends Component {
               .then(r=>{
                   console.log(r)
                   message.success('Deleted successfully');
+
               }).catch(e=>{
 
-                message.error('No puedes eliminar aretes con gastos registrados')
+                message.error('No puedes eliminar aretes con gastos o pesadas registradas')
               /*for (let i in this.props.errors){
                   console.log(this.props.errors[i])
                   message.error(this.props.errors[i])
@@ -91,7 +92,9 @@ class AnimalsPage extends Component {
 
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
-                    message.success('Modificado con éxito')
+                    message.success('Modificado con éxito');
+                    this.handleCancel()
+
                 }).catch(e => {
                for (let i in e.response.data){
                    message.error(e.response.data[i])

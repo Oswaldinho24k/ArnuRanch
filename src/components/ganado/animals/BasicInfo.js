@@ -148,7 +148,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         )}
                     </FormItem>:
                     <FormItem label={'Empresa'}>
-                        {form.getFieldDecorator('empresa', {
+                        {form.getFieldDecorator('empresa_id', {
                             initialValue:empresa?empresa.id:'',
 
                         })(
@@ -238,7 +238,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                     </FormItem>
                     <FormItem
                         label="Raza">
-                        {form.getFieldDecorator('raza', {
+                        {form.getFieldDecorator('raza_id', {
                                     initialValue:raza?raza.id:''
                             })(
                             <Select
@@ -263,7 +263,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         <FormItem
                             label={"Lote"}
                             style={{width:'40%'}}>
-                            {form.getFieldDecorator('lote',{
+                            {form.getFieldDecorator('lote_id',{
                                 initialValue:lote?lote.id:''
                             })(
                                 <Select

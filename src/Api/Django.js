@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -834,10 +834,10 @@ const api = {
         });
     },
     editEmpresa:(empresa)=>{
-        let data = new FormData();
+       /* let data = new FormData();
         for ( var key in empresa ) {
             data.append(key, empresa[key]);
-        }
+        }*/
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -845,16 +845,16 @@ const api = {
                 baseURL: empresasUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': undefined,
+                    'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.patch(empresa.id+'/', data)
+            instance.patch(empresa.id+'/', empresa)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
+
                     console.log('el error: ', error.response);
                     reject(error);
                 });
