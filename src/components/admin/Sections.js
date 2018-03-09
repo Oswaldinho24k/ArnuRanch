@@ -30,6 +30,7 @@ import VacunasPage from "../vacunas/VacunasPage";
 import DetailVacuna from "../vacunas/DetailVacuna";
 import InventarioEmpresa from "../empresas/InventarioEmpresa";
 import ListaAlmacen from "../empresas/ListaAlmacen";
+import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -49,7 +50,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
-                <Route path={'/admin/empresas/inventario/almacen'} component={ListaAlmacen}/>
+                <Route path={'/admin/empresas/inventario/:em/:n/:k'} component={ListaAlmacenDetail}/>
+                <Route path={'/admin/empresas/inventario/:em/:n'} component={ListaAlmacen}/>
                 <Route path={'/admin/empresas/inventario/:em'} component={InventarioEmpresa}/>
                 <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
                 <Route path={'/admin/empresas'} component={Company}/>
