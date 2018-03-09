@@ -117,7 +117,7 @@ class AnimalsPage extends Component {
 
     filterByLote=(lote)=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/?lote=';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -128,7 +128,7 @@ class AnimalsPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/?q=';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -136,7 +136,7 @@ class AnimalsPage extends Component {
 
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };

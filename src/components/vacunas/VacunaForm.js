@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, Modal, InputNumber } from 'antd';
+import { Form, Input, Button, Modal, InputNumber, Select } from 'antd';
+
+const Option = Select.Option;
 
 
 const FormItem = Form.Item;
@@ -21,10 +23,24 @@ const styles = {
 };
 
 
-const VacunaForm = Form.create()(
-    (props)=>{
-        const{visible, onCancel, onCreate, form,} = props;
+
+
+const VacunaForm = Form.create()(({visible, onCancel, onCreate, form,})=>{
+
         const {getFieldDecorator} = form;
+        const selectAfter = (
+            <FormItem style={{height:5, padding:0}}>
+                {getFieldDecorator('unity',{
+                    initialValue:'ml'
+                })(
+                    <Select  style={{ width: 100 }}>
+                        <Option value="ml">ml</Option>
+                        <Option value="unidad">unidad</Option>
+                    </Select>
+                )}
+            </FormItem>
+
+        );
 
         return(
             <Modal
@@ -56,7 +72,7 @@ const VacunaForm = Form.create()(
                         <FormItem
                             label="Tipo de Fórmula"
                         >
-                            {getFieldDecorator('type', {
+                            {getFieldDecorator('typeofv', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -69,26 +85,22 @@ const VacunaForm = Form.create()(
 
 
                         <FormItem
-                            label="Dosis ml"
-                            style={{width:'50%'}}
+                            label="Dosis Recomendada"
+                            style={{width:'100%'}}
                         >
                             {getFieldDecorator('dose', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
+
                             })(
-                                <InputNumber
-                                    min={0}
-                                    style={{width:'90%'}}
-                                    step={0.01}
-                                    formatter={value => `${value}ml`}
-                                    parser={value => value.replace('ml', '')}
+
+                                <Input
+
+                                    addonAfter={selectAfter}
                                 />
                             )}
                         </FormItem>
 
                         <FormItem
-                            label="Contenido ml"
+                            label="Contenido (ml)"
                             style={{width:'50%'}}
                         >
                             {getFieldDecorator('content', {
@@ -107,7 +119,7 @@ const VacunaForm = Form.create()(
                         </FormItem>
 
                         <FormItem
-                            label="Concentración ml"
+                            label="Concentración (ml)"
                             style={{width:'50%'}}
                         >
                             {getFieldDecorator('concentration', {
@@ -126,7 +138,7 @@ const VacunaForm = Form.create()(
                         </FormItem>
 
                         <FormItem
-                            label="Costo"
+                            label="Costo por envase"
                             style={{width:'50%'}}
                         >
                             {getFieldDecorator('cost', {

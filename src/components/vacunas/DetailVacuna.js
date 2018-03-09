@@ -33,7 +33,7 @@ class DetailVacuna extends Component{
                     Vacuna {vacuna.id}
                 </div>
 
-                <div style={{width:'30%', margin: '0 auto'}}>
+                <div style={{width:'50%', margin: '0 auto'}}>
                     <Card title={"Detalle"}>
                         <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(vacuna.created).format('LL')}</span>
                         <InfoVacuna

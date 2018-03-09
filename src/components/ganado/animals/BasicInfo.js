@@ -213,8 +213,9 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                             initialValue:(form.getFieldValue('costo_kilo')*form.getFieldValue('peso_entrada')).toFixed(2),
                         })(
                             <InputNumber
+
                                 style={{width:'150px'}}
-                                disabled={!editMode}
+                                disabled={true}
                                 step={0.01}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
