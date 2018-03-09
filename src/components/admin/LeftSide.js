@@ -68,8 +68,13 @@ const LeftSide = ({onOpenChange, user}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
+
+                <Menu.Item key="16" disabled>
+                    <Link to='/admin/reportes'>  Reportes </Link>
+
                 <Menu.Item key="14" disabled={false}>
                     <Link to='/admin/razas'>  Razas </Link>
+
                 </Menu.Item>
 
 
@@ -77,18 +82,27 @@ const LeftSide = ({onOpenChange, user}) => {
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub3" title={<span className={'my-icon'}><Icon type="apple" /><span>Alimentos</span></span>}>
 
-                <Menu.Item key="16" disabled={false}>
+
+                <Menu.Item key="17">
                     <Link to={paths.insumos}>Insumos</Link>
                 </Menu.Item>
-                <Menu.Item key="17" disabled={false}>
+               
+
+                
+ <Menu.Item key="18">
                     <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
+
+
+            <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
+                <Menu.Item key="19">
 
             </SubMenu>:''}
 
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub4" title={<span className={'my-icon'}><Icon type={'pushpin'} /><span>Vacunas</span></span>}>
-                <Menu.Item key="18">
+                <Menu.Item key="20">
+
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
             </SubMenu>:''}
