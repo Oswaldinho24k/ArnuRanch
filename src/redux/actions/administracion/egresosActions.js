@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_EGRESOS_SUCCESS = 'GET_EGRESOS_SUCCESS';
 
@@ -13,7 +13,7 @@ export const getEgresos=()=>(dispatch, getState)=> {
         .then(r => {
             dispatch(getEgresosSuccess(r))
         }).catch(e => {
-        console.log(e)
+            throw e
     })
 };
 
@@ -30,13 +30,13 @@ export function saveEgresoSuccess(egreso){
 export const saveEgreso=(egreso)=>(dispatch, getState)=>{
     api.newEgreso(egreso)
         .then(r=>{
-            console.log(r);
+
             let provider= getState().proveedores.list.find(l=>l.id===r.provider);
             r['provider'] = provider
-            console.log(r);
+
             dispatch(saveEgresoSuccess(r))
         }).catch(e=>{
-        console.log(e)
+            throw e
     })
 };
 
@@ -52,12 +52,12 @@ export function editEgresoSucces(egreso) {
 export const editEgreso=(egreso)=>(dispatch, getState)=>{
     return api.editEgreso(egreso)
         .then(r=>{
-            console.log(r);
+
             let provider= getState().proveedores.list.find(l=>l.id===r.provider);
             r['provider'] = provider
             dispatch(editEgresoSucces(r))
         }).catch(e=>{
-            console.log(e)
+                throw e
         })
 };
 
@@ -76,6 +76,6 @@ export const deleteEgreso=(egresoId)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(deleteEgresoSuccess(egresoId))
         }).catch(e=>{
-            console.log(e)
+                throw e
         })
 };

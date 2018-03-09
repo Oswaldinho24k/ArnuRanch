@@ -306,9 +306,9 @@ class FormulasForm extends Component {
                             </Button>
                         </FormItem>
                     </div>
-                    {/*<FormItem>*/}
-                        {/*<Button type="primary" htmlType="submit">Guardar</Button>*/}
-                    {/*</FormItem>*/}
+                    <FormItem>
+                        <Button type="primary" htmlType="submit">Guardar</Button>
+                    </FormItem>
                 </Form>
             </Modal>
         );

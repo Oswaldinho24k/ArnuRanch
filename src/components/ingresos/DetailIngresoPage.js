@@ -5,7 +5,7 @@ import IngresoInfo from "./InfoIngreso";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
-import * as ingresoActions from '../../redux/actions/ingresosActions';
+import * as ingresoActions from '../../redux/actions/administracion/ingresosActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 

@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 
 
@@ -22,7 +22,7 @@ export function getAllDataSuccess(data){
 export const getAnimals=(url)=>(dispatch, getState)=>{
     return api.getAnimals(url)
         .then(r=>{
-            //console.log(r.results)
+
             dispatch(getAnimalsSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
@@ -44,14 +44,14 @@ export function saveAnimalSuccess(animal){
 export const saveAnimal=(animal)=>(dispatch, getState)=>{
     return api.newAnimal(animal)
         .then(r=>{
-            let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            r['lote'] = lote;
-            console.log(r);
+            //let lote = getState().lotes.list.find(l=>l.id===r.lote);
+            //let raza = getState().razas.list.find(ra=>ra.id===r.raza);
+            //r['raza'] = raza;
+           // r['lote'] = lote;
             dispatch(saveAnimalSuccess(r))
         })
         .catch(e=>{
             throw e;
-
         })
 };
 
@@ -68,10 +68,11 @@ export function editAnimalSuccess(animal){
 export const editAnimal=(animal)=>(dispatch, getState)=>{
     return api.editAnimal(animal)
         .then(r=>{
-            let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            r['lote'] = lote;
-            dispatch(editAnimalSuccess(r));
-            console.log(r)
+            //let lote = getState().lotes.list.find(l=>l.id===r.lote);
+            //let raza = getState().razas.list.find(ra=>ra.id===r.raza);
+            //r['raza'] = raza;
+           // r['lote'] = lote;
+            dispatch(editAnimalSuccess(r))
         }).catch(e=>{
             throw e;
     })

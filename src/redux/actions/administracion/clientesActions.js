@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_CLIENTES_SUCCESS = 'GET_CLIENTES_SUCCESS';
 
@@ -13,7 +13,7 @@ export const getClientes=()=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getClientesSuccess(r))
         }).catch(e=>{
-        console.log(e)
+            throw e
     })
 };
 
@@ -31,10 +31,12 @@ export function saveClienteSuccess(cliente){
 export const saveCliente=(cliente)=>(dispatch, getState)=>{
     return api.newCliente(cliente)
         .then(r=>{
-            console.log(r);
             dispatch(saveClienteSuccess(r));
         }).catch(e=>{
+
+
         console.log(e)
+
             throw e
     })
 };
@@ -53,7 +55,7 @@ export const editCliente=(cliente)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editClienteSucces(r))
         }).catch(e=>{
-            console.log(e)
+            throw e
         })
 };
 
@@ -72,6 +74,6 @@ export const deleteCliente=(clienteId)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(deleteClienteSuccess(clienteId))
         }).catch(e=>{
-            console.log(e)
+            throw e
         })
 };

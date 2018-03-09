@@ -16,15 +16,18 @@ let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
 let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
 let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
 let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
-
+let allUsersUrl = 'http://localhost:8000/api/auth/users/';
+let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
+let razasUrl = 'http://localhost:8000/api/ganado/razas/';
 // planta_alimentos
-let  insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
-let  itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
-let  formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
+let insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
+let itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
+let formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
 //empresas
 let empresasUrl = 'http://localhost:8000/api/ingresos/empresas/';
+let blinesUrl = 'http://localhost:8000/api/ingresos/blines/';
 //vacunas
 let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 
@@ -32,7 +35,32 @@ let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 
 //heroku urls
 if(!debug){
-    animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
+
+    /******************************AWS Urls********************************/
+    animalsUrl = 'https://rancho.fixter.org/api/ganado/animals/';
+    tokenUrl = 'https://rancho.fixter.org/api/auth/token-auth/';
+    userUrl = 'https://rancho.fixter.org/api/auth/me/';
+    lotesUrl = 'https://rancho.fixter.org/api/ganado/lotes/';
+    corralesUrl = 'https://rancho.fixter.org/api/ganado/corrales/';
+    animalGastoUrl = 'https://rancho.fixter.org/api/ganado/alimentos/';
+    pesadasUrl = 'https://rancho.fixter.org/api/ganado/pesadas/';
+    proveedoresUrl = 'https://rancho.fixter.org/api/egresos/proveedores/';
+    clientesUrl = 'https://rancho.fixter.org/api/ingresos/clientes/';
+    salesUrl = 'https://rancho.fixter.org/api/ingresos/ingresos/';
+    allUsersUrl = 'https://rancho.fixter.org/api/auth/users/';
+    profilesUrl = 'https://rancho.fixter.org/api/auth/profiles/';
+    razasUrl = 'https://rancho.fixter.org/api/ganado/razas/';
+// planta_alimentos
+    insumosUrl = 'https://rancho.fixter.org/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://rancho.fixter.org/api/planta_alimentos/items/';
+    formulasUrl = 'https://rancho.fixter.org/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://rancho.fixter.org/api/egresos/egresos/';
+    empresasUrl = 'https://rancho.fixter.org/api/ingresos/empresas/';
+    blinesUrl = 'https://rancho.fixter.org/api/ingresos/blines/';
+    vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
+
+    /******************************Heroku Urls********************************/
+    /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
     tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
     userUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/me/';
     lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
@@ -47,12 +75,101 @@ if(!debug){
     insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
     itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
     formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
-    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';
-
+    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';*/
 }
 
 
+
+
+
 const api = {
+    /*-----------------Users functions-----------------------*/
+    getAllUsers:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+    },
+    newUser:(user)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', user)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+    },
+
+    deleteUser:(user)=>{
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(user+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    saveProfile:(profile)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: profilesUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', profile)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+    },
+
     /*-----------------animals functions-----------------------*/
     //Get all animals
     getAnimals:(url)=>{
@@ -77,16 +194,18 @@ const api = {
                     console.log('el error: ', error.response);
                     reject(error);
                 });
-
-
         });
     },
     newAnimal:(animal)=>{
         let data = new FormData();
+        let date;
         for ( var key in animal ) {
             data.append(key, animal[key]);
         }
-        let date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+        if (animal.fecha_entrada){
+            date = animal.fecha_entrada.format("YYYY-MM-DD HH:mm:ss");
+            data.append('fecha_entrada', date);
+        }
         //data.append('fierro_original', animal.fierro_original[0].originFileObj);
         //data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
 
@@ -103,7 +222,7 @@ const api = {
             data.append('fierro_nuevo', animal.fierro_nuevo[0].originFileObj);
         }
 
-        data.append('fecha_entrada', date);
+
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -1356,6 +1475,100 @@ const api = {
 
         });
     },
+    /**************************Razas***************************************/
+    getRazas:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newRaza:(raza)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', raza)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteRaza:(raza)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: razasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(raza+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    /**************************Razas***************************************/
+    getBusinessLines:()=>{
+    const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+    return new Promise(function (resolve, reject) {
+        const instance = axios.create({
+            baseURL: blinesUrl,
+            // timeout: 2000,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + userToken
+            }
+        });
+        instance.get('')
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                console.log('el error: ', error.response);
+                reject(error);
+            });
+
+
+    });
+},
 
 
 

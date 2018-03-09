@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { Layout, Menu, Icon , message} from 'antd';
+import { Layout, message} from 'antd';
 
 import LeftSide from "./LeftSide";
 import Sections from "./Sections";
@@ -17,7 +17,8 @@ class AdminPage extends Component {
 
     state = {
         collapsed: false,
-        user:{}
+        user:{},
+        openKeys: ['sub1'],
     };
 
     componentWillMount(){
@@ -40,6 +41,17 @@ class AdminPage extends Component {
         this.props.history.push('/login');
     };
 
+    onOpenChange = (openKeys) => {
+       /* const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            this.setState({ openKeys });
+        } else {
+            this.setState({
+                openKeys: latestOpenKey ? [latestOpenKey] : [],
+            });
+        }*/
+    }
+
 
     render() {
         let {user, fetched} = this.props;
@@ -52,8 +64,8 @@ class AdminPage extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'RADMIN'}</div>
-                    <LeftSide/>
+                    <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'ADMIN'}</div>
+                    <LeftSide onOpenChange={this.onOpenChange} user={user}/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>

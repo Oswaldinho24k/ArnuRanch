@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 
-import * as egresosActions from '../../redux/actions/egresosActions';
+import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import FormEgreso from "./EgresoForm";
 
 import TablePageB from "../clientes/TablePageB";

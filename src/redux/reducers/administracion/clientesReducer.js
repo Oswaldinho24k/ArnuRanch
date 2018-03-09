@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE_CLIENTE_SUCCESS} from "../actions/clientesActions";
+import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE_CLIENTE_SUCCESS} from "../../actions/administracion/clientesActions";
 
 function list(state=[], action){
     switch(action.type){

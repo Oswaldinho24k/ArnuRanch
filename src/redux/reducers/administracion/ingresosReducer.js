@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_INGRESOS_SUCCESS, SAVE_INGRESO_SUCCESS, EDIT_INGRESO_SUCCESS, DELETE_INGRESO_SUCCESS} from "../actions/ingresosActions";
+import {GET_INGRESOS_SUCCESS, SAVE_INGRESO_SUCCESS, EDIT_INGRESO_SUCCESS, DELETE_INGRESO_SUCCESS} from "../../actions/administracion/ingresosActions";
 
 
 

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Checkbox, Button, Switch} from 'antd';
+import {Form, Input, Button, Switch, Select} from 'antd';
 
 
 const FormItem = Form.Item;
@@ -7,13 +7,15 @@ const FormItem = Form.Item;
 
 
 
-const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, edit }) => {
+const InfoBatch = ({form, name, id, status, corral, corrales, handleEdit, canEdit, edit, option_corrales }) => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                handleEdit()
+                values['id']=id;
+                edit(values);
+                handleEdit();
             }
             if (Array.isArray(e)) {
                 return e;
@@ -27,34 +29,38 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                 <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                     {canEdit?
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
-                    {form.getFieldDecorator('name', {
-                        initialValue:name
-                    })(
-                        <FormItem
-                            label="Name"
-                        >
+                    <FormItem
+                        label={"Nombre de Lote"}
+                    >
+                        {form.getFieldDecorator('name', {
+                            initialValue:name
+                        })(
                             <Input
-
                                 disabled={!canEdit}/>
-                        </FormItem>)}
-                    {form.getFieldDecorator('corral', {
-                        initialValue:corral.numero_serial
-                    })(
-                        <FormItem
-                            label="Corral">
-                            <Input
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label={"Corral"}
+                    >
+                        {form.getFieldDecorator('corral', {
 
-                                disabled={!canEdit}/>
-                        </FormItem>)}
-                    {form.getFieldDecorator('status', {
-                        initialValue:status
-                    })(
-                        <FormItem
-                            label="Statussss">
+                        })(
+                            <Select  placeholder={corral?corral.no_corral:'Elige un Corral'} style={{width:"150px"}}>
+                                {option_corrales}
+                            </Select>
+                        )}
+                    </FormItem>
 
-                            <Switch
-                                disabled={!canEdit}/>
-                        </FormItem>)}
+
+                    <FormItem
+                        label="Statussss">
+                        {form.getFieldDecorator('status', {
+                            initialValue:status
+                        })(
+                        <Switch
+                            defaultChecked={status}/>
+                        )}
+                    </FormItem>
                 </div>:
                 <div>
                     <h2>Lote: {name} | Corral: {corral?corral.no_corral:'No asignado aún'} | Status: {status?'Activo':'Inactivo'}</h2>
@@ -62,11 +68,11 @@ const InfoBatch = ({form, name, status, corral, corrales, handleEdit, canEdit, e
                 {canEdit?
                     <Button htmlType="submit">Guardar</Button>:''}
             </Form>
-               {/* {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}*/}
+                {canEdit?'':<Button type="primary" onClick={handleEdit}>Editar</Button>}
             </Fragment>
     )
 };
 
-const BasicInfoForm= Form.create()(InfoBatch);
+const BasicInfoForm = Form.create()(InfoBatch);
 
 export default BasicInfoForm;
