@@ -238,12 +238,19 @@ class Company extends Component {
                 dataIndex: 'rfc_comp'
             },
             {
+                title: 'Inventario',
+                render: (text, record) => (
+                    <span><Link to={`/admin/empresas/inventario/${record.id}`}>Inventario</Link></span>
+                ),
+            },
+            {
                 title: 'Actions',
                 dataIndex: 'id',
                 render: id => <Link to={`/admin/empresas/${id}`} >Detalle</Link>,
                 fixed:'right',
                 width:100
             },
+
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
