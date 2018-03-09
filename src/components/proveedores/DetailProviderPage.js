@@ -49,7 +49,7 @@ class DetailProviderPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/proveedores/`} style={{color:'black'}} >Proveedores</Link>
                     <Divider type="vertical" />
-                    Proveedor {proveedor.id}
+                    {proveedor.provider}
                 </div>
 
             <div style={{width:'30%', margin: '0 auto'}} >

@@ -118,7 +118,7 @@ class CobrarIngreso extends Component {
             {
                 title: 'Razón Social',
                 dataIndex: 'client',
-                render: client => client && client !== null ? client.client || client: "No Cliente",
+                render: (client,obj) =><Link to={`/admin/ingresos/${obj.id}`}>{ client && client !== null ? client.client  || client: "No Cliente"}</Link>,
 
 
                 key:'client',
@@ -164,13 +164,6 @@ class CobrarIngreso extends Component {
                 dataIndex: 'created',
                 render: created => moment(created).startOf(3, 'days').calendar()
 
-            },
-            {
-                title: 'Actions',
-                dataIndex: 'id',
-                render: id => <Link to={`/admin/ingresos/${id}`} >Detalle</Link>,
-                fixed:'right',
-                width:100
             },
         ];
 
