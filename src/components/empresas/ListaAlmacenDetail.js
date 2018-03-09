@@ -103,6 +103,8 @@ class ListaAlmacenDetail extends Component{
                     Detalle
                 </div>
 
+                <h2>Lista de Items</h2>
+
                 <TablePageB data={data} columns={columns}/>
             </div>
 
