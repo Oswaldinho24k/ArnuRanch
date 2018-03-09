@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_LOTES_SUCCESS = 'GET_LOTES_SUCCESS';
 
@@ -59,6 +59,8 @@ export function editLoteSuccess(lote){
 export const editLote=(lote)=>(dispatch, getState)=>{
     return api.editLote(lote)
         .then(r=>{
+            let corral = getState().corrales.list.find(c=>c.id===r.corral);
+            r['corral']=corral;
             dispatch(editLoteSuccess(r))
         }).catch(e=>{
            throw e

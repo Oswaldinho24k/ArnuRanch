@@ -5,7 +5,7 @@ import ClientInfo from "./InfoClient";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
-import * as clienteActions from '../../redux/actions/clientesActions';
+import * as clienteActions from '../../redux/actions/administracion/clientesActions';
 
 class DetailClientPage extends Component{
     state={

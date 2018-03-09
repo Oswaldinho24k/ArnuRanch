@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Form, Input, Select, Button, Checkbox, InputNumber, message} from 'antd';
-import {editEgreso} from "../../redux/actions/egresosActions";
+import {editEgreso} from "../../redux/actions/administracion/egresosActions";
 
 const Option = Select.Option;
 const FormItem = Form.Item;

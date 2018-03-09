@@ -23,7 +23,7 @@ const styles = {
 
 const CompanyForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, rfc, phone, options} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, options, handleChange} = props;
         const {getFieldDecorator} = form;
 
         return(
@@ -55,7 +55,7 @@ const CompanyForm = Form.create()(
                         <FormItem
                             label={"Linea de negocio"}
                         >
-                            {getFieldDecorator('line_comp', {
+                            {getFieldDecorator('line_comp_id', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -65,7 +65,7 @@ const CompanyForm = Form.create()(
                             })(
 
 
-                                <Select  placeholder={"Linea de Negocio"}>
+                                <Select  placeholder={"Linea de Negocio"} mode={'multiple'} onChange={handleChange}>
 
                                     {options}
                                 </Select>
@@ -83,7 +83,7 @@ const CompanyForm = Form.create()(
                                     {validator: rfc}
                                 ],
                             })(
-                                <Input minLength={"13"} maxLength={"13"} placeholder={" RFC a trece dígitos"}  />
+                                <Input minLength={"12"} />
                             )}
                         </FormItem>
 

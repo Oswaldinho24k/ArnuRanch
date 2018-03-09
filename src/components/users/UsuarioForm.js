@@ -23,7 +23,7 @@ const styles = {
 
 const UsuarioForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_permisos } = props;
+        const{visible, onCancel, onCreate, form, options_permisos, user ,canEdit} = props;
         const{getFieldDecorator} = form;
 
 
@@ -39,44 +39,58 @@ const UsuarioForm = Form.create()(
                     null,
                 ]}
             >
-                <Form onSubmit={this.handleSubmit} >
+                <Form onSubmit={onCreate} >
                     <div style={styles.form}>
                         <FormItem
-                            label="Usuario"
+                            label="Nombre de Usuario"
                         >
-                            {getFieldDecorator('user_name', {
+                            {getFieldDecorator('username', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                                initialValue:user.username
                             })(
-                                <Input />
+                                <Input disabled={canEdit}/>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Email de Usuario"
+                        >
+                            {getFieldDecorator('email', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                    type: 'email', message: 'The input is not valid E-mail!',
+                                }],
+                                initialValue:user.email
+                            })(
+                                <Input type={'email'} disabled={canEdit}/>
                             )}
                         </FormItem>
 
                         <FormItem
                             label="Contraseña"
                         >
-                            {getFieldDecorator('user_pass', {
+                            {getFieldDecorator('password', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                                initialValue:canEdit?'********':''
                             })(
-                                <Input />
+                                <Input type={'password'} disabled={canEdit}/>
                             )}
                         </FormItem>
 
                         <FormItem
-                            label={"Permiso"}
+                            label={"Sección de Trabajo"}
                         >
                             {getFieldDecorator('permiso', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+                           initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
 
                             })(
-
-
-                                <Select  placeholder={"Selecciona un Permiso"}>
+                                <Select  placeholder={"Selecciona un Permiso"} disabled={canEdit}>
                                     {options_permisos}
                                 </Select>
                             )}
@@ -84,15 +98,13 @@ const UsuarioForm = Form.create()(
                         </FormItem>
 
 
-
-
-
                     </div>
-                    <FormItem>
-                        <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
+                    {!canEdit?<FormItem>
+                        <Button type="primary" htmlType={'submit'} size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                             Guardar
                         </Button>
-                    </FormItem>
+                    </FormItem>:''}
+                    {/*canEdit?<Button type="primary" size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>Editar</Button >:''*/}
 
 
 

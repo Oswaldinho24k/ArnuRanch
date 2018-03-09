@@ -3,7 +3,7 @@ import {Table, Button, Modal, message} from "antd";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as corralesActions from '../../../redux/actions/corralesActions';
+import * as corralesActions from '../../../redux/actions/ganado/corralesActions';
 import moment from 'moment';
 import FormCorral from "./CorralForm";
 
@@ -13,7 +13,12 @@ const columns = [
         title: 'Numero de Corral',
         dataIndex: 'no_corral',
         width:200
-    }, {
+    },
+    /*{
+        title: 'Numero de Serial',
+        dataIndex: 'numero_serial',
+        width:200
+    },*/ {
         title: 'Fecha de Generación',
         dataIndex: 'fecha_generacion',
         render:val=><p>{moment(val).format('LL')}</p>,

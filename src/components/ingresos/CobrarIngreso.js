@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, Modal, message, Popconfirm, Tag, Divider, Input, Icon, BackTop} from "antd";
 import moment from 'moment';
-import * as ingresosActions from '../../redux/actions/ingresosActions';
+import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 

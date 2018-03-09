@@ -116,7 +116,7 @@ class FormulasPage extends Component {
                         Agregar
                     </Button>
                 </Link>
-                {/*
+                {
                     selectedRowsKeys.length > 0 &&
                     <Button
                         type="danger"
@@ -124,7 +124,7 @@ class FormulasPage extends Component {
                     >
                         Eliminar
                     </Button>
-                */}
+                }
                 <Switch>
                     <Route path={path} render={FormulasFormRender}/>
                 </Switch>

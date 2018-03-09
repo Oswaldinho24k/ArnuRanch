@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Table, Button, Modal, Input, Divider, Pagination, message} from 'antd';
-import * as lotesActions from '../../../redux/actions/lotesActions';
+import {Table, Button, Modal, Input, Divider, message} from 'antd';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
 import MainLoader from "../../common/Main Loader";
@@ -13,7 +13,7 @@ const columns = [
         dataIndex: 'name',
         key:'name',
         render:(text, record)=>  <Link to={`/admin/lotes/${record.id}`} >{text}</Link>,
-        fixed:'left',
+
         width:150
 
     },
@@ -76,7 +76,11 @@ class BatchPage extends Component {
             .then(r=>{
                 message.success('lote creado con éxito');
                 this.handleCancel()
-            })
+            }).catch(e=>{
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
+        })
     };
 
     handleSearch=(e)=>{
@@ -84,37 +88,36 @@ class BatchPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/?q=';
+        let basePath = 'http://54.201.124.163/api/ganado/lotes/?q=';
         let url = basePath+this.state.searchText;
-        console.log(url)
         this.props.loteActions.getLotes(url)
     };
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/';
-        let basePath = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
+        let basePath = 'http://54.201.124.163/.herokuapp.com/api/ganado/lotes/';
         this.props.loteActions.getLotes(basePath);
         this.setState({searchText:''});
     };
     handlePagination=(pagina)=>{
-        console.log(this.props.paginationData);
+
         let newUrl = this.props.paginationData.next;
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
             newUrl=newUrl.slice(0,newUrl.length-nextLength);
             newUrl=newUrl+pagina;
             this.props.loteActions.getLotes(newUrl);
-            console.log(newUrl)
+
         }else{
             newUrl = this.props.paginationData.previous;
             this.props.loteActions.getLotes(newUrl);
-            console.log(newUrl)
+
         }
 
     };
 
     render() {
-        const { visible, ModalText , searchText} = this.state;
-        let {lotes, fetched, corrales, loteActions, paginationData} = this.props;
+        const { visible , searchText} = this.state;
+        let {lotes, fetched, corrales, paginationData} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -151,14 +154,13 @@ class BatchPage extends Component {
                     columns={columns}
                     dataSource={lotes}
                     rowKey={record => record.id}
-                    pagination={false}
+                    pagination={{
+                        pageSize:10,
+                        total:paginationData.count,
+                        onChange:this.handlePagination}}
                     scroll={{x:650, y:500}}
                 />
-                <Pagination
-                    pageSize={10}
-                    total={paginationData.count}
-                    onChange={this.handlePagination}
-                    style={{padding:'1% 0'}}/>
+
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Modal title="Nuevo Lote"

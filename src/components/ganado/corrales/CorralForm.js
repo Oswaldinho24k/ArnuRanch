@@ -11,7 +11,6 @@ class CorralForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 this.props.saveCorral(values)
             }
         });
@@ -36,7 +35,7 @@ class CorralForm extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem
+                   {/* <FormItem
                         label="No. Serial"
                     >
                         {getFieldDecorator('numero_serial', {
@@ -46,7 +45,7 @@ class CorralForm extends Component {
                         })(
                             <Input />
                         )}
-                    </FormItem>
+                    </FormItem>*/}
 
                     <FormItem
                         label={"Comentarios"}

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, Modal, Form, message, Select} from "antd";
+import {Card, Modal, message, Select} from "antd";
 import {bindActionCreators} from 'redux';
 import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
 import FormGasto from "./FormGasto";
-import * as animalGastoActions from '../../../redux/actions/gastoAnimalActions';
-import * as animalActions from '../../../redux/actions/animalsActions';
-import * as pesadasActions from '../../../redux/actions/pesadasActions';
+import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
+import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as pesadasActions from '../../../redux/actions/ganado/pesadasActions';
 import MainLoader from "../../common/Main Loader";
 import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
@@ -42,20 +42,25 @@ class DetailAnimalPage extends Component {
         selectedRowKeys: [], // Check here to configure the default column
         selectedRowKeys2:[],
         visible: false,
-        visible2:false
+        visible2:false,
+        wEmpresa:true,
     };
+
+    componentDidMount(){
+        if(this.props.animal){
+            this.props.animal.empresa?this.setState({wEmpresa:true}):this.setState({wEmpresa:false})
+        }
+    }
 
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
     onSelectChange2 = (selectedRowKeys2) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys2);
         this.setState({ selectedRowKeys2 });
     };
     onTabChange = (key, type) => {
-        //console.log(key, type);
+
         this.setState({ [type]: key });
     };
 
@@ -88,7 +93,9 @@ class DetailAnimalPage extends Component {
             this.handleCancel();
             message.success('Gasto agregado con éxito')
         }).catch(e=>{
-            console.log(e)
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
         })
     };
     savePesada=(pesada)=>{
@@ -98,15 +105,22 @@ class DetailAnimalPage extends Component {
                 this.handleCancel();
                 message.success('Pesada agregado con éxito')
             }).catch(e=>{
-            console.log(e)
+            for (let i in e.response.data){
+                message.error(e.response.data[i])
+            }
         })
+    };
+
+    handleEmpresa=(e)=>{
+        this.setState({wEmpresa:e})
     };
 
 
 
     render() {
-        const {animal, fetched} = this.props;
-        const {selectedRowKeys, visible, ModalText, editMode, visible2, selectedRowKeys2} = this.state;
+        const {animal, fetched, razas, lotes, empresas} = this.props;
+        console.log(empresas)
+        const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -121,14 +135,21 @@ class DetailAnimalPage extends Component {
 
             onSelection: this.onSelection,
         };
-        let options_lote = this.props.lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+        let options_lote = lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+        let options_raza = razas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+        let options_empresa = empresas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.company}</Option>);
+
         let contentList = {
             Detalle: <BasicInfoAndEdit
                  {...animal}
                 editAnimal={this.props.animalActions.editAnimal}
                 handleEditMode={this.handleEditMode}
                 editMode={editMode}
-                options={options_lote}/>,
+                options={options_lote}
+                options_raza={options_raza}
+                options_empresa={options_empresa}
+                handleEmpresa={this.handleEmpresa}
+                wEmpresa={wEmpresa}/>,
             Gastos: <GastosComponent
 
                 animal={animal}
@@ -185,6 +206,7 @@ class DetailAnimalPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.key;
+
     let animal = state.animals.list.filter(a=>{
         return id == a.id;
     });
@@ -193,7 +215,9 @@ function mapStateToProps(state, ownProps) {
     return {
         animal,
         lotes:state.lotes.list,
-        fetched:animal!==undefined&&state.lotes.list!==undefined,
+        razas:state.razas.list,
+        empresas:state.empresas.list,
+        fetched:animal!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
     }
 }
 

@@ -24,6 +24,9 @@ import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasBanco";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
+
+import RazasPage from "../ganado/razas/RazasPage";
+
 import Company from "../empresas/Company";
 import DetailCompany from "../empresas/DetailCompany";
 import VacunasPage from "../vacunas/VacunasPage";
@@ -31,6 +34,7 @@ import DetailVacuna from "../vacunas/DetailVacuna";
 import InventarioEmpresa from "../empresas/InventarioEmpresa";
 import ListaAlmacen from "../empresas/ListaAlmacen";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
+
 
 export const paths = {
     formulas: '/admin/planta_alimentos/formulas',
@@ -40,7 +44,7 @@ const Sections = ({props}) => {
     return (
         <div className={'admin-sections'}>
             <Switch>
-
+                {/***************************** Admin ROUTES *****************************/}
                 <Route path={'/admin/estadisticas'} component={Dashboard}/>
                 <Route path={'/admin/ingresos/cobrar'} component={CobrarIngreso} />
                 <Route path={'/admin/ingresos/:in'} component={DetailIngresoPage} />
@@ -67,14 +71,15 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
-                {/***************************** Animal ROUTES *****************************/}
+                {/***************************** Ganado ROUTES *****************************/}
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
                 <Route path={'/admin/animals'} component={AnimalsPage}/>
-                {/***************************** Corral ROUTES *****************************/}
+
                 <Route path={'/admin/corrales'} component={CorralPage}/>
-                {/***************************** BATCH ROUTES *****************************/}
+
                 <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
-                <Route path='/admin/lotes'      component={BatchPage}       />
+                <Route path='/admin/lotes' component={BatchPage}/>
+                <Route path='/admin/razas' component={RazasPage}/>
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
                 {/* Planta alimentos routes begin*/}

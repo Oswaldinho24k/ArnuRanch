@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message} from 'antd';
+import {Form, Input, InputNumber, Upload, DatePicker, Icon, Button, Select, message, Switch} from 'antd';
 import moment from 'moment';
 
 const Option = Select.Option;
@@ -10,11 +10,23 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, comentarios,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
+                if(!values.lote_id) delete values.lote_id;
+                if(!values.raza_id) delete values.raza_id;
+                if(!values.empresa_id) delete values.empresa_id;
+                /*if(!values.lote_id) values['lote_id'] = null;
+                if(!values.raza_id) values['raza_id'] = null;
+                if(!values.empresa_id) values['empresa_id'] = null;*/
+                if(!values.tipo_animal) delete values.tipo_animal;
+                /* if(!values.costo_inicial) delete values.costo_inicial;
+                 if(!values.costo_kilo) delete values.costo_kilo;
+                 if(!values.peso_entrada) delete values.peso_entrada;*/
                 console.log(values);
                 values['id']=id;
                 editAnimal(values)
@@ -23,7 +35,6 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         handleEditMode()
                     }).catch(e=>{
                     for (let i in e.response.data){
-                        console.log(e.response.data[i])
                         message.error(e.response.data[i])
                     }
                 })
@@ -52,6 +63,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
 
     let tipos = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
 
+
     return (
         <Fragment>
             <Form style={{width:'100%', padding:'1% 3%'}} onSubmit={handleSubmit}>
@@ -62,7 +74,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         label="Arete Rancho"
                         style={{width:'250px'}}>
                         {form.getFieldDecorator('arete_rancho', {
-                            initialValue:arete_rancho
+                            initialValue:arete_rancho,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Input
                                 disabled={!editMode}
@@ -73,7 +88,10 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         label="Arete Siniga"
                         style={{width:'200px'}}>
                         {form.getFieldDecorator('arete_siniga', {
-                            initialValue:arete_siniga
+                            initialValue:arete_siniga,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
                         })(
                             <Input
                                 disabled={!editMode}
@@ -97,7 +115,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         {form.getFieldDecorator('tipo_animal', {
                             initialValue:tipo_animal,
                             rules: [{
-                                required: true, message: 'Completa el campo!',
+                                required: false, message: 'Completa el campo!',
                             }],
                             props:{
                                 placeholder:'Selecciona un tipo',
@@ -112,17 +130,35 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         )}
 
                     </FormItem>
-                    <FormItem
-                        label="Owner">
+                    <FormItem label={'Empresa?'}>
+                        <Switch  disabled={!editMode} defaultChecked={wEmpresa} onChange={handleEmpresa} checkedChildren="E" unCheckedChildren="P"/>
+                    </FormItem>
+                    {!wEmpresa?
+                        <FormItem
+                        label="Propietario">
                         {form.getFieldDecorator('owner', {
                                     initialValue:owner
 
                             })(
                         <Input
+                            style={{widht:'200px'}}
+
                             disabled={!editMode}
                             />
                         )}
-                    </FormItem>
+                    </FormItem>:
+                    <FormItem label={'Empresa'}>
+                        {form.getFieldDecorator('empresa', {
+                            initialValue:empresa?empresa.id:'',
+
+                        })(
+                        <Select
+                            disabled={!editMode}
+                            style={{width:'200px'}}>
+                            {options_empresa}
+                        </Select>
+                        )}
+                    </FormItem>}
                     <FormItem
                         label="Factura Inicial"
                         style={{width:'200px'}}>
@@ -174,7 +210,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                         label="Costo Inicial"
                         style={{width:'150px'}}>
                         {form.getFieldDecorator('costo_inicial', {
-                            initialValue:costo_inicial
+                            initialValue:(form.getFieldValue('costo_kilo')*form.getFieldValue('peso_entrada')).toFixed(2),
                         })(
                             <InputNumber
                                 style={{width:'150px'}}
@@ -203,11 +239,14 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                     <FormItem
                         label="Raza">
                         {form.getFieldDecorator('raza', {
-                                    initialValue:raza
+                                    initialValue:raza?raza.id:''
                             })(
-                            <Input
+                            <Select
+                                style={{width:'150px'}}
                                 disabled={!editMode}
-                                />
+                            >
+                                {options_raza}
+                            </Select>
                                                     )}
                     </FormItem>
                     <FormItem
@@ -220,12 +259,12 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                             />
                                                         )}
                     </FormItem>
-                    {lote?
+
                         <FormItem
                             label={"Lote"}
                             style={{width:'40%'}}>
                             {form.getFieldDecorator('lote',{
-                                initialValue:lote.id
+                                initialValue:lote?lote.id:''
                             })(
                                 <Select
                                     disabled={!editMode}
@@ -233,21 +272,7 @@ const BasicInfo = ({form, editAnimal, editMode,handleEditMode, id, tipo_animal, 
                                     {options}
                                 </Select>
                             )}
-                        </FormItem>:
-                        <FormItem
-                            label={"Lote"}
-                            style={{width:'40%'}}>
-                            {form.getFieldDecorator('lote',{
-
-                            })(
-                                <Select
-                                    disabled={!editMode}
-
-                                    placeholder={"Selecciona un Lote"}>
-                                    {options}
-                                </Select>
-                            )}
-                        </FormItem>}
+                        </FormItem>
 
                     <FormItem
                         label="Descripción"

@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
-import * as egresoActions from '../../redux/actions/egresosActions';
+import * as egresoActions from '../../redux/actions/administracion/egresosActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 

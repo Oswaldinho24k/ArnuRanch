@@ -1,4 +1,4 @@
-import api from "../../Api/Django";
+import api from "../../../Api/Django";
 
 export const GET_CORRALES_SUCCESS = 'GET_CORRALES_SUCCESS';
 
@@ -30,7 +30,6 @@ export function saveCorralSuccess(corral){
 export const saveCorral=(corral)=>(dispatch, getState)=>{
     return api.newCorral(corral)
         .then(r=>{
-            console.log(r);
             dispatch(saveCorralSuccess(r))
         })
         .catch(e=>{

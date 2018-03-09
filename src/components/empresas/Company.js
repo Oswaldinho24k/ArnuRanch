@@ -25,7 +25,7 @@ const style={
     }
 };
 
-const opciones = [{
+const otrrr = [{
     name :'Cerdos',
     id: 1
 },
@@ -111,6 +111,7 @@ class Company extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
+
                 this.props.empresasActions.saveEmpresa(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
@@ -118,8 +119,10 @@ class Company extends Component {
                         form.resetFields();
                         this.setState({ visible: false });
                     })
-                    .catch(r=>{
-                        message.error('El RFC ingresado ya existe!')
+                    .catch(e=>{
+                        for (let i in e.response.data){
+                            message.error(e.response.data[i])
+                        }
                         console.log(values)
                     })
             }else{message.error('Algo fallo, verifica los campos');}
@@ -127,7 +130,7 @@ class Company extends Component {
         });
     };
 
-    checkRfc = (rule, value, callback) => {
+   /* checkRfc = (rule, value, callback) => {
         if (value === undefined) {
             callback('Verifica el RFC ingresado');
         } else {
@@ -136,7 +139,7 @@ class Company extends Component {
             }
             callback()
         }
-    };
+    };*/
 
     checkPhone = (rule, value, callback) => {
         if (value === undefined) {
@@ -193,6 +196,9 @@ class Company extends Component {
             filtered: false,
         });
     };
+    handleChange=(value)=> {
+        console.log(`selected ${value}`);
+    };
 
 
     render(){
@@ -248,8 +254,8 @@ class Company extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {empresas, fetched} = this.props;
-        let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+        let {empresas, fetched, blines} = this.props;
+        let options = blines.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>);
         if(!fetched)return(<MainLoader/>);
 
 
@@ -276,9 +282,10 @@ class Company extends Component {
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                     options={options}
-                    rfc={this.checkRfc}
+
                     phone={this.checkPhone}
                     handleChange={this.handleChange}
+
 
                 />
 
@@ -303,8 +310,9 @@ class Company extends Component {
 
 function mapStateToProps(state, ownProps) {
     return{
+        blines:state.blines.list,
         empresas: state.empresas.list,
-        fetched: state.empresas.list !== undefined,
+        fetched: state.empresas.list !== undefined && state.blines.list !== undefined,
     }
 }
 

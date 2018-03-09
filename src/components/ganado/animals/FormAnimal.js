@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select} from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select, Switch} from 'antd';
 import './detailAnimal.css';
+import moment from 'moment';
 
 const MonthPicker = DatePicker.MonthPicker;
 const FormItem = Form.Item;
 const {TextArea} = Input;
 const Option = Select.Option;
 
-const config = {
-    rules: [{ type: 'object', required: true, message: 'Please select time!' }],
-};
+
 
 const opciones = [{
     name :'becerro',
@@ -29,23 +28,38 @@ const opciones = [{
 ];
 
 class FormAnimal extends Component {
+    state={
+        wEmpresa:true
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+
             values['status']=true;
             if (!err) {
-                if(!values.lote){
-                    delete values.lote
-                }
+                if(!values.lote_id) delete values.lote_id;
+                if(!values.raza_id) delete values.raza_id;
+                if(!values.empresa_id) delete values.empresa_id;
+                /*if(!values.lote_id) values['lote_id'] = null;
+                if(!values.raza_id) values['raza_id'] = null;
+                if(!values.empresa_id) values['empresa_id'] = null;*/
+                if(!values.tipo_animal) delete values.tipo_animal;
+               /* if(!values.costo_inicial) delete values.costo_inicial;
+                if(!values.costo_kilo) delete values.costo_kilo;
+                if(!values.peso_entrada) delete values.peso_entrada;*/
+
+                console.log(values)
                 this.props.saveAnimal(values);
-                //this.props.form.resetFields()
+                this.props.form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;
             }
             return e && e.fileList;
         });
+    };
+    handleEmpresa=(e)=>{
+      this.setState({wEmpresa:e})
     };
 
     normFile = (e) => {
@@ -57,8 +71,11 @@ class FormAnimal extends Component {
 
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
+        let {wEmpresa} = this.state;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
+        let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.name}</Option>);
+        let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.company}</Option>);
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
@@ -68,9 +85,11 @@ class FormAnimal extends Component {
                             label="Arete Rancho"
                         >
                             {getFieldDecorator('arete_rancho', {
+
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
+
                             })(
                                 <Input />
                             )}
@@ -80,6 +99,7 @@ class FormAnimal extends Component {
                             label="Arete Siniga"
                         >
                             {getFieldDecorator('arete_siniga', {
+
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -91,18 +111,22 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Fecha Registro"
                         >
-                            {getFieldDecorator('fecha_entrada', config)(
+                            {getFieldDecorator('fecha_entrada', {
+                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                rules: [{ type: 'object', required: false, message: 'Please select time!' }],
+                            })(
                                 <DatePicker />
                             )}
                         </FormItem>
 
                         <FormItem
                             label={"Tipo"}
-                            style={{width:'200px'}}
+                            style={{width:'150px'}}
                         >
                             {getFieldDecorator('tipo_animal', {
+
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+
                                 }],
                                 props:{
                                     placeholder:'Selecciona un tipo',
@@ -117,26 +141,42 @@ class FormAnimal extends Component {
                             )}
 
                         </FormItem>
-
+                        <FormItem label={'A empresa?'}>
+                            <Switch  defaultChecked={wEmpresa} onChange={this.handleEmpresa} checkedChildren="E" unCheckedChildren="P"/>
+                        </FormItem>
+                        {!wEmpresa?
                         <FormItem
-                            label="Owner"
+                            label="Propietario"
                         >
                             {getFieldDecorator('owner', {
+                                initialValue:null,
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+
                                 }],
                             })(
-                                <Input />
+                                <Input style={{width:'200px'}}/>
                             )}
-                        </FormItem>
+                        </FormItem>:
+                        <FormItem
+                            label="Empresa"
+                        >
+                            {getFieldDecorator('empresa_id', {
+
+                            })(
+                                <Select style={{width:'200px'}}>
+                                    {options_empresa}
+                                </Select>
+                            )}
+                        </FormItem>}
 
                         <FormItem
                             label="Factura Inicial"
                             style={{width:'200px'}}
                         >
                             {getFieldDecorator('ref_factura_original', {
+                                initialValue:null,
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+
                                 }],
                             })(
                                 <Input />
@@ -148,8 +188,9 @@ class FormAnimal extends Component {
                             style={{width:'150px'}}
                         >
                             {getFieldDecorator('peso_entrada', {
+                                initialValue:0,
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+                                    required:false
                                 }],
                             })(
                                 <InputNumber
@@ -157,8 +198,8 @@ class FormAnimal extends Component {
                                     step={0.01}
                                     min={0}
                                     max={1000}
-                                    //formatter={value => `${value}kg`}
-                                    //parser={value => value.replace('kg', '')}
+                                    formatter={value => `${value}`}
+                                    parser={value => value.replace('', '')}
                                 />
                             )}
                         </FormItem>
@@ -169,9 +210,9 @@ class FormAnimal extends Component {
                             style={{width:'150px'}}
                         >
                             {getFieldDecorator('costo_kilo', {
-
+                                initialValue:0,
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+                                    required:false
                                 }],
                             })(
                                 <InputNumber
@@ -189,8 +230,9 @@ class FormAnimal extends Component {
                         >
                             {getFieldDecorator('costo_inicial', {
                                 initialValue:(getFieldValue('costo_kilo')*getFieldValue('peso_entrada')).toFixed(2),
+
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+
                                 }],
                             })(
                                 <InputNumber
@@ -207,8 +249,9 @@ class FormAnimal extends Component {
                             style={{width:'150px'}}
                         >
                             {getFieldDecorator('merma', {
+                                initialValue:0,
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+                                    required:false
                                 }],
                             })(
                                 <InputNumber
@@ -223,12 +266,12 @@ class FormAnimal extends Component {
                         <FormItem
                             label="Raza"
                         >
-                            {getFieldDecorator('raza', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
+                            {getFieldDecorator('raza_id', {
+
                             })(
-                                <Input />
+                               <Select  style={{width:'150px'}}>
+                                   {options_raza}
+                               </Select>
                             )}
                         </FormItem>
 
@@ -236,8 +279,9 @@ class FormAnimal extends Component {
                             label="Color"
                         >
                             {getFieldDecorator('color', {
+
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+
                                 }],
                             })(
                                 <Input />
@@ -248,15 +292,13 @@ class FormAnimal extends Component {
                             label={"Lote"}
                             style={{width:'30%'}}
                         >
-                            {getFieldDecorator('lote', {
+                            {getFieldDecorator('lote_id', {
                                 props:{
                                     placeholder:'Selecciona un Lote',
                                 }
                             })(
                                 <Select  placeholder={"Selecciona un Lote"}>
-
                                     {options_lote}
-
                                 </Select>
                             )}
                         </FormItem>

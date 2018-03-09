@@ -5,7 +5,7 @@ import {Button, message, Popconfirm, Table, Tag, Divider, Select, Input, Icon, B
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-import * as ingresosActions from '../../redux/actions/ingresosActions';
+import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import FormIngreso from "./IngresoForm";
 
 import TablePageB from "../clientes/TablePageB";
