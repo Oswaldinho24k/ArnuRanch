@@ -12,6 +12,12 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
             if (!err) {
                 console.log(values);
                 values['id']=id;
+                let newBlines = [];
+                for(let i in values.line_comp_id){
+                    newBlines.push(values.line_comp_id[i])
+                }
+                values['line_comp_id'] = newBlines;
+
                 editEmpresa(values)
                     .then(r=>{
                         console.log("Editado con éxito");
@@ -24,6 +30,12 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
         });
     };
 
+    let blineselected = [];
+    if(line_comp){
+        for(let i in line_comp){
+            blineselected.push(line_comp[i].id)
+        }
+    }
 
 
     return (
@@ -50,14 +62,15 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                         <FormItem
                             label={"Linea de negocio"}
                         >
-                            {form.getFieldDecorator('line_comp',{
-                                initialValue:line_comp,
+                            {form.getFieldDecorator('line_comp_id',{
+                                initialValue:blineselected,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Select
                                     disabled={!editMode}
+                                    mode={'multiple'}
                                     placeholder={"Linea de negocio"}>
                                     {options}
                                 </Select>
@@ -66,7 +79,7 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                         <FormItem
                             label={"Linea de negocio"}
                         >
-                            {form.getFieldDecorator('line_comp',{
+                            {form.getFieldDecorator('line_comp_id',{
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -74,7 +87,7 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                             })(
                                 <Select
                                     disabled={!editMode}
-
+                                    mode={'multiple'}
                                     placeholder={"Lina de negocio"}>
                                     {options}
                                 </Select>
@@ -89,8 +102,8 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                             initialValue:rfc_comp,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
-                            },
-                                {validator: rfcR}
+                            }
+
                             ],
 
                         })(

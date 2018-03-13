@@ -5,14 +5,15 @@ import {paths} from './Sections';
 
 const SubMenu = Menu.SubMenu;
 
-const LeftSide = ({onOpenChange, user}) => {
+const LeftSide = ({onOpenChange, user, openKeys}) => {
 
     return (
 
         <Menu theme="dark"
               mode="inline"
-              defaultSelectedKeys={['12']}
-              defaultOpenKeys={['sub2']}
+              openKeys={openKeys}
+              defaultSelectedKeys={[]}
+              defaultOpenKeys={[]}
               onOpenChange={onOpenChange}
         >
 
@@ -27,16 +28,16 @@ const LeftSide = ({onOpenChange, user}) => {
                     <Menu.Item key="1" disabled={true}>
                         <Link to={'/admin/estadisticas'} >Estadísticas</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" disabled={true}>
+                    <Menu.Item key="2" disabled={false}>
                         <Link to={'/admin/ingresos'} >Ingresos</Link>
                     </Menu.Item>
-                    <Menu.Item key="3" disabled={true}>
+                    <Menu.Item key="3" disabled={false}>
                         <Link to={'/admin/ingresos/cobrar'} >Cuentas por Cobrar</Link>
                     </Menu.Item>
-                    <Menu.Item key="4" disabled={true}>
+                    <Menu.Item key="4" disabled={false}>
                         <Link to={'/admin/egresos'}>Egresos</Link>
                     </Menu.Item>
-                    <Menu.Item key="5" disabled={true}>
+                    <Menu.Item key="5" disabled={false}>
                         <Link to={'/admin/egresos/pagar'} >Cuentas por Pagar</Link>
                     </Menu.Item>
                     <Menu.Item key="6" disabled={false}>
@@ -68,7 +69,6 @@ const LeftSide = ({onOpenChange, user}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-
                 <Menu.Item key="16" disabled>
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
@@ -95,17 +95,23 @@ const LeftSide = ({onOpenChange, user}) => {
                 </Menu.Item>
 
 
+
             <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
                 <Menu.Item key="19"/>
 
+
             </SubMenu>:''}
 
+            {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub4" title={<span className={'my-icon'}><Icon type={'pushpin'} /><span>Vacunas</span></span>}>
-                <Menu.Item key="20">
+                <Menu.Item key="19">
 
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
-            </SubMenu>*/}
+
+            </SubMenu>:''}
+
+
         </Menu>
     )
 };

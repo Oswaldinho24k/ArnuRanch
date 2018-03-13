@@ -51,7 +51,7 @@ class DetailClientPage extends Component{
                     <Divider type="vertical" />
                     {cliente.client}
                 </div>
-            <div style={{width:'30%', margin: '0 auto'}} >
+            <div style={{width:'50%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <ClientInfo
                         {...cliente}

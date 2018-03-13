@@ -68,10 +68,11 @@ class DetailCompany extends Component{
 
 
     render(){
-        let {empresa, fetched} = this.props;
+
+        let {empresa, fetched, blines} = this.props;
+        let options = blines.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>);
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
-        let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -82,7 +83,7 @@ class DetailCompany extends Component{
                     {empresa.company}
                 </div>
 
-                <div style={{width:'30%', margin: '0 auto'}}>
+                <div style={{width:'50%', margin: '0 auto'}}>
                     <Card title={"Detalle"}>
                         <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(empresa.created).format('LL')}</span>
                         <InfoCompany
@@ -111,7 +112,8 @@ function mapStateToProps(state, ownProps) {
     empresa = empresa[0];
     return {
         empresa,
-        fetched: empresa!==undefined && state.empresas.list!==undefined,
+        blines : state.blines.list,
+        fetched: empresa!==undefined && state.empresas.list!==undefined && state.blines.list !==undefined,
     }
 }
 

@@ -48,7 +48,7 @@ class DetailAnimalPage extends Component {
 
     componentDidMount(){
         if(this.props.animal){
-            this.props.animal.empresa?this.setState({wEmpresa:true}):this.setState({wEmpresa:false})
+            this.props.animal.empresa?this.setState({wEmpresa:true}):this.props.animal.empresa===null? this.setState({wEmpresa:true}):this.setState({wEmpresa:false})
         }
     }
 
@@ -119,7 +119,7 @@ class DetailAnimalPage extends Component {
 
     render() {
         const {animal, fetched, razas, lotes, empresas} = this.props;
-        console.log(empresas)
+
         const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
         const rowSelection = {
             selectedRowKeys,

@@ -52,7 +52,7 @@ class DetailProviderPage extends Component{
                     {proveedor.provider}
                 </div>
 
-            <div style={{width:'30%', margin: '0 auto'}} >
+            <div style={{width:'50%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>
                     <ProveedorInfo
                         {...proveedor}

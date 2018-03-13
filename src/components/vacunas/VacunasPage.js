@@ -95,7 +95,7 @@ class VacunasPage extends Component {
                         this.setState({ visible: false });
                     })
                     .catch(r=>{
-                        message.error('El RFC ingresado ya existe!')
+
                         console.log(values)
                     })
             }else{message.error('Algo fallo, verifica los campos');}
@@ -181,7 +181,7 @@ class VacunasPage extends Component {
             },
             {
                 title: 'Tipo de Vacuna',
-                dataIndex: 'type',
+                dataIndex: 'typeofv',
             },
             {
                 title: 'Dosis por animal',

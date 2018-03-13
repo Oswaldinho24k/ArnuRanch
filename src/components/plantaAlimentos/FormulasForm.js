@@ -294,7 +294,7 @@ class FormulasForm extends Component {
                             />
                         )}
                     </FormItem>
-                    <div style={{height: 300, overflow: 'scroll'}}>
+                    <div style={{height: 300, overflowY: 'scroll'}}>
                         {formItems}
                         <FormItem style={{width: '100%'}}>
                             <Button
@@ -306,9 +306,7 @@ class FormulasForm extends Component {
                             </Button>
                         </FormItem>
                     </div>
-                    <FormItem>
-                        <Button type="primary" htmlType="submit">Guardar</Button>
-                    </FormItem>
+
                 </Form>
             </Modal>
         );

@@ -236,6 +236,7 @@ class FormAnimal extends Component {
                                 }],
                             })(
                                 <InputNumber
+                                    disabled={true}
                                     style={{width:'150px'}}
                                     step={0.01}
                                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}

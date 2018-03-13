@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {metadata} from "./metadataFormulas";
-import {Button, Table} from "antd";
+import {Button, Table, Popconfirm, Divider} from "antd";
 import {Link, Route, Switch} from "react-router-dom";
 import FormulasForm from "./FormulasForm";
 import {deleteFormula} from '../../redux/actions/plantaAlimentos/formulasActions';
@@ -28,13 +28,13 @@ class FormulasPage extends Component {
     }
 
     componentWillMount(){
-        showMessage("Detente", "color:red;font-size:40px;");
+        /*showMessage("Detente", "color:red;font-size:40px;");
         showMessage(
             "El uso de la consola es para fines de " +
             "desarrollo, cualquier actividad distinta a " +
             "ésta es considerda un delito",
             "color:#8F939F;font-size:15px;text-align:justify;"
-        );
+        );*/
     }
 
     closeModal = () => {
@@ -57,13 +57,18 @@ class FormulasPage extends Component {
     };
 
     deleteSelection = () => {
-        const response = window.confirm('¿Seguro que quieres eliminar los insumos selecionados?');
-        if (response) {
+
             const {selectedRowsKeys} = this.state;
             selectedRowsKeys.forEach( key => this.onDelete(key));
-        }
+
         this.setState({selectedRowsKeys:[]})
     };
+    confirm=()=>{
+        this.deleteSelection()
+    };
+    cancel=()=>{
+        console.log('ok')
+    }
 
     render() {
         const {columns} = metadata;
@@ -93,6 +98,7 @@ class FormulasPage extends Component {
                 <Table
                     columns={columnsNestedTable}
                     dataSource={record.items}
+                    size={'small'}
                     rowKey={(record)=> record.id}
                     pagination={false}
                 />
@@ -104,6 +110,7 @@ class FormulasPage extends Component {
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
+
                     dataSource={formulas}
                     expandedRowRender={expandedRowRender}
                     rowKey={record => record.id}
@@ -116,14 +123,17 @@ class FormulasPage extends Component {
                         Agregar
                     </Button>
                 </Link>
+                <Divider/>
                 {
                     selectedRowsKeys.length > 0 &&
-                    <Button
-                        type="danger"
-                        onClick={this.deleteSelection}
-                    >
-                        Eliminar
-                    </Button>
+                    <Popconfirm title="Seguro que borrarás los items?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                        <Button
+                            type="danger"
+
+                        >
+                            Eliminar
+                        </Button>
+                    </Popconfirm>
                 }
                 <Switch>
                     <Route path={path} render={FormulasFormRender}/>

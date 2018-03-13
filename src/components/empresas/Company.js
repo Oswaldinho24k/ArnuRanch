@@ -245,6 +245,13 @@ class Company extends Component {
                 ),
             },
 
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: id => <Link to={`/admin/empresas/${id}`}>Detalle</Link>,
+                fixed:'right',
+                width:100
+            },
 
         ];
 
