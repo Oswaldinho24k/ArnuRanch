@@ -52,6 +52,7 @@ export const editEmpresa=(empresa)=>(dispatch, getState)=>{
     return api.editEmpresa(empresa)
         .then(r=>{
             dispatch(editEmpresaSucces(r))
+            console.log(r);
         }).catch(e=>{
             console.log(e)
         })

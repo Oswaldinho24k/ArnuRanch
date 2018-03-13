@@ -5,7 +5,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine, dose, content, concentration, cost }) => {
+const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, typeofv, vaccine, dose, content, concentration, cost, unity }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -23,6 +23,20 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
             }else{message.error('Algo fallo, verifica los campos');}
         });
     };
+
+    const selectAfter = (
+        <FormItem style={{height:5, padding:0}}>
+            {form.getFieldDecorator('unity',{
+                initialValue:unity
+            })(
+                <Select  style={{ width: 100 }} disabled={!editMode}>
+                    <Option value="ml">ml</Option>
+                    <Option value="unidad">unidad</Option>
+                </Select>
+            )}
+        </FormItem>
+
+    );
 
 
 
@@ -48,8 +62,8 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     <FormItem
                         label="Tipo de Vacuna"
                     >
-                        {form.getFieldDecorator('type', {
-                            initialValue: type,
+                        {form.getFieldDecorator('typeofv', {
+                            initialValue: typeofv,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
@@ -62,22 +76,16 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'}}>
 
                     <FormItem
-                        label="Dosis ml"
-                        style={{width:'50%'}}
+                        label="Dosis Recomendada"
+                        style={{width:'1000%'}}
                     >
                         {form.getFieldDecorator('dose', {
                             initialValue:dose,
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
+
                         })(
-                            <InputNumber
-                                min={0}
-                                style={{width:'90%'}}
+                            <Input
                                 disabled={!editMode}
-                                step={0.01}
-                                formatter={value => `${value}ml`}
-                                parser={value => value.replace('ml', '')}
+                                addonAfter={selectAfter}
                             />
                         )}
                     </FormItem>
@@ -125,7 +133,7 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, type, vaccine,
                     </FormItem>
 
                     <FormItem
-                        label="Costo"
+                        label="Costo por envase"
                         style={{width:'50%'}}
                     >
                         {form.getFieldDecorator('cost', {

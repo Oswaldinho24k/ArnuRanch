@@ -148,7 +148,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         )}
                     </FormItem>:
                     <FormItem label={'Empresa'}>
-                        {form.getFieldDecorator('empresa', {
+                        {form.getFieldDecorator('empresa_id', {
                             initialValue:empresa?empresa.id:'',
 
                         })(
@@ -182,7 +182,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                                 disabled={!editMode}
                                 step={0.01}
                                 min={0}
-                                max={100}
+
                                 formatter={value => `${value}kg`}
                                 parser={value => value.replace('kg', '')}
                             />
@@ -213,8 +213,9 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                             initialValue:(form.getFieldValue('costo_kilo')*form.getFieldValue('peso_entrada')).toFixed(2),
                         })(
                             <InputNumber
+
                                 style={{width:'150px'}}
-                                disabled={!editMode}
+                                disabled={true}
                                 step={0.01}
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
@@ -238,7 +239,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                     </FormItem>
                     <FormItem
                         label="Raza">
-                        {form.getFieldDecorator('raza', {
+                        {form.getFieldDecorator('raza_id', {
                                     initialValue:raza?raza.id:''
                             })(
                             <Select
@@ -263,7 +264,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                         <FormItem
                             label={"Lote"}
                             style={{width:'40%'}}>
-                            {form.getFieldDecorator('lote',{
+                            {form.getFieldDecorator('lote_id',{
                                 initialValue:lote?lote.id:''
                             })(
                                 <Select

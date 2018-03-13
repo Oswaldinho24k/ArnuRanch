@@ -68,10 +68,12 @@ export function editAnimalSuccess(animal){
 export const editAnimal=(animal)=>(dispatch, getState)=>{
     return api.editAnimal(animal)
         .then(r=>{
-            //let lote = getState().lotes.list.find(l=>l.id===r.lote);
-            //let raza = getState().razas.list.find(ra=>ra.id===r.raza);
-            //r['raza'] = raza;
-           // r['lote'] = lote;
+            // let lote = getState().lotes.list.find(l=>l.id===r.lote);
+            // let raza = getState().razas.list.find(ra=>ra.id===r.raza);
+            // let empresa = getState().empresas.list.find(e=>e.id===r.empresa);
+            // r['raza'] = raza;
+            // r['lote'] = lote;
+            // r['empresa'] = empresa;
             dispatch(editAnimalSuccess(r))
         }).catch(e=>{
             throw e;

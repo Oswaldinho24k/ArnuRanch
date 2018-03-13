@@ -70,9 +70,10 @@ class AnimalsPage extends Component {
               .then(r=>{
                   console.log(r)
                   message.success('Deleted successfully');
+
               }).catch(e=>{
 
-                message.error('No puedes eliminar aretes con gastos registrados')
+                message.error('No puedes eliminar aretes con gastos o pesadas registradas')
               /*for (let i in this.props.errors){
                   console.log(this.props.errors[i])
                   message.error(this.props.errors[i])
@@ -91,7 +92,9 @@ class AnimalsPage extends Component {
 
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
-                    message.success('Modificado con éxito')
+                    message.success('Modificado con éxito');
+                    this.handleCancel()
+
                 }).catch(e => {
                for (let i in e.response.data){
                    message.error(e.response.data[i])
@@ -114,7 +117,7 @@ class AnimalsPage extends Component {
 
     filterByLote=(lote)=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/?lote=';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -125,7 +128,7 @@ class AnimalsPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/?q=';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -133,13 +136,17 @@ class AnimalsPage extends Component {
 
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'http://54.201.124.163//api/ganado/animals/';
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:''});
     };
     handlePagination=(pagina)=>{
         console.log(this.props.animalsData);
-        let newUrl = this.props.animalsData.next;
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?page=';
+        let newUrl = basePath +pagina;
+        this.props.animalActions.getAnimals(newUrl);
+        /*let newUrl = this.props.animalsData.next;
+
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
             newUrl=newUrl.slice(0,newUrl.length-nextLength);
@@ -149,7 +156,7 @@ class AnimalsPage extends Component {
             newUrl = this.props.animalsData.previous;
             this.props.animalActions.getAnimals(newUrl);
 
-        }
+        }*/
 
     };
 

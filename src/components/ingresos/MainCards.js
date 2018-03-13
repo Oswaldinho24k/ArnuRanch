@@ -70,7 +70,7 @@ const MainCards = ({props}) => {
         <div>
             <Row>
                 <Col span={24}>
-                    <ChartCard >
+                    <ChartCard>
                         <Pie
                             hasLegend
                             subTitle="Gastos Arnus"

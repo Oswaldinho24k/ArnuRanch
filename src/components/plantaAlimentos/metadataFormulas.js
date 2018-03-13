@@ -26,7 +26,7 @@ export const metadata = {
 
     columnsNestedTable: [
         {
-            title: 'Nombre',
+            title: 'Insumo',
             dataIndex: 'insumo',
             render: insumo => insumo.name
         },
