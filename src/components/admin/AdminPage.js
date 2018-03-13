@@ -13,12 +13,15 @@ const { Header, Sider, Content } = Layout;
 
 
 
+
 class AdminPage extends Component {
+    rootSubmenuKeys = ['sub1', 'sub2','sub3', 'sub4', 'sub5'];
+
 
     state = {
         collapsed: false,
         user:{},
-        openKeys: ['sub1'],
+        openKeys: [],
     };
 
     componentWillMount(){
@@ -42,14 +45,14 @@ class AdminPage extends Component {
     };
 
     onOpenChange = (openKeys) => {
-       /* const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
         if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             this.setState({ openKeys });
         } else {
             this.setState({
                 openKeys: latestOpenKey ? [latestOpenKey] : [],
             });
-        }*/
+        }
     }
 
 
@@ -65,7 +68,7 @@ class AdminPage extends Component {
                     collapsed={this.state.collapsed}
                 >
                     <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'ADMIN'}</div>
-                    <LeftSide onOpenChange={this.onOpenChange} user={user}/>
+                    <LeftSide onOpenChange={this.onOpenChange} user={user} openKeys={this.state.openKeys}/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>

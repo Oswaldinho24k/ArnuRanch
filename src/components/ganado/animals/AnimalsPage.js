@@ -142,7 +142,11 @@ class AnimalsPage extends Component {
     };
     handlePagination=(pagina)=>{
         console.log(this.props.animalsData);
-        let newUrl = this.props.animalsData.next;
+        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?page=';
+        let newUrl = basePath +pagina;
+        this.props.animalActions.getAnimals(newUrl);
+        /*let newUrl = this.props.animalsData.next;
+
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
             newUrl=newUrl.slice(0,newUrl.length-nextLength);
@@ -152,7 +156,7 @@ class AnimalsPage extends Component {
             newUrl = this.props.animalsData.previous;
             this.props.animalActions.getAnimals(newUrl);
 
-        }
+        }*/
 
     };
 

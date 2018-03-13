@@ -182,7 +182,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                                 disabled={!editMode}
                                 step={0.01}
                                 min={0}
-                                max={100}
+
                                 formatter={value => `${value}kg`}
                                 parser={value => value.replace('kg', '')}
                             />
