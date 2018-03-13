@@ -12,6 +12,47 @@ import TablePageB from "../clientes/TablePageB";
 
 const Option = Select.Option;
 
+const dataI =
+    {
+        lines:[
+            {
+                id:2,
+                name:"ganado",
+                almacen:[
+                    {
+                        id: 1,
+                        nombre: "Almacen 1",
+                        items:32
+                    }, {
+                        id: 2,
+                        nombre: "Almacen 2",
+                        items:12
+                    }]
+            },
+            {
+                id:3,
+                name:"granos",
+                almacen:[{
+                    id:1,
+                    nombre:"Almacen 2",
+                    items:24
+                }],
+
+            },
+            {
+                id:4,
+                name:"planta de alimentos",
+                almacen:[{
+                    id:1,
+                    nombre:"Almacen 3",
+                    items:2
+                }]
+            }]
+
+    };
+
+
+
 const data = [{
     name :'Item 1',
     precio:334.65,
@@ -85,7 +126,11 @@ class ListaAlmacenDetail extends Component{
 
 
     render(){
-        let {empresa, fetched} = this.props;
+        let {empresa, fetched,pathname,linea} = this.props;
+        let lin = dataI.lines.filter(f=>{return f.id==linea});
+        console.log(lin)
+        console.log(pathname.slice(0,-4))
+        console.log(linea)
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
 
@@ -94,11 +139,11 @@ class ListaAlmacenDetail extends Component{
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    <Link to={`/admin/empresas/`} style={{color:'black'}} >Empresas</Link>
+                    Empresas
                     <Divider type="vertical" />
-                    Nombre empresa
+                    {empresa.company}
                     <Divider type="vertical" />
-                    Almacenes
+                    <Link to={`/admin/empresas/inventario/${empresa.id}/${lin[0].id}`} style={{color:'black'}} >{lin[0].name}</Link>
                     <Divider type="vertical" />
                     Detalle
                 </div>
@@ -113,12 +158,20 @@ class ListaAlmacenDetail extends Component{
 }
 
 function mapStateToProps(state, ownProps) {
+    let path = ownProps.location.pathname;
+    let pathname = path.slice(-5);
+    let linea = pathname.slice(2,-2)
+    let pathfinder = pathname.slice(0,-4)
+    console.log(pathfinder)
+
     let id = ownProps.match.params.em;
     let empresa = state.empresas.list.filter(a=>{
-        return id == a.id;
+        return pathfinder == a.id;
     });
     empresa = empresa[0];
     return {
+        linea,
+        pathname,
         empresa,
         fetched: empresa!==undefined && state.empresas.list!==undefined,
     }
@@ -126,7 +179,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return{
-        empresaActions: bindActionCreators(empresaActions, dispatch),
+        //empresaActions: bindActionCreators(empresaActions, dispatch),
     }
 }
 
