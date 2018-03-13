@@ -1,11 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import {Table, Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
-import ClienteForm from './ClienteForm';
-import * as clientesActions from '../../redux/actions/administracion/clientesActions';
-import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
-import {Link} from 'react-router-dom';
-import MainLoader from "../common/Main Loader";
+import React from 'react';
+import {Table} from 'antd';
 
 
 const TablePageB = ({data, columns, rowSelection})=>{
