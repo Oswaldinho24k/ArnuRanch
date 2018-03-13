@@ -119,7 +119,7 @@ class CuentasBanco extends Component {
             {
                 title: 'Razón Social',
                 dataIndex: 'provider',
-                render: provider => provider && provider !== null ? provider.provider || provider: "No Proveedor",
+                render: (provider,obj) =><Link to={`/admin/egresos/${obj.id}`}>{ provider && provider !== null ? provider.provider || provider: "No Proveedor"}</Link>,
 
 
                 key:'provider',
@@ -164,13 +164,6 @@ class CuentasBanco extends Component {
                 dataIndex: 'created',
                 render: created => moment(created).startOf(3, 'days').calendar()
 
-            },
-            {
-                title: 'Actions',
-                dataIndex: 'id',
-                render: id => <Link to={`/admin/egresos/${id}`} >Detalle</Link>,
-                fixed:'right',
-                width:100
             },
         ];
 

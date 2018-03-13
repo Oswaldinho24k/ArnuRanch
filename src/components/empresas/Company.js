@@ -206,6 +206,7 @@ class Company extends Component {
             {
                 title: 'Empresa',
                 dataIndex: 'company',
+                render: (company,obj) =><Link to={`/admin/empresas/${obj.id}`}>{ company && company !== null ? company: "No Company"}</Link>,
                 key:'company',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
@@ -243,6 +244,7 @@ class Company extends Component {
                     <span><Link to={`/admin/empresas/inventario/${record.id}`}>Inventario</Link></span>
                 ),
             },
+
             {
                 title: 'Actions',
                 dataIndex: 'id',

@@ -192,6 +192,7 @@ class ClientePage extends Component {
             {
                 title: 'Cliente',
                 dataIndex: 'client',
+                render: (client,obj) =><Link to={`/admin/clientes/${obj.id}`}>{ client && client !== null ? client: "No Cliente"}</Link>,
                 key:'client',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
@@ -227,21 +228,10 @@ class ClientePage extends Component {
                 title: 'RFC',
                 dataIndex: 'rfc'
             },
-            {
-                title: 'Actions',
-                fixed:'right',
-                width:100,
-                key: 'action',
-                render: (text, record) => (
-                    <span>
-              <Link to={`/admin/clientes/${record.id}`}>Detalle</Link>
-            </span>
-                ),
-            }
+
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
-        console.log(filtered)
         const canDelete = selectedRowKeys.length > 0;
         //const filter = data.length > 0;
         const rowSelection = {
@@ -250,8 +240,6 @@ class ClientePage extends Component {
         };
         let {clientes, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
-        console.log(clientes);
-        console.log(data);
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>

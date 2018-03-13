@@ -70,7 +70,7 @@ class DetailEgresoPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/egresos/`} style={{color:'black'}} >Egresos</Link>
                     <Divider type="vertical" />
-                    Egreso {egreso.id}
+                    {egreso.provider.provider}
                 </div>
 
             <div style={{width:'50%', margin: '0 auto'}} >

@@ -55,7 +55,7 @@ class DetailIngresoPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/ingresos/`} style={{color:'black'}} >Ingresos</Link>
                     <Divider type="vertical" />
-                    Ingreso {ingreso.id}
+                    {ingreso.client.client}
                 </div>
 
             <div style={{width:'50%', margin: '0 auto'}} >

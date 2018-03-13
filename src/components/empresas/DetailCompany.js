@@ -80,7 +80,7 @@ class DetailCompany extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/empresas/`} style={{color:'black'}} >Empresas</Link>
                     <Divider type="vertical" />
-                    Empresa {empresa.id}
+                    {empresa.company}
                 </div>
 
                 <div style={{width:'50%', margin: '0 auto'}}>

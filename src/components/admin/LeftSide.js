@@ -80,7 +80,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
 
 
             </SubMenu>:''}
-            {(user.profile&&user.profile.ganado)|| user.is_superuser?
+            {/*{(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub3" title={<span className={'my-icon'}><Icon type="apple" /><span>Alimentos</span></span>}>
 
 
@@ -94,6 +94,12 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Link to={paths.formulas}>Fórmulas</Link>
                 </Menu.Item>
 
+
+
+            <SubMenu key="sub4" title={<span className={'my-icon'}>🌽<Icon /><span>Vacunas</span></span>}>
+                <Menu.Item key="19"/>
+
+
             </SubMenu>:''}
 
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
@@ -102,7 +108,10 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
 
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
+
             </SubMenu>:''}
+
+
         </Menu>
     )
 };
