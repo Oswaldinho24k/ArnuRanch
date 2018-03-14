@@ -109,7 +109,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Link to={"/admin/vacunas"}>Vacunas</Link>
                 </Menu.Item>
 
-            </SubMenu>:''}
+            </SubMenu>:''*/}
 
 
         </Menu>

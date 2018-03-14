@@ -25,29 +25,6 @@ const style={
     }
 };
 
-const otrrr = [{
-    name :'Cerdos',
-    id: 1
-},
-    {
-        name:'Ganado',
-        id:2
-    },
-    {
-        name:'Granos',
-        id:3
-    },
-    {
-        name:'Planta de alimentos',
-        id:4
-    },
-    {
-        name:'Campo',
-        id:5
-    },
-
-];
-
 class Company extends Component {
 
     state = {
@@ -243,14 +220,6 @@ class Company extends Component {
                 render: (text, record) => (
                     <span><Link to={`/admin/empresas/inventario/${record.id}`}>Inventario</Link></span>
                 ),
-            },
-
-            {
-                title: 'Actions',
-                dataIndex: 'id',
-                render: id => <Link to={`/admin/empresas/${id}`}>Detalle</Link>,
-                fixed:'right',
-                width:100
             },
 
         ];

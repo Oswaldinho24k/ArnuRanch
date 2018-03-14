@@ -16,6 +16,36 @@ const gridStyle = {
 };
 
 
+const dataI =
+    {
+        lines:[
+            {
+                id:2,
+                name:"ganado",
+                almacen:[{
+                    id:1,
+                    nombre:"Almacen 1"
+                }]
+            },
+            {
+                id:3,
+                name:"granos",
+                almacen:[{
+                    id:1,
+                    nombre:"Almacen 2"
+                }]
+            },
+            {
+                id:4,
+                name:"planta de alimentos",
+                almacen:[{
+                    id:1,
+                    nombre:"Almacen 3"
+                }]
+            }]
+
+    };
+
 class InventarioEmpresa extends Component{
     state={
         dataIn:[],
@@ -29,7 +59,7 @@ class InventarioEmpresa extends Component{
     render(){
         let {pathname, empresa, fetched} = this.props;
         console.log(empresa)
-        //console.log(empresa.line_comp);
+        console.log(empresa.line_comp);
         //let lineas = this.props.empresa.map((p)=>{p.linea_comp});
         //console.log(lineas)
         if(!fetched)return(<MainLoader/>);
@@ -46,19 +76,11 @@ class InventarioEmpresa extends Component{
 
                 <Card title="Lineas de Negocio">
 
-
-                    {empresa.line_comp.length>0 ?
-                        empresa.line_comp.map(p =>(
-                            <Link to={`${pathname}/${p.id}`} style={{color:'black'}} key={p.id} >
-                                <Card.Grid style={gridStyle}>{p.name}</Card.Grid>
-                            </Link>
-                        ))
-
-                    :
-                    "Esta empresa no tiene lineas de negocio..."
-                    }
-
-
+                    {dataI.lines.map(p =>(
+                        <Link to={`${pathname}/${p.id}`} style={{color:'black'}} key={p.id} >
+                            <Card.Grid style={gridStyle}>{p.name}</Card.Grid>
+                        </Link>
+                    ))}
 
                     {/*<Link to={`/admin/empresas/inventario/almacen`} style={{color:'black'}} >
                             <Card.Grid style={gridStyle}>Cerdos</Card.Grid>

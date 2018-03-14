@@ -59,17 +59,13 @@ const dataSource = [{
 
 const columns = [{
     title: 'Almacen',
-    dataIndex: 'nombre',
+    dataIndex: 'almacenes',
+    render: value =>(value[0].name)
 
 }, {
     title: 'Items',
     dataIndex: 'items',
     key: 'items',
-}, {
-    title: 'Registro',
-    dataIndex: 'name',
-    render:render=>"09/Marzo/2018",
-    key: 'name',
 },
     {
         title: 'Actions',
@@ -87,10 +83,9 @@ const columns = [{
 class ListaAlmacen extends Component {
     render(){
         let {empresa, fetched, pathname}= this.props;
-        let filtrados = dataI.lines.filter(f=>{return f.id==pathname});
-        let alma = filtrados.map(f=>{return f["almacen"]});
-        let almacene = alma[0]
-        console.log(almacene)
+
+        let filtrados = empresa.line_comp.filter(f=>{return f.id==pathname});
+
         if(!fetched)return(<MainLoader/>);
         return(
             <div>
@@ -101,12 +96,12 @@ class ListaAlmacen extends Component {
                     <Divider type="vertical" />
                     <Link to={`/admin/empresas/inventario/${empresa.id}`} style={{color:'black'}} >{empresa.company}</Link>
                     <Divider type="vertical" />
-                    {filtrados[0].name}
+
                 </div>
 
                 <h2>Lista de Almacenes</h2>
 
-                <TablePageB data={almacene} columns={columns}/>
+                <TablePageB data={filtrados} columns={columns}/>
 
             </div>
         )
