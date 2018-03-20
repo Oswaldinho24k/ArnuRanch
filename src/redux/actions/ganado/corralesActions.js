@@ -36,3 +36,22 @@ export const saveCorral=(corral)=>(dispatch, getState)=>{
             throw e
         })
 };
+
+/*************************delete********************************+*/
+
+export const DELETE_CORRAL_SUCCESS = 'DELETE_CORRAL_SUCCESS';
+
+export function deleteCorralSuccess(corralId){
+    return {
+        type:DELETE_CORRAL_SUCCESS, corralId
+    }
+}
+
+export const deleteCorral=(corralId)=>(dispatch, getState)=>{
+    return api.deleteCorral(corralId)
+        .then(r=>{
+            dispatch(deleteCorralSuccess(corralId))
+        }).catch(e=>{
+            throw e;
+        })
+};

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message} from "antd";
+import {Table, Button, Modal, message, Popconfirm, Divider} from "antd";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -41,6 +41,7 @@ const rowSelection = {
 class CorralPage extends Component {
     state = {
         visible: false,
+        selectedRowKeys:[],
     };
 
     showModal = () => {
@@ -66,10 +67,44 @@ class CorralPage extends Component {
                 }
         })
     };
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+    deleteCorrales=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            this.props.corralesActions.deleteCorral(keys[i])
+                .then(r=>{
+                    console.log(r);
+                    message.success('Deleted successfully');
+                }).catch(e=>{
+
+                message.error('No puedes eliminar este Lote')
+                /*for (let i in this.props.errors){
+                    console.log(this.props.errors[i])
+                    message.error(this.props.errors[i])
+                }*/
+
+            })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    confirm=()=>{
+        this.deleteCorrales()
+    };
+    cancel=()=>{
+        console.log('ño')
+    }
 
     render() {
-        const { visible } = this.state;
+        const { visible, selectedRowKeys } = this.state;
         let {corrales} = this.props;
+        const canUse = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         return (
             <div>
                 <h2>Listado de Corrales</h2>
@@ -83,6 +118,11 @@ class CorralPage extends Component {
                 />
 
                 <Button type="primary" onClick={this.showModal} style={{margin:'1% 0'}}>Agregar</Button>
+                <Divider
+                    type={'vertical'}/>
+                <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canUse} type="primary">Delete</Button>
+                </Popconfirm>
                 <Modal title="Agregar nuevo corral"
                        visible={visible}
                        onCancel={this.handleCancel}
