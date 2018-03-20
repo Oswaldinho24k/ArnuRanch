@@ -1,56 +1,31 @@
 import React, {Component} from 'react';
-import {Card, Select, Divider, Row, Tabs, Table, Badge, Dropdown} from 'antd';
+import {Card, Divider, Tabs, Table} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
-import TablePageB from "../clientes/TablePageB";
 
 const TabPane = Tabs.TabPane;
 
-
-
-const gridStyle = {
-    width: '50%',
-    height: '150px',
-    display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-};
-
-
 class InventarioEmpresa extends Component{
     state={
-        dataIn:[],
         key:"0",
-        datos:[]
     };
 
-    componentWillMount(){
-        this.setState({
-            dataIn:this.props.empresa
-        })
-    }
-
     callback=(key)=>{
-        console.log(key)
         this.setState({key:key})
-    }
+    };
 
 
 
     render(){
 
-        let {pathname, empresa, fetched, bline} = this.props;
+        let {empresa, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
         let datos = [empresa.line_comp[this.state.key]];
         let almacenes = datos.map(a=> a.almacenes);
-        let info = almacenes[0]
+        let info = almacenes[0];
         let items = info.map(a=> a.items);
-        console.log(items[0])
-        console.log(info)
-        console.log(empresa.line_comp !==undefined)
 
         const expandedRowRender = () => {
             const columns = [
@@ -73,12 +48,12 @@ class InventarioEmpresa extends Component{
                 },
             ];
 
-            console.log(info.items)
             return (
                 <Table
                     columns={columns}
                     dataSource={items[0]}
                     pagination={false}
+                    rowKey={record => record.id}
                 />
             );
         }
@@ -89,7 +64,6 @@ class InventarioEmpresa extends Component{
             {
                 title: 'Nombre de almacen',
                 dataIndex: 'name',
-                //render: (value) => console.log(value.name)
 
             },
             {
@@ -99,14 +73,6 @@ class InventarioEmpresa extends Component{
             },
 
         ];
-
-
-
-
-        console.log(datos)
-        //console.log(empresa)
-        console.log(this.state.key)
-        //console.log(empresa.line_comp[this.state.key].almacenes)
 
         return(
             <div>
@@ -139,6 +105,8 @@ class InventarioEmpresa extends Component{
                         columns={columns}
                         expandedRowRender={expandedRowRender}
                         dataSource={info}
+                        rowKey={record => record.id}
+
                     />
 
 
@@ -154,23 +122,14 @@ class InventarioEmpresa extends Component{
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log(ownProps)
-    let pathname = ownProps.location.pathname;
-    //let id = ownProps.match.params.em;
+    let id = ownProps.match.params.em;
     let empresa = state.empresas.list.filter(a=>{
-        return pathname.slice(-1) == a.id;
+        return id == a.id;
     });
     empresa = empresa[0];
-    console.log(empresa)
-    //let bline = empresa.line_comp.map(b=>b)
-    //console.log(bline)
-
-
 
     return {
-        pathname,
         empresa,
-//        bline,
         fetched: empresa!==undefined && state.empresas.list!==undefined && empresa.line_comp !==undefined,
     }
 }
