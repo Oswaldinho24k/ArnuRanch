@@ -18,8 +18,8 @@ export function getAllDataSuccess(data){
 export const getLotes=(url)=>(dispatch, getState)=>{
     return api.getLotes(url)
         .then(r=>{
-            dispatch(getLotesSuccess(r.results));
-            dispatch(getAllDataSuccess(r));
+            dispatch(getLotesSuccess(r));
+
         }).catch(e=>{
        throw e
     })
@@ -65,4 +65,23 @@ export const editLote=(lote)=>(dispatch, getState)=>{
         }).catch(e=>{
            throw e
     })
+};
+
+/*************************delete********************************+*/
+
+export const DELETE_LOTE_SUCCESS = 'DELETE_LOTE_SUCCESS';
+
+export function deleteLoteSuccess(loteId){
+    return {
+        type:DELETE_LOTE_SUCCESS, loteId
+    }
+}
+
+export const deleteLote=(loteId)=>(dispatch, getState)=>{
+    return api.deleteLote(loteId)
+        .then(r=>{
+            dispatch(deleteLoteSuccess(loteId))
+        }).catch(e=>{
+            throw e;
+        })
 };
