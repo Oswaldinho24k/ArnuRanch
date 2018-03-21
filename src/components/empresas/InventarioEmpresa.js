@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import {Card, Divider, Tabs, Table} from 'antd';
+import {Card, Divider, Tabs, Table, Button, message} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
+
+import AlmacenForm from "./nuevoAlmacen/AlmacenForm"
+
+import * as almacenActions from '../../redux/actions/almacen/almacenActions';
+import AlmacenCard from "./nuevoAlmacen/AlmacenCard";
 
 const TabPane = Tabs.TabPane;
 
@@ -22,30 +27,70 @@ const gridStyle = {
 class InventarioEmpresa extends Component{
     state={
         key:"0",
-        bline:"",
+        visible:false,
     };
 
     callback=(key)=>{
-        console.log(key)
         this.setState({key:key})
     };
 
-    bline = (key)=>{
-        console.log(key)
+    saveFormRef = (form) => {
+        this.form = form;
+    };
 
-    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCreate = (e) => {
+        const form = this.form;
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+
+                this.props.almacenActions.saveAlmacen(values)
+                    .then(r=>{
+                        message.success('Guardado con éxito');
+
+                        form.resetFields();
+                        this.setState({ visible: false });
+                    })
+                    .catch(e=>{
+                        for (let i in e.response.data){
+                            message.error(e.response.data[i])
+                        }
+                        console.log(values)
+                    })
+            }else{message.error('Algo fallo, verifica los campos');}
+
+        });
+    };
 
 
 
     render(){
 
         let {empresa, fetched} = this.props;
+        let {visible, key} = this.state;
         if(!fetched)return(<MainLoader/>);
         let datos = [empresa.line_comp[this.state.key]];
         let almacenes = datos.map(a=> a.almacenes);
         let info = almacenes[0];
         let items = info.map(a=> a.items);
         console.log(empresa)
+
+
+        let bline= empresa.line_comp[key];
+        console.log(bline);
 
         const expandedRowRender = () => {
             const columns = [
@@ -111,7 +156,7 @@ class InventarioEmpresa extends Component{
                         {empresa.line_comp.length>0 ?
                             empresa.line_comp.map((p, index) => {
                                 return(
-                                    <TabPane tab={p.name} key={index} onChange={this.bline(p.name)}/>
+                                    <TabPane tab={p.name} key={index} />
                                     )
                             })
                             :
@@ -124,33 +169,26 @@ class InventarioEmpresa extends Component{
 
 
                     {info && info.length > 0 ?
-
-                        info.map(p =>(
-                            <Link to={`/admin/empresas/inventario/${empresa.id}/${this.state.key}/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >
-                                <Card.Grid style={gridStyle}><div>{p.name}</div></Card.Grid>
-                            </Link>
-                        ))
+                        <AlmacenCard info={info}/>
 
                         :
                         ":( No tiene almacenes"
                     }
                     </div>
 
-
-
-                    {/*<Table
-                        columns={columns}
-                        expandedRowRender={expandedRowRender}
-                        dataSource={info}
-                        rowKey={record => record.id}
-
-                    />*/}
-
+                    <Button type="primary" onClick={this.showModal}>Agregar Almacen</Button>
+                    <AlmacenForm
+                        ref={this.saveFormRef}
+                        visible={visible}
+                        onCancel={this.handleCancel}
+                        onCreate={this.handleCreate}
+                        bline={bline}
 
 
 
-
+                    />
                 </Card>
+
 
 
             </div>
@@ -173,7 +211,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return{
-        //empresaActions: bindActionCreators(empresaActions, dispatch),
+        almacenActions: bindActionCreators(almacenActions, dispatch),
     }
 }
 

@@ -18,6 +18,7 @@ import empresasReducer from "./administracion/empresasReducer";
 import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
+import almacenReducer from "./almacen/almacenReducer";
 
 
 
@@ -39,7 +40,8 @@ const rootReducer = combineReducers({
     egresos:egresosReducer,
     empresas:empresasReducer,
     vacunas: vacunasReducer,
-    blines:blinesReducer
+    blines:blinesReducer,
+    almacen:almacenReducer,
 
 });
 

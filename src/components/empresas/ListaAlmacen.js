@@ -90,7 +90,7 @@ class ListaAlmacen extends Component {
         let almac = bline.almacenes.filter(f=>{
             return ida == f.id;
         });
-        console.log(almac[0].name)
+        console.log(almac[0])
         let items = almac.map(a=> a.items);
 
 
