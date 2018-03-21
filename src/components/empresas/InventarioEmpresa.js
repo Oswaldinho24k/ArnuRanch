@@ -7,14 +7,33 @@ import MainLoader from "../common/Main Loader";
 
 const TabPane = Tabs.TabPane;
 
+const gridStyle = {
+    width: '100%',
+    height: '150px',
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    padding:'80px'
+};
+
+
+
 class InventarioEmpresa extends Component{
     state={
         key:"0",
+        bline:"",
     };
 
     callback=(key)=>{
+        console.log(key)
         this.setState({key:key})
     };
+
+    bline = (key)=>{
+        console.log(key)
+
+    }
 
 
 
@@ -26,6 +45,7 @@ class InventarioEmpresa extends Component{
         let almacenes = datos.map(a=> a.almacenes);
         let info = almacenes[0];
         let items = info.map(a=> a.items);
+        console.log(empresa)
 
         const expandedRowRender = () => {
             const columns = [
@@ -85,13 +105,13 @@ class InventarioEmpresa extends Component{
 
                 </div>
 
-                <Card>
-                    <h3>Lineas de Negocio</h3>
+                <Card style={{textAlign:'center'}}>
+                    <h3><strong>Lineas de Negocio</strong></h3>
                     <Tabs defaultActiveKey={this.state.key} onChange={this.callback}>
                         {empresa.line_comp.length>0 ?
                             empresa.line_comp.map((p, index) => {
                                 return(
-                                    <TabPane tab={p.name} key={index} />
+                                    <TabPane tab={p.name} key={index} onChange={this.bline(p.name)}/>
                                     )
                             })
                             :
@@ -99,15 +119,32 @@ class InventarioEmpresa extends Component{
                             }
                     </Tabs>
 
+                    <div style={{flexWrap: 'wrap', display:'flex', justifyContent:'center', alignItems:'center'}}>
 
 
-                    <Table
+
+                    {info && info.length > 0 ?
+
+                        info.map(p =>(
+                            <Link to={`/admin/empresas/inventario/${empresa.id}/${this.state.key}/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >
+                                <Card.Grid style={gridStyle}><div>{p.name}</div></Card.Grid>
+                            </Link>
+                        ))
+
+                        :
+                        ":( No tiene almacenes"
+                    }
+                    </div>
+
+
+
+                    {/*<Table
                         columns={columns}
                         expandedRowRender={expandedRowRender}
                         dataSource={info}
                         rowKey={record => record.id}
 
-                    />
+                    />*/}
 
 
 

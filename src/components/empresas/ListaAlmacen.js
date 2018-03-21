@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider} from 'antd';
+import {Divider, Table} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
@@ -60,7 +60,7 @@ const dataSource = [{
 const columns = [{
     title: 'Almacen',
     dataIndex: 'almacenes',
-    render: value =>(value[0].name)
+    //render: value =>(value[0].name)
 
 }, {
     title: 'Items',
@@ -82,11 +82,38 @@ const columns = [{
 
 class ListaAlmacen extends Component {
     render(){
-        let {empresa, fetched, pathname}= this.props;
-
-        let filtrados = empresa.line_comp.filter(f=>{return f.id==pathname});
+        let {empresa, fetched, idl, ida, id}= this.props;
 
         if(!fetched)return(<MainLoader/>);
+
+        let bline= empresa.line_comp[idl];
+        let almac = bline.almacenes.filter(f=>{
+            return ida == f.id;
+        });
+        console.log(almac[0].name)
+        let items = almac.map(a=> a.items);
+
+
+        const columns = [
+            {title: 'Item', dataIndex: 'id', key: 'id'},
+            {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
+            {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
+            {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
+            {title: 'Total', dataIndex: 'total', key: 'total'},
+            {
+                title: 'Action',
+                dataIndex: 'operation',
+                key: 'operation',
+                render: () => (
+                    <span className="table-operation">
+            <a href="#">Pause</a>
+            <a href="#">Stop</a>
+
+          </span>
+                ),
+            },
+        ];
+
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -94,14 +121,24 @@ class ListaAlmacen extends Component {
                     <Divider type="vertical" />
                     Empresas
                     <Divider type="vertical" />
-                    <Link to={`/admin/empresas/inventario/${empresa.id}`} style={{color:'black'}} >{empresa.company}</Link>
+                    {empresa.company}
                     <Divider type="vertical" />
+                    <Link to={`/admin/empresas/inventario/${id}`}>Lineas de Negocio</Link>
+                    <Divider type="vertical" />
+                    {almac[0].name}
 
                 </div>
 
-                <h2>Lista de Almacenes</h2>
+                <h2>Lista de Items</h2>
 
-                <TablePageB data={filtrados} columns={columns}/>
+                <Table
+                    columns={columns}
+                    dataSource={items[0]}
+                    pagination={false}
+                    rowKey={record => record.id}
+                />
+
+
 
             </div>
         )
@@ -109,18 +146,20 @@ class ListaAlmacen extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    let path = ownProps.location.pathname;
-    let pathname = path.slice(-1);
-
     let id = ownProps.match.params.em;
+    let idl = ownProps.match.params.li;
+    let ida = ownProps.match.params.n;
     let empresa = state.empresas.list.filter(a=>{
         return id == a.id;
     });
     empresa = empresa[0];
 
+
     return {
-        pathname,
+        id,
         empresa,
+        idl,
+        ida,
         fetched: empresa!==undefined && state.empresas.list!==undefined,
     }
 }
