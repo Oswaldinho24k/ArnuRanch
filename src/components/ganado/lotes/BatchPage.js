@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Table, Button, Modal, Input, Divider, message} from 'antd';
+import {Table, Button, Modal, Input, Divider, message, Popconfirm} from 'antd';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
@@ -57,6 +57,7 @@ class BatchPage extends Component {
     state = {
         visible: false,
         searchText:'',
+        selectedRowKeys:[],
     };
 
     showModal = () => {
@@ -110,14 +111,47 @@ class BatchPage extends Component {
         }else{
             newUrl = this.props.paginationData.previous;
             this.props.loteActions.getLotes(newUrl);
-
         }
-
     };
 
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+    deleteLotes=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            this.props.loteActions.deleteLote(keys[i])
+                .then(r=>{
+                    console.log(r);
+                    message.success('Deleted successfully');
+                }).catch(e=>{
+
+                message.error('No puedes eliminar este Lote')
+                /*for (let i in this.props.errors){
+                    console.log(this.props.errors[i])
+                    message.error(this.props.errors[i])
+                }*/
+
+            })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    confirm=()=>{
+        this.deleteLotes()
+    };
+    cancel=()=>{
+        console.log('ño')
+    }
+
     render() {
-        const { visible , searchText} = this.state;
+        const { visible , searchText, selectedRowKeys} = this.state;
         let {lotes, fetched, corrales, paginationData} = this.props;
+        const canUse = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -156,13 +190,19 @@ class BatchPage extends Component {
                     rowKey={record => record.id}
                     pagination={{
                         pageSize:10,
-                        total:paginationData.count,
-                        onChange:this.handlePagination}}
+                        total:lotes.length,
+                        }}
                     scroll={{x:650, y:500}}
                 />
 
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <Divider
+                    type={'vertical'}/>
+                <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button disabled={!canUse} type="primary">Delete</Button>
+                </Popconfirm>
+
                 <Modal title="Nuevo Lote"
                        visible={visible}
                        onCancel={this.handleCancel}
@@ -187,8 +227,8 @@ function mapStateToProps(state, ownProps) {
     return {
         lotes:state.lotes.list,
         corrales:state.corrales.list,
-        paginationData:state.lotes.allData,
-        fetched:state.lotes.list!==undefined && state.corrales.list!==undefined && state.lotes.allData!==undefined,
+        //paginationData:state.lotes.allData,
+        fetched:state.lotes.list!==undefined && state.corrales.list!==undefined,
     }
 }
 
