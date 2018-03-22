@@ -78,13 +78,17 @@ class InventarioEmpresa extends Component{
 
 
     render(){
-
-        let {empresa, fetched} = this.props;
+//Cambiar info here
+        let {empresa, fetched, empresas} = this.props;
+        console.log(empresas)
         let {visible, key} = this.state;
         if(!fetched)return(<MainLoader/>);
         let datos = [empresa.line_comp[this.state.key]];
         let almacenes = datos.map(a=> a.almacenes);
-        let info = almacenes[0];
+        let infor = almacenes[0];
+        console.log(infor)
+        let info = infor.filter(f=> { return f.company === empresa.id})
+        console.log(info);
         let items = info.map(a=> a.items);
         console.log(empresa)
 
@@ -167,13 +171,8 @@ class InventarioEmpresa extends Component{
                     <div style={{flexWrap: 'wrap', display:'flex', justifyContent:'center', alignItems:'center'}}>
 
 
-
-                    {info && info.length > 0 ?
                         <AlmacenCard info={info}/>
 
-                        :
-                        ":( No tiene almacenes"
-                    }
                     </div>
 
                     <Button type="primary" onClick={this.showModal}>Agregar Almacen</Button>
@@ -183,6 +182,7 @@ class InventarioEmpresa extends Component{
                         onCancel={this.handleCancel}
                         onCreate={this.handleCreate}
                         bline={bline}
+                        empresa={empresa}
 
 
 
@@ -198,6 +198,7 @@ class InventarioEmpresa extends Component{
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.em;
+    let empresas = state.empresas.list;
     let empresa = state.empresas.list.filter(a=>{
         return id == a.id;
     });
@@ -205,6 +206,7 @@ function mapStateToProps(state, ownProps) {
 
     return {
         empresa,
+        empresas,
         fetched: empresa!==undefined && state.empresas.list!==undefined && empresa.line_comp !==undefined,
     }
 }

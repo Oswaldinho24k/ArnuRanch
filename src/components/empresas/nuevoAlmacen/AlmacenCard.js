@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card} from 'antd';
+import {Card, Button} from 'antd';
 import {Link} from 'react-router-dom';
 
 const gridStyle = {
@@ -17,9 +17,14 @@ const AlmacenCard = ({info})=>{
 
 
             info.map(p =>(
+                <div>
+                <Button type="primary" onClick={()=>console.log(p.id)}>Delete Almacen</Button>
                 <Link to={`/admin/empresas/inventario/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >
-                    <Card.Grid style={gridStyle}><div>{p.name}</div></Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                        <div>{p.name}</div>
+                    </Card.Grid>
                 </Link>
+                </div>
             ))
     )
 };

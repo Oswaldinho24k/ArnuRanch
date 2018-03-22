@@ -24,8 +24,14 @@ const styles = {
 
 const AlmacenForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, bline} = props;
+        const{visible, onCancel, onCreate, form, bline, empresa} = props;
+        console.log(empresa)
         const {getFieldDecorator} = form;
+
+        /*let datos = [empresa.line_comp[this.state.key]];
+        let almacenes = datos.map(a=> a.almacenes);
+        let info = almacenes[0];*/
+
 
         return(
             <Modal
@@ -65,6 +71,24 @@ const AlmacenForm = Form.create()(
                             })(
                                 <Select disabled={true}>
                                     <Option key={bline.id} value={bline.id} >{bline.name}</Option>
+                                </Select>
+
+                            )}
+
+                        </FormItem>
+
+                        <FormItem
+                            label={"Empresa"}
+                        >
+
+                            {form.getFieldDecorator('company',{
+                                initialValue:empresa.id,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select disabled={true}>
+                                    <Option key={empresa.id} value={empresa.id} >{empresa.company}</Option>
                                 </Select>
 
                             )}

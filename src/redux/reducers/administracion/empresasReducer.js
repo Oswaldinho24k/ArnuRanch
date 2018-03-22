@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 import {GET_EMPRESAS_SUCCESS, SAVE_EMPRESA_SUCCESS, DELETE_EMPRESA_SUCCESS, EDIT_EMPRESA_SUCCESS} from "../../actions/empresasActions";
+import {SAVE_ALMACEN_SUCCESS} from "../../actions/almacen/almacenActions";
+
 
 function list(state=[], action){
     switch(action.type){
@@ -17,6 +19,25 @@ function list(state=[], action){
                 return a.id!=action.empresaId;
             });
             return acualL;
+        case SAVE_ALMACEN_SUCCESS:
+            let empresas = state.filter(e =>{
+                return e.id !== action.almacen.company;
+            });
+
+
+            let empresa = state.find(e=> {
+               return e.id === action.almacen.company;
+            });
+
+
+            let bline = empresa.line_comp.find(line => {
+               return line.id === action.almacen.bline
+            });
+
+
+            bline.almacenes.push(action.almacen);
+
+            return [empresa, ...empresas];
         default:
             return state;
     }

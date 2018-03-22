@@ -1,6 +1,6 @@
 import api from "../../../Api/Django";
 
-/*FORM EMPRESA SAVE*/
+
 
 export const SAVE_ALMACEN_SUCCESS = 'SAVE_ALMACEN_SUCCESS';
 
