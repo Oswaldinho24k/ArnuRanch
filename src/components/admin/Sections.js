@@ -34,6 +34,7 @@ import DetailVacuna from "../vacunas/DetailVacuna";
 import InventarioEmpresa from "../empresas/InventarioEmpresa";
 import ListaAlmacen from "../empresas/ListaAlmacen";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
+import EventosPage from "../ganado/eventos/EventosPage";
 
 
 export const paths = {
@@ -80,6 +81,7 @@ const Sections = ({props}) => {
                 <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
                 <Route path='/admin/lotes' component={BatchPage}/>
                 <Route path='/admin/razas' component={RazasPage}/>
+                <Route path='/admin/eventos' component={EventosPage}/>
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
                 {/* Planta alimentos routes begin*/}

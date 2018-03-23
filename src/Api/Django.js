@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -187,6 +187,30 @@ const api = {
                 }
             });
             instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        });
+    },
+    getSingleAnimal:(id)=>{
+       // let newUrl = animalsUrl;
+        //if(url)newUrl=url;
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: animalsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get(id+'/')
                 .then(function (response) {
                     resolve(response.data);
                 })

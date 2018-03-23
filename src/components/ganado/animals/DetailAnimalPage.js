@@ -12,6 +12,9 @@ import MainLoader from "../../common/Main Loader";
 import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
 import ReportesComponent from "./ReportesComponent";
+import {store} from '../../../index';
+
+
 
 
 const Option = Select.Option;
@@ -207,21 +210,25 @@ class DetailAnimalPage extends Component {
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.key;
 
-    let animal = state.animals.list.filter(a=>{
-        return id == a.id;
-    });
-    animal = animal[0];
+
+
+    console.log(id)
+
+
 
     return {
-        animal,
+        animal:state.animals.object,
         lotes:state.lotes.list,
         razas:state.razas.list,
         empresas:state.empresas.list,
-        fetched:animal!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
+        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, oP) {
+
+    let id = oP.match.params.key;
+    dispatch(animalActions.getSingleAnimal(id));
     return {
         animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
         animalActions:bindActionCreators(animalActions, dispatch),
