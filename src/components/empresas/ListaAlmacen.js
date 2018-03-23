@@ -1,49 +1,33 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider} from 'antd';
+import {Divider, Table} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
 
-const dataI =
+const items =[
     {
-        lines:[
-            {
-                id:2,
-                name:"ganado",
-                almacen:[
-                    {
-                    id: 1,
-                    nombre: "Almacen 1",
-                        items:32
-                }, {
-                    id: 2,
-                    nombre: "Almacen 2",
-                        items:12
-                }]
-            },
-            {
-                id:3,
-                name:"granos",
-                almacen:[{
-                    id:1,
-                    nombre:"Almacen 2",
-                    items:24
-                }],
-
-            },
-            {
-                id:4,
-                name:"planta de alimentos",
-                almacen:[{
-                    id:1,
-                    nombre:"Almacen 3",
-                    items:2
-                }]
-            }]
-
-    };
-
+        id:1,
+        product_type: "tipo 1",
+        cantidad:2,
+        costo_u:8,
+        total:16,
+    },
+    {
+        id:2,
+        product_type: "tipo 2",
+        cantidad:4,
+        costo_u:1,
+        total:4,
+    },
+    {
+        id:3,
+        product_type: "tipo 3",
+        cantidad:1,
+        costo_u:100,
+        total:100,
+    }
+];
 
 const dataSource = [{
     key: '1',
@@ -59,17 +43,13 @@ const dataSource = [{
 
 const columns = [{
     title: 'Almacen',
-    dataIndex: 'nombre',
+    dataIndex: 'almacenes',
+    //render: value =>(value[0].name)
 
 }, {
     title: 'Items',
     dataIndex: 'items',
     key: 'items',
-}, {
-    title: 'Registro',
-    dataIndex: 'name',
-    render:render=>"09/Marzo/2018",
-    key: 'name',
 },
     {
         title: 'Actions',
@@ -86,12 +66,30 @@ const columns = [{
 
 class ListaAlmacen extends Component {
     render(){
-        let {empresa, fetched, pathname}= this.props;
-        let filtrados = dataI.lines.filter(f=>{return f.id==pathname});
-        let alma = filtrados.map(f=>{return f["almacen"]});
-        let almacene = alma[0]
-        console.log(almacene)
+        let {empresa, fetched, idl, ida, id}= this.props;
+        console.log(this.props)
+
         if(!fetched)return(<MainLoader/>);
+        /*
+                let bline= empresa.line_comp[idl];
+                let almac = bline.almacenes.filter(f=>{
+                    return ida == f.id;
+                });
+                console.log(almac[0])
+                let items = almac.map(a=> a.items);*/
+
+
+
+
+        const columns = [
+            {title: 'Item', dataIndex: 'id', key: 'id'},
+            {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
+            {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
+            {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
+            {title: 'Total', dataIndex: 'total', key: 'total'},
+
+        ];
+
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -99,14 +97,32 @@ class ListaAlmacen extends Component {
                     <Divider type="vertical" />
                     Empresas
                     <Divider type="vertical" />
-                    <Link to={`/admin/empresas/inventario/${empresa.id}`} style={{color:'black'}} >{empresa.company}</Link>
+                    <Link to={`/admin/empresas/inventario/${empresa.id}`}>
+                    {empresa.company}
+                    </Link>
                     <Divider type="vertical" />
-                    {filtrados[0].name}
+                    Lista de Items
+                    <Divider type="vertical" />
+
+
                 </div>
 
-                <h2>Lista de Almacenes</h2>
+                <h2>Lista de Items Fake</h2>
 
-                <TablePageB data={almacene} columns={columns}/>
+                {/*<Table
+                    columns={columns}
+                    dataSource={items[0]}
+                    pagination={false}
+                    rowKey={record => record.id}
+                />*/}
+                <Table
+                    columns={columns}
+                    dataSource={items}
+                    pagination={false}
+                    rowKey={record => record.id}
+                />
+
+
 
             </div>
         )
@@ -114,18 +130,20 @@ class ListaAlmacen extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    let path = ownProps.location.pathname;
-    let pathname = path.slice(-1);
-
     let id = ownProps.match.params.em;
+    let idl = ownProps.match.params.li;
+    let ida = ownProps.match.params.n;
     let empresa = state.empresas.list.filter(a=>{
         return id == a.id;
     });
     empresa = empresa[0];
 
+
     return {
-        pathname,
+        id,
         empresa,
+        idl,
+        ida,
         fetched: empresa!==undefined && state.empresas.list!==undefined,
     }
 }
