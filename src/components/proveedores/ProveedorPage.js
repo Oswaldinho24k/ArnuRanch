@@ -190,6 +190,7 @@ class ProovedorPage extends Component {
             {
                 title: 'Proveedor',
                 dataIndex: 'provider',
+                render: (provider,obj) =><Link to={`/admin/proveedores/${obj.id}`}>{ provider && provider !== null ? provider: "No Proveedor"}</Link>,
                 key:'provider',
                 filterDropdown: (
                     <div style={style.customFilterDropdown}>
@@ -225,17 +226,7 @@ class ProovedorPage extends Component {
                 title: 'RFC',
                 dataIndex: 'rfc'
             },
-            {
-                title: 'Actions',
-                key: 'action',
-                fixed:'right',
-                width:100,
-                render: (text, record) => (
-                    <span>
-              <Link to={`/admin/proveedores/${record.id}`}>Detalle</Link>
-            </span>
-                ),
-            }
+
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;

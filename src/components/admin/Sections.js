@@ -55,8 +55,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/cuentas'} component={CuentasBanco}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
-                <Route path={'/admin/empresas/inventario/:em/:n/:k'} component={ListaAlmacenDetail}/>
-                <Route path={'/admin/empresas/inventario/:em/:n'} component={ListaAlmacen}/>
+                <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
+                <Route path={'/admin/empresas/inventario/:em/:li/:n'} component={ListaAlmacen}/>
                 <Route path={'/admin/empresas/inventario/:em'} component={InventarioEmpresa}/>
                 <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
                 <Route path={'/admin/empresas'} component={Company}/>

@@ -49,7 +49,7 @@ class DetailClientPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/clientes/`} style={{color:'black'}} >Clientes</Link>
                     <Divider type="vertical" />
-                    Cliente {cliente.id}
+                    {cliente.client}
                 </div>
             <div style={{width:'50%', margin: '0 auto'}} >
                 <Card title={"Detalle"}>

@@ -11,28 +11,6 @@ import moment from 'moment';
 
 const Option = Select.Option;
 
-const opciones = [{
-    name :'Cerdos',
-    id: 1
-},
-    {
-        name:'Ganado',
-        id:2
-    },
-    {
-        name:'Granos',
-        id:3
-    },
-    {
-        name:'Planta de alimentos',
-        id:4
-    },
-    {
-        name:'Campo',
-        id:5
-    },
-
-];
 
 class DetailCompany extends Component{
     state={
@@ -80,7 +58,7 @@ class DetailCompany extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/empresas/`} style={{color:'black'}} >Empresas</Link>
                     <Divider type="vertical" />
-                    Empresa {empresa.id}
+                    {empresa.company}
                 </div>
 
                 <div style={{width:'50%', margin: '0 auto'}}>

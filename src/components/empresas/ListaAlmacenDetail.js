@@ -1,54 +1,14 @@
 import React, {Component} from 'react';
 import {Card, Select, Divider} from 'antd';
-import * as empresaActions from '../../redux/actions/empresasActions';
+import * as almacenActions from '../../redux/actions/almacen/almacenActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-import InfoCompany from './InfoCompany';
+import EditAlmacen from "./nuevoAlmacen/EditAlmacen";
 
-import moment from 'moment';
-import TablePageB from "../clientes/TablePageB";
 
 const Option = Select.Option;
-
-const data = [{
-    name :'Item 1',
-    precio:334.65,
-    id: 1
-},
-    {
-        name:'Item 2',
-        precio:4.65,
-        id:2
-    },
-    {
-        name:'Item 3',
-        precio:465,
-        id:3
-    },
-    {
-        name:'Item 4',
-        precio:65,
-        id:4
-    },
-    {
-        name:'Item5',
-        precio:99,
-        id:5
-    },
-
-];
-
-const columns = [{
-    title: 'Item',
-    dataIndex: 'name',
-
-}, {
-    title: 'Precio',
-    dataIndex: 'precio',
-},
-];
 
 
 class ListaAlmacenDetail extends Component{
@@ -61,51 +21,48 @@ class ListaAlmacenDetail extends Component{
         this.setState({editMode:!this.state.editMode})
     };
 
-    checkRfc = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('Verifica el RFC ingresado');
-        } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
-            }
-            callback()
-        }
-    };
-
-    checkPhone = (rule, value, callback) => {
-        if (value === undefined) {
-            callback('El número ingresa debe contener 10 dígitos.');
-        } else {
-            if(value.length < 10){
-                callback('Ingresa un número de 10 dígitos');
-            }
-            callback()
-        }
-    };
 
 
     render(){
-        let {empresa, fetched} = this.props;
+       let {empresa, fetched, bline, idAlmacen} = this.props;
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
+        let almacen = empresa.line_comp.filter(f=>{return f.id ==bline});
+        let displayInfo = almacen[0].almacenes.find(fi => {return fi.id == idAlmacen});
 
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    <Link to={`/admin/empresas/`} style={{color:'black'}} >Empresas</Link>
+                    Empresas
                     <Divider type="vertical" />
-                    Nombre empresa
+                    <Link to={`/admin/empresas/inventario/${empresa.id}/`} style={{color:'black'}} >
+                    {empresa.company}
+                    </Link>
+
                     <Divider type="vertical" />
-                    Almacenes
-                    <Divider type="vertical" />
-                    Detalle
+                    Almacen {displayInfo.name}
+
                 </div>
 
-                <h2>Lista de Items</h2>
+                <div style={{width:'50%', margin: '0 auto'}}>
+                    <Card title={`Detalle almacén ${displayInfo.name}`}>
+                        <EditAlmacen
+                            {...displayInfo}
+                            bline={almacen[0]}
+                            empresa={empresa}
+                            editAlmacen={this.props.almacenActions.editAlmacen}
+                           handleEditMode={this.handleEditMode}
+                           editMode={editMode}
 
-                <TablePageB data={data} columns={columns}/>
+                        />
+                    </Card>
+                </div>
+
+
+
+
             </div>
 
         )
@@ -114,19 +71,23 @@ class ListaAlmacenDetail extends Component{
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.em;
+    let bline = ownProps.match.params.bl;
+    let idAlmacen = ownProps.match.params.k;
     let empresa = state.empresas.list.filter(a=>{
         return id == a.id;
     });
     empresa = empresa[0];
     return {
         empresa,
+        bline,
+        idAlmacen,
         fetched: empresa!==undefined && state.empresas.list!==undefined,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return{
-        empresaActions: bindActionCreators(empresaActions, dispatch),
+        almacenActions: bindActionCreators(almacenActions, dispatch),
     }
 }
 
