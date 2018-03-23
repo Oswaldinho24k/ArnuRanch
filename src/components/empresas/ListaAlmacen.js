@@ -5,45 +5,29 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
 
-const dataI =
+const items =[
     {
-        lines:[
-            {
-                id:2,
-                name:"ganado",
-                almacen:[
-                    {
-                    id: 1,
-                    nombre: "Almacen 1",
-                        items:32
-                }, {
-                    id: 2,
-                    nombre: "Almacen 2",
-                        items:12
-                }]
-            },
-            {
-                id:3,
-                name:"granos",
-                almacen:[{
-                    id:1,
-                    nombre:"Almacen 2",
-                    items:24
-                }],
-
-            },
-            {
-                id:4,
-                name:"planta de alimentos",
-                almacen:[{
-                    id:1,
-                    nombre:"Almacen 3",
-                    items:2
-                }]
-            }]
-
-    };
-
+        id:1,
+        product_type: "tipo 1",
+        cantidad:2,
+        costo_u:8,
+        total:16,
+    },
+    {
+        id:2,
+        product_type: "tipo 2",
+        cantidad:4,
+        costo_u:1,
+        total:4,
+    },
+    {
+        id:3,
+        product_type: "tipo 3",
+        cantidad:1,
+        costo_u:100,
+        total:100,
+    }
+];
 
 const dataSource = [{
     key: '1',
@@ -83,15 +67,18 @@ const columns = [{
 class ListaAlmacen extends Component {
     render(){
         let {empresa, fetched, idl, ida, id}= this.props;
+        console.log(this.props)
 
         if(!fetched)return(<MainLoader/>);
+        /*
+                let bline= empresa.line_comp[idl];
+                let almac = bline.almacenes.filter(f=>{
+                    return ida == f.id;
+                });
+                console.log(almac[0])
+                let items = almac.map(a=> a.items);*/
 
-        let bline= empresa.line_comp[idl];
-        let almac = bline.almacenes.filter(f=>{
-            return ida == f.id;
-        });
-        console.log(almac[0])
-        let items = almac.map(a=> a.items);
+
 
 
         const columns = [
@@ -100,18 +87,7 @@ class ListaAlmacen extends Component {
             {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
             {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
             {title: 'Total', dataIndex: 'total', key: 'total'},
-            {
-                title: 'Action',
-                dataIndex: 'operation',
-                key: 'operation',
-                render: () => (
-                    <span className="table-operation">
-            <a href="#">Pause</a>
-            <a href="#">Stop</a>
 
-          </span>
-                ),
-            },
         ];
 
         return(
@@ -121,19 +97,27 @@ class ListaAlmacen extends Component {
                     <Divider type="vertical" />
                     Empresas
                     <Divider type="vertical" />
+                    <Link to={`/admin/empresas/inventario/${empresa.id}`}>
                     {empresa.company}
+                    </Link>
                     <Divider type="vertical" />
-                    <Link to={`/admin/empresas/inventario/${id}`}>Lineas de Negocio</Link>
+                    Lista de Items
                     <Divider type="vertical" />
-                    {almac[0].name}
+
 
                 </div>
 
-                <h2>Lista de Items</h2>
+                <h2>Lista de Items Fake</h2>
 
-                <Table
+                {/*<Table
                     columns={columns}
                     dataSource={items[0]}
+                    pagination={false}
+                    rowKey={record => record.id}
+                />*/}
+                <Table
+                    columns={columns}
+                    dataSource={items}
                     pagination={false}
                     rowKey={record => record.id}
                 />

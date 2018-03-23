@@ -25,13 +25,7 @@ const styles = {
 const AlmacenForm = Form.create()(
     (props)=>{
         const{visible, onCancel, onCreate, form, bline, empresa} = props;
-        console.log(empresa)
         const {getFieldDecorator} = form;
-
-        /*let datos = [empresa.line_comp[this.state.key]];
-        let almacenes = datos.map(a=> a.almacenes);
-        let info = almacenes[0];*/
-
 
         return(
             <Modal

@@ -12,13 +12,15 @@ const gridStyle = {
     padding:'80px'
 };
 
-const AlmacenCard = ({info})=>{
+
+const AlmacenCard = ({info, eliminar})=>{
+    console.log(info)
     return(
 
 
             info.map(p =>(
                 <div>
-                <Button type="primary" onClick={()=>console.log(p.id)}>Delete Almacen</Button>
+                <Button type="primary" onClick={eliminar(p)}>Delete Almacen</Button>
                 <Link to={`/admin/empresas/inventario/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >
                     <Card.Grid style={gridStyle}>
                         <div>{p.name}</div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Divider, Tabs, Table, Button, message} from 'antd';
+import {Card, Divider, Tabs, Table, Button, message, Icon, Avatar, Popconfirm} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -9,8 +9,10 @@ import AlmacenForm from "./nuevoAlmacen/AlmacenForm"
 
 import * as almacenActions from '../../redux/actions/almacen/almacenActions';
 import AlmacenCard from "./nuevoAlmacen/AlmacenCard";
+import EditAlmacen from './nuevoAlmacen/EditAlmacen'
 
 const TabPane = Tabs.TabPane;
+const { Meta } = Card;
 
 const gridStyle = {
     width: '100%',
@@ -28,6 +30,7 @@ class InventarioEmpresa extends Component{
     state={
         key:"0",
         visible:false,
+        visibleEdit:false,
     };
 
     callback=(key)=>{
@@ -44,9 +47,20 @@ class InventarioEmpresa extends Component{
         });
     };
 
+    showModalEdit = () => {
+        this.setState({
+            visibleEdit: true,
+        });
+    };
+
     handleCancel = () => {
         this.setState({
             visible: false,
+        });
+    };
+    handleCancelEdit = () => {
+        this.setState({
+            visibleEdit: false,
         });
     };
 
@@ -75,13 +89,32 @@ class InventarioEmpresa extends Component{
         });
     };
 
+    eliminarAlmacen =(almacen)=>{
+            this.props.almacenActions.deleteAlmacen(almacen)
+                .then(r=>{
+                    console.log(r)
+                }).catch(e=>{
+                console.log(e)
+            })
+        };
+
+    confirm=(p)=> {
+        console.log(p);
+        this.eliminarAlmacen(p)
+        message.success('Deleted successfully');
+    };
+
+    cancel=(e) =>{
+        console.log(e);
+    };
+
 
 
     render(){
-//Cambiar info here
+
         let {empresa, fetched, empresas} = this.props;
         console.log(empresas)
-        let {visible, key} = this.state;
+        let {visible, key, visibleEdit} = this.state;
         if(!fetched)return(<MainLoader/>);
         let datos = [empresa.line_comp[this.state.key]];
         let almacenes = datos.map(a=> a.almacenes);
@@ -171,9 +204,37 @@ class InventarioEmpresa extends Component{
                     <div style={{flexWrap: 'wrap', display:'flex', justifyContent:'center', alignItems:'center'}}>
 
 
-                        <AlmacenCard info={info}/>
+                      {/*  <AlmacenCard info={info} eliminar={this.elimnarAlmacen}/>*/}
+
+                        {info && info.length>0?
+                            info.map((p,index) =>(
+                                <div key={index}>
+
+                                        <Card
+                                            style={{ width: 300, margin:10 }}
+                                            actions={[
+                                                <Link to={`/admin/empresas/inventario/${empresa.id}/${bline.id}/detalle/${p.id}/`} >
+                                                    <Icon type="edit" />
+                                                </Link>,
+                                                <Popconfirm title="Are you sure delete this almacen?" onConfirm={()=>this.confirm(p)} onCancel={this.cancel} okText="Yes" cancelText="No">
+                                                <Icon type="setting" />
+                                                </Popconfirm>]}
+                                        >
+                                            <Link to={`/admin/empresas/inventario/${empresa.id}/${bline.id}/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >
+                                            <Meta
+                                                title={p.name}
+                                            />
+                                            </Link>
+                                        </Card>
+
+                                </div>
+                            )):"No tiene almacén"
+                        }
+
 
                     </div>
+
+                    <div style={{display:'flex', marginTop:10}}>
 
                     <Button type="primary" onClick={this.showModal}>Agregar Almacen</Button>
                     <AlmacenForm
@@ -187,6 +248,7 @@ class InventarioEmpresa extends Component{
 
 
                     />
+                    </div>
                 </Card>
 
 
