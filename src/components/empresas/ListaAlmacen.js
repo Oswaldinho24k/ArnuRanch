@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider, Table, message, Button} from 'antd';
+import {Divider, Table, message, Button, Popconfirm} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
@@ -13,6 +13,7 @@ class ListaAlmacen extends Component {
 
     state = {
         visible: false,
+        selectedRowKeys:[],
     };
 
     saveFormRef = (form) => {
@@ -47,10 +48,42 @@ class ListaAlmacen extends Component {
         });
     };
 
+    deleteItem=()=>{
+        let keys = this.state.selectedRowKeys;
+        for(let i in keys){
+            this.props.itemsActions.deleteItem(keys[i], this.props.almacenDetail.id)
+                .then(r=>{
+                    console.log(r)
+                }).catch(e=>{
+                console.log(e)
+            })
+        }
+        this.setState({selectedRowKeys:[]})
+    };
+    confirm=(e)=> {
+        console.log(e);
+        this.deleteItem();
+        message.success('Deleted successfully');
+    };
+
+    cancel=(e) =>{
+        console.log(e);
+    };
+
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
 
     render(){
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen}= this.props;
-        let {visible} = this.state;
+        let {visible, selectedRowKeys} = this.state;
+        const canDelete = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         if(!fetched)return(<MainLoader/>);
 
 
@@ -59,6 +92,7 @@ class ListaAlmacen extends Component {
 
         let items = almacenDetail.items.map(f=>{return f})
         console.log(items)
+        console.log(almacenDetail)
 
         const columns = [
             {title: 'Item', dataIndex: 'id', key: 'id'},
@@ -80,19 +114,19 @@ class ListaAlmacen extends Component {
                     {empresa.company}
                     </Link>
                     <Divider type="vertical" />
-                    Lista de Items
-                    <Divider type="vertical" />
+                    {almacenDetail.name}
 
 
                 </div>
 
-                <h2>Lista de Items Fake</h2>
+                <h2>Lista de Items</h2>
 
                 <Table
                     columns={columns}
                     dataSource={items}
                     pagination={false}
                     rowKey={record => record.id}
+                    rowSelection={rowSelection}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
@@ -106,6 +140,13 @@ class ListaAlmacen extends Component {
                     almacen={almacen}
 
                 />
+
+                <Divider type={'vertical'} />
+
+
+                <Popconfirm title="Are you sure delete this item?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
+                </Popconfirm>
 
 
 
@@ -128,6 +169,7 @@ function mapStateToProps(state, ownProps) {
     });
     almacenDetail = almacenDetail[0];
     let listAlmacen=state.almacen.list;
+    console.log(listAlmacen)
 
 
     return {

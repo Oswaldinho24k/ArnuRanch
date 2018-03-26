@@ -19,3 +19,22 @@ export const saveItem=(item)=>(dispatch, getState)=>{
             throw e
         })
 };
+
+//DELETE
+
+export const DELETE_ITEMALMACEN_SUCCESS = 'DELETE_ITEMALMACEN_SUCCESS';
+
+export function deleteItemAlmacenSuccess(item, almacen){
+    return {
+        type:DELETE_ITEMALMACEN_SUCCESS, item, almacen
+    }
+}
+
+export const deleteItem=(item, almacen)=>(dispatch, getState)=>{
+    return api.deleteItem(item, almacen)
+        .then(r=>{
+            dispatch(deleteItemAlmacenSuccess(item, almacen))
+        }).catch(e=>{
+            throw e;
+        })
+};
