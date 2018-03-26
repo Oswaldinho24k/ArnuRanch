@@ -15,6 +15,7 @@ import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
 import {getBusinessLines} from "./administracion/blinesActions";
+import {getAlmacenes} from "./almacen/almacenActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -88,6 +89,7 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getEmpresas());
         dispatch(getVacunas());
         dispatch(getBusinessLines());
+        dispatch(getAlmacenes());
 
     }
 };

@@ -1,85 +1,64 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider, Table} from 'antd';
+import {Divider, Table, message, Button} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
+import FormItems from "./items/FormItems";
+import * as itemsActions from '../../redux/actions/items/itemsActions';
+import {bindActionCreators} from 'redux';
 
-const items =[
-    {
-        id:1,
-        product_type: "tipo 1",
-        cantidad:2,
-        costo_u:8,
-        total:16,
-    },
-    {
-        id:2,
-        product_type: "tipo 2",
-        cantidad:4,
-        costo_u:1,
-        total:4,
-    },
-    {
-        id:3,
-        product_type: "tipo 3",
-        cantidad:1,
-        costo_u:100,
-        total:100,
-    }
-];
-
-const dataSource = [{
-    key: '1',
-    name: 'Almacen 1',
-    age: 32,
-    address: '10 Downing Street'
-}, {
-    key: '2',
-    name: 'Almacen 2',
-    age: 42,
-    address: '10 Downing Street'
-}];
-
-const columns = [{
-    title: 'Almacen',
-    dataIndex: 'almacenes',
-    //render: value =>(value[0].name)
-
-}, {
-    title: 'Items',
-    dataIndex: 'items',
-    key: 'items',
-},
-    {
-        title: 'Actions',
-        fixed:'right',
-        width:100,
-        key: 'action',
-        render: (text, record) => (
-            <span>
-              <Link to={`/admin/empresas/inventario/1/2/${record.id}`}>Detalle</Link>
-            </span>
-        ),
-    }
-];
 
 class ListaAlmacen extends Component {
+
+    state = {
+        visible: false,
+    };
+
+    saveFormRef = (form) => {
+        this.form = form;
+    };
+
+    handleCreate = (e) => {
+        const form = this.form;
+        e.preventDefault();
+        form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+                this.props.itemsActions.saveItem(values);
+                message.success('Guardado con éxito');
+
+                form.resetFields();
+                this.setState({ visible: false });
+            }else{message.error('Algo fallo, verifica los campos');}
+
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+
     render(){
-        let {empresa, fetched, idl, ida, id}= this.props;
-        console.log(this.props)
-
+        let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen}= this.props;
+        let {visible} = this.state;
         if(!fetched)return(<MainLoader/>);
-        /*
-                let bline= empresa.line_comp[idl];
-                let almac = bline.almacenes.filter(f=>{
-                    return ida == f.id;
-                });
-                console.log(almac[0])
-                let items = almac.map(a=> a.items);*/
 
 
+        let bline= empresa.line_comp.find(f=>f.id ==idl);
+        let almacen = bline.almacenes.find(f=>f.id==ida)
 
+        let items = almacenDetail.items.map(f=>{return f})
+        console.log(items)
 
         const columns = [
             {title: 'Item', dataIndex: 'id', key: 'id'},
@@ -109,17 +88,23 @@ class ListaAlmacen extends Component {
 
                 <h2>Lista de Items Fake</h2>
 
-                {/*<Table
-                    columns={columns}
-                    dataSource={items[0]}
-                    pagination={false}
-                    rowKey={record => record.id}
-                />*/}
                 <Table
                     columns={columns}
                     dataSource={items}
                     pagination={false}
                     rowKey={record => record.id}
+                />
+
+                <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
+                <FormItems
+                    ref={this.saveFormRef}
+                    visible={visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    empresa={empresa}
+                    bline={bline}
+                    almacen={almacen}
+
                 />
 
 
@@ -138,19 +123,27 @@ function mapStateToProps(state, ownProps) {
     });
     empresa = empresa[0];
 
+    let almacenDetail = state.almacen.list.filter(almacen=>{
+        return ida == almacen.id;
+    });
+    almacenDetail = almacenDetail[0];
+    let listAlmacen=state.almacen.list;
+
 
     return {
         id,
         empresa,
         idl,
         ida,
-        fetched: empresa!==undefined && state.empresas.list!==undefined,
+        almacenDetail,
+        listAlmacen,
+        fetched: empresa!==undefined && state.empresas.list!==undefined && almacenDetail!==undefined && state.almacen.list!==undefined && listAlmacen !== undefined
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return{
-        //empresaActions: bindActionCreators(empresaActions, dispatch),
+        itemsActions: bindActionCreators(itemsActions, dispatch),
     }
 }
 
