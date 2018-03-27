@@ -3,6 +3,7 @@ import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from 
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
+import moment from 'moment';
 
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
@@ -200,12 +201,19 @@ class AnimalsPage extends Component {
                 render:(v)=><Link to={v?`/admin/lotes/${v.id}`:''}>{v?v.name:''}</Link>,
                 width:100
 
-            },{
+            },/*{
                 title:'Última Pesada',
                 dataIndex:'pesadas',
                 key:'pesadas',
                 render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
                 width:150
+            }*/
+            {
+                title:'Registro',
+                dataIndex:'fecha_entrada',
+                key:'fecha_entrada',
+                render:(v)=><p>{moment(v).format('LL')}</p>,
+                width:100
             }
             ];
 
