@@ -1,7 +1,25 @@
 import api from "../../../Api/Django";
 
+export const GET_ALMACENES_SUCCESS = 'GET_ALMACENES_SUCCESS';
+
+export function getAlmacenesSuccess(almacenes){
+    return{
+        type:GET_ALMACENES_SUCCESS, almacenes
+    }
+}
+
+export const getAlmacenes=()=>(dispatch, getState)=>{
+    return api.getAlmacenes()
+        .then(r=>{
+            dispatch(getAlmacenesSuccess(r))
+        }).catch(e=>{
+            console.log(e)
+        })
+};
 
 
+
+//save
 export const SAVE_ALMACEN_SUCCESS = 'SAVE_ALMACEN_SUCCESS';
 
 export function saveAlmacenSuccess(almacen){

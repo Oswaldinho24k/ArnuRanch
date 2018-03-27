@@ -38,7 +38,7 @@ const InfoAlmacen = ({form,editAlmacen, bline, empresa, onCreate, name, editMode
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input placeholder={"Nombre del almacén"} disabled={!editMode}/>
+                                <Input placeholder={"Nombre del almacén"} disabled={false}/>
                             )}
                         </FormItem>
 
@@ -95,7 +95,7 @@ const InfoAlmacen = ({form,editAlmacen, bline, empresa, onCreate, name, editMode
                     </div>
 
                     <FormItem>
-                        {editMode ?
+
                             <Button
                                 htmlType="submit"
                                 size="large"
@@ -103,19 +103,10 @@ const InfoAlmacen = ({form,editAlmacen, bline, empresa, onCreate, name, editMode
                                 style={{width: '100%'}}
                             >
                                 Guardar
-                            </Button> : ""
-                        }
+                            </Button>
+
                     </FormItem>
                 </Form>
-                {!editMode ?
-                    <Button
-                        htmlType={"button"}
-                        onClick={handleEditMode}
-                        style={{width: '90%', display:'flex', justifyContent:'center', margin:'0 auto'}}
-                    >
-                        Editar
-                    </Button> : ""
-                }
 
 
             </Fragment>
