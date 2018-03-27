@@ -32,6 +32,7 @@ let blinesUrl = 'http://localhost:8000/api/ingresos/blines/';
 let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 //almacen
 let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
+let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
 
 
 
@@ -1620,6 +1621,31 @@ const api = {
 
     //ALMACEN
 
+    getAlmacenes:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: almacenesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+
     newAlmacen:(almacen)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
@@ -1687,6 +1713,56 @@ const api = {
                 })
                 .catch(function (error) {
 
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    //ITEMS ALMACEN
+
+    newItemAlmacen:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: itemsAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', item)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteItem:(item, almacen)=>{
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: itemsAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(item+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
                     console.log('el error: ', error.response);
                     reject(error);
                 });
