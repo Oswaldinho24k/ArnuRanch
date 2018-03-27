@@ -164,7 +164,7 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                 <Button
                     htmlType={"button"}
                     onClick={handleEditMode}
-                    style={{width: '90%', display:'flex', justifyContent:'center', margin:'0 auto'}}
+                    style={{width: '100%', display:'flex', justifyContent:'center', margin:'0 auto'}}
                 >
                     Editar
                 </Button> : ""

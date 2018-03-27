@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Select, Divider} from 'antd';
+import {Card, Select, Divider, Icon} from 'antd';
 import * as empresaActions from '../../redux/actions/empresasActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -47,7 +47,7 @@ class DetailCompany extends Component{
 
     render(){
 
-        let {empresa, fetched, blines} = this.props;
+        let {empresa, fetched, blines, id} = this.props;
         let options = blines.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>);
         let {editMode} = this.state;
         if(!fetched)return(<MainLoader/>);
@@ -64,6 +64,14 @@ class DetailCompany extends Component{
                 <div style={{width:'50%', margin: '0 auto'}}>
                     <Card title={"Detalle"}>
                         <span style={{textAlign:'center', display:'inherit', marginBottom:10}}><strong>Fecha de Registro: </strong>{moment(empresa.created).format('LL')}</span>
+                        <span style={{display:'flex', justifyContent:'flex-end'}} >
+                            <Link to={`/admin/empresas/inventario/${id}`} style={{color:'black'}} >
+                                <strong>
+                                    Inventario
+                                </strong>
+                                <Icon type="file-text" />
+                            </Link>
+                        </span>
                         <InfoCompany
                             {...empresa}
                             editEmpresa={this.props.empresaActions.editEmpresa}
@@ -89,6 +97,7 @@ function mapStateToProps(state, ownProps) {
     });
     empresa = empresa[0];
     return {
+        id,
         empresa,
         blines : state.blines.list,
         fetched: empresa!==undefined && state.empresas.list!==undefined && state.blines.list !==undefined,
