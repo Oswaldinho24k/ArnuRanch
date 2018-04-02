@@ -75,7 +75,6 @@ class ListaAlmacen extends Component {
         this.setState({ selectedRowKeys });
     };
 
-
     render(){
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen}= this.props;
         let {visible, selectedRowKeys} = this.state;
