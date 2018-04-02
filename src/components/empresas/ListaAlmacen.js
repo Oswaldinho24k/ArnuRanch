@@ -95,7 +95,6 @@ class ListaAlmacen extends Component {
         console.log(almacenDetail)
 
         const columns = [
-            {title: 'Item', dataIndex: 'id', key: 'id'},
             {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
             {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
             {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
@@ -127,6 +126,7 @@ class ListaAlmacen extends Component {
                     pagination={false}
                     rowKey={record => record.id}
                     rowSelection={rowSelection}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
@@ -145,7 +145,7 @@ class ListaAlmacen extends Component {
 
 
                 <Popconfirm title="Are you sure delete this item?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
 
