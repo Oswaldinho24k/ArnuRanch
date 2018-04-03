@@ -11,6 +11,7 @@ import {bindActionCreators} from "redux";
 
 
 
+
 const Option = Select.Option;
 
 const columns = [
@@ -137,6 +138,15 @@ class BatchDetailPage extends Component {
         let animals = lote.animals?lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner)):[];
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    <Link to={'/admin/lotes'}>
+                        Lotes
+                    </Link>
+                    <Divider type="vertical" />
+                    {lote.name}
+                </div>
                 <InfoBatch {...lote}
                            canEdit={canEdit}
                            handleEdit={this.handleEdit}
@@ -146,7 +156,7 @@ class BatchDetailPage extends Component {
 
                 {loading?<MainLoader/>:''}
                 <Divider/>
-                <h4>Aretes de este Lote:</h4>
+                <h3>Aretes de este Lote:</h3>
 
                 <Input.Search
                     onChange={this.handleSearch}

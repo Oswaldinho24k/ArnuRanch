@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, Modal, message, Select} from "antd";
+import {Card, Modal, message, Select, Divider} from "antd";
+import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
@@ -166,44 +167,57 @@ class DetailAnimalPage extends Component {
             Reportes:<ReportesComponent
                 animal={animal}/>
         };
-        if(!fetched)return(<MainLoader/>);
         return (
-        <div>
-            <h1>Arete {animal.arete_rancho}</h1>
-            <Card
-                tabList={tabList}
-                onTabChange={(key) => { this.onTabChange(key, 'key'); }}
-            >
-                {contentList[this.state.key]}
-            </Card>
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    <Link to={`/admin/animals`} style={{color:'black'}} >
+                        Aretes
+                    </Link>
+                    <Divider type="vertical" />
 
-            <Modal title="Agregar nuevo gasto"
-                   visible={visible}
-                   onCancel={this.handleCancel}
-                   width={'30%'}
-                   maskClosable={true}
-                   footer={[
-                       null,
-                       null,
-                   ]}
-            >
-                <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
-            </Modal>
-            <Modal title="Agregar nueva Pesada"
-                   visible={visible2}
-                   onCancel={this.handleCancel}
-                   width={'30%'}
-                   maskClosable={true}
-                   footer={[
-                       null,
-                       null,
-                   ]}
-            >
-                <FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
-            </Modal>
-        </div>
+                    {animal.arete_rancho}
+
+
+
+                </div>
+                <h2>Arete {animal.arete_rancho}</h2>
+                <Card
+                    tabList={tabList}
+                    onTabChange={(key) => { this.onTabChange(key, 'key'); }}
+                >
+                    {contentList[this.state.key]}
+                </Card>
+
+                <Modal title="Agregar nuevo gasto"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
+                </Modal>
+                <Modal title="Agregar nueva Pesada"
+                       visible={visible2}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
+                </Modal>
+            </div>
 
         );
+        if(!fetched)return(<MainLoader/>);
     }
 }
 

@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
 import {metadata} from "./metadataInsumos";
-import {Button, Table} from "antd";
+import {Button, Table, Divider, message} from "antd";
 import InsumosForm from "./InsumosForm";
 import {saveInsumo, editInsumo, deleteInsumo} from '../../redux/actions/plantaAlimentos/insumosActions'
 import {Link, Route, Switch} from "react-router-dom";
-import {message} from 'antd';
+
 
 const path = "/admin/planta_alimentos/insumos/:id";
 const absolutePath = "/admin/planta_alimentos/insumos/";
@@ -102,6 +102,12 @@ class InsumosPage extends Component {
         };
         return (
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Planta de Alimentos
+                    <Divider type="vertical" />
+                    Insumos
+
+                </div>
                 <h2>Insumos</h2>
                 <Table
                     rowSelection={rowSelection}

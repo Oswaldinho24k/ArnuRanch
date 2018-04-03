@@ -232,6 +232,12 @@ class AnimalsPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    Aretes
+                    <Divider type="vertical" />
+                </div>
                 <h2>Listado de Aretes</h2>
                 {/*Search and filters*/}
                 <div style={{padding:'1% 0'}}>
