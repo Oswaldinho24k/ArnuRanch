@@ -26,7 +26,7 @@ const FormItems = Form.create()(
     (props)=>{
         const{visible, onCancel, onCreate, form, bline, empresa, almacen, insumos, vacunas, onChangeSelect, selectChange} = props;
         const {getFieldDecorator, getFieldValue} = form;
-        
+
         return(
             <Modal
                 visible={visible}
