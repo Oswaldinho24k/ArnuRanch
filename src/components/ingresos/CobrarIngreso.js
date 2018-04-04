@@ -74,10 +74,12 @@ class CobrarIngreso extends Component {
     onSearch = () => {
         const { searchText } = this.state;
         const reg = new RegExp(searchText, 'gi');
+        let dataFilter = this.props.ingresos.filter(f=>{return f.paid===false });
+
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
-            data: this.props.ingresos.map((record) => {
+            data: dataFilter.map((record) => {
                 const match = record.client.client.match(reg);
                 if (!match) {
                     return null;
@@ -98,14 +100,15 @@ class CobrarIngreso extends Component {
     };
 
     componentWillMount(){
+        let filtro = this.props.ingresos.filter(f=>{return f.paid===false });
         this.setState({
-            data:this.props.ingresos
+            data:filtro
         });
     }
 
     resetFilter = () => {
         this.setState({
-            data:this.props.ingresos,
+            data:this.props.ingresos.filter(f=>{return f.paid===false }),
             filterDropdownVisible: false,
             searchText: '',
             filtered: false,
@@ -204,8 +207,10 @@ class CobrarIngreso extends Component {
                 }
 
                 <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
+
+                <Divider type={'vertical'} />
 
                 <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 

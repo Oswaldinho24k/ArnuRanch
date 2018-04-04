@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
-import { Form, Input, Button, Modal, Select, message } from 'antd';
+import { Form, Input, Button, Select, message } from 'antd';
 
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const InfoAlmacen = ({form,editAlmacen, bline, empresa, onCreate, name, editMode, handleEditMode, id})=>{
+const InfoAlmacen = ({form,editAlmacen, regresar, bline, empresa, onCreate, name, editMode, handleEditMode, id})=>{
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,6 +17,7 @@ const InfoAlmacen = ({form,editAlmacen, bline, empresa, onCreate, name, editMode
                         console.log("Editado con éxito");
                         handleEditMode();
                         message.success('Guardado con éxito');
+                        regresar();
                     }).catch(e=>{
                     console.log(e)
                 })

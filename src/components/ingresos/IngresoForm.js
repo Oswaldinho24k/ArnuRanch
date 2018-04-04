@@ -42,6 +42,7 @@ const FormIngreso = Form.create()(
                     <div style={styles.form}>
                         <FormItem
                             label={"Razón Social"}
+                            hasFeedback
                         >
                             {getFieldDecorator('client', {
                                 rules: [{
@@ -57,7 +58,7 @@ const FormIngreso = Form.create()(
                             )}
                         </FormItem>
 
-                        <FormItem label={"Linea de negocio"}>
+                        <FormItem label={"Linea de negocio"} hasFeedback>
                             {getFieldDecorator('business_line', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',

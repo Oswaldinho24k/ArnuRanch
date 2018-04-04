@@ -307,7 +307,7 @@ class EgresosPage extends Component {
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />

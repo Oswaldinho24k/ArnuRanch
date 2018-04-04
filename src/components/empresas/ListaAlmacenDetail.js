@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Select, Divider} from 'antd';
+import {Card, Select, Divider, Button, Icon} from 'antd';
 import * as almacenActions from '../../redux/actions/almacen/almacenActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -19,6 +19,10 @@ class ListaAlmacenDetail extends Component{
 
     handleEditMode=()=>{
         this.setState({editMode:!this.state.editMode})
+    };
+
+    goBack=()=>{
+        this.props.history.goBack()
     };
 
 
@@ -48,6 +52,14 @@ class ListaAlmacenDetail extends Component{
 
                 <div style={{width:'50%', margin: '0 auto'}}>
                     <Card title={`Detalle almacén ${displayInfo.name}`}>
+                        <div style={{display:'flex', justifyContent:'flex-end'}}>
+                            <Button size="small"
+                                    onClick={this.goBack}
+                            >
+                                <Icon type="left" />
+                                Regresar
+                            </Button>
+                        </div>
                         <EditAlmacen
                             {...displayInfo}
                             bline={almacen[0]}
@@ -55,6 +67,7 @@ class ListaAlmacenDetail extends Component{
                             editAlmacen={this.props.almacenActions.editAlmacen}
                            handleEditMode={this.handleEditMode}
                            editMode={editMode}
+                            regresar={this.goBack}
 
                         />
                     </Card>

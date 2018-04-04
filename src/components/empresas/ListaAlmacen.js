@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider, Table, message, Button, Popconfirm} from 'antd';
+import {Divider, Table, message, Button, Popconfirm, Select} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
@@ -8,12 +8,18 @@ import FormItems from "./items/FormItems";
 import * as itemsActions from '../../redux/actions/items/itemsActions';
 import {bindActionCreators} from 'redux';
 
+const Option = Select.Option;
+
 
 class ListaAlmacen extends Component {
 
     state = {
         visible: false,
         selectedRowKeys:[],
+        selectChange:'',
+
+        insumoValidate:true,
+        vacunaValidate:true,
     };
 
     saveFormRef = (form) => {
@@ -75,16 +81,29 @@ class ListaAlmacen extends Component {
         this.setState({ selectedRowKeys });
     };
 
+    onChangeSelect=(e)=>{
+        this.setState({
+            selectChange:e
+        })
+    }
 
     render(){
-        let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen}= this.props;
-        let {visible, selectedRowKeys} = this.state;
+        console.log(this.state.selectChange)
+
+        let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen, insumosList, vacunasList}= this.props;
+        let {visible, selectedRowKeys, selectChange} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         if(!fetched)return(<MainLoader/>);
+
+        console.log(insumosList)
+        console.log(vacunasList)
+
+        let vacunas= vacunasList.map((vacuna, key) => <Option value={vacuna.id} key={vacuna.id}>{vacuna.vaccine}</Option>);
+        let insumos = insumosList.map((insumo, key)=><Option value={insumo.id} key={insumo.id} >{insumo.name}</Option>)
 
 
         let bline= empresa.line_comp.find(f=>f.id ==idl);
@@ -95,7 +114,6 @@ class ListaAlmacen extends Component {
         console.log(almacenDetail)
 
         const columns = [
-            {title: 'Item', dataIndex: 'id', key: 'id'},
             {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
             {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
             {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
@@ -127,6 +145,7 @@ class ListaAlmacen extends Component {
                     pagination={false}
                     rowKey={record => record.id}
                     rowSelection={rowSelection}
+                    style={{marginBottom:10}}
                 />
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
@@ -138,6 +157,10 @@ class ListaAlmacen extends Component {
                     empresa={empresa}
                     bline={bline}
                     almacen={almacen}
+                    vacunas={vacunas}
+                    insumos={insumos}
+                    onChangeSelect={this.onChangeSelect}
+                    selectChange={selectChange}
 
                 />
 
@@ -145,7 +168,7 @@ class ListaAlmacen extends Component {
 
 
                 <Popconfirm title="Are you sure delete this item?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
 
@@ -171,6 +194,9 @@ function mapStateToProps(state, ownProps) {
     let listAlmacen=state.almacen.list;
     console.log(listAlmacen)
 
+    let insumosList = state.insumos.list;
+    let vacunasList = state.vacunas.list;
+
 
     return {
         id,
@@ -179,7 +205,9 @@ function mapStateToProps(state, ownProps) {
         ida,
         almacenDetail,
         listAlmacen,
-        fetched: empresa!==undefined && state.empresas.list!==undefined && almacenDetail!==undefined && state.almacen.list!==undefined && listAlmacen !== undefined
+        insumosList,
+        vacunasList,
+        fetched: empresa!==undefined && state.empresas.list!==undefined && almacenDetail!==undefined && state.almacen.list!==undefined && listAlmacen !== undefined && state.vacunas.list!==undefined && state.insumos.list!==undefined
     }
 }
 
