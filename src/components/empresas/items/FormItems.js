@@ -24,7 +24,7 @@ const styles = {
 
 const FormItems = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, bline, empresa, almacen, insumos, vacunas, onChangeSelect, selectChange} = props;
+        const{visible, onCancel, onCreate, form, bline, empresa, almacen, insumos, vacunas, onChangeSelect, selectChange, onChangeItem, itemIn} = props;
         const {getFieldDecorator, getFieldValue} = form;
 
         return(
@@ -45,7 +45,6 @@ const FormItems = Form.create()(
 
                             <FormItem
                                 label="Tipo"
-                                hasFeedback
                                 style={{width:'60%'}}
                             >
                                 {getFieldDecorator('product_type', {
@@ -65,7 +64,7 @@ const FormItems = Form.create()(
                                 style={{width:'30%', marginLeft:5}}
                             >
                                 {getFieldDecorator('cantidad', {
-                                    initialValue:0,
+                                    initialValue:1,
                                     rules: [{
                                         required: true, message: 'Completa el campo!',
                                     }],
@@ -100,7 +99,7 @@ const FormItems = Form.create()(
                                 })(
 
 
-                                    <Select  placeholder={"Selecciona un insumo"}>
+                                    <Select  placeholder={"Selecciona un insumo"} onChange={onChangeItem}>
 
                                         {insumos}
                                     </Select>
@@ -158,6 +157,26 @@ const FormItems = Form.create()(
 
                         <div style={styles.formSection}>
 
+                            <FormItem
+                                label="Total"
+                                style={{width:'40%'}}
+                            >
+                                {getFieldDecorator('total', {
+                                    initialValue:0,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <InputNumber
+                                        disabled={false}
+                                        style={{width:'150px'}}
+                                        step={0.01}
+                                        formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                    />
+                                )}
+                            </FormItem>
+
 
 
                         <FormItem
@@ -165,12 +184,14 @@ const FormItems = Form.create()(
                             style={{width:'40%'}}
                         >
                             {getFieldDecorator('costo_u', {
-                                initialValue:0,
+                                //initialValue:itemIn,
+                                initialValue:(getFieldValue('total')/getFieldValue('cantidad')).toFixed(2),
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <InputNumber
+                                    disabled
                                     min={0}
                                     style={{width:'150px'}}
                                     step={0.01}
@@ -180,25 +201,7 @@ const FormItems = Form.create()(
                             )}
                         </FormItem>
 
-                        <FormItem
-                            label="Total"
-                            style={{width:'40%'}}
-                        >
-                            {getFieldDecorator('total', {
-                                initialValue:(getFieldValue('cantidad')*getFieldValue('costo_u')).toFixed(2),
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <InputNumber
-                                    disabled={true}
-                                    style={{width:'150px'}}
-                                    step={0.01}
-                                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                                />
-                            )}
-                        </FormItem>
+
 
                         </div>
 

@@ -32,7 +32,7 @@ import DetailCompany from "../empresas/DetailCompany";
 import VacunasPage from "../vacunas/VacunasPage";
 import DetailVacuna from "../vacunas/DetailVacuna";
 import InventarioEmpresa from "../empresas/InventarioEmpresa";
-import ListaAlmacen from "../empresas/ListaAlmacen";
+import ListaAlmacen from "../empresas/ListaItems";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
 
 

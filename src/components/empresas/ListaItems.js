@@ -20,6 +20,7 @@ class ListaAlmacen extends Component {
 
         insumoValidate:true,
         vacunaValidate:true,
+        itemIn:''
     };
 
     saveFormRef = (form) => {
@@ -87,20 +88,37 @@ class ListaAlmacen extends Component {
         })
     }
 
+    onChangeItem=(e, )=>{
+        console.log(e)
+        let insumoInfo=this.props.insumosList.find(insumo=>{return insumo.id === e})
+        console.log(insumoInfo)
+
+        this.setState({
+            itemIn:insumoInfo.unit_price
+        })
+
+    }
+
+    totalItems=(items)=>{
+        let li = items.map(f=>{return parseFloat(f.total)})
+        let totalCost = li.reduce((total, items)=>{
+            return total + items
+        }, 0);
+        return totalCost;
+
+    };
+
     render(){
-        console.log(this.state.selectChange)
+        console.log(this.state.itemIn)
 
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen, insumosList, vacunasList}= this.props;
-        let {visible, selectedRowKeys, selectChange} = this.state;
+        let {visible, selectedRowKeys, selectChange, itemIn} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         if(!fetched)return(<MainLoader/>);
-
-        console.log(insumosList)
-        console.log(vacunasList)
 
         let vacunas= vacunasList.map((vacuna, key) => <Option value={vacuna.id} key={vacuna.id}>{vacuna.vaccine}</Option>);
         let insumos = insumosList.map((insumo, key)=><Option value={insumo.id} key={insumo.id} >{insumo.name}</Option>)
@@ -111,13 +129,31 @@ class ListaAlmacen extends Component {
 
         let items = almacenDetail.items.map(f=>{return f})
         console.log(items)
-        console.log(almacenDetail)
+
 
         const columns = [
-            {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
-            {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
-            {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
-            {title: 'Total', dataIndex: 'total', key: 'total'},
+            {   title: 'Tipo',
+                dataIndex: 'product_type',
+                key: 'product_type'
+            },
+            {
+                title: 'Cantidad',
+                dataIndex: 'cantidad',
+                key: 'cantidad',
+                render:(cantidad, obj)=>`${cantidad} ${obj.unity}`
+            },
+            {
+                title: 'Costo Unitario',
+                dataIndex: 'costo_u',
+                key: 'costo_u',
+                render:costo=>`$ ${costo}`
+            },
+            {
+                title: 'Total',
+                dataIndex: 'total',
+                key: 'total',
+                render:total=>`$ ${total}`
+            },
 
         ];
 
@@ -139,6 +175,7 @@ class ListaAlmacen extends Component {
 
                 <h2>Lista de Items</h2>
 
+
                 <Table
                     columns={columns}
                     dataSource={items}
@@ -147,6 +184,10 @@ class ListaAlmacen extends Component {
                     rowSelection={rowSelection}
                     style={{marginBottom:10}}
                 />
+
+                <div style={{display:'flex', justifyContent:'flex-end'}}>
+                    <h3 style={{marginRight: 20}}><strong>Total:</strong> $ {this.totalItems(items)}</h3>
+                </div>
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
                 <FormItems
@@ -161,6 +202,8 @@ class ListaAlmacen extends Component {
                     insumos={insumos}
                     onChangeSelect={this.onChangeSelect}
                     selectChange={selectChange}
+                    onChangeItem={this.onChangeItem}
+                    itemIn={itemIn}
 
                 />
 
