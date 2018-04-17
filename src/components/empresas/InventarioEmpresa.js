@@ -8,22 +8,10 @@ import MainLoader from "../common/Main Loader";
 import AlmacenForm from "./nuevoAlmacen/AlmacenForm"
 
 import * as almacenActions from '../../redux/actions/almacen/almacenActions';
-import AlmacenCard from "./nuevoAlmacen/AlmacenCard";
-import EditAlmacen from './nuevoAlmacen/EditAlmacen'
+
 
 const TabPane = Tabs.TabPane;
 const { Meta } = Card;
-
-const gridStyle = {
-    width: '100%',
-    height: '150px',
-    display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    padding:'80px'
-};
-
 
 
 class InventarioEmpresa extends Component{
@@ -47,20 +35,9 @@ class InventarioEmpresa extends Component{
         });
     };
 
-    showModalEdit = () => {
-        this.setState({
-            visibleEdit: true,
-        });
-    };
-
     handleCancel = () => {
         this.setState({
             visible: false,
-        });
-    };
-    handleCancelEdit = () => {
-        this.setState({
-            visibleEdit: false,
         });
     };
 
@@ -129,52 +106,6 @@ class InventarioEmpresa extends Component{
         let bline= empresa.line_comp[key];
         console.log(bline);
 
-        const expandedRowRender = () => {
-            const columns = [
-                {title: 'Item', dataIndex: 'id', key: 'id'},
-                {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
-                {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
-                {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
-                {title: 'Total', dataIndex: 'total', key: 'total'},
-                {
-                    title: 'Action',
-                    dataIndex: 'operation',
-                    key: 'operation',
-                    render: () => (
-                        <span className="table-operation">
-            <a href="#">Pause</a>
-            <a href="#">Stop</a>
-
-          </span>
-                    ),
-                },
-            ];
-
-            return (
-                <Table
-                    columns={columns}
-                    dataSource={items[0]}
-                    pagination={false}
-                    rowKey={record => record.id}
-                />
-            );
-        }
-
-
-
-        const columns = [
-            {
-                title: 'Nombre de almacen',
-                dataIndex: 'name',
-
-            },
-            {
-                title: 'Items',
-                dataIndex: 'items',
-                render: items => items.length
-            },
-
-        ];
 
         return(
             <div>
@@ -202,9 +133,6 @@ class InventarioEmpresa extends Component{
                     </Tabs>
 
                     <div style={{flexWrap: 'wrap', display:'flex', justifyContent:'center', alignItems:'center'}}>
-
-
-                      {/*  <AlmacenCard info={info} eliminar={this.elimnarAlmacen}/>*/}
 
                         {info && info.length>0?
                             info.map((p,index) =>(

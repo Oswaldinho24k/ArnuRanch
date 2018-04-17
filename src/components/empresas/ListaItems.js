@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider, Table, message, Button, Popconfirm, Select} from 'antd';
+import {Divider, Table, message, Button, Popconfirm, Select, Tabs} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
@@ -9,6 +9,7 @@ import * as itemsActions from '../../redux/actions/items/itemsActions';
 import {bindActionCreators} from 'redux';
 
 const Option = Select.Option;
+const TabPane = Tabs.TabPane;
 
 
 class ListaAlmacen extends Component {
@@ -20,7 +21,12 @@ class ListaAlmacen extends Component {
 
         insumoValidate:true,
         vacunaValidate:true,
-        itemIn:''
+        itemIn:'',
+        key:"0"
+    };
+
+    callback=(key)=>{
+        this.setState({key:key})
     };
 
     saveFormRef = (form) => {
@@ -109,7 +115,7 @@ class ListaAlmacen extends Component {
     };
 
     render(){
-        console.log(this.state.itemIn)
+        console.log(this.state.key)
 
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen, insumosList, vacunasList}= this.props;
         let {visible, selectedRowKeys, selectChange, itemIn} = this.state;
@@ -128,13 +134,52 @@ class ListaAlmacen extends Component {
         let almacen = bline.almacenes.find(f=>f.id==ida)
 
         let items = almacenDetail.items.map(f=>{return f})
-        console.log(items)
+
+        let itemsInsumo = items.filter(f=>f.insumo !== null)
+
+        let itemsVacuna = items.filter(f=>f.vacuna !== null)
+
 
 
         const columns = [
             {   title: 'Tipo',
                 dataIndex: 'product_type',
                 key: 'product_type'
+            },
+            {   title: 'Nombre',
+                dataIndex:'insumo',
+                render:(value)=><span>{value && value !==null ? value.name : "NoData"}</span>,
+
+
+            },
+            {
+                title: 'Cantidad',
+                dataIndex: 'cantidad',
+                key: 'cantidad',
+                render:(cantidad, obj)=>`${cantidad} ${obj.unity}`
+            },
+            {
+                title: 'Costo Unitario',
+                dataIndex: 'costo_u',
+                key: 'costo_u',
+                render:costo=>`$ ${costo}`
+            },
+            {
+                title: 'Total',
+                dataIndex: 'total',
+                key: 'total',
+                render:total=>`$ ${total}`
+            },
+
+        ];
+        const columns2 = [
+            {   title: 'Tipo',
+                dataIndex: 'product_type',
+                key: 'product_type'
+            },
+            {   title: 'Nombre',
+                dataIndex:'vacuna',
+                render:(value )=><span>{value && value !== null ? value.vaccine:"No Data"}</span>
             },
             {
                 title: 'Cantidad',
@@ -175,19 +220,33 @@ class ListaAlmacen extends Component {
 
                 <h2>Lista de Items</h2>
 
+                <Tabs defaultActiveKey={this.state.key} onChange={this.callback}>
+                    <TabPane tab={"Insumos"} key={0} />
+                    <TabPane tab={"Vacunas"} key={1} />
+                </Tabs>
 
-                <Table
-                    columns={columns}
-                    dataSource={items}
-                    pagination={false}
-                    rowKey={record => record.id}
-                    rowSelection={rowSelection}
-                    style={{marginBottom:10}}
-                />
+                {this.state.key ?
+                    this.state.key ==="0" ?
+                        <Table
+                            columns={columns}
+                            dataSource={itemsInsumo}
+                            pagination={false}
+                            rowKey={record => record.id}
+                            rowSelection={rowSelection}
+                            style={{marginBottom:10}}
+                        />
+                        :
+                        <Table
+                            columns={columns2}
+                            dataSource={itemsVacuna}
+                            pagination={false}
+                            rowKey={record => record.id}
+                            rowSelection={rowSelection}
+                            style={{marginBottom:10}}
+                        />
+                :"No Items"}
 
-                <div style={{display:'flex', justifyContent:'flex-end'}}>
-                    <h3 style={{marginRight: 20}}><strong>Total:</strong> $ {this.totalItems(items)}</h3>
-                </div>
+
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
                 <FormItems
