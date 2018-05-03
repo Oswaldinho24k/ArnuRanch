@@ -184,12 +184,12 @@ class ClientePage extends Component {
         });
     };
 
-    handlePagination=(pagina)=>{
+   /* handlePagination=(pagina)=>{
         console.log(pagina);
         let basePath = 'http://localhost:8000/api/ingresos/clientes/?page=';
         let newUrl = basePath +pagina;
         this.props.clientesActions.getClientes(newUrl);
-        /*let newUrl = this.props.animalsData.next;
+        /!*let newUrl = this.props.animalsData.next;
 
         let nextLength = pagina.toString().length;
         if(newUrl!==null){
@@ -200,10 +200,10 @@ class ClientePage extends Component {
             newUrl = this.props.animalsData.previous;
             this.props.animalActions.getAnimals(newUrl);
 
-        }*/
+        }*!/
 
     };
-
+*/
 
 
     render() {
@@ -278,11 +278,11 @@ class ClientePage extends Component {
                         rowKey={record => record.id}
                         scroll={{x:650}}
                         style={{marginBottom:10}}
-                        pagination={{
+                        /*pagination={{
                             pageSize: 10,
                             total:clientesData.count,
                             onChange:this.handlePagination,
-                        }}
+                        }}*/
                     />
 
 
@@ -327,9 +327,9 @@ function mapStateToProps(state, ownProps) {
     console.log(state.clientes)
     console.log("estado CLiente PAge: ",state)
     return {
-        clientesData:state.clientes.allData,
+        clientesData:state.clientes.list.results,
         clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined && state.clientes.allData !==undefined,
+        fetched:state.clientes.list!==undefined //&& state.clientes.allData !==undefined,
     }
 }
 

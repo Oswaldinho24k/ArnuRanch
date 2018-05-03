@@ -20,8 +20,8 @@ export const getClientes=(url)=>(dispatch, getState)=>{
     return api.getClientes(url)
         .then(r=>{
             console.log(r);
-            dispatch(getClientesSuccess(r.results));
-            dispatch(getAllDataSuccess(r));
+            dispatch(getClientesSuccess(r));
+            //dispatch(getAllDataSuccess(r));
         }).catch(e=>{
             throw e
     })
