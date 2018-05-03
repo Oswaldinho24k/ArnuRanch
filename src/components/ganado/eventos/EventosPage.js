@@ -79,7 +79,9 @@ class EventosPage extends Component {
         let {loteId} = this.state;
         //let keys = this.state.selectedRowKeys;
         let parcialAmount = gasto.costo/loteId.animals.length;
+        parcialAmount = parcialAmount.toFixed(2);
         let parcialQuantity = gasto.cantidad/loteId.animals.length;
+        parcialQuantity = parcialQuantity.toFixed(2);
         for(let i in loteId.animals){
             let animalId = loteId.animals[i].id;
             gasto['animal']=animalId;

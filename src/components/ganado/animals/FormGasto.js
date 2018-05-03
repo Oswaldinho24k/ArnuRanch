@@ -13,6 +13,8 @@ class FormGasto extends React.Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
 
+                //values['cantidad']=values['cantidad'].toFixed(2);
+                //values['costo']=values['costo'].toFixed(2);
                 this.props.saveGasto(values);
                 this.props.form.resetFields()
             }

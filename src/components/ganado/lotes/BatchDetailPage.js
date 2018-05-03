@@ -78,13 +78,16 @@ class BatchDetailPage extends Component {
 
         let keys = this.state.selectedRowKeys;
         let parcialAmount = gasto.costo/keys.length;
+        parcialAmount=parcialAmount.toFixed(2);
         let parcialQuantity = gasto.cantidad/keys.length;
+        parcialQuantity=parcialQuantity.toFixed(2);
         for(let i in keys){
             let animalId = keys[i];
             gasto['animal']=animalId;
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
+            console.log(toSend)
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
 

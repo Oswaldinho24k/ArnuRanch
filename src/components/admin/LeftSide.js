@@ -59,6 +59,9 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                 </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>
+                <Menu.Item key="21" disabled={false}>
+                    <Link to='/admin/dash/animals'>  Dashboard </Link>
+                </Menu.Item>
                 <Menu.Item key="15" disabled={false}>
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
@@ -80,6 +83,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                 <Menu.Item key="20" disabled={false}>
                     <Link to='/admin/eventos'>  Eventos </Link>
                 </Menu.Item>
+
 
             </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?

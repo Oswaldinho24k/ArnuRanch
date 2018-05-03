@@ -12,12 +12,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../../common/Main Loader";
 
-
 const Option = Select.Option;
-
-
-
-
 
 class AnimalsPage extends Component {
     state = {
@@ -142,22 +137,16 @@ class AnimalsPage extends Component {
         this.setState({searchText:'', loteFilter:''});
     };
     handlePagination=(pagina)=>{
-        console.log(this.props.animalsData);
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?page=';
-        let newUrl = basePath +pagina;
-        this.props.animalActions.getAnimals(newUrl);
-        /*let newUrl = this.props.animalsData.next;
 
         let nextLength = pagina.toString().length;
-        if(newUrl!==null){
-            newUrl=newUrl.slice(0,newUrl.length-nextLength);
-            newUrl=newUrl+pagina;
-            this.props.animalActions.getAnimals(newUrl);
-        }else{
+        let newUrl = this.props.animalsData.next;
+        if(newUrl===null){
             newUrl = this.props.animalsData.previous;
-            this.props.animalActions.getAnimals(newUrl);
+        }
+        newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        console.log(newUrl)
+        this.props.animalActions.getAnimals(newUrl);
 
-        }*/
 
     };
 
@@ -166,6 +155,7 @@ class AnimalsPage extends Component {
 
 
         let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset} = this.state;
+        console.log(this.props.animalsData)
 
         const columns = [
             {
