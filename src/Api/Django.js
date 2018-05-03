@@ -627,11 +627,14 @@ const api = {
 
     //Proveedores
 
-    getProveedores:()=>{
+    getProveedores:(url)=>{
+        let newUrl = proveedoresUrl;
+        if(url)newUrl=url;
+
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: proveedoresUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
@@ -732,11 +735,13 @@ const api = {
 
 
     //Clientes
-    getClientes:()=>{
+    getClientes:(url)=>{
+        let newUrl = clientesUrl;
+        if(url)newUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: clientesUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',

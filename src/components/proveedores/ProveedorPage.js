@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Button, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
+import {Button, message, Popconfirm, Divider, BackTop, Icon, Input, Table} from 'antd';
 import ProveedorForm from './ProveedorForm';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 import {connect} from 'react-redux';
@@ -183,6 +183,26 @@ class ProovedorPage extends Component {
         });
     };
 
+    handlePagination=(pagina)=>{
+        console.log(this.props.proveedores);
+        let basePath = 'http://localhost:8000/api/egresos/proveedores/?page=';
+        let newUrl = basePath +pagina;
+        this.props.proveedoresActions.getProveedores(newUrl);
+        /*let newUrl = this.props.animalsData.next;
+
+        let nextLength = pagina.toString().length;
+        if(newUrl!==null){
+            newUrl=newUrl.slice(0,newUrl.length-nextLength);
+            newUrl=newUrl+pagina;
+            this.props.animalActions.getAnimals(newUrl);
+        }else{
+            newUrl = this.props.animalsData.previous;
+            this.props.animalActions.getAnimals(newUrl);
+
+        }*/
+
+    };
+
 
     render() {
 
@@ -235,7 +255,7 @@ class ProovedorPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {proveedores, fetched} = this.props;
+        let {proveedores, fetched, proveedoresData} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -248,19 +268,38 @@ class ProovedorPage extends Component {
                 <h1>Proveedores</h1>
                 <BackTop visibilityHeight={100} />
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
+                {/*{filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
                     :<TablePageB data={proveedores} columns={columns} rowSelection={rowSelection}/>
-                }
+                }*/}
 
-               {/* <Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={proveedores}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                />*/}
+                {filtered?
+                    <Table
+                        dataSource={data}
+                        columns={columns}
+                        rowSelection={rowSelection}
+                        rowKey={record => record.id}
+                        scroll={{x:650}}
+                        style={{marginBottom:10}}
+                        pagination={{
+                            pageSize: 10,
+                            onChange:this.handlePagination,
+                            total:proveedoresData.count
+                        }}
+                    />
+                    :<Table
+                        dataSource={proveedores}
+                        columns={columns}
+                        rowSelection={rowSelection}
+                        rowKey={record => record.id}
+                        scroll={{x:650}}
+                        style={{marginBottom:10}}
+                        pagination={{
+                            pageSize: 10,
+                            total:proveedoresData.count,
+                            onChange:this.handlePagination,
+                        }}
+                    />
+                }
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
 
@@ -298,8 +337,9 @@ class ProovedorPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        proveedoresData:state.proveedores.allData,
         proveedores:state.proveedores.list,
-        fetched:state.proveedores.list!==undefined,
+        fetched:state.proveedores.list!==undefined && state.proveedores.allData,
     }
 }
 

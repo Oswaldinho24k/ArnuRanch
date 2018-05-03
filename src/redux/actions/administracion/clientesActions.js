@@ -8,10 +8,20 @@ export function getClientesSuccess(clientes){
     }
 }
 
-export const getClientes=()=>(dispatch, getState)=>{
-    return api.getClientes()
+export const GET_CLIENTES_DATA_SUCCESS = 'GET_CLIENTES_DATA_SUCCESS';
+
+export function getAllDataSuccess(data){
+    return{
+        type:GET_CLIENTES_DATA_SUCCESS, data
+    }
+}
+
+export const getClientes=(url)=>(dispatch, getState)=>{
+    return api.getClientes(url)
         .then(r=>{
-            dispatch(getClientesSuccess(r))
+            console.log(r);
+            dispatch(getClientesSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
         }).catch(e=>{
             throw e
     })
@@ -31,6 +41,7 @@ export function saveClienteSuccess(cliente){
 export const saveCliente=(cliente)=>(dispatch, getState)=>{
     return api.newCliente(cliente)
         .then(r=>{
+            console.log(r)
             dispatch(saveClienteSuccess(r));
         }).catch(e=>{
 

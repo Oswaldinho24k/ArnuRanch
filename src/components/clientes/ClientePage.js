@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
+import {Table, Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import {connect} from 'react-redux';
@@ -184,6 +184,25 @@ class ClientePage extends Component {
         });
     };
 
+    handlePagination=(pagina)=>{
+        console.log(pagina);
+        let basePath = 'http://localhost:8000/api/ingresos/clientes/?page=';
+        let newUrl = basePath +pagina;
+        this.props.clientesActions.getClientes(newUrl);
+        /*let newUrl = this.props.animalsData.next;
+
+        let nextLength = pagina.toString().length;
+        if(newUrl!==null){
+            newUrl=newUrl.slice(0,newUrl.length-nextLength);
+            newUrl=newUrl+pagina;
+            this.props.animalActions.getAnimals(newUrl);
+        }else{
+            newUrl = this.props.animalsData.previous;
+            this.props.animalActions.getAnimals(newUrl);
+
+        }*/
+
+    };
 
 
 
@@ -238,7 +257,7 @@ class ClientePage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {clientes, fetched} = this.props;
+        let {clientes, fetched, clientesData} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -251,20 +270,21 @@ class ClientePage extends Component {
                 <h2>Clientes</h2>
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={clientes}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                    onChange={this.handleChang}
-                />*/}
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                :<TablePageB data={clientes} columns={columns} rowSelection={rowSelection}/>
-                }
+                <Table
+                        dataSource={clientes}
+                        columns={columns}
+                        rowSelection={rowSelection}
+                        rowKey={record => record.id}
+                        scroll={{x:650}}
+                        style={{marginBottom:10}}
+                        pagination={{
+                            pageSize: 10,
+                            total:clientesData.count,
+                            onChange:this.handlePagination,
+                        }}
+                    />
+
 
 
 
@@ -304,9 +324,12 @@ class ClientePage extends Component {
 
 
 function mapStateToProps(state, ownProps) {
+    console.log(state.clientes)
+    console.log("estado CLiente PAge: ",state)
     return {
+        clientesData:state.clientes.allData,
         clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined ,
+        fetched:state.clientes.list!==undefined && state.clientes.allData !==undefined,
     }
 }
 
