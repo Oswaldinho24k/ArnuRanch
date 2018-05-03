@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, Modal, message, Select} from "antd";
+import {Card, Modal, message, Select, Divider} from "antd";
+import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import BasicInfoAndEdit from "./BasicInfo";
 import GastosComponent from "./GastosComponent";
@@ -12,6 +13,9 @@ import MainLoader from "../../common/Main Loader";
 import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
 import ReportesComponent from "./ReportesComponent";
+import {store} from '../../../index';
+
+
 
 
 const Option = Select.Option;
@@ -163,65 +167,82 @@ class DetailAnimalPage extends Component {
             Reportes:<ReportesComponent
                 animal={animal}/>
         };
-        if(!fetched)return(<MainLoader/>);
         return (
-        <div>
-            <h1>Arete {animal.arete_rancho}</h1>
-            <Card
-                tabList={tabList}
-                onTabChange={(key) => { this.onTabChange(key, 'key'); }}
-            >
-                {contentList[this.state.key]}
-            </Card>
+            <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    <Link to={`/admin/animals`} style={{color:'black'}} >
+                        Aretes
+                    </Link>
+                    <Divider type="vertical" />
 
-            <Modal title="Agregar nuevo gasto"
-                   visible={visible}
-                   onCancel={this.handleCancel}
-                   width={'30%'}
-                   maskClosable={true}
-                   footer={[
-                       null,
-                       null,
-                   ]}
-            >
-                <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
-            </Modal>
-            <Modal title="Agregar nueva Pesada"
-                   visible={visible2}
-                   onCancel={this.handleCancel}
-                   width={'30%'}
-                   maskClosable={true}
-                   footer={[
-                       null,
-                       null,
-                   ]}
-            >
-                <FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
-            </Modal>
-        </div>
+                    {animal.arete_rancho}
+
+
+
+                </div>
+                <h2>Arete {animal.arete_rancho}</h2>
+                <Card
+                    tabList={tabList}
+                    onTabChange={(key) => { this.onTabChange(key, 'key'); }}
+                >
+                    {contentList[this.state.key]}
+                </Card>
+
+                <Modal title="Agregar nuevo gasto"
+                       visible={visible}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
+                </Modal>
+                <Modal title="Agregar nueva Pesada"
+                       visible={visible2}
+                       onCancel={this.handleCancel}
+                       width={'30%'}
+                       maskClosable={true}
+                       footer={[
+                           null,
+                           null,
+                       ]}
+                >
+                    <FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
+                </Modal>
+            </div>
 
         );
+        if(!fetched)return(<MainLoader/>);
     }
 }
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.key;
 
-    let animal = state.animals.list.filter(a=>{
-        return id == a.id;
-    });
-    animal = animal[0];
+
+
+    console.log(id)
+
+
 
     return {
-        animal,
+        animal:state.animals.object,
         lotes:state.lotes.list,
         razas:state.razas.list,
         empresas:state.empresas.list,
-        fetched:animal!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
+        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, oP) {
+
+    let id = oP.match.params.key;
+    dispatch(animalActions.getSingleAnimal(id));
     return {
         animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
         animalActions:bindActionCreators(animalActions, dispatch),

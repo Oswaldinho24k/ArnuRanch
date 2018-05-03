@@ -102,7 +102,7 @@ const ProveedorForm = Form.create()(
                                     {validator: rfc}
                                 ],
                             })(
-                                <Input minLength={"13"} maxLength={"13"}/>
+                                <Input minLength={"12"} maxLength={"13"}/>
                             )}
                         </FormItem>
 

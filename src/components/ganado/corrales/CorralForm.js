@@ -31,7 +31,7 @@ class CorralForm extends Component {
                                 required: true, message: 'Completa el campo!',
                             }],
                         })(
-                            <InputNumber />
+                            <Input />
                         )}
                     </FormItem>
 

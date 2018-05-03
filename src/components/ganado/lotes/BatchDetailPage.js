@@ -11,6 +11,7 @@ import {bindActionCreators} from "redux";
 
 
 
+
 const Option = Select.Option;
 
 const columns = [
@@ -77,13 +78,16 @@ class BatchDetailPage extends Component {
 
         let keys = this.state.selectedRowKeys;
         let parcialAmount = gasto.costo/keys.length;
+        parcialAmount=parcialAmount.toFixed(2);
         let parcialQuantity = gasto.cantidad/keys.length;
+        parcialQuantity=parcialQuantity.toFixed(2);
         for(let i in keys){
             let animalId = keys[i];
             gasto['animal']=animalId;
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
+            console.log(toSend)
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
 
@@ -137,6 +141,15 @@ class BatchDetailPage extends Component {
         let animals = lote.animals?lote.animals.filter(a=>regEx.test(a.arete_rancho)||regEx.test(a.arete_siniga)||regEx.test(a.owner)):[];
         return (
             <Fragment>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    <Link to={'/admin/lotes'}>
+                        Lotes
+                    </Link>
+                    <Divider type="vertical" />
+                    {lote.name}
+                </div>
                 <InfoBatch {...lote}
                            canEdit={canEdit}
                            handleEdit={this.handleEdit}
@@ -146,7 +159,7 @@ class BatchDetailPage extends Component {
 
                 {loading?<MainLoader/>:''}
                 <Divider/>
-                <h4>Aretes de este Lote:</h4>
+                <h3>Aretes de este Lote:</h3>
 
                 <Input.Search
                     onChange={this.handleSearch}

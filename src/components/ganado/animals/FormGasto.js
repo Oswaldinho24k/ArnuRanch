@@ -1,5 +1,7 @@
 import React from 'react';
 import {Form, InputNumber, Select, Button, Input} from 'antd';
+import MainLoader from "../../common/Main Loader";
+import {connect} from "react-redux";
 const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -10,7 +12,11 @@ class FormGasto extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.saveGasto(values)
+
+                //values['cantidad']=values['cantidad'].toFixed(2);
+                //values['costo']=values['costo'].toFixed(2);
+                this.props.saveGasto(values);
+                this.props.form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;
@@ -22,7 +28,12 @@ class FormGasto extends React.Component{
 
     render(){
         const { getFieldDecorator, getFieldValue } = this.props.form;
+        let {fetched, vacunas, formulas} = this.props;
         let tipo = getFieldValue('tipo');
+        if(!fetched) return <MainLoader/>;
+
+        let vacunasOptions = vacunas.map((v, key)=>(<Option value={parseInt(v.id)} key={key}>{v.vaccine}</Option>));
+        let formulasOptions = formulas.map((f, key)=>(<Option value={parseInt(f.id)} key={key}>{f.name}</Option>));
 
         return(
 
@@ -43,7 +54,16 @@ class FormGasto extends React.Component{
 
                 {tipo==='Alimento'?
                     <div>
-                        <FormItem>
+                        <FormItem label={'Fórmula'}>
+                            {getFieldDecorator('formula', {
+                                rules: [{
+                                    required: true, message: 'Rellena el campo!',
+                                }],
+                            })(
+                                <Select>
+                                    {formulasOptions}
+                                </Select>
+                            )}
 
                         </FormItem>
                         <FormItem  label="Cantidad">
@@ -68,7 +88,16 @@ class FormGasto extends React.Component{
                     </div>
                     :tipo==='Vacuna'?
                         <div>
-                            <FormItem>
+                            <FormItem label={'Vacuna'}>
+                                {getFieldDecorator('vacuna', {
+                                    rules: [{
+                                        required: true, message: 'Rellena el campo!',
+                                    }],
+                                })(
+                                   <Select>
+                                       {vacunasOptions}
+                                   </Select>
+                                )}
 
                             </FormItem>
                             <FormItem  label="Cantidad">
@@ -119,4 +148,20 @@ class FormGasto extends React.Component{
     }
 }
 FormGasto = Form.create()(FormGasto);
-export default FormGasto;
+
+function mapStateToProps(state, ownProps) {
+    return {
+        vacunas:state.vacunas.list,
+        formulas:state.formulas.list,
+        fetched:state.vacunas.list!==undefined && state.formulas.list!==undefined
+
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+    }
+}
+
+FormGasto = connect(mapStateToProps, mapDispatchToProps)(FormGasto);
+export default FormGasto

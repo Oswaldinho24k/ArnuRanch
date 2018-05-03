@@ -1,7 +1,19 @@
 import {combineReducers} from 'redux';
-import {EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS} from "../../actions/ganado/animalsActions";
+import {
+    EDIT_ANIMAL_SUCCESS, GET_ANIMALS_SUCCESS, SAVE_ANIMAL_SUCCESS, DELETE_ANIMAL_SUCCESS, GET_ANIMALS_DATA_SUCCESS,
+    GET_SINGLE_ANIMAL_SUCCESS
+} from "../../actions/ganado/animalsActions";
 import {SAVE_ANIMAL_GASTO_SUCCESS} from '../../actions/ganado/gastoAnimalActions';
 import {SAVE_PESADA_SUCCESS} from "../../actions/ganado/pesadasActions";
+
+function object(state={}, action){
+    switch(action.type){
+        case GET_SINGLE_ANIMAL_SUCCESS:
+            return action.animal;
+        default:
+            return state;
+    }
+}
 
 
 function list(state=[], action){
@@ -55,6 +67,7 @@ function allData(state={}, action){
 const animalsReducer = combineReducers({
     list:list,
     allData:allData,
+    object:object,
 
 });
 

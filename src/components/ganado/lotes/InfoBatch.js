@@ -26,6 +26,7 @@ const InfoBatch = ({form, name, id, status, corral, corrales, handleEdit, canEdi
 
     return (
             <Fragment>
+
                 <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                     {canEdit?
                 <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>

@@ -108,8 +108,8 @@ class ProovedorPage extends Component {
         if (value === undefined) {
             callback('Verifica el RFC ingresado');
         } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
+            if(value.length < 12 ){
+                callback('RFC de 12 a 13 dígitos');
             }
             callback()
         }
