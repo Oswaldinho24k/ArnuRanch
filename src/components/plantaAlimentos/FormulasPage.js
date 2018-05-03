@@ -106,6 +106,12 @@ class FormulasPage extends Component {
         };
         return (
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Planta de Alimentos
+                    <Divider type="vertical" />
+                    Fórmulas
+
+                </div>
                 <h2>Fórmulas</h2>
                 <Table
                     rowSelection={rowSelection}

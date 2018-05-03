@@ -28,7 +28,25 @@ export const getAnimals=(url)=>(dispatch, getState)=>{
         }).catch(e=>{
             throw e
     })
-};
+}
+/*************************get a single animal********************************+*/
+
+export const GET_SINGLE_ANIMAL_SUCCESS = 'GET_SINGLE_ANIMAL_SUCCESS';
+
+export function getSingleAnimalSuccess(animal){
+    return{
+        type:GET_SINGLE_ANIMAL_SUCCESS, animal
+    }
+}
+export const getSingleAnimal=(id)=>(dispatch, getState)=>{
+    return api.getSingleAnimal(id)
+        .then(r=>{
+            console.log(r)
+            dispatch(getSingleAnimalSuccess(r))
+        }).catch(e=>{
+            throw e
+        })
+}
 
 /*************************save new********************************+*/
 

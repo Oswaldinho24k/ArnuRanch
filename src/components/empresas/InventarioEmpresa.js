@@ -217,7 +217,7 @@ class InventarioEmpresa extends Component{
                                                     <Icon type="edit" />
                                                 </Link>,
                                                 <Popconfirm title="Are you sure delete this almacen?" onConfirm={()=>this.confirm(p)} onCancel={this.cancel} okText="Yes" cancelText="No">
-                                                <Icon type="setting" />
+                                                <Icon type="delete" />
                                                 </Popconfirm>]}
                                         >
                                             <Link to={`/admin/empresas/inventario/${empresa.id}/${bline.id}/${p.id}`} style={{color:'black', margin:'10px'}} key={p.id} >

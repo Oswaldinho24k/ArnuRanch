@@ -3,6 +3,7 @@ import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from 
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
+import moment from 'moment';
 
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
@@ -11,12 +12,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../../common/Main Loader";
 
-
 const Option = Select.Option;
-
-
-
-
 
 class AnimalsPage extends Component {
     state = {
@@ -141,22 +137,16 @@ class AnimalsPage extends Component {
         this.setState({searchText:'', loteFilter:''});
     };
     handlePagination=(pagina)=>{
-        console.log(this.props.animalsData);
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?page=';
-        let newUrl = basePath +pagina;
-        this.props.animalActions.getAnimals(newUrl);
-        /*let newUrl = this.props.animalsData.next;
 
         let nextLength = pagina.toString().length;
-        if(newUrl!==null){
-            newUrl=newUrl.slice(0,newUrl.length-nextLength);
-            newUrl=newUrl+pagina;
-            this.props.animalActions.getAnimals(newUrl);
-        }else{
+        let newUrl = this.props.animalsData.next;
+        if(newUrl===null){
             newUrl = this.props.animalsData.previous;
-            this.props.animalActions.getAnimals(newUrl);
+        }
+        newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        console.log(newUrl)
+        this.props.animalActions.getAnimals(newUrl);
 
-        }*/
 
     };
 
@@ -165,6 +155,7 @@ class AnimalsPage extends Component {
 
 
         let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset} = this.state;
+        console.log(this.props.animalsData)
 
         const columns = [
             {
@@ -200,12 +191,19 @@ class AnimalsPage extends Component {
                 render:(v)=><Link to={v?`/admin/lotes/${v.id}`:''}>{v?v.name:''}</Link>,
                 width:100
 
-            },{
+            },/*{
                 title:'Última Pesada',
                 dataIndex:'pesadas',
                 key:'pesadas',
                 render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
                 width:150
+            }*/
+            {
+                title:'Registro',
+                dataIndex:'fecha_entrada',
+                key:'fecha_entrada',
+                render:(v)=><p>{moment(v).format('LL')}</p>,
+                width:100
             }
             ];
 
@@ -224,6 +222,12 @@ class AnimalsPage extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    Aretes
+                    <Divider type="vertical" />
+                </div>
                 <h2>Listado de Aretes</h2>
                 {/*Search and filters*/}
                 <div style={{padding:'1% 0'}}>

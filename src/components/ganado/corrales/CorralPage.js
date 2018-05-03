@@ -107,6 +107,12 @@ class CorralPage extends Component {
         };
         return (
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Ganado
+                    <Divider type="vertical" />
+                    Corrales
+
+                </div>
                 <h2>Listado de Corrales</h2>
                 <Table
                     pagination={false}
