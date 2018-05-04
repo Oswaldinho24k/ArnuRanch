@@ -9,8 +9,7 @@ function list(state=[], action){
             return action.clientes;
         case SAVE_CLIENTE_SUCCESS:
             console.log(state)
-            return [...state, action.cliente];
-            console.log(state)
+            return [action.cliente, ...state ];
         case EDIT_CLIENTE_SUCCESS:
             let newL = state.filter(a=>{
                 return a.id!=action.cliente.id
@@ -27,21 +26,20 @@ function list(state=[], action){
 }
 
 
-/*function allData(state=[], action) {
+function allData(state={}, action) {
     console.log(action)
-    console.log(state)
     switch (action.type){
         case GET_CLIENTES_DATA_SUCCESS:
-            return action.data;
+            return action.dataClient;
         default:
             return state;
     }
-}*/
+}
 
 
 const clientesReducer = combineReducers({
     list:list,
-    //allData:allData
+    allData:allData
 });
 
 

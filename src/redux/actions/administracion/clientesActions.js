@@ -10,9 +10,9 @@ export function getClientesSuccess(clientes){
 
 export const GET_CLIENTES_DATA_SUCCESS = 'GET_CLIENTES_DATA_SUCCESS';
 
-export function getAllDataSuccess(data){
+export function getAllDataSuccess(dataClient){
     return{
-        type:GET_CLIENTES_DATA_SUCCESS, data
+        type:GET_CLIENTES_DATA_SUCCESS, dataClient
     }
 }
 
@@ -20,8 +20,8 @@ export const getClientes=(url)=>(dispatch, getState)=>{
     return api.getClientes(url)
         .then(r=>{
             console.log(r);
-            dispatch(getClientesSuccess(r));
-            //dispatch(getAllDataSuccess(r));
+            dispatch(getClientesSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
         }).catch(e=>{
             throw e
     })
@@ -44,10 +44,7 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
             console.log(r)
             dispatch(saveClienteSuccess(r));
         }).catch(e=>{
-
-
-        console.log(e)
-
+            console.log(e)
             throw e
     })
 };
