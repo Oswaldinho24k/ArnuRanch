@@ -3,12 +3,10 @@ import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE
 
 
 function list(state=[], action){
-    console.log(action)
     switch(action.type){
         case GET_CLIENTES_SUCCESS:
             return action.clientes;
         case SAVE_CLIENTE_SUCCESS:
-            console.log(state)
             return [action.cliente, ...state ];
         case EDIT_CLIENTE_SUCCESS:
             let newL = state.filter(a=>{

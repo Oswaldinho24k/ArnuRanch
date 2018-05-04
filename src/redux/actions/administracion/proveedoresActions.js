@@ -12,9 +12,9 @@ export function getProveedoresSuccess(proveedores){
 
 export const GET_PROVEEDORES_DATA_SUCCESS = 'GET_PROVEEDORES_DATA_SUCCESS';
 
-export function getAllDataSuccess(data){
+export function getAllDataSuccess(dataProvider){
     return{
-        type:GET_PROVEEDORES_DATA_SUCCESS, data
+        type:GET_PROVEEDORES_DATA_SUCCESS, dataProvider
     }
 }
 
@@ -25,6 +25,7 @@ export const getProveedores=(url)=>(dispatch, getState)=>{
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
         console.log(e)
+            throw e
     })
 };
 

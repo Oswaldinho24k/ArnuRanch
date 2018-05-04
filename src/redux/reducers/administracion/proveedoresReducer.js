@@ -6,7 +6,7 @@ function list(state=[], action){
         case GET_PROVEEDORES_SUCCESS:
             return action.proveedores;
         case SAVE_PROVEEDOR_SUCCESS:
-            return [...state, action.proveedor];
+            return [action.proveedor, ...state];
         case EDIT_PROVEEDOR_SUCCESS:
             let newL = state.filter(a=>{
                 return a.id!=action.proveedor.id
@@ -25,7 +25,7 @@ function list(state=[], action){
 function allData(state={}, action){
     switch(action.type){
         case GET_PROVEEDORES_DATA_SUCCESS:
-            return action.data;
+            return action.dataProvider;
         default:
             return state;
     }

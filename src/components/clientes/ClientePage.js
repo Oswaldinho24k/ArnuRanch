@@ -306,8 +306,6 @@ class ClientePage extends Component {
 
 
 function mapStateToProps(state, ownProps) {
-    console.log(state.clientes)
-    console.log("estado CLiente PAge: ",state)
     return {
         clientesData:state.clientes.allData,
         clientes:state.clientes.list,
