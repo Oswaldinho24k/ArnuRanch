@@ -41,8 +41,8 @@ export function saveClienteSuccess(cliente){
 export const saveCliente=(cliente)=>(dispatch, getState)=>{
     return api.newCliente(cliente)
         .then(r=>{
-            console.log(r)
             dispatch(saveClienteSuccess(r));
+            dispatch(getClientes());
         }).catch(e=>{
             console.log(e)
             throw e
@@ -80,7 +80,8 @@ export function deleteClienteSuccess(clienteId){
 export const deleteCliente=(clienteId)=>(dispatch, getState)=>{
     return api.deleteCliente(clienteId)
         .then(r=>{
-            dispatch(deleteClienteSuccess(clienteId))
+            dispatch(deleteClienteSuccess(clienteId));
+            dispatch(getClientes());
         }).catch(e=>{
             throw e
         })

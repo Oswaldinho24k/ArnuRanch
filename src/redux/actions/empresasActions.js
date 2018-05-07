@@ -40,8 +40,8 @@ export function saveEmpresaSuccess(empresa){
 export const saveEmpresa=(empresa)=>(dispatch, getState)=>{
     return api.newEmpresa(empresa)
         .then(r=>{
-            console.log(r);
             dispatch(saveEmpresaSuccess(r));
+            dispatch(getEmpresas());
         }).catch(e=>{
             console.log(e)
             throw e
@@ -80,7 +80,8 @@ export function deleteEmpresaSuccess(empresaId){
 export const deleteEmpresa=(empresaId)=>(dispatch, getState)=>{
     return api.deleteEmpresa(empresaId)
         .then(r=>{
-            dispatch(deleteEmpresaSuccess(empresaId))
+            dispatch(deleteEmpresaSuccess(empresaId));
+            dispatch(getEmpresas());
         }).catch(e=>{
             console.log(e)
         })

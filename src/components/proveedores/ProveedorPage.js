@@ -163,24 +163,27 @@ class ProovedorPage extends Component {
         });
     };
 
-    handlePagination=(pagina)=>{
+    /*handlePagination=(pagina)=>{
         console.log(this.props.proveedores);
         let basePath = 'http://localhost:8000/api/egresos/proveedores/?page=';
         let newUrl = basePath +pagina;
         this.props.proveedoresActions.getProveedores(newUrl);
-        /*let newUrl = this.props.animalsData.next;
 
+    };*/
+
+    handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
-        if(newUrl!==null){
-            newUrl=newUrl.slice(0,newUrl.length-nextLength);
-            newUrl=newUrl+pagina;
-            this.props.animalActions.getAnimals(newUrl);
+        let newUrl = this.props.proveedoresData.next;
+        if(newUrl===null){
+            newUrl = this.props.proveedoresData.previous;
+        }
+
+        if( pagina ==1 && this.props.proveedoresData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
-            newUrl = this.props.animalsData.previous;
-            this.props.animalActions.getAnimals(newUrl);
-
-        }*/
-
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.proveedoresActions.getProveedores(newUrl);
     };
 
     handleSearch=(e)=>{

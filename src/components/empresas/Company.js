@@ -162,17 +162,22 @@ class Company extends Component {
 
     };
 
+
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
         let newUrl = this.props.empresasData.next;
         if(newUrl===null){
             newUrl = this.props.empresasData.previous;
         }
-        //newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
-        console.log(newUrl)
-        this.props.empresasActions.getEmpresas(newUrl);
 
+        if( pagina ==1 && this.props.empresasData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.empresasActions.getEmpresas(newUrl);
     };
+
 
     handleSearch=(e)=>{
         this.setState({searchText:e.target.value})
@@ -244,7 +249,7 @@ class Company extends Component {
                     scroll={{x:650}}
                     style={{marginBottom:10}}
                     pagination={{
-                        pageSize: 5,
+                        pageSize: 10,
                         total:empresasData.count,
                         onChange:this.handlePagination,
                         showTotal:total => `Total: ${total} Empresas`

@@ -168,24 +168,20 @@ class ClientePage extends Component {
 
     };
 
+
     handlePagination=(pagina)=>{
-        console.log(pagina);
-        let basePath = 'http://localhost:8000/api/ingresos/clientes/?page=';
-        let newUrl = basePath +pagina;
-        this.props.clientesActions.getClientes(newUrl);
-        /*let newUrl = this.props.animalsData.next;
-
         let nextLength = pagina.toString().length;
-        if(newUrl!==null){
-            newUrl=newUrl.slice(0,newUrl.length-nextLength);
-            newUrl=newUrl+pagina;
-            this.props.animalActions.getAnimals(newUrl);
+        let newUrl = this.props.clientesData.next;
+        if(newUrl===null){
+            newUrl = this.props.clientesData.previous;
+        }
+
+        if( pagina ==1 && this.props.clientesData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
-            newUrl = this.props.animalsData.previous;
-            this.props.animalActions.getAnimals(newUrl);
-
-        }*/
-
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.clientesActions.getClientes(newUrl);
     };
 
     handleSearch=(e)=>{

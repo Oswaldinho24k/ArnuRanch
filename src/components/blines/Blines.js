@@ -90,17 +90,18 @@ class Blines extends Component {
     };
 
     handlePagination=(pagina)=>{
-
         let nextLength = pagina.toString().length;
         let newUrl = this.props.blinesData.next;
         if(newUrl===null){
             newUrl = this.props.blinesData.previous;
         }
-        //newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
-        console.log(newUrl)
+
+        if( pagina ==1 && this.props.blinesData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
         this.props.blinesActions.getLines(newUrl);
-
-
     };
 
 
@@ -123,7 +124,7 @@ class Blines extends Component {
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={{
-                        pageSize: 5,
+                        pageSize: 10,
                         total:blinesData.count,
                         onChange:this.handlePagination,
                         showTotal:total => `Total: ${total} Blines`

@@ -39,7 +39,8 @@ export function newLineSuccess(line){
 export const newLine=(line)=>(dispatch, getState)=>{
     return api.newLine(line)
         .then(r=>{
-            dispatch(newLineSuccess(r))
+            dispatch(newLineSuccess(r));
+            dispatch(getLines());
         }).catch(e=>{
             throw e
         })
@@ -56,7 +57,8 @@ export function deleteLineSuccess(line){
 export const deleteLine=(line)=>(dispatch, getState)=>{
     return api.deleteLine(line)
         .then(r=>{
-            dispatch(deleteLineSuccess(line))
+            dispatch(deleteLineSuccess(line));
+            dispatch(getLines());
         }).catch(e=>{
             throw e
         })

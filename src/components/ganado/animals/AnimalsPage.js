@@ -146,15 +146,9 @@ class AnimalsPage extends Component {
         if( pagina ==1 && this.props.animalsData.count <= 40){
             newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
-            console.log("kesta", newUrl)
             newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
-
         }
-
-        console.log(newUrl)
         this.props.animalActions.getAnimals(newUrl);
-
-
     };
 
 
