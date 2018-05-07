@@ -8,10 +8,19 @@ export function getEmpresasSuccess(empresas){
     }
 }
 
-export const getEmpresas=()=>(dispatch, getState)=>{
-    return api.getEmpresas()
+export const GET_EMPRESAS_DATA_SUCCESS = 'GET_EMPRESAS_DATA_SUCCESS';
+
+export function getAllEmpresasSuccess(dataEmpresa){
+    return{
+        type:GET_EMPRESAS_DATA_SUCCESS, dataEmpresa
+    }
+}
+
+export const getEmpresas=(url)=>(dispatch, getState)=>{
+    return api.getEmpresas(url)
         .then(r=>{
-            dispatch(getEmpresasSuccess(r))
+            dispatch(getEmpresasSuccess(r.results));
+            dispatch(getAllEmpresasSuccess(r));
         }).catch(e=>{
             console.log(e)
         })

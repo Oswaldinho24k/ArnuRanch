@@ -31,9 +31,6 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="2" disabled={false}>
                         <Link to={'/admin/ingresos'} >Ingresos</Link>
                     </Menu.Item>
-                    <Menu.Item key="22" disabled={false}>
-                        <Link to={'/admin/ingresos/blines'} >Bussines Lines</Link>
-                    </Menu.Item>
                     <Menu.Item key="3" disabled={false}>
                         <Link to={'/admin/ingresos/cobrar'} >Cuentas por Cobrar</Link>
                     </Menu.Item>
@@ -52,8 +49,11 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="8" disabled={true}>
                         <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                     </Menu.Item>
-                    <Menu.Item key="9" disabled={true}>
+                    {/*<Menu.Item key="9" disabled={true}>
                         <Link to={'/admin/inventario'}>Inventario</Link>
+                    </Menu.Item>*/}
+                    <Menu.Item key="9" disabled={false}>
+                        <Link to={'/admin/ingresos/blines'} >Bussines Lines</Link>
                     </Menu.Item>
                     <Menu.Item key="11">
                         <Link to='/admin/empresas'> Empresas </Link>

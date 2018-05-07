@@ -864,11 +864,13 @@ const api = {
     },
 
     //Empresas
-    getEmpresas:()=>{
+    getEmpresas:(url)=>{
+        let newUrl = empresasUrl;
+        if(url)newUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: empresasUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
