@@ -1623,30 +1623,78 @@ const api = {
 
         });
     },
-    /**************************Razas***************************************/
-    getBusinessLines:()=>{
-    const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-    return new Promise(function (resolve, reject) {
-        const instance = axios.create({
-            baseURL: blinesUrl,
-            // timeout: 2000,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Token ' + userToken
-            }
-        });
-        instance.get('')
-            .then(function (response) {
-                resolve(response.data);
-            })
-            .catch(function (error) {
-                console.log('el error: ', error.response);
-                reject(error);
+    /**************************BLINES***************************************/
+    getLines:(url)=>{
+        let nUrl = blinesUrl;
+        if(url)nUrl=url;
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: nUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
             });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
 
 
-    });
-},
+        });
+    },
+    newLine:(line)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: blinesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', line)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteLine:(line)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: blinesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(line+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
 
     //ALMACEN
 
