@@ -8,10 +8,19 @@ export function getEgresosSuccess(egresos){
     }
 }
 
-export const getEgresos=()=>(dispatch, getState)=> {
-    api.getEgresos()
+export const GET_EGRESOS_DATA_SUCCESS = 'GET_EGRESOS_DATA_SUCCESS';
+
+export function getAllEgresosSuccess(dataEgreso){
+    return{
+        type:GET_EGRESOS_DATA_SUCCESS, dataEgreso
+    }
+}
+
+export const getEgresos=(url)=>(dispatch, getState)=> {
+    api.getEgresos(url)
         .then(r => {
-            dispatch(getEgresosSuccess(r))
+            dispatch(getEgresosSuccess(r.results));
+            dispatch(getAllEgresosSuccess(r));
         }).catch(e => {
             throw e
     })
@@ -32,9 +41,10 @@ export const saveEgreso=(egreso)=>(dispatch, getState)=>{
         .then(r=>{
 
             let provider= getState().proveedores.list.find(l=>l.id===r.provider);
-            r['provider'] = provider
+            r['provider'] = provider;
 
-            dispatch(saveEgresoSuccess(r))
+            dispatch(saveEgresoSuccess(r));
+            dispatch(getEgresos());
         }).catch(e=>{
             throw e
     })
@@ -54,7 +64,7 @@ export const editEgreso=(egreso)=>(dispatch, getState)=>{
         .then(r=>{
 
             let provider= getState().proveedores.list.find(l=>l.id===r.provider);
-            r['provider'] = provider
+            r['provider'] = provider;
             dispatch(editEgresoSucces(r))
         }).catch(e=>{
                 throw e
@@ -74,7 +84,8 @@ export function deleteEgresoSuccess(egresoId){
 export const deleteEgreso=(egresoId)=>(dispatch, getState)=>{
     return api.deleteEgreso(egresoId)
         .then(r=>{
-            dispatch(deleteEgresoSuccess(egresoId))
+            dispatch(deleteEgresoSuccess(egresoId));
+            dispatch(getEgresos());
         }).catch(e=>{
                 throw e
         })

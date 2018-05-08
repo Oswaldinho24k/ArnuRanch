@@ -1073,11 +1073,13 @@ const api = {
 
 
     /*********************INGRESOS API*************/
-    getIngresos:()=>{
+    getIngresos:(url)=>{
+        let newUrl = salesUrl;
+        if(url)newUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: salesUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',
@@ -1454,11 +1456,13 @@ const api = {
 
     /*********EGRESOS API******/
 
-    getEgresos:()=>{
+    getEgresos:(url)=>{
+        let newUrl = egresosUrl;
+        if(url)newUrl=url;
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: egresosUrl,
+                baseURL: newUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',

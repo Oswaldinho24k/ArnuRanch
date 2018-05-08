@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_EGRESOS_SUCCESS, SAVE_EGRESO_SUCCESS, EDIT_EGRESO_SUCCESS, DELETE_EGRESO_SUCCESS} from "../../actions/administracion/egresosActions";
+import {GET_EGRESOS_SUCCESS, SAVE_EGRESO_SUCCESS, EDIT_EGRESO_SUCCESS, DELETE_EGRESO_SUCCESS, GET_EGRESOS_DATA_SUCCESS} from "../../actions/administracion/egresosActions";
 
 
 
@@ -24,9 +24,19 @@ function list(state=[], action){
     }
 }
 
+function allData(state={}, action) {
+    switch (action.type){
+        case GET_EGRESOS_DATA_SUCCESS:
+            return action.dataEgreso;
+        default:
+            return state;
+    }
+}
+
 
 const egresosReducer = combineReducers({
     list:list,
+    allData:allData
 });
 
 
