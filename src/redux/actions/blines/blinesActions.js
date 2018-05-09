@@ -1,6 +1,25 @@
 import api from '../../../Api/Django';
 
+///GET BLINES SEARCH
 
+export const GET_LISEARCH_SUCCESS = 'GET_LISEARCH_SUCCESS';
+
+export function getLiSearchSuccess(linesS){
+    return{
+        type:GET_LISEARCH_SUCCESS, linesS
+    }
+}
+
+export const getLiSearch=(url)=>(dispatch, getState)=>{
+    return api.getLines(url)
+        .then(r=>{
+            dispatch(getLiSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};
+
+///end
 export const GET_LINES_SUCCESS = 'GET_LINES_SUCCESS';
 
 export function getLinesSuccess(lines){

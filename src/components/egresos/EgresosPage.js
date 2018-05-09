@@ -9,7 +9,7 @@ import moment from 'moment';
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import FormEgreso from "./EgresoForm";
 
-import TablePageB from "../clientes/TablePageB";
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 
 
 const Option = Select.Option;
@@ -74,6 +74,7 @@ class EgresosPage extends Component {
         searchText: '',
         canReset:false,
         filtered: false,
+        linea:"",
     };
 
     showModal = () => {
@@ -123,6 +124,8 @@ class EgresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            values['business_line']=this.state.linea;
+            console.log(values)
             if (!err) {
                 console.log(values);
                 this.props.egresosActions.saveEgreso(values);
@@ -194,6 +197,21 @@ class EgresosPage extends Component {
         this.setState({searchText:e.target.value})
     };
 
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        //this.props.linesActions.getLiSearch(basePath);
+    };
+
 
 
     render() {
@@ -235,7 +253,7 @@ class EgresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched, egresosData} = this.props;
+        let {egresos, fetched, egresosData, blines} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         //let type = type.map((a) => <Option key={a.name}>{a.name}</Option>);
         let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
@@ -285,13 +303,15 @@ class EgresosPage extends Component {
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                     options_proveedores={options_proveedores}
-                    options={options}
+                    options={blines}
                     type={tipo}
                     handleChange={this.handleChange}
                     handleChangeD={this.handleChangeD}
                     contacto={this.state.contacto_directo}
                     factura = {this.state.factura}
 
+                    searchLine={this.handleSearchLine}
+                    lineHandle={this.handleChangeS}
 
                 />
 
@@ -315,14 +335,16 @@ function mapStateToProps(state, ownProps) {
     return {
         egresos: state.egresos.list,
         egresosData:state.egresos.allData,
-        fetched: state.egresos.list !==undefined,
+        blines:state.blines.lineSearch,
+        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined,
         proveedores: state.proveedores.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        egresosActions: bindActionCreators(egresosActions, dispatch)
+        egresosActions: bindActionCreators(egresosActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

@@ -3,6 +3,7 @@ import { Form, Input, Button, Modal, Select } from 'antd';
 
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const styles = {
     form:{
@@ -23,7 +24,7 @@ const styles = {
 
 const CompanyForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, rfc, phone, options, handleChange} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, options, handleChange,searchLine, linea, selectLine, saveId} = props;
         const {getFieldDecorator} = form;
 
         return(
@@ -55,21 +56,19 @@ const CompanyForm = Form.create()(
                         <FormItem
                             label={"Linea de negocio"}
                         >
-                            {getFieldDecorator('line_comp_id', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                                props:{
-                                    placeholder:'Linea de Negocio',
+                            <Select
+                                placeholder={"Linea de Negocio"}
+                                mode={'multiple'}
+                                onChange={handleChange}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
                                 }
-                            })(
 
+                            </Select>
 
-                                <Select  placeholder={"Linea de Negocio"} mode={'multiple'} onChange={handleChange}>
-
-                                    {options}
-                                </Select>
-                            )}
 
                         </FormItem>
 

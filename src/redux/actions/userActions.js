@@ -15,7 +15,7 @@ import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
 import {getAlmacenes} from "./almacen/almacenActions";
-import {getLines} from "./blines/blinesActions";
+import {getLines, getLiSearch} from "./blines/blinesActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -89,6 +89,7 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getEmpresas());
         dispatch(getVacunas());
         dispatch(getLines());
+        dispatch(getLiSearch());
         dispatch(getAlmacenes());
 
     }

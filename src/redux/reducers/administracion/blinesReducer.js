@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_LINES_SUCCESS, NEW_LINE_SUCCESS, DELETE_LINE_SUCCESS, GET_LINES_DATA_SUCCESS} from "../../actions/blines/blinesActions";
+import {GET_LINES_SUCCESS, NEW_LINE_SUCCESS, DELETE_LINE_SUCCESS, GET_LINES_DATA_SUCCESS, GET_LISEARCH_SUCCESS} from "../../actions/blines/blinesActions";
 
 function list(state=[], action){
     switch(action.type){
@@ -28,10 +28,20 @@ function allData(state={}, action) {
     }
 }
 
+function lineSearch(state={}, action) {
+    switch (action.type){
+        case GET_LISEARCH_SUCCESS:
+            return action.linesS;
+        default:
+            return state;
+    }
+}
+
 
 const blinesReducer = combineReducers({
     list:list,
-    allData:allData
+    allData:allData,
+    lineSearch:lineSearch
 });
 
 

@@ -6,9 +6,9 @@ import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 import FormIngreso from "./IngresoForm";
 
-import TablePageB from "../clientes/TablePageB";
 
 
 const Option = Select.Option;
@@ -59,6 +59,7 @@ class IngresosPage extends Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+        linea:'',
     };
 
     showModal = () => {
@@ -108,6 +109,7 @@ class IngresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            values['business_line']=this.state.linea;
             if (!err) {
                 console.log(values);
                 this.props.ingresosActions.saveIngreso(values);
@@ -172,6 +174,21 @@ class IngresosPage extends Component {
         this.setState({searchText:e.target.value})
     };
 
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+
+    };
+
+
 
 
     render() {
@@ -214,7 +231,7 @@ class IngresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {ingresos, fetched, clientes, ingresosData} = this.props;
+        let {ingresos, fetched, clientes, ingresosData, blines} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_clientes = clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
         if(!fetched)return(<MainLoader/>);
@@ -263,9 +280,12 @@ class IngresosPage extends Component {
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                     options_clientes={options_clientes}
-                    options={options}
+                    options={blines}
                     handleChange={this.handleChange}
                     factura = {this.state.factura}
+
+                    searchLine={this.handleSearchLine}
+                    lineHandle={this.handleChangeS}
 
                 />
 
@@ -290,14 +310,16 @@ function mapStateToProps(state, ownProps) {
     return {
         ingresos:state.ingresos.list,
         ingresosData:state.ingresos.allData,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined,
+        blines:state.blines.lineSearch,
+        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined,
         clientes:state.clientes.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        ingresosActions: bindActionCreators(ingresosActions, dispatch)
+        ingresosActions: bindActionCreators(ingresosActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as empresasActions from '../../redux/actions/empresasActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 
 import CompanyForm from './CompanyForm';
 
@@ -37,6 +38,9 @@ class Company extends Component {
         searchText: '',
         filtered: false,
         canReset:false,
+
+        linea:[],
+        line_comp_id:null,
 
     };
 
@@ -87,6 +91,9 @@ class Company extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            console.log("KssK", values)
+            values['line_comp_id']=this.state.linea;
+            console.log("KAKAK", values)
             if (!err) {
                 console.log(values);
 
@@ -95,7 +102,7 @@ class Company extends Component {
                         message.success('Guardado con éxito');
 
                         form.resetFields();
-                        this.setState({ visible: false });
+                        this.setState({ visible: false, });
                     })
                     .catch(e=>{
                         for (let i in e.response.data){
@@ -136,8 +143,10 @@ class Company extends Component {
     };
 
 
-    handleChange=(value)=> {
-        console.log(`selected ${value}`);
+    handleChange=(value, obj)=> {
+        this.setState({linea:value});
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        this.props.linesActions.getLiSearch(basePath);
     };
 
     onSearch = () => {
@@ -183,6 +192,26 @@ class Company extends Component {
         this.setState({searchText:e.target.value})
     };
 
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    onSelect=(value, b)=>{
+        console.log(b, value);
+        this.setState({linea:value})
+
+    };
+
+    saveId=(id)=>{
+        let ids=[]
+        ids.push(id)
+        this.setState({line_comp_id:ids})
+    };
+
     render(){
         const columns = [
             {
@@ -208,15 +237,15 @@ class Company extends Component {
 
         ];
 
-        const { visible, selectedRowKeys, data, filtered, searchText, canReset } = this.state;
+        const { visible, selectedRowKeys, data, filtered, linea , searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         let {empresas, fetched, blines, empresasData} = this.props;
-        let options = blines.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>);
         if(!fetched)return(<MainLoader/>);
+        console.log("BLINESSS",blines)
 
 
         return(
@@ -262,10 +291,15 @@ class Company extends Component {
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    options={options}
+                    options={blines}
 
                     phone={this.checkPhone}
                     handleChange={this.handleChange}
+
+                    linea={linea}
+                    searchLine={this.handleSearchLine}
+                    selectLine={this.onSelect}
+                    saveId={this.saveId}
 
 
                 />
@@ -292,7 +326,7 @@ class Company extends Component {
 function mapStateToProps(state, ownProps) {
     return{
         empresasData:state.empresas.allData,
-        blines:state.blines.list,
+        blines:state.blines.lineSearch,
         empresas: state.empresas.list,
         fetched: state.empresas.list !== undefined && state.blines.list !== undefined,
     }
@@ -300,7 +334,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return{
-       empresasActions: bindActionCreators(empresasActions, dispatch)
+       empresasActions: bindActionCreators(empresasActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 
