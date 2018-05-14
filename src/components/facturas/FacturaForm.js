@@ -23,7 +23,7 @@ const styles = {
 };
 
 
-const BLineForm = Form.create()(
+const FacturaForm = Form.create()(
     (props) => {
         const{visible, onCancel, onCreate, form} = props;
         const{getFieldDecorator} = form;
@@ -32,7 +32,7 @@ const BLineForm = Form.create()(
         return(
             <Modal
                 visible={visible}
-                title={"Nueva Bussines Line"}
+                title={"Nueva Factura"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}
@@ -44,9 +44,9 @@ const BLineForm = Form.create()(
                 <Form onSubmit={onCreate} >
                     <div style={styles.form}>
                         <FormItem
-                            label="Nombre de la Bussines Line"
+                            label="Numero de factura"
                         >
-                            {getFieldDecorator('name', {
+                            {getFieldDecorator('factura', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -62,9 +62,6 @@ const BLineForm = Form.create()(
                         </Button>
                     </FormItem>
 
-
-
-
                 </Form>
 
             </Modal>
@@ -73,4 +70,4 @@ const BLineForm = Form.create()(
     }
 );
 
-export default BLineForm;
+export default FacturaForm;

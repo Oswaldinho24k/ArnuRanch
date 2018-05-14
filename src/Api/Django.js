@@ -33,6 +33,8 @@ let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 //almacen
 let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
 let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
+//facturas
+let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
 
 
 
@@ -1842,6 +1844,80 @@ const api = {
                 }
             });
             instance.delete(item+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    //FACTURAS
+
+    getFacturas:(url)=>{
+        let nUrl = facturasUrl;
+        if(url)nUrl=url;
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: nUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newFactura:(factura)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: facturasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', factura)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteFactura:(factura)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: facturasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(factura+'/' )
                 .then(function (response) {
                     resolve(response.data);
                 })

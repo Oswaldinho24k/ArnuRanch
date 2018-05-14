@@ -1,29 +1,29 @@
 import React, {Component, Fragment} from 'react';
-import BLineForm from './BLineForm';
+import FacturaForm from './FacturaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, message, Divider, Popconfirm} from 'antd';
-import * as blinesActions from '../../redux/actions/blines/blinesActions';
+import * as facturasActions from '../../redux/actions/facturas/facturasActions';
 import MainLoader from "../common/Main Loader";
 
 const columns = [
     {
-        title: 'Nombre',
-        dataIndex: 'name',
+        title: 'Folio',
+        dataIndex: 'factura',
 
     },
 ];
 
-class Blines extends Component {
+
+class FacturasPage extends Component{
     state = {
         visible:false,
         selectedRowKeys:[],
     };
 
-
     showModal = () => {
         this.setState({
-            visible: true,
+            visible: true
         });
     };
 
@@ -33,11 +33,10 @@ class Blines extends Component {
         });
     };
 
-
-    deleteBline=()=>{
+    deleteFactura=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.blinesActions.deleteLine(keys[i])
+            this.props.facturasActions.deleteFactura(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -48,7 +47,7 @@ class Blines extends Component {
     };
     confirm=(e)=> {
         console.log(e);
-        this.deleteBline();
+        this.deleteFactura();
         console.log("Eliminado")
         message.success('Deleted successfully');
     };
@@ -66,13 +65,14 @@ class Blines extends Component {
         this.form = form;
     };
 
+
     handleCreate = (e) => {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.blinesActions.newLine(values)
+                this.props.facturasActions.newFactura(values)
                     .then(r=>{
                         console.log(r);
                         message.success('Guardado con éxito');
@@ -91,22 +91,23 @@ class Blines extends Component {
 
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
-        let newUrl = this.props.blinesData.next;
+        let newUrl = this.props.facturasData.next;
         if(newUrl===null){
-            newUrl = this.props.blinesData.previous;
+            newUrl = this.props.facturasData.previous;
         }
 
-        if( pagina ==1 && this.props.blinesData.count <= 20){
+        if( pagina ==1 && this.props.facturasData.count <= 20){
             newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
             newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
-        this.props.blinesActions.getLines(newUrl);
+        this.props.facturasActions.getFacturas(newUrl);
     };
 
 
+
     render() {
-        let {blines, fetched, blinesData} = this.props;
+        let {facturas, fetched, facturasData} = this.props;
         let {visible, selectedRowKeys} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
@@ -114,26 +115,31 @@ class Blines extends Component {
             onChange: this.onSelectChange,
         };
         if(!fetched)return(<MainLoader/>);
+
+
         return (
             <Fragment>
-                <h2>Bussines Line</h2>
+                <h2>
+                    Facturas
+                </h2>
+
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={blines}
+                    dataSource={facturas}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={{
-                        pageSize: 10,
-                        total:blinesData.count,
+                        pageSize: 1,
+                        total:facturasData.count,
                         onChange:this.handlePagination,
-                        showTotal:total => `Total: ${total} Blines`
+                        showTotal:total => `Total: ${total} Facturas`
                     }}
                     style={{marginBottom:10}}
                 />
-                <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <BLineForm
 
+                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <FacturaForm
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
@@ -141,28 +147,24 @@ class Blines extends Component {
                 <Divider
                     type={'vertical'}/>
 
-                {/*<Popconfirm title="Are you sure delete this Bussinesline?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>*/}
             </Fragment>
         );
     }
 }
 
-
 function mapStateToProps(state, ownProps) {
     return {
-        blines: state.blines.list,
-        blinesData:state.blines.allData,
-        fetched:state.blines.list !== undefined
+        facturas: state.facturas.list,
+        facturasData:state.facturas.allData,
+        fetched:state.facturas.list !== undefined && state.facturas.allData !==undefined
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        blinesActions: bindActionCreators(blinesActions, dispatch)
+        facturasActions: bindActionCreators(facturasActions, dispatch)
     }
 }
 
-Blines = connect(mapStateToProps, mapDispatchToProps)(Blines);
-export default Blines;
+FacturasPage = connect(mapStateToProps, mapDispatchToProps)(FacturasPage);
+export default FacturasPage;
