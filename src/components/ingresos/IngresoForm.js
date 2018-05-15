@@ -4,6 +4,7 @@ import { Form, Input, Button, Select, InputNumber, Checkbox, Modal } from 'antd'
 
 const FormItem = Form.Item;
 const TextArea = Input;
+const Option = Select.Option;
 
 const styles = {
     form:{
@@ -23,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura,}=props;
+        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine}=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -58,20 +59,27 @@ const FormIngreso = Form.create()(
                             )}
                         </FormItem>
 
-                        <FormItem label={"Linea de negocio"} hasFeedback>
-                            {getFieldDecorator('business_line', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                                props:{
-                                    placeholder:'Linea de Negocio',
+                        <FormItem
+                            label={"Linea de negocio"}
+                            hasFeedback
+                        >
+                            <Select
+                                placeholder={"Linea de Negocio"}
+                                mode={'combobox'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
                                 }
-                            })(
-                                <Select  placeholder={"Linea de Negocio"}>
-                                    {options}
-                                </Select>
-                            )}
+
+                            </Select>
+
+
                         </FormItem>
+
+
 
                         <FormItem
                             label="Monto"

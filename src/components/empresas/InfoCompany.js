@@ -5,18 +5,30 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, line_comp, options, phone_compa, rfc_comp, email_comp, phone, rfcR }) => {
+const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, line_comp, options, phone_compa, rfc_comp, email_comp, phone, rfcR, searchLine, lineHandle, linea }) => {
+
+    let blineselected = [];
+    if(line_comp){
+        for(let i in line_comp){
+            blineselected.push(line_comp[i].id)
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
+            if(linea.length > 0 ){
+                values['line_comp_id'] = linea;
+
+            }else{
+                values['line_comp_id'] = blineselected;
+
+            }
+
+
             if (!err) {
                 console.log(values);
                 values['id']=id;
-                let newBlines = [];
-                for(let i in values.line_comp_id){
-                    newBlines.push(values.line_comp_id[i])
-                }
-                values['line_comp_id'] = newBlines;
 
                 editEmpresa(values)
                     .then(r=>{
@@ -30,12 +42,7 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
         });
     };
 
-    let blineselected = [];
-    if(line_comp){
-        for(let i in line_comp){
-            blineselected.push(line_comp[i].id)
-        }
-    }
+
 
 
     return (
@@ -59,40 +66,47 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
 
 
                     {line_comp?
-                        <FormItem
-                            label={"Linea de negocio"}
-                        >
-                            {form.getFieldDecorator('line_comp_id',{
-                                initialValue:blineselected,
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    mode={'multiple'}
-                                    placeholder={"Linea de negocio"}>
-                                    {options}
-                                </Select>
-                            )}
+                        <FormItem>
+
+                            <Select
+                                disabled={!editMode}
+                                defaultValue={blineselected}
+                                placeholder={"Linea de Negocio"}
+                                mode={'multiple'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
+
+                            </Select>
+
+
                         </FormItem>:
                         <FormItem
                             label={"Linea de negocio"}
+                            hasFeedback
                         >
-                            {form.getFieldDecorator('line_comp_id',{
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"Linea de Negocio"}
+                                mode={'multiple'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
 
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    mode={'multiple'}
-                                    placeholder={"Lina de negocio"}>
-                                    {options}
-                                </Select>
-                            )}
-                        </FormItem>}
+                            </Select>
+
+
+                        </FormItem>
+                    }
 
 
                     <FormItem

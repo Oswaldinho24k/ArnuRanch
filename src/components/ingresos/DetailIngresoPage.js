@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import * as ingresoActions from '../../redux/actions/administracion/ingresosActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 
@@ -35,15 +36,30 @@ const opciones = [{
 class DetailIngresoPage extends Component{
     state={
         editMode:false,
+        linea:'',
     };
 
     handleEditMode=()=>{
         this.setState({editMode:!this.state.editMode})
     };
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        //this.props.linesActions.getLiSearch(basePath);
+    };
 
     render(){
-        let {ingreso, fetched, clientes} = this.props;
-        let {editMode} = this.state;
+        let {ingreso, fetched, clientes, blines} = this.props;
+        let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let options_clients = clientes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.client}</Option>);
@@ -67,8 +83,12 @@ class DetailIngresoPage extends Component{
                         editIngreso={this.props.ingresoActions.editIngreso}
                         handleEditMode={this.handleEditMode}
                         editMode={editMode}
-                        options={options}
+                        options={blines}
                         clientes={options_clients}
+
+                        searchLine={this.handleSearchLine}
+                        lineHandle={this.handleChangeS}
+                        linea={linea}
                     />
                 </Card>
             </div>
@@ -85,7 +105,8 @@ function mapStateToProps(state, ownProps) {
     ingreso = ingreso[0];
     return {
         ingreso,
-        fetched: ingreso!==undefined && state.ingresos.list!==undefined,
+        blines:state.blines.lineSearch,
+        fetched: ingreso!==undefined && state.ingresos.list!==undefined && state.blines.lineSearch !== undefined,
         clientes: state.clientes.list,
     }
 }
@@ -93,6 +114,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return{
         ingresoActions: bindActionCreators(ingresoActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

@@ -1,13 +1,14 @@
 import React, {Component, Fragment} from 'react';
-import {Button, message, Popconfirm, Divider, BackTop, Input,Icon, Select} from 'antd';
+import {Button,Table, message, Popconfirm, Divider, BackTop, Input,Icon, Select} from 'antd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as empresasActions from '../../redux/actions/empresasActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 
 import CompanyForm from './CompanyForm';
-import TablePageB from "../clientes/TablePageB";
+
 
 const Option = Select.Option;
 
@@ -36,6 +37,10 @@ class Company extends Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+        canReset:false,
+
+        linea:[],
+        line_comp_id:null,
 
     };
 
@@ -86,6 +91,9 @@ class Company extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            console.log("KssK", values)
+            values['line_comp_id']=this.state.linea;
+            console.log("KAKAK", values)
             if (!err) {
                 console.log(values);
 
@@ -94,7 +102,7 @@ class Company extends Component {
                         message.success('Guardado con éxito');
 
                         form.resetFields();
-                        this.setState({ visible: false });
+                        this.setState({ visible: false, });
                     })
                     .catch(e=>{
                         for (let i in e.response.data){
@@ -134,49 +142,75 @@ class Company extends Component {
         console.log(e.target.value)
     };
 
-    onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.empresas.map((record) => {
-                const match = record.company.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    company: (
-                        <span>
-              {record.company.split(reg).map((company, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, company] : company
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
+
+    handleChange=(value, obj)=> {
+        this.setState({linea:value});
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        this.props.linesActions.getLiSearch(basePath);
     };
 
-    componentWillMount(){
-        this.setState({
-            data:this.props.empresas
-        });
-    }
+    onSearch = () => {
+        let basePath= "http://localhost:8000/api/ingresos/empresas/?q=";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/empresas/?q=';
+
+        let url = basePath+this.state.searchText;
+        this.props.empresasActions.getEmpresas(url);
+        this.setState({canReset:true})
+
+    };
 
     resetFilter = () => {
+        let basePath= "http://localhost:8000/api/ingresos/empresas/";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/empresas/';
+
+        this.props.empresasActions.getEmpresas(basePath);
         this.setState({
-            data:this.props.empresas,
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+            searchText:'',
+            canReset:false
         });
-    };
-    handleChange=(value)=> {
-        console.log(`selected ${value}`);
+
     };
 
+
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.empresasData.next;
+        if(newUrl===null){
+            newUrl = this.props.empresasData.previous;
+        }
+
+        if( pagina ==1 && this.props.empresasData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.empresasActions.getEmpresas(newUrl);
+    };
+
+
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
+    };
+
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    onSelect=(value, b)=>{
+        console.log(b, value);
+        this.setState({linea:value})
+
+    };
+
+    saveId=(id)=>{
+        let ids=[]
+        ids.push(id)
+        this.setState({line_comp_id:ids})
+    };
 
     render(){
         const columns = [
@@ -185,27 +219,6 @@ class Company extends Component {
                 dataIndex: 'company',
                 render: (company,obj) =><Link to={`/admin/empresas/${obj.id}`}>{ company && company !== null ? company: "No Company"}</Link>,
                 key:'company',
-                filterDropdown: (
-                    <div style={style.customFilterDropdown}>
-                        <Input
-                            ref={ele => this.searchInput = ele}
-                            placeholder="Buscar empresa"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
-                            style={style.customFilterDropdownInput}
-                        />
-                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
-                    </div>
-                ),
-                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
-                ),
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
             },
             {
                 title: 'E-mail',
@@ -224,15 +237,15 @@ class Company extends Component {
 
         ];
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered, linea , searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {empresas, fetched, blines} = this.props;
-        let options = blines.map((a, key) => <Option key={key} value={a.id}>{a.name}</Option>);
+        let {empresas, fetched, blines, empresasData} = this.props;
         if(!fetched)return(<MainLoader/>);
+        console.log("BLINESSS",blines)
 
 
         return(
@@ -245,11 +258,32 @@ class Company extends Component {
                 </div>
 
                 <h2>Empresas Arnulfo</h2>
+                <div style={{paddingBottom:'1%'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por nombre...'}
+                    />
+                </div>
                 <BackTop visibilityHeight={100} />
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={empresas} columns={columns} rowSelection={rowSelection}/>
-                }
+                <Table
+                    dataSource={empresas}
+                    columns={columns}
+                    rowSelection={rowSelection}
+                    rowKey={record => record.id}
+                    scroll={{x:650}}
+                    style={{marginBottom:10}}
+                    pagination={{
+                        pageSize: 10,
+                        total:empresasData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Empresas`
+                    }}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <CompanyForm
@@ -257,10 +291,15 @@ class Company extends Component {
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    options={options}
+                    options={blines}
 
                     phone={this.checkPhone}
                     handleChange={this.handleChange}
+
+                    linea={linea}
+                    searchLine={this.handleSearchLine}
+                    selectLine={this.onSelect}
+                    saveId={this.saveId}
 
 
                 />
@@ -273,7 +312,7 @@ class Company extends Component {
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" disabled={!canReset} onClick={this.resetFilter}>Borrar filtro</Button>
 
 
 
@@ -286,7 +325,8 @@ class Company extends Component {
 
 function mapStateToProps(state, ownProps) {
     return{
-        blines:state.blines.list,
+        empresasData:state.empresas.allData,
+        blines:state.blines.lineSearch,
         empresas: state.empresas.list,
         fetched: state.empresas.list !== undefined && state.blines.list !== undefined,
     }
@@ -294,7 +334,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return{
-       empresasActions: bindActionCreators(empresasActions, dispatch)
+       empresasActions: bindActionCreators(empresasActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

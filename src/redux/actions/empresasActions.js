@@ -8,10 +8,19 @@ export function getEmpresasSuccess(empresas){
     }
 }
 
-export const getEmpresas=()=>(dispatch, getState)=>{
-    return api.getEmpresas()
+export const GET_EMPRESAS_DATA_SUCCESS = 'GET_EMPRESAS_DATA_SUCCESS';
+
+export function getAllEmpresasSuccess(dataEmpresa){
+    return{
+        type:GET_EMPRESAS_DATA_SUCCESS, dataEmpresa
+    }
+}
+
+export const getEmpresas=(url)=>(dispatch, getState)=>{
+    return api.getEmpresas(url)
         .then(r=>{
-            dispatch(getEmpresasSuccess(r))
+            dispatch(getEmpresasSuccess(r.results));
+            dispatch(getAllEmpresasSuccess(r));
         }).catch(e=>{
             console.log(e)
         })
@@ -31,8 +40,8 @@ export function saveEmpresaSuccess(empresa){
 export const saveEmpresa=(empresa)=>(dispatch, getState)=>{
     return api.newEmpresa(empresa)
         .then(r=>{
-            console.log(r);
             dispatch(saveEmpresaSuccess(r));
+            dispatch(getEmpresas());
         }).catch(e=>{
             console.log(e)
             throw e
@@ -71,7 +80,8 @@ export function deleteEmpresaSuccess(empresaId){
 export const deleteEmpresa=(empresaId)=>(dispatch, getState)=>{
     return api.deleteEmpresa(empresaId)
         .then(r=>{
-            dispatch(deleteEmpresaSuccess(empresaId))
+            dispatch(deleteEmpresaSuccess(empresaId));
+            dispatch(getEmpresas());
         }).catch(e=>{
             console.log(e)
         })

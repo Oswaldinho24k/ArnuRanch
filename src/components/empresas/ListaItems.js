@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TablePageB from "../clientes/TablePageB";
-import {Divider, Table, message, Button, Popconfirm, Select} from 'antd';
+import {Divider, Table, message, Button, Popconfirm, Select, Tabs} from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MainLoader from "../common/Main Loader";
@@ -9,6 +9,7 @@ import * as itemsActions from '../../redux/actions/items/itemsActions';
 import {bindActionCreators} from 'redux';
 
 const Option = Select.Option;
+const TabPane = Tabs.TabPane;
 
 
 class ListaAlmacen extends Component {
@@ -20,6 +21,12 @@ class ListaAlmacen extends Component {
 
         insumoValidate:true,
         vacunaValidate:true,
+        itemIn:'',
+        key:"0"
+    };
+
+    callback=(key)=>{
+        this.setState({key:key})
     };
 
     saveFormRef = (form) => {
@@ -87,20 +94,37 @@ class ListaAlmacen extends Component {
         })
     }
 
+    onChangeItem=(e, )=>{
+        console.log(e)
+        let insumoInfo=this.props.insumosList.find(insumo=>{return insumo.id === e})
+        console.log(insumoInfo)
+
+        this.setState({
+            itemIn:insumoInfo.unit_price
+        })
+
+    }
+
+    totalItems=(items)=>{
+        let li = items.map(f=>{return parseFloat(f.total)})
+        let totalCost = li.reduce((total, items)=>{
+            return total + items
+        }, 0);
+        return totalCost;
+
+    };
+
     render(){
-        console.log(this.state.selectChange)
+        console.log(this.state.key)
 
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen, insumosList, vacunasList}= this.props;
-        let {visible, selectedRowKeys, selectChange} = this.state;
+        let {visible, selectedRowKeys, selectChange, itemIn} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
         if(!fetched)return(<MainLoader/>);
-
-        console.log(insumosList)
-        console.log(vacunasList)
 
         let vacunas= vacunasList.map((vacuna, key) => <Option value={vacuna.id} key={vacuna.id}>{vacuna.vaccine}</Option>);
         let insumos = insumosList.map((insumo, key)=><Option value={insumo.id} key={insumo.id} >{insumo.name}</Option>)
@@ -110,14 +134,71 @@ class ListaAlmacen extends Component {
         let almacen = bline.almacenes.find(f=>f.id==ida)
 
         let items = almacenDetail.items.map(f=>{return f})
-        console.log(items)
-        console.log(almacenDetail)
+
+        let itemsInsumo = items.filter(f=>f.insumo !== null)
+
+        let itemsVacuna = items.filter(f=>f.vacuna !== null)
+
+
 
         const columns = [
-            {title: 'Tipo', dataIndex: 'product_type', key: 'product_type'},
-            {title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad'},
-            {title: 'Costo Unitario', dataIndex: 'costo_u', key: 'costo_u'},
-            {title: 'Total', dataIndex: 'total', key: 'total'},
+            {   title: 'Tipo',
+                dataIndex: 'product_type',
+                key: 'product_type'
+            },
+            {   title: 'Nombre',
+                dataIndex:'insumo',
+                render:(value)=><span>{value && value !==null ? value.name : "NoData"}</span>,
+
+
+            },
+            {
+                title: 'Cantidad',
+                dataIndex: 'cantidad',
+                key: 'cantidad',
+                render:(cantidad, obj)=>`${cantidad} ${obj.unity}`
+            },
+            {
+                title: 'Costo Unitario',
+                dataIndex: 'costo_u',
+                key: 'costo_u',
+                render:costo=>`$ ${costo}`
+            },
+            {
+                title: 'Total',
+                dataIndex: 'total',
+                key: 'total',
+                render:total=>`$ ${total}`
+            },
+
+        ];
+        const columns2 = [
+            {   title: 'Tipo',
+                dataIndex: 'product_type',
+                key: 'product_type'
+            },
+            {   title: 'Nombre',
+                dataIndex:'vacuna',
+                render:(value )=><span>{value && value !== null ? value.vaccine:"No Data"}</span>
+            },
+            {
+                title: 'Cantidad',
+                dataIndex: 'cantidad',
+                key: 'cantidad',
+                render:(cantidad, obj)=>`${cantidad} ${obj.unity}`
+            },
+            {
+                title: 'Costo Unitario',
+                dataIndex: 'costo_u',
+                key: 'costo_u',
+                render:costo=>`$ ${costo}`
+            },
+            {
+                title: 'Total',
+                dataIndex: 'total',
+                key: 'total',
+                render:total=>`$ ${total}`
+            },
 
         ];
 
@@ -139,14 +220,33 @@ class ListaAlmacen extends Component {
 
                 <h2>Lista de Items</h2>
 
-                <Table
-                    columns={columns}
-                    dataSource={items}
-                    pagination={false}
-                    rowKey={record => record.id}
-                    rowSelection={rowSelection}
-                    style={{marginBottom:10}}
-                />
+                <Tabs defaultActiveKey={this.state.key} onChange={this.callback}>
+                    <TabPane tab={"Insumos"} key={0} />
+                    <TabPane tab={"Vacunas"} key={1} />
+                </Tabs>
+
+                {this.state.key ?
+                    this.state.key ==="0" ?
+                        <Table
+                            columns={columns}
+                            dataSource={itemsInsumo}
+                            pagination={false}
+                            rowKey={record => record.id}
+                            rowSelection={rowSelection}
+                            style={{marginBottom:10}}
+                        />
+                        :
+                        <Table
+                            columns={columns2}
+                            dataSource={itemsVacuna}
+                            pagination={false}
+                            rowKey={record => record.id}
+                            rowSelection={rowSelection}
+                            style={{marginBottom:10}}
+                        />
+                :"No Items"}
+
+
 
                 <Button type="primary" onClick={this.showModal}>Agregar Item</Button>
                 <FormItems
@@ -161,6 +261,8 @@ class ListaAlmacen extends Component {
                     insumos={insumos}
                     onChangeSelect={this.onChangeSelect}
                     selectChange={selectChange}
+                    onChangeItem={this.onChangeItem}
+                    itemIn={itemIn}
 
                 />
 

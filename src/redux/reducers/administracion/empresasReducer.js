@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_EMPRESAS_SUCCESS, SAVE_EMPRESA_SUCCESS, DELETE_EMPRESA_SUCCESS, EDIT_EMPRESA_SUCCESS} from "../../actions/empresasActions";
+import {GET_EMPRESAS_SUCCESS, SAVE_EMPRESA_SUCCESS, DELETE_EMPRESA_SUCCESS, EDIT_EMPRESA_SUCCESS, GET_EMPRESAS_DATA_SUCCESS} from "../../actions/empresasActions";
 import {DELETE_ALMACEN_SUCCESS, EDIT_ALMACEN_SUCCESS, SAVE_ALMACEN_SUCCESS} from "../../actions/almacen/almacenActions";
 
 
@@ -89,9 +89,19 @@ function list(state=[], action){
     }
 }
 
+function allData(state={}, action) {
+    switch (action.type){
+        case GET_EMPRESAS_DATA_SUCCESS:
+            return action.dataEmpresa;
+        default:
+            return state;
+    }
+}
+
 
 const empresasReducer = combineReducers({
     list:list,
+    allData:allData
 });
 
 
