@@ -2,23 +2,18 @@ import React, {Component, Fragment} from 'react';
 import FacturaForm from './FacturaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, message, Divider, Popconfirm} from 'antd';
+import {Table, Button, message, Divider, Popconfirm, Modal} from 'antd';
 import * as facturasActions from '../../redux/actions/facturas/facturasActions';
 import MainLoader from "../common/Main Loader";
-
-const columns = [
-    {
-        title: 'Folio',
-        dataIndex: 'factura',
-
-    },
-];
+import EditFactura from './EditFactura';
 
 
 class FacturasPage extends Component{
     state = {
         visible:false,
         selectedRowKeys:[],
+        visibleEdit:false,
+        infoEdit:[]
     };
 
     showModal = () => {
@@ -96,19 +91,51 @@ class FacturasPage extends Component{
             newUrl = this.props.facturasData.previous;
         }
 
-        if( pagina ==1 && this.props.facturasData.count <= 20){
+        if( pagina ==1 && this.props.facturasData.count <= 2){
             newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
             newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
+        console.log("URLPAG", newUrl)
+        console.log("PAGINA", pagina)
         this.props.facturasActions.getFacturas(newUrl);
+    };
+
+    visibleEdit=(obj)=>{
+        //this.showModalEdit();
+        console.log(obj)
+        this.setState({visibleEdit:true, infoEdit:obj});
+
+    };
+
+    cancelar = () => {
+        this.setState({
+            visibleEdit: false,
+        });
     };
 
 
 
     render() {
         let {facturas, fetched, facturasData} = this.props;
-        let {visible, selectedRowKeys} = this.state;
+        let {visible, selectedRowKeys, visibleEdit, infoEdit} = this.state;
+
+        const columns = [
+            {
+                title: 'Folio',
+                dataIndex: 'factura',
+
+            },
+
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
+                fixed:'right',
+                width:100
+            },
+        ];
+
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -123,6 +150,7 @@ class FacturasPage extends Component{
                     Facturas
                 </h2>
 
+
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
@@ -136,7 +164,9 @@ class FacturasPage extends Component{
                         showTotal:total => `Total: ${total} Facturas`
                     }}
                     style={{marginBottom:10}}
+                    height={'80vh'}
                 />
+
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <FacturaForm
@@ -146,6 +176,28 @@ class FacturasPage extends Component{
                     onCreate={this.handleCreate}/>
                 <Divider
                     type={'vertical'}/>
+
+                <EditFactura
+                    onCancel={this.cancelar}
+                    visible={visibleEdit}
+                    data={this.state.infoEdit}
+                    {...infoEdit}
+                    edit={this.props.facturasActions.editFactura}
+
+
+                />
+
+
+                {/*<Modal
+                    title="Editar factura"
+                    visible={this.state.visibleEdit}
+                    //onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                >
+                    <p>{this.state.infoEdit.id}</p>
+                    <p>{this.state.infoEdit.factura}</p>
+                    <p>Some contents...</p>
+                </Modal>*/}
 
             </Fragment>
         );

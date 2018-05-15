@@ -1930,6 +1930,39 @@ const api = {
         });
     },
 
+    editFactura:(factura)=>{
+        let dataF = new FormData();
+        for ( var id in factura ) {
+            dataF.append(id, factura[id]);
+        }
+
+        console.log("FACTURA_EDIT", factura)
+        console.log("DATAF", dataF)
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: facturasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(factura.id+'/', dataF)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
 
 
 

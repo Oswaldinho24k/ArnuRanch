@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_FACTURAS_SUCCESS, NEW_FACTURA_SUCCESS, DELETE_FACTURA_SUCCESS, GET_FACTURAS_DATA_SUCCESS, GET_FASEARCH_SUCCESS } from "../../actions/facturas/facturasActions";
+import {GET_FACTURAS_SUCCESS, NEW_FACTURA_SUCCESS, DELETE_FACTURA_SUCCESS, GET_FACTURAS_DATA_SUCCESS, GET_FASEARCH_SUCCESS, EDIT_FACTURA_SUCCESS } from "../../actions/facturas/facturasActions";
 
 function list(state=[], action){
     switch(action.type){
@@ -11,6 +11,11 @@ function list(state=[], action){
             return  state.filter(r=>{
                 return r.id!==action.factura;
             });
+        case EDIT_FACTURA_SUCCESS:
+            let newF = state.filter(a=>{
+                return a.id!==action.factura.id
+            });
+            return [...newF, action.factura];
 
         default:
             return state;

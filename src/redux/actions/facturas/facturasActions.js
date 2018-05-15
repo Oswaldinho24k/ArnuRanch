@@ -83,3 +83,22 @@ export const deleteFactura=(factura)=>(dispatch, getState)=>{
             throw e
         })
 };
+
+
+export const EDIT_FACTURA_SUCCESS = 'EDIT_FACTURA_SUCCESS';
+export function editFacturaSucces(factura) {
+    return{
+        type: EDIT_FACTURA_SUCCESS, factura
+    }
+}
+
+export const editFactura=(factura)=>(dispatch, getState)=>{
+    return api.editFactura(factura)
+        .then(r=>{
+            dispatch(editFacturaSucces(r));
+            dispatch(getFacturas());
+        }).catch(e=>{
+            throw e
+        })
+};
+
