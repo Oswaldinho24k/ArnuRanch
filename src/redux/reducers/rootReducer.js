@@ -19,6 +19,7 @@ import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
 import almacenReducer from "./almacen/almacenReducer";
+import productsReducer from './sellpoint/products/productsReducer'
 
 
 
@@ -42,6 +43,8 @@ const rootReducer = combineReducers({
     vacunas: vacunasReducer,
     blines:blinesReducer,
     almacen:almacenReducer,
+    //sellpoint
+    products:productsReducer,
 
 });
 

@@ -23,7 +23,7 @@ const styles = {
 
 const UsuarioForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_permisos, user ,canEdit} = props;
+        const{visible, onCancel, onCreate, form, options_sections, options_permissions, user ,canEdit} = props;
         const{getFieldDecorator} = form;
 
 
@@ -41,31 +41,32 @@ const UsuarioForm = Form.create()(
             >
                 <Form onSubmit={onCreate} >
                     <div style={styles.form}>
+
                         <FormItem
-                            label="Nombre de Usuario"
+                            label="Nombre usuario"
                         >
-                            {getFieldDecorator('username', {
+                            {getFieldDecorator('first_name', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                                initialValue:user.username
+                                initialValue:''
                             })(
                                 <Input disabled={canEdit}/>
                             )}
                         </FormItem>
                         <FormItem
-                            label="Email de Usuario"
+                            label="Email del usuario"
                         >
                             {getFieldDecorator('email', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
-                                    type: 'email', message: 'The input is not valid E-mail!',
                                 }],
                                 initialValue:user.email
                             })(
-                                <Input type={'email'} disabled={canEdit}/>
+                                <Input disabled={canEdit}/>
                             )}
                         </FormItem>
+                       
 
                         <FormItem
                             label="Contraseña"
@@ -83,15 +84,31 @@ const UsuarioForm = Form.create()(
                         <FormItem
                             label={"Sección de Trabajo"}
                         >
+                            {getFieldDecorator('section', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
+
+                            })(
+                                <Select mode="multiple" placeholder={"Selecciona un Permiso"} disabled={canEdit} >
+                                    {options_sections}
+                                </Select>
+                            )}
+
+                        </FormItem>
+                        <FormItem
+                            label={"Permisos de Usuario"}
+                        >
                             {getFieldDecorator('permiso', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                           initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
+                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
 
                             })(
-                                <Select  placeholder={"Selecciona un Permiso"} disabled={canEdit}>
-                                    {options_permisos}
+                                <Select mode="multiple" placeholder={"Selecciona un Permiso"} disabled={canEdit} >
+                                    {options_permissions}
                                 </Select>
                             )}
 

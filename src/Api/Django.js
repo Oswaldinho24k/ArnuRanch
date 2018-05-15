@@ -34,6 +34,12 @@ let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
 let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
 
+//punto de venta
+let productsUrl = 'http://localhost:8000/api/sell_point/products/';
+let categoriesUrl = 'http://localhost:8000/api/sell_point/categories/';
+let saleordersUrl = 'http://localhost:8000/api/sell_point/saleorders/';
+
+
 
 
 //heroku urls
@@ -62,6 +68,10 @@ if(!debug){
     blinesUrl = 'https://rancho.fixter.org/api/ingresos/blines/';
     vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
 
+    productsUrl = 'https://rancho.fixter.org/api/sell_point/products/';
+    categoriesUrl = 'https://rancho.fixter.org/api/sell_point/categories/';
+    saleordersUrl = 'https://rancho.fixter.org/api/sell_point/saleorders/';
+
     /******************************Heroku Urls********************************/
     /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
     tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
@@ -86,6 +96,97 @@ if(!debug){
 
 
 const api = {
+    /*----------------------SellPoint functions------------------------*/ 
+    getAllProducts:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    newProduct:(product)=>{
+        let data = new FormData();
+        let date;
+        for ( var key in product ) {
+            data.append(key, product[key]);
+        }
+
+        if(product.image === null || product.image === undefined){
+            data.delete('image')
+        }else{
+            data.append('image', product.image[0].originFileObj);
+        }
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    editProduct:(product)=>{
+        let data = new FormData();
+        let date;
+        for ( var key in product ) {
+            data.append(key, product[key]);
+        }
+        if(product.image){
+            console.log(typeof product.image)
+           if(product.image === null || product.image === undefined || typeof product.image === 'string'){
+               data.delete('fierro_original')
+           }else{
+               data.append('fierro_original', product.image.file.originFileObj);
+           }
+       }else{
+           data.delete('fierro_original')
+       }
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get(product.id+'/', product)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+      
     /*-----------------Users functions-----------------------*/
     getAllUsers:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));

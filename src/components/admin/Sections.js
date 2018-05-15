@@ -36,6 +36,8 @@ import ListaAlmacen from "../empresas/ListaAlmacen";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
 import EventosPage from "../ganado/eventos/EventosPage";
 import AnimalsDashboard from "../ganado/dashboard/AnimalsDashboard";
+import ProductList from '../sell_point/products/ProductsList';
+import LeftSide from './LeftSide';
 
 
 export const paths = {
@@ -92,6 +94,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
                 <Route path={'/admin/vacunas'} component={VacunasPage}/>
+                {/*************************sell point routes************************/}
+                <Route exact path={'/admin/sp'} component={ProductList}/>
 
             </Switch>
 

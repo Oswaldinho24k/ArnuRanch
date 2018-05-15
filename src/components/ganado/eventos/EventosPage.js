@@ -10,10 +10,12 @@ import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
+const {Option, OptGroup } = Select;
 
 class EventosPage extends Component {
     state = {
+        aretes:[],
+        aretesId:[],
         areteRancho:'',
         areteId:'',
         lote:'',
@@ -22,17 +24,9 @@ class EventosPage extends Component {
         loading:false,
     };
 
-    onSelect=(value, b)=>{
-        console.log(b, value);
-        this.setState({areteRancho:value})
-    };
-    saveId=(id)=>{
-        this.setState({areteId:id})
-        console.log(id)
-    };
-
     handleSearch=(a)=>{
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
@@ -44,6 +38,10 @@ class EventosPage extends Component {
     onSelectLote=(value, b)=>{
         console.log(b, value);
         this.setState({lote:value})
+    };
+    saveId=(id)=>{
+        this.setState({areteId:id});
+        console.log(id)
     };
     saveLoteId=(id)=>{
         this.setState({loteId:id});
@@ -127,11 +125,13 @@ class EventosPage extends Component {
                     <h2>Registro de Eventos</h2>
                     <FormItem label={'Modo'}>
                         <Select
+                           value={modo}
                             onChange={this.handleChangeMode}
                             style={{width:'100%'}}
                         >
                             <Option value={'individual'}>Individual</Option>
                             <Option value={'lote'}>Por Lote</Option>
+                            <Option value={'multiple'}>Multiple</Option>
                         </Select>
                     </FormItem>
                     {modo==='lote'?
@@ -156,23 +156,25 @@ class EventosPage extends Component {
                         </FormItem>:modo==='individual'?
                         <FormItem label={"Arete"}>
                             <Select
-                        value={this.state.areteRancho}
-                        mode="combobox"
-                        style={{width:'100%'}}
-                        onSelect={this.onSelect}
-                        onSearch={this.handleSearch}
-                        onChange={this.handleChange}
-                        placeholder="ingresa el arete de rancho, o siniga para buscarlo"
-                        filterOption={false}
-                        >
-                    {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
-                        <div onClick={()=>this.saveId(a.id)}>
-                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
-                        <span >Siniga: {a.arete_siniga}</span>
-                        </div>
-                        </Option>)}
-                        </Select>
+                                value={this.state.areteRancho}
+                                mode="combobox"
+                                style={{width:'100%'}}
+                                onSelect={this.onSelect}
+                                onSearch={this.handleSearch}
+                                onChange={this.handleChange}
+                                placeholder="ingresa el arete de rancho, o siniga para buscarlo"
+                                filterOption={false}
+                                >
+                                {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
+                                    <div onClick={()=>this.saveId(a.id)}>
+                                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
+                                        <span >Siniga: {a.arete_siniga}</span>
+                                    </div>
+                                    </Option>)}
+                            </Select>
                         </FormItem>:''}
+                        
+                        
                     <FormGasto saveGasto={modo==='individual'?this.saveGasto:this.saveLoteGastos}/>
                 </div>
             </div>
