@@ -3,7 +3,7 @@ import {Divider, Select, Button, Input} from 'antd'
 
 export const ProductFilters = () => {
   return (
-    <div style={{padding:'1% 0'}}>
+    <div style={{padding:'0 0 1% 0'}}>
        {/*<Input.Search
             enterButton
             onSearch={this.onSearch}

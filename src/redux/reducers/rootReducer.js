@@ -20,6 +20,7 @@ import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
 import almacenReducer from "./almacen/almacenReducer";
 import productsReducer from './sellpoint/products/productsReducer'
+import categoriesReducer from './sellpoint/products/categories'
 
 
 
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
     almacen:almacenReducer,
     //sellpoint
     products:productsReducer,
+    categories:categoriesReducer,
 
 });
 

@@ -3,12 +3,16 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from '../../common/Main Loader';
 import {ProductCard} from './ProductCard';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import {ProductFilters} from './ProductFilters'
 
 
 
 class ProductList extends Component {
+
+goAdd=()=>{
+    this.props.history.push('/admin/sp/add')
+}
 
 
 
@@ -19,13 +23,16 @@ class ProductList extends Component {
     return (
       <div>
         <ProductFilters/>
+        <div className="cards-list-container">
         <Row gutter={16}>
             {products.map((p, key)=>(
-                <Col span={8}>
-                    <ProductCard key={key} {...p}/>
+                <Col span={6}>
+                    <ProductCard key={key} {...p} admin={true}/>
                 </Col>
              ))}
         </Row> 
+        </div>
+        <Button type='primary' style={{marginTop:'1%', alignSelf:'right'}} onClick={this.goAdd}>Agregar</Button>
       </div>
     )
   }

@@ -16,3 +16,20 @@ export const getProducts=(url)=>(dispatch, getState)=>{
             throw e
     })
 }
+//New product
+export const NEW_PRODUCT_SUCCESS = 'NEW_PRODUCT_SUCCESS';
+
+export function newProductSuccess(product){
+    return{
+        type: NEW_PRODUCT_SUCCESS, product
+    }
+}
+
+export const newProduct=(product)=>(dispatch, getState)=>{
+    return api.newProduct(product)
+        .then(r=>{
+            dispatch(newProductSuccess(r));
+        }).catch(e=>{
+            throw e
+    })
+}

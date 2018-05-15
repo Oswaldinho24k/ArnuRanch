@@ -38,6 +38,8 @@ import EventosPage from "../ganado/eventos/EventosPage";
 import AnimalsDashboard from "../ganado/dashboard/AnimalsDashboard";
 import ProductList from '../sell_point/products/ProductsList';
 import LeftSide from './LeftSide';
+import ProductForm  from '../sell_point/products/ProductForm';
+import EditForm  from '../sell_point/products/EditForm';
 
 
 export const paths = {
@@ -96,6 +98,8 @@ const Sections = ({props}) => {
                 <Route path={'/admin/vacunas'} component={VacunasPage}/>
                 {/*************************sell point routes************************/}
                 <Route exact path={'/admin/sp'} component={ProductList}/>
+                <Route exact path={'/admin/sp/add'} component={ProductForm}/>
+                <Route exact path={'/admin/sp/manage/:id'} component={EditForm}/>
 
             </Switch>
 

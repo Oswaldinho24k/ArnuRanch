@@ -96,6 +96,72 @@ if(!debug){
 
 
 const api = {
+     /*----------------------SellPoint functions------------------------*/ 
+     getCategories:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    newCategory:(cat)=>{
+        
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', cat)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    editCategory:(cat)=>{
+        
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(cat.id+'/', cat)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
     /*----------------------SellPoint functions------------------------*/ 
     getAllProducts:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -128,7 +194,7 @@ const api = {
         if(product.image === null || product.image === undefined){
             data.delete('image')
         }else{
-            data.append('image', product.image[0].originFileObj);
+            data.append('image', product.image.file.originFileObj);
         }
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
@@ -139,7 +205,7 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.get('', data)
+            instance.post('', data)
                 .then(function (response) {
                     resolve(response.data);
                 })
@@ -175,7 +241,7 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.get(product.id+'/', product)
+            instance.patch(product.id+'/', data)
                 .then(function (response) {
                     resolve(response.data);
                 })
