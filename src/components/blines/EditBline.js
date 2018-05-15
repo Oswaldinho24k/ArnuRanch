@@ -6,9 +6,9 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
+const InfoBline = ({form,edit,onCancel, visible, data, name }) => {
     console.log("DATAA", data)
-    console.log("FACTURA", factura)
+    console.log("BLINE", name)
 
     const handleSubmit = (e) => {
         console.log("LALLA", e)
@@ -18,7 +18,7 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
             if (!err) {
                 console.log("VALUES",values);
                 values['id']=data.id;
-                values['animals']=data.animals
+                values['almacenes']=data.almacenes;
                 console.log("ENVIAR", values)
 
                 edit(values)
@@ -37,7 +37,7 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
     return (
         <Fragment>
             <Modal
-                title="Editar factura"
+                title="Editar bussines line"
                 visible={visible}
                 onCancel={onCancel}
                 maskClosable={true}
@@ -48,15 +48,15 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
             >
 
 
-            <Form style={{width:'100%'}} onSubmit={handleSubmit}>
-                <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
+                <Form style={{width:'100%'}} onSubmit={handleSubmit}>
+                    <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
 
                         <FormItem
-                            label={"Razón Social"}
+                            label={"Bussines Line"}
                         >
-                            {form.getFieldDecorator('factura',{
-                                initialValue:data.factura,
+                            {form.getFieldDecorator('name',{
+                                initialValue:data.name,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -67,9 +67,9 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
 
 
 
-                                    </div>
+                    </div>
 
-                <FormItem>
+                    <FormItem>
 
                         <Button
                             htmlType="submit"
@@ -79,8 +79,8 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
                         >
                             Guardar
                         </Button>
-                </FormItem>
-            </Form>
+                    </FormItem>
+                </Form>
 
 
 
@@ -88,5 +88,5 @@ const InfoFactura = ({form,edit,onCancel, visible, data, factura }) => {
         </Fragment>
     )
 };
-const EditFactura = Form.create()(InfoFactura);
-export default EditFactura;
+const EditBline = Form.create()(InfoBline);
+export default EditBline;

@@ -38,6 +38,7 @@ import EventosPage from "../ganado/eventos/EventosPage";
 import AnimalsDashboard from "../ganado/dashboard/AnimalsDashboard";
 import Blines from "../blines/Blines";
 import FacturasPage from "../facturas/FacturasPage";
+import FacturaDetalle from "../facturas/FacturaDetalle";
 
 
 export const paths = {
@@ -50,6 +51,7 @@ const Sections = ({props}) => {
             <Switch>
                 {/***************************** Admin ROUTES *****************************/}
                 <Route path={'/admin/estadisticas'} component={Dashboard}/>
+                <Route path={'/admin/facturas/:fa'} component={FacturaDetalle}/>
                 <Route path={'/admin/facturas'} component={FacturasPage}/>
                 <Route path={'/admin/ingresos/blines'} component={Blines} />
                 <Route path={'/admin/ingresos/cobrar'} component={CobrarIngreso} />

@@ -82,3 +82,20 @@ export const deleteLine=(line)=>(dispatch, getState)=>{
             throw e
         })
 };
+
+export const EDIT_LINEA_SUCCESS = 'EDIT_LINEA_SUCCESS';
+export function editLineaSucces(line) {
+    return{
+        type: EDIT_LINEA_SUCCESS, line
+    }
+}
+
+export const editLinea=(line)=>(dispatch, getState)=>{
+    return api.editLinea(line)
+        .then(r=>{
+            dispatch(editLineaSucces(r));
+            dispatch(getLines());
+        }).catch(e=>{
+            throw e
+        })
+};

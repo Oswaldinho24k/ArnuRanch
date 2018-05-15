@@ -1704,6 +1704,36 @@ const api = {
         });
     },
 
+    editLinea:(linea)=>{
+        let dataL = new FormData();
+        for ( var id in linea ) {
+            dataL.append(id, linea[id]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: blinesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(linea.id+'/', dataL)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
     //ALMACEN
 
     getAlmacenes:()=>{

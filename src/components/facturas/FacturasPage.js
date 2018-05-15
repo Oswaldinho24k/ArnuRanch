@@ -3,6 +3,7 @@ import FacturaForm from './FacturaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, message, Divider, Popconfirm, Modal} from 'antd';
+import {Link} from 'react-router-dom';
 import * as facturasActions from '../../redux/actions/facturas/facturasActions';
 import MainLoader from "../common/Main Loader";
 import EditFactura from './EditFactura';
@@ -41,9 +42,7 @@ class FacturasPage extends Component{
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
         this.deleteFactura();
-        console.log("Eliminado")
         message.success('Deleted successfully');
     };
 
@@ -52,7 +51,6 @@ class FacturasPage extends Component{
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -66,10 +64,8 @@ class FacturasPage extends Component{
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 this.props.facturasActions.newFactura(values)
                     .then(r=>{
-                        console.log(r);
                         message.success('Guardado con éxito');
                         form.resetFields();
                     }).catch(e=>{
@@ -91,19 +87,15 @@ class FacturasPage extends Component{
             newUrl = this.props.facturasData.previous;
         }
 
-        if( pagina ==1 && this.props.facturasData.count <= 2){
+        if( pagina ==1 && this.props.facturasData.count <= 20){
             newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
             newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
-        console.log("URLPAG", newUrl)
-        console.log("PAGINA", pagina)
         this.props.facturasActions.getFacturas(newUrl);
     };
 
     visibleEdit=(obj)=>{
-        //this.showModalEdit();
-        console.log(obj)
         this.setState({visibleEdit:true, infoEdit:obj});
 
     };
@@ -124,6 +116,7 @@ class FacturasPage extends Component{
             {
                 title: 'Folio',
                 dataIndex: 'factura',
+                render: (factura,obj) =><Link to={`/admin/facturas/${obj.id}`}>{ factura && factura !== null ? factura: "No Factura"}</Link>,
 
             },
 
@@ -152,13 +145,13 @@ class FacturasPage extends Component{
 
 
                 <Table
-                    rowSelection={rowSelection}
+
                     columns={columns}
                     dataSource={facturas}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={{
-                        pageSize: 1,
+                        pageSize: 10,
                         total:facturasData.count,
                         onChange:this.handlePagination,
                         showTotal:total => `Total: ${total} Facturas`

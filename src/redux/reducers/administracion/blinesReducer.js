@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_LINES_SUCCESS, NEW_LINE_SUCCESS, DELETE_LINE_SUCCESS, GET_LINES_DATA_SUCCESS, GET_LISEARCH_SUCCESS} from "../../actions/blines/blinesActions";
+import {GET_LINES_SUCCESS, NEW_LINE_SUCCESS, DELETE_LINE_SUCCESS, GET_LINES_DATA_SUCCESS, GET_LISEARCH_SUCCESS, EDIT_LINEA_SUCCESS} from "../../actions/blines/blinesActions";
 
 function list(state=[], action){
     switch(action.type){
@@ -11,6 +11,11 @@ function list(state=[], action){
             return  state.filter(r=>{
                 return r.id!==action.line;
             });
+        case EDIT_LINEA_SUCCESS:
+            let newL = state.filter(a=>{
+                return a.id!==action.line.id
+            });
+            return [...newL, action.line];
 
         default:
             return state;

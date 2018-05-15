@@ -5,19 +5,15 @@ import {bindActionCreators} from 'redux';
 import {Table, Button, message, Divider, Popconfirm} from 'antd';
 import * as blinesActions from '../../redux/actions/blines/blinesActions';
 import MainLoader from "../common/Main Loader";
+import EditBline from './EditBline'
 
-const columns = [
-    {
-        title: 'Nombre',
-        dataIndex: 'name',
-
-    },
-];
 
 class Blines extends Component {
     state = {
         visible:false,
         selectedRowKeys:[],
+        visibleEdit:false,
+        infoEdit:[]
     };
 
 
@@ -104,21 +100,49 @@ class Blines extends Component {
         this.props.blinesActions.getLines(newUrl);
     };
 
+    visibleEdit=(obj)=>{
+        this.setState({visibleEdit:true, infoEdit:obj});
+
+    };
+
+    cancelar = () => {
+        this.setState({
+            visibleEdit: false,
+        });
+    };
+
 
     render() {
         let {blines, fetched, blinesData} = this.props;
-        let {visible, selectedRowKeys} = this.state;
+        let {visible, selectedRowKeys, infoEdit, visibleEdit} = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
+
+        const columns = [
+            {
+                title: 'Nombre',
+                dataIndex: 'name',
+
+            },
+
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
+                fixed:'right',
+                width:100
+            },
+        ];
+
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
                 <h2>Bussines Line</h2>
                 <Table
-                    rowSelection={rowSelection}
+                    
                     columns={columns}
                     dataSource={blines}
                     rowKey={record => record.id}
@@ -141,9 +165,13 @@ class Blines extends Component {
                 <Divider
                     type={'vertical'}/>
 
-                {/*<Popconfirm title="Are you sure delete this Bussinesline?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button disabled={!canDelete} type="primary" >Delete</Button>
-                </Popconfirm>*/}
+                <EditBline
+                    onCancel={this.cancelar}
+                    visible={visibleEdit}
+                    data={this.state.infoEdit}
+                    {...infoEdit}
+                    edit={this.props.blinesActions.editLinea}
+                />
             </Fragment>
         );
     }
