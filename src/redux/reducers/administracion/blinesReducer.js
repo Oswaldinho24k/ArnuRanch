@@ -24,7 +24,6 @@ function list(state=[], action){
 }
 
 function allData(state={}, action) {
-    console.log(action)
     switch (action.type){
         case GET_LINES_DATA_SUCCESS:
             return action.dataLine;

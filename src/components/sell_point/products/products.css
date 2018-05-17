@@ -1,0 +1,18 @@
+.cards-list-container{
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+    padding-bottom: 1%;
+    position: relative;
+    width: 100%;
+}
+
+.cards-list-container::-webkit-scrollbar{
+    display: none;
+}
+
+.products-cart-container{
+    height: auto;
+    position: fixed;
+    top: 80px;
+    right: 30px;
+}

@@ -25,7 +25,6 @@ function list(state=[], action){
 
 
 function allData(state={}, action) {
-    console.log(action)
     switch (action.type){
         case GET_CLIENTES_DATA_SUCCESS:
             return action.dataClient;

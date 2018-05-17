@@ -75,10 +75,10 @@ class FormGasto extends React.Component{
                                 <Input
                                     addonAfter={<FormItem style={{height:5, padding:0}}>
                                         {getFieldDecorator('unity',{
-                                            initialValue:'g'
+                                            initialValue:'Kg'
                                         })(
                                             <Select  style={{ width: 100 }}>
-                                                <Option value="g">g</Option>
+                                                <Option value="Kg">g</Option>
                                             </Select>
                                         )}
                                     </FormItem>}
@@ -154,7 +154,6 @@ function mapStateToProps(state, ownProps) {
         vacunas:state.vacunas.list,
         formulas:state.formulas.list,
         fetched:state.vacunas.list!==undefined && state.formulas.list!==undefined
-
     }
 }
 

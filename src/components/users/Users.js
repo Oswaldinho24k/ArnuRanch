@@ -12,19 +12,42 @@ const Option = Select.Option;
 
 
 
-const options_permisos = [
+const options_sections = [
     {
         name:"Ganado",
         value:'ganado'
+    },
+    {
+        name:"Punto de Venta",
+        value:'vendedor'
     },
     {
         name:"Administración",
         value:'admin'
     },
     {
-        name:"SuperUsuario",
-        value:'super'
+        name:"Planta de Alimentos",
+        value:'alimentos'
+    },
+    {
+        name:"Vacunación",
+        value:'vacunas'
     }
+];
+const options_permissions = [
+    {
+        name:"Super User",
+        value:'is_superuser'
+    },
+    {
+        name:"Admin",
+        value:'is_staff'
+    },
+    {
+        name:"Just User",
+        value:'is_active'
+    },
+
 ];
 
 
@@ -88,6 +111,19 @@ class Users extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
+                values['username'] = values.email
+                values['profile']={}
+                for(let i in values.permiso){
+                    values[values.permiso[i]]=true;
+                }
+            
+            
+                for(let i in values.section){
+                    values['profile'][values.section[i]]=true;
+                }
+            
+                console.log(values);
+
                 this.props.usuariosActions.newUser(values)
                     .then(r=>{
                         console.log(r);
@@ -138,7 +174,8 @@ class Users extends Component {
             },
 
         ];
-        let options = options_permisos.map((a)=><Option key={a.value}>{a.name}</Option>);
+        let sections = options_sections.map((a)=><Option key={a.value}>{a.name}</Option>);
+        let permissions = options_permissions.map((a)=><Option key={a.value}>{a.name}</Option>);
         let {users, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
@@ -162,7 +199,8 @@ class Users extends Component {
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    options_permisos={options}
+                    options_sections={sections}
+                    options_permissions={permissions}
                     canEdit={canEdit}
 
                 />
