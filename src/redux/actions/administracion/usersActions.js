@@ -31,17 +31,17 @@ export const newUser=(user)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(newUserSuccess(r))
 
-            let profile={};
-            profile['user']=r.id;
-            if(user.permiso){
-                if(user.permiso === 'ganado'){
-                    profile['ganado']=true;
-                }
-                if(user.permiso === 'admin'){
-                    profile['admin']=true;
-                }
-            }
-            dispatch(saveProfile(profile));
+            // let profile={};
+            // profile['user']=r.id;
+            // if(user.permiso){
+            //     if(user.permiso === 'ganado'){
+            //         profile['ganado']=true;
+            //     }
+            //     if(user.permiso === 'admin'){
+            //         profile['admin']=true;
+            //     }
+            // }
+            //dispatch(saveProfile(profile));
         }).catch(e=>{
             throw e
         })

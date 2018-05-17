@@ -36,6 +36,12 @@ let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
 //facturas
 let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
 
+//punto de venta
+let productsUrl = 'http://localhost:8000/api/sell_point/products/';
+let categoriesUrl = 'http://localhost:8000/api/sell_point/categories/';
+let saleordersUrl = 'http://localhost:8000/api/sell_point/saleorders/';
+
+
 
 
 //heroku urls
@@ -64,6 +70,10 @@ if(!debug){
     blinesUrl = 'https://rancho.fixter.org/api/ingresos/blines/';
     vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
 
+    productsUrl = 'https://rancho.fixter.org/api/sell_point/products/';
+    categoriesUrl = 'https://rancho.fixter.org/api/sell_point/categories/';
+    saleordersUrl = 'https://rancho.fixter.org/api/sell_point/saleorders/';
+
     /******************************Heroku Urls********************************/
     /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
     tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
@@ -88,6 +98,227 @@ if(!debug){
 
 
 const api = {
+     /*----------------------SellPoint functions------------------------*/ 
+     getOrders:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: saleordersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    saveOrder:(order)=>{
+        
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: saleordersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', order)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+     getCategories:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    newCategory:(cat)=>{
+        
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', cat)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    editCategory:(cat)=>{
+        
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: categoriesUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(cat.id+'/', cat)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    /*----------------------SellPoint functions------------------------*/ 
+    getAllProducts:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    newProduct:(product)=>{
+        let data = new FormData();
+        let date;
+        for ( var key in product ) {
+            data.append(key, product[key]);
+        }
+
+        if(product.image === null || product.image === undefined){
+            data.delete('image')
+        }else{
+            data.append('image', product.image.file.originFileObj);
+        }
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    editProduct:(product)=>{
+        let data = new FormData();
+        
+        for ( var key in product ) {
+            data.append(key, product[key]);
+        }
+        if(product.image){
+            console.log(typeof product.image)
+           if(product.image === null || product.image === undefined || typeof product.image === 'string'){
+               data.delete('image')
+           }else{
+               data.append('image', product.image.file.originFileObj);
+           }
+       }else{
+           data.delete('image')
+       }
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(product.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+    deleteProduct:(product)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: productsUrl,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(product.id+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+        })
+
+    },
+      
     /*-----------------Users functions-----------------------*/
     getAllUsers:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
