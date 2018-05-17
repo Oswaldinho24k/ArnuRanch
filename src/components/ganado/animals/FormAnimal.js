@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import { Form, Icon, Input, Button, DatePicker, Upload, InputNumber, Select, Switch} from 'antd';
 import './detailAnimal.css';
 import moment from 'moment';
+import * as facturasActions from '../../../redux/actions/facturas/facturasActions';
+import MainLoader from "../../common/Main Loader";
 
 const MonthPicker = DatePicker.MonthPicker;
 const FormItem = Form.Item;
@@ -29,13 +32,16 @@ const opciones = [{
 
 class FormAnimal extends Component {
     state={
-        wEmpresa:true
+        wEmpresa:true,
+        linea:null,
+        facturaId:''
     }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
 
             values['status']=true;
+            //values['ref_factura_original']=this.state.linea;
             if (!err) {
                 if(!values.lote_id) delete values.lote_id;
                 if(!values.raza_id) delete values.raza_id;
@@ -48,7 +54,8 @@ class FormAnimal extends Component {
                 if(!values.costo_kilo) delete values.costo_kilo;
                 if(!values.peso_entrada) delete values.peso_entrada;*/
 
-                console.log(values)
+                values['ref_factura_original_id']=this.state.facturaId;
+
                 this.props.saveAnimal(values);
                 this.props.form.resetFields()
             }
@@ -69,13 +76,32 @@ class FormAnimal extends Component {
         return e && e.fileList;
     };
 
+    handleChange=(value, obj)=> {
+        this.setState({linea:value});
+        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/';
+        this.props.facturasActions.getFaSearch(basePath);
+    };
+
+    handleSearchLine=(a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/?q=';
+        let url = basePath+a;
+        this.props.facturasActions.getFaSearch(url);
+    };
+
+    saveFacturaId=(id)=>{
+        this.setState({facturaId:id})
+    };
+
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
+        let {facturas, fetched} = this.props;
         let {wEmpresa} = this.state;
+        if(!fetched)return(<MainLoader/>);
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
         let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.name}</Option>);
         let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.company}</Option>);
+
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
                 <Form onSubmit={this.handleSubmit} style={{width:'100%'}}>
@@ -169,7 +195,7 @@ class FormAnimal extends Component {
                             )}
                         </FormItem>}
 
-                        <FormItem
+                        {/*<FormItem
                             label="Factura Inicial"
                             style={{width:'200px'}}
                         >
@@ -181,6 +207,26 @@ class FormAnimal extends Component {
                             })(
                                 <Input />
                             )}
+                        </FormItem>*/}
+
+                        <FormItem
+                            label={"Factura inicial"}
+                            style={{width:'200px'}}
+                        >
+                            <Select
+                                placeholder={"Factura inicial"}
+                                mode={'combobox'}
+                                onChange={this.handleChange}
+                                onSearch={this.handleSearchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    facturas.length >0? facturas.map((a, key) => <Option value={a.factura} key={key} ><div onClick={()=>this.saveFacturaId(a.id)} ><span>{a.factura}</span></div></Option>):<Option key={999999} disabled >No facturas</Option>
+                                }
+
+                            </Select>
+
+
                         </FormItem>
 
                         <FormItem
@@ -369,10 +415,12 @@ class FormAnimal extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+    facturas:state.facturas.facturaSearch,
+    fetched:state.facturas.facturaSearch !== undefined
 });
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch) => ({
+    facturasActions: bindActionCreators(facturasActions, dispatch)
 });
 
 

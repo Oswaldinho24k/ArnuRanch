@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import * as egresoActions from '../../redux/actions/administracion/egresosActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 
@@ -46,22 +47,41 @@ const type = [{
 class DetailEgresoPage extends Component{
     state={
         editMode:false,
+        linea:'',
 
     };
+
 
     handleEditMode=()=>{
         this.setState({editMode:!this.state.editMode})
     };
 
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        //this.props.linesActions.getLiSearch(basePath);
+    };
+
+
 
 
     render(){
-        let {egreso, fetched, proveedores} = this.props;
-        let {editMode} = this.state;
+        let {egreso, fetched, proveedores, blines} = this.props;
+        let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
         let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
+
         return(
 
             <div>
@@ -82,9 +102,14 @@ class DetailEgresoPage extends Component{
                         editEgreso={this.props.egresoActions.editEgreso}
                         handleEditMode={this.handleEditMode}
                         editMode={editMode}
-                        options={options}
+                        options={blines}
                         proveedores={options_providers}
                         types={tipo}
+
+                        searchLine={this.handleSearchLine}
+                        lineHandle={this.handleChangeS}
+                        linea={linea}
+
 
                     />
                 </Card>
@@ -102,7 +127,8 @@ function mapStateToProps(state, ownProps) {
     egreso = egreso[0];
     return {
         egreso,
-        fetched: egreso!==undefined && state.egresos.list!==undefined,
+        blines:state.blines.lineSearch,
+        fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined,
         proveedores:state.proveedores.list,
     }
 }
@@ -110,6 +136,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return{
         egresoActions: bindActionCreators(egresoActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

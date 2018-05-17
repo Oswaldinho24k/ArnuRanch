@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Button, message, Popconfirm, Divider, BackTop, Icon, Input} from 'antd';
+import {Button, message, Popconfirm, Divider, BackTop, Icon, Input, Table} from 'antd';
 import ProveedorForm from './ProveedorForm';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 import {connect} from 'react-redux';
@@ -35,6 +35,7 @@ class ProovedorPage extends Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+        canReset:false
     };
 
     showModal = () => {
@@ -144,43 +145,49 @@ class ProovedorPage extends Component {
     };
 
     onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
+        let basePath = 'http://localhost:8000/api/egresos/proveedores/?q=';
+
+        let url = basePath+this.state.searchText;
+        this.props.proveedoresActions.getProveedores(url);
+        this.setState({canReset:true})
+
+    };
+
+
+    resetFilter = () => {
+        let basePath = 'http://localhost:8000/api/egresos/proveedores/';
+        this.props.proveedoresActions.getProveedores(basePath)
         this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.proveedores.map((record) => {
-                const match = record.provider.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    provider: (
-                        <span>
-              {record.provider.split(reg).map((provider, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, provider] : provider
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
+            searchText: '',
+            canReset: false,
         });
     };
 
-    componentWillMount(){
-        this.setState({
-            data:this.props.proveedores
-        });
-    }
+    /*handlePagination=(pagina)=>{
+        console.log(this.props.proveedores);
+        let basePath = 'http://localhost:8000/api/egresos/proveedores/?page=';
+        let newUrl = basePath +pagina;
+        this.props.proveedoresActions.getProveedores(newUrl);
 
-    resetFilter = () => {
-        this.setState({
-            data:this.props.proveedores,
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
-        });
+    };*/
+
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.proveedoresData.next;
+        if(newUrl===null){
+            newUrl = this.props.proveedoresData.previous;
+        }
+
+        if( pagina ==1 && this.props.proveedoresData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.proveedoresActions.getProveedores(newUrl);
+    };
+
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
     };
 
 
@@ -192,27 +199,6 @@ class ProovedorPage extends Component {
                 dataIndex: 'provider',
                 render: (provider,obj) =><Link to={`/admin/proveedores/${obj.id}`}>{ provider && provider !== null ? provider: "No Proveedor"}</Link>,
                 key:'provider',
-                filterDropdown: (
-                    <div style={style.customFilterDropdown}>
-                        <Input
-                            ref={ele => this.searchInput = ele}
-                            placeholder="Buscar proveedor"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
-                            style={style.customFilterDropdownInput}
-                        />
-                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
-                    </div>
-                ),
-                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
-                ),
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
             },
             {
                 title: 'Dirección',
@@ -229,13 +215,13 @@ class ProovedorPage extends Component {
 
         ];
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered, searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {proveedores, fetched} = this.props;
+        let {proveedores, fetched, proveedoresData} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -246,21 +232,34 @@ class ProovedorPage extends Component {
                 </div>
 
                 <h1>Proveedores</h1>
+
+                <div style={{paddingBottom:'1%'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por nombre...'}
+                    />
+                </div>
+
                 <BackTop visibilityHeight={100} />
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={proveedores} columns={columns} rowSelection={rowSelection}/>
-                }
-
-               {/* <Table
-                    rowSelection={rowSelection}
-                    columns={columns}
+                <Table
                     dataSource={proveedores}
+                    columns={columns}
+                    rowSelection={rowSelection}
                     rowKey={record => record.id}
                     scroll={{x:650}}
-                    pagination={false}
                     style={{marginBottom:10}}
-                />*/}
+                    pagination={{
+                        pageSize: 10,
+                        total:proveedoresData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Proveedores`
+                    }}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
 
@@ -281,12 +280,12 @@ class ProovedorPage extends Component {
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this proveedor?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" disabled={!canReset} onClick={this.resetFilter}>Borrar filtro</Button>
 
                </Fragment>
         );
@@ -298,8 +297,9 @@ class ProovedorPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        proveedoresData:state.proveedores.allData,
         proveedores:state.proveedores.list,
-        fetched:state.proveedores.list!==undefined,
+        fetched:state.proveedores.list!==undefined && state.proveedores.allData,
     }
 }
 

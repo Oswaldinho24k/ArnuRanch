@@ -137,17 +137,18 @@ class AnimalsPage extends Component {
         this.setState({searchText:'', loteFilter:''});
     };
     handlePagination=(pagina)=>{
-
         let nextLength = pagina.toString().length;
         let newUrl = this.props.animalsData.next;
         if(newUrl===null){
             newUrl = this.props.animalsData.previous;
         }
-        newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
-        console.log(newUrl)
+
+        if( pagina ==1 && this.props.animalsData.count <= 40){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
         this.props.animalActions.getAnimals(newUrl);
-
-
     };
 
 

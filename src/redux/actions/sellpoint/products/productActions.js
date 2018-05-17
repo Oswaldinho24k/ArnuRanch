@@ -33,3 +33,40 @@ export const newProduct=(product)=>(dispatch, getState)=>{
             throw e
     })
 }
+
+//Edit product
+export const EDIT_PRODUCT_SUCCESS = 'EDIT_PRODUCT_SUCCESS';
+
+export function editProductSuccess(product){
+    return{
+        type: EDIT_PRODUCT_SUCCESS, product
+    }
+}
+
+export const editProduct=(product)=>(dispatch, getState)=>{
+    return api.editProduct(product)
+        .then(r=>{
+            dispatch(editProductSuccess(r));
+        }).catch(e=>{
+            throw e
+    })
+}
+
+
+//DELETE product
+export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
+
+export function deleteProductSuccess(product){
+    return{
+        type: DELETE_PRODUCT_SUCCESS, product
+    }
+}
+
+export const deleteProduct=(product)=>(dispatch, getState)=>{
+    return api.deleteProduct(product)
+        .then(r=>{
+            dispatch(deleteProductSuccess(r));
+        }).catch(e=>{
+            throw e
+    })
+}

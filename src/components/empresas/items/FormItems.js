@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Modal, Select } from 'antd';
+import { Form, Input, Button, Modal, Select, InputNumber } from 'antd';
 
 
 const FormItem = Form.Item;
@@ -24,8 +24,8 @@ const styles = {
 
 const FormItems = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, bline, empresa, almacen} = props;
-        const {getFieldDecorator} = form;
+        const{visible, onCancel, onCreate, form, bline, empresa, almacen, insumos, vacunas, onChangeSelect, selectChange, onChangeItem, itemIn} = props;
+        const {getFieldDecorator, getFieldValue} = form;
 
         return(
             <Modal
@@ -41,67 +41,169 @@ const FormItems = Form.create()(
             >
                 <Form >
                     <div style={styles.form}>
+                        <div style={styles.formSection} >
 
-                        <FormItem
-                            label="Cantidad"
-                        >
-                            {getFieldDecorator('cantidad', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Input placeholder={"Cantidad item"} />
-                            )}
-                        </FormItem>
+                            <FormItem
+                                label="Tipo"
+                                style={{width:'60%'}}
+                            >
+                                {getFieldDecorator('product_type', {
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Select placeholder="Product Type" onChange={onChangeSelect}>
+                                        <Option value="insumo">Insumo</Option>
+                                        <Option value="vacuna">Vacuna</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
 
-                        <FormItem
-                            label="Tipo"
-                        >
-                            {getFieldDecorator('product_type', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Input placeholder={"Product Type"} />
-                            )}
-                        </FormItem>
+                            <FormItem
+                                label="Cantidad"
+                                style={{width:'30%', marginLeft:5}}
+                            >
+                                {getFieldDecorator('cantidad', {
+                                    initialValue:1,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <InputNumber
+                                        min={0}
+                                    />
+                                )}
+                            </FormItem>
+
+
+
+
+                        </div>
+
+                        <div style={styles.formSection}>
+
+                        {selectChange === "insumo"
+                            ?
+                            <FormItem
+                                label={"Tipo"}
+                                style={{width:'60%'}}
+                            >
+                                {getFieldDecorator('insumo_id', {
+
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                    props:{
+                                        placeholder:'Selecciona un insumo',
+                                    }
+                                })(
+
+
+                                    <Select  placeholder={"Selecciona un insumo"} onChange={onChangeItem}>
+
+                                        {insumos}
+                                    </Select>
+                                )}
+
+                            </FormItem>
+                            :""
+                        }
+
+
+                        {selectChange === "vacuna"
+                            ?
+                            <FormItem
+                                label={"Tipo"}
+                                style={{width:'60%'}}
+                            >
+                                {getFieldDecorator('vacuna_id', {
+
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                    props:{
+                                        placeholder:'Selecciona una vacuna',
+                                    }
+                                })(
+
+
+                                    <Select  placeholder={"Selecciona una vacuna"}>
+
+                                        {vacunas}
+                                    </Select>
+                                )}
+
+                            </FormItem>
+                            :""
+                        }
 
                         <FormItem
                             label="Unidad"
+                            style={{width:'30%', marginLeft:5}}
                         >
                             {getFieldDecorator('unity', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input placeholder={"Unidad item"} />
+                                <Select style={{ width: 90 }}>
+                                    <Option value="kg">kg</Option>
+                                    <Option value="ml">ml</Option>
+                                    <Option value="pieza">pieza</Option>
+                                </Select>
                             )}
                         </FormItem>
+                    </div>
+
+                        <div style={styles.formSection}>
+
+                            <FormItem
+                                label="Total"
+                                style={{width:'40%'}}
+                            >
+                                {getFieldDecorator('total', {
+                                    initialValue:0,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <InputNumber
+                                        disabled={false}
+                                        style={{width:'150px'}}
+                                        step={0.01}
+                                        formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                    />
+                                )}
+                            </FormItem>
+
 
 
                         <FormItem
                             label="Costo Unitario"
+                            style={{width:'40%'}}
                         >
                             {getFieldDecorator('costo_u', {
+                                //initialValue:itemIn,
+                                initialValue:(getFieldValue('total')/getFieldValue('cantidad')).toFixed(2),
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
-                                <Input placeholder={"Costo unitario"} />
+                                <InputNumber
+                                    disabled
+                                    min={0}
+                                    style={{width:'150px'}}
+                                    step={0.01}
+                                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                />
                             )}
                         </FormItem>
 
-                        <FormItem
-                            label="Total"
-                        >
-                            {getFieldDecorator('total', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Input placeholder={"Total"} />
-                            )}
-                        </FormItem>
+
+
+                        </div>
 
                         <FormItem
                             label="Nombre del almacén"

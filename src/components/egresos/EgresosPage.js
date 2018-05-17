@@ -9,7 +9,7 @@ import moment from 'moment';
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import FormEgreso from "./EgresoForm";
 
-import TablePageB from "../clientes/TablePageB";
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 
 
 const Option = Select.Option;
@@ -72,7 +72,9 @@ class EgresosPage extends Component {
         data:[],
         filterDropdownVisible: false,
         searchText: '',
+        canReset:false,
         filtered: false,
+        linea:"",
     };
 
     showModal = () => {
@@ -122,6 +124,8 @@ class EgresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            values['business_line']=this.state.linea;
+            console.log(values)
             if (!err) {
                 console.log(values);
                 this.props.egresosActions.saveEgreso(values);
@@ -152,44 +156,60 @@ class EgresosPage extends Component {
     };
 
     onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.egresos.map((record) => {
-                const match = record.provider.provider.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    provider: (
-                        <span >
-              {record.provider.provider.split(reg).map((provider, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, provider] : provider
+        let basePath= "http://localhost:8000/api/egresos/egresos/?q=";
+        //let basePath = 'https://rancho.fixter.org/api/egresos/egresos/?q=';
 
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
+        let url = basePath+this.state.searchText;
+        this.props.egresosActions.getEgresos(url);
+        this.setState({canReset:true})
+
     };
 
-    componentWillMount(){
-        this.setState({
-            data:this.props.egresos
-        });
-    }
-
     resetFilter = () => {
+        let basePath= "http://localhost:8000/api/egresos/egresos/";
+        //let basePath = 'https://rancho.fixter.org/api/egresos/egresos/';
+
+        this.props.egresosActions.getEgresos(basePath);
         this.setState({
-            data:this.props.egresos,
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+            searchText:'',
+            canReset:false
         });
+
+    };
+
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.egresosData.next;
+        if(newUrl===null){
+            newUrl = this.props.egresosData.previous;
+        }
+
+        if( pagina ==1 && this.props.egresosData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.egresosActions.getEgresos(newUrl);
+    };
+
+
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
+    };
+
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
+        //this.props.linesActions.getLiSearch(basePath);
     };
 
 
@@ -201,30 +221,8 @@ class EgresosPage extends Component {
                 title: 'Razón Social',
                 dataIndex: 'provider',
                 render: (provider,obj) =><Link to={`/admin/egresos/${obj.id}`}>{ provider && provider !== null ? provider.provider  || provider: "No Proveedor"}</Link>,
-
-
                 key:'provider',
-                filterDropdown: (
-                    <div style={style.customFilterDropdown}>
-                        <Input
-                            ref={ele => this.searchInput = ele}
-                            placeholder="Buscar proveedor"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
-                            style={style.customFilterDropdownInput}
-                        />
-                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
-                    </div>
-                ),
-                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
-                ),
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
+
             },
             {
                 title: 'Linea de negocio',
@@ -249,13 +247,13 @@ class EgresosPage extends Component {
         ];
 
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered, searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched} = this.props;
+        let {egresos, fetched, egresosData, blines} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         //let type = type.map((a) => <Option key={a.name}>{a.name}</Option>);
         let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
@@ -270,21 +268,33 @@ class EgresosPage extends Component {
                 </div>
                 <h1>Egresos Page</h1>
 
+                {/*<div style={{paddingBottom:'1%'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por nombre...'}
+                    />
+                </div>*/}
+
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
+                <Table
                     dataSource={egresos}
+                    columns={columns}
+                    rowSelection={rowSelection}
                     rowKey={record => record.id}
                     scroll={{x:650}}
-                    pagination={false}
                     style={{marginBottom:10}}
-                />*/}
-
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={egresos} columns={columns} rowSelection={rowSelection}/>
-                }
+                    pagination={{
+                        pageSize: 10,
+                        total:egresosData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Egresos`
+                    }}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <FormEgreso
@@ -293,13 +303,15 @@ class EgresosPage extends Component {
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                     options_proveedores={options_proveedores}
-                    options={options}
+                    options={blines}
                     type={tipo}
                     handleChange={this.handleChange}
                     handleChangeD={this.handleChangeD}
                     contacto={this.state.contacto_directo}
                     factura = {this.state.factura}
 
+                    searchLine={this.handleSearchLine}
+                    lineHandle={this.handleChangeS}
 
                 />
 
@@ -307,12 +319,12 @@ class EgresosPage extends Component {
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" disabled={!canReset} onClick={this.resetFilter}>Borrar filtro</Button>
             </Fragment>
         );
     }
@@ -322,14 +334,17 @@ class EgresosPage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         egresos: state.egresos.list,
-        fetched: state.egresos.list !==undefined,
+        egresosData:state.egresos.allData,
+        blines:state.blines.lineSearch,
+        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined,
         proveedores: state.proveedores.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        egresosActions: bindActionCreators(egresosActions, dispatch)
+        egresosActions: bindActionCreators(egresosActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

@@ -3,10 +3,11 @@ import { Form, Input, Button, Select, InputNumber, Checkbox, Modal } from 'antd'
 
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type} = props;
+        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine} = props;
         const {getFieldDecorator} = form;
 
 
@@ -48,22 +49,21 @@ const FormEgreso = Form.create()(
 
                         <FormItem
                             label={"Linea de negocio"}
+                            hasFeedback
                         >
-                            {getFieldDecorator('business_line', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                                props:{
-                                    placeholder:'Linea de Negocio',
+                            <Select
+                                placeholder={"Linea de Negocio"}
+                                mode={'combobox'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
                                 }
-                            })(
 
+                            </Select>
 
-                                <Select  placeholder={"Linea de Negocio"}>
-
-                                    {options}
-                                </Select>
-                            )}
 
                         </FormItem>
 

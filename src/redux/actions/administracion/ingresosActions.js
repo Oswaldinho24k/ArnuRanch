@@ -8,10 +8,19 @@ export function getIngresosSuccess(ingresos){
     }
 }
 
-export const getIngresos=()=>(dispatch, getState)=> {
-    api.getIngresos()
+export const GET_INGRESOS_DATA_SUCCESS = 'GET_INGRESOS_DATA_SUCCESS';
+
+export function getAllIngresosSuccess(dataIngreso){
+    return{
+        type:GET_INGRESOS_DATA_SUCCESS, dataIngreso
+    }
+}
+
+export const getIngresos=(url)=>(dispatch, getState)=> {
+    api.getIngresos(url)
         .then(r => {
-            dispatch(getIngresosSuccess(r))
+            dispatch(getIngresosSuccess(r.results));
+            dispatch(getAllIngresosSuccess(r));
         }).catch(e => {
         console.log(e)
     })
@@ -33,7 +42,8 @@ export const saveIngreso=(ingreso)=>(dispatch, getState)=>{
             console.log(r);
             let client= getState().clientes.list.find(l=>l.id===r.client);
             r['client'] = client
-            dispatch(saveIngresoSuccess(r))
+            dispatch(saveIngresoSuccess(r));
+            dispatch(getIngresos());
         }).catch(e=>{
         console.log(e)
     })
@@ -72,7 +82,8 @@ export function deleteIngresoSuccess(ingresoId){
 export const deleteIngreso=(ingresoId)=>(dispatch, getState)=>{
     return api.deleteIngreso(ingresoId)
         .then(r=>{
-            dispatch(deleteIngresoSuccess(ingresoId))
+            dispatch(deleteIngresoSuccess(ingresoId));
+            dispatch(getIngresos());
         }).catch(e=>{
             console.log(e)
         })

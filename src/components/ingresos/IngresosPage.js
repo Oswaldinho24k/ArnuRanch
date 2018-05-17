@@ -6,9 +6,9 @@ import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
+import * as linesActions from '../../redux/actions/blines/blinesActions';
 import FormIngreso from "./IngresoForm";
 
-import TablePageB from "../clientes/TablePageB";
 
 
 const Option = Select.Option;
@@ -59,6 +59,7 @@ class IngresosPage extends Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+        linea:'',
     };
 
     showModal = () => {
@@ -108,6 +109,7 @@ class IngresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
+            values['business_line']=this.state.linea;
             if (!err) {
                 console.log(values);
                 this.props.ingresosActions.saveIngreso(values);
@@ -132,45 +134,60 @@ class IngresosPage extends Component {
     };
 
     onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.ingresos.map((record) => {
-                const match = record.client.client.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    client: (
-                        <span >
-              {record.client.client.split(reg).map((client, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, client] : client
+        let basePath= "http://localhost:8000/api/ingresos/ingresos/?q=";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/ingresos/?q=';
 
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
+        let url = basePath+this.state.searchText;
+        this.props.ingresosActions.getIngresos(url);
+        this.setState({canReset:true})
+
     };
-
-    componentWillMount(){
-        this.setState({
-            data:this.props.ingresos
-        });
-    }
 
     resetFilter = () => {
+        let basePath= "http://localhost:8000/api/ingresos/ingresos/";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/ingresos/';
+
+        this.props.ingresosActions.getIngresos(basePath);
         this.setState({
-            data:this.props.ingresos,
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+            searchText:'',
+            canReset:false
         });
     };
+
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.ingresosData.next;
+        if(newUrl===null){
+            newUrl = this.props.ingresosData.previous;
+        }
+
+        if( pagina ==1 && this.props.ingresosData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.ingresosActions.getIngresos(newUrl);
+    };
+
+
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
+    };
+
+    handleSearchLine=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.linesActions.getLiSearch(url);
+    };
+
+    handleChangeS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({linea:value});
+
+    };
+
 
 
 
@@ -182,28 +199,6 @@ class IngresosPage extends Component {
                 dataIndex: 'client',
                 render: (client,obj) =><Link to={`/admin/ingresos/${obj.id}`}>{ client && client !== null ? client.client  || client: "No Cliente"}</Link>,
                 key:'client',
-                filterDropdown: (
-                    <div style={style.customFilterDropdown}>
-                        <Input
-                            ref={ele => this.searchInput = ele}
-                            placeholder="Buscar cliente"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
-                            style={style.customFilterDropdownInput}
-                        />
-                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
-                    </div>
-                ),
-                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
-                ),
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
-
             },
             {
                 title: 'Linea de negocio',
@@ -230,13 +225,13 @@ class IngresosPage extends Component {
 
 
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered, searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {ingresos, fetched, clientes} = this.props;
+        let {ingresos, fetched, clientes, ingresosData, blines} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let options_clientes = clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
         if(!fetched)return(<MainLoader/>);
@@ -250,21 +245,33 @@ class IngresosPage extends Component {
 
                 <h1>Ingresos Page</h1>
 
+                {/*<div style={{paddingBottom:'1%'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por nombre...'}
+                    />
+                </div>*/}
+
                 <BackTop visibilityHeight={100} />
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={ingresos} columns={columns} rowSelection={rowSelection}/>
-                }
-
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
+                <Table
                     dataSource={ingresos}
+                    columns={columns}
+                    rowSelection={rowSelection}
                     rowKey={record => record.id}
                     scroll={{x:650}}
-                    pagination={false}
                     style={{marginBottom:10}}
-                />*/}
+                    pagination={{
+                        pageSize: 10,
+                        total:ingresosData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Ingresos`
+                    }}
+                />
 
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <FormIngreso
@@ -273,9 +280,12 @@ class IngresosPage extends Component {
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                     options_clientes={options_clientes}
-                    options={options}
+                    options={blines}
                     handleChange={this.handleChange}
                     factura = {this.state.factura}
+
+                    searchLine={this.handleSearchLine}
+                    lineHandle={this.handleChangeS}
 
                 />
 
@@ -284,12 +294,12 @@ class IngresosPage extends Component {
                     type={'vertical'}/>
 
                 <Popconfirm title="Are you sure delete this ingreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" disabled={!canReset} onClick={this.resetFilter}>Borrar filtro</Button>
             </Fragment>
         );
     }
@@ -299,14 +309,17 @@ class IngresosPage extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         ingresos:state.ingresos.list,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined,
+        ingresosData:state.ingresos.allData,
+        blines:state.blines.lineSearch,
+        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined,
         clientes:state.clientes.list,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        ingresosActions: bindActionCreators(ingresosActions, dispatch)
+        ingresosActions: bindActionCreators(ingresosActions, dispatch),
+        linesActions: bindActionCreators(linesActions, dispatch)
     }
 }
 

@@ -1,6 +1,4 @@
 import api from "../../../Api/Django";
-import {editAnimalSuccess} from "../ganado/animalsActions";
-
 
 
 export const GET_PROVEEDORES_SUCCESS = 'GET_PROVEEDORES_SUCCESS';
@@ -11,12 +9,23 @@ export function getProveedoresSuccess(proveedores){
     }
 }
 
-export const getProveedores=()=>(dispatch, getState)=>{
-    return api.getProveedores()
+
+export const GET_PROVEEDORES_DATA_SUCCESS = 'GET_PROVEEDORES_DATA_SUCCESS';
+
+export function getAllDataSuccess(dataProvider){
+    return{
+        type:GET_PROVEEDORES_DATA_SUCCESS, dataProvider
+    }
+}
+
+export const getProveedores=(url)=>(dispatch, getState)=>{
+    return api.getProveedores(url)
         .then(r=>{
-            dispatch(getProveedoresSuccess(r))
+            dispatch(getProveedoresSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
         }).catch(e=>{
         console.log(e)
+            throw e
     })
 };
 
@@ -34,7 +43,8 @@ export function saveProveedorSuccess(proveedor){
 export const saveProveedor=(proveedor)=>(dispatch, getState)=>{
     return api.newProveedor(proveedor)
         .then(r=>{
-            dispatch(saveProveedorSuccess(r))
+            dispatch(saveProveedorSuccess(r));
+            dispatch(getProveedores());
         }).catch(e=>{
         throw e
     })
@@ -71,7 +81,8 @@ export function deleteProveedorSuccess(proveedorId){
 export const deleteProveedor=(proveedorId)=>(dispatch, getState)=>{
     return api.deleteProveedor(proveedorId)
         .then(r=>{
-            dispatch(deleteProveedorSuccess(proveedorId))
+            dispatch(deleteProveedorSuccess(proveedorId));
+            dispatch(getProveedores());
         }).catch(e=>{
             console.log(e)
         })

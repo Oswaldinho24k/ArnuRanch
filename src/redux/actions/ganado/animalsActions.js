@@ -66,7 +66,8 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
             //let raza = getState().razas.list.find(ra=>ra.id===r.raza);
             //r['raza'] = raza;
            // r['lote'] = lote;
-            dispatch(saveAnimalSuccess(r))
+            dispatch(saveAnimalSuccess(r));
+            dispatch(getAnimals());
         })
         .catch(e=>{
             throw e;
@@ -111,7 +112,8 @@ export function deleteAnimalSuccess(animalId){
 export const deleteAnimal=(animalId)=>(dispatch, getState)=>{
     return api.deleteAnimal(animalId)
         .then(r=>{
-            dispatch(deleteAnimalSuccess(animalId))
+            dispatch(deleteAnimalSuccess(animalId));
+            dispatch(getAnimals());
         }).catch(e=>{
             throw e;
         })

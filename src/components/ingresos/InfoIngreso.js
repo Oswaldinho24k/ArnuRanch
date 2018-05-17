@@ -6,10 +6,16 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
+            if(linea !== ''){
+                values['business_line']=linea;
+            }else{
+                values['business_line']=business_line;
+            }
+
             if (!err) {
                 console.log(values);
                 values['id']=id;
@@ -66,39 +72,49 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                         </FormItem>}
 
                     {business_line?
+
                         <FormItem
                             label={"Linea de negocio"}
+                            hasFeedback
+                        >
+                            <Select
+                                disabled={!editMode}
+                                defaultValue={business_line}
+                                placeholder={"Linea de Negocio"}
+                                mode={'combobox'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
                             >
-                            {form.getFieldDecorator('business_line',{
-                                initialValue:business_line,
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    placeholder={"Linea de negocio"}>
-                                    {options}
-                                </Select>
-                            )}
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
+
+                            </Select>
+
+
                         </FormItem>:
                         <FormItem
                             label={"Linea de negocio"}
+                            hasFeedback
+                        >
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"Linea de Negocio"}
+                                mode={'combobox'}
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
                             >
-                            {form.getFieldDecorator('business_line',{
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
 
-                            })(
-                                <Select
-                                    disabled={!editMode}
+                            </Select>
 
-                                    placeholder={"Linea de negocio"}>
-                                    {options}
-                                </Select>
-                            )}
-                        </FormItem>}
+
+                        </FormItem>
+                    }
 
                     <FormItem
                         label="Monto">

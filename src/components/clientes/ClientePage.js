@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
+import {Table, Button, message, Popconfirm, Divider, BackTop, Input,Icon} from 'antd';
 import ClienteForm from './ClienteForm';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import {connect} from 'react-redux';
@@ -35,6 +35,7 @@ class ClientePage extends Component {
 
             filterDropdownVisible: false,
             searchText: '',
+            canReset:false,
             filtered: false,
 
         };
@@ -145,45 +146,47 @@ class ClientePage extends Component {
     };
 
     onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.clientes.map((record) => {
-                const match = record.client.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    client: (
-                        <span>
-              {record.client.split(reg).map((client, i) => (
-                  i > 0 ? [<span style={{color:'red'}} key={i}>{match[0]}</span>, client] : client
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
+        let basePath= "http://localhost:8000/api/ingresos/clientes/?q=";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/clientes/?q=';
+
+        let url = basePath+this.state.searchText;
+        this.props.clientesActions.getClientes(url);
+        this.setState({canReset:true})
+
     };
 
-    componentWillMount(){
-        this.setState({
-            data:this.props.clientes
-        });
-    }
 
     resetFilter = () => {
+        let basePath= "http://localhost:8000/api/ingresos/clientes/";
+        //let basePath = 'https://rancho.fixter.org/api/ingresos/clientes/';
+
+        this.props.clientesActions.getClientes(basePath);
         this.setState({
-            data:this.props.clientes,
-            filterDropdownVisible: false,
-            searchText: '',
-            filtered: false,
+            searchText:'',
+            canReset:false
         });
+
     };
 
+
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.clientesData.next;
+        if(newUrl===null){
+            newUrl = this.props.clientesData.previous;
+        }
+
+        if( pagina ==1 && this.props.clientesData.count <= 20){
+            newUrl='http'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.clientesActions.getClientes(newUrl);
+    };
+
+    handleSearch=(e)=>{
+        this.setState({searchText:e.target.value})
+    };
 
 
 
@@ -194,27 +197,7 @@ class ClientePage extends Component {
                 dataIndex: 'client',
                 render: (client,obj) =><Link to={`/admin/clientes/${obj.id}`}>{ client && client !== null ? client: "No Cliente"}</Link>,
                 key:'client',
-                filterDropdown: (
-                    <div style={style.customFilterDropdown}>
-                        <Input
-                            ref={ele => this.searchInput = ele}
-                            placeholder="Buscar cliente"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
-                            style={style.customFilterDropdownInput}
-                        />
-                        <Button type="primary" onClick={this.onSearch}><Icon type="search" /></Button>
-                    </div>
-                ),
-                filterIcon: (<Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />
-                ),
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
+
             },
             {
                 title: 'Dirección',
@@ -231,40 +214,55 @@ class ClientePage extends Component {
 
         ];
 
-        const { visible, selectedRowKeys, data, filtered } = this.state;
+        const { visible, selectedRowKeys, data, filtered, searchText, canReset } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         //const filter = data.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {clientes, fetched} = this.props;
+        let {clientes, fetched, clientesData} = this.props;
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
+
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
                     Clientes
                 </div>
 
-                <h2>Clientes</h2>
+
+                    <h2 style={{margin:0}}>Clientes</h2>
+                <div style={{paddingBottom:'1%'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Busca por nombre...'}
+                    />
+                </div>
+
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={clientes}
-                    rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
-                    style={{marginBottom:10}}
-                    onChange={this.handleChang}
-                />*/}
 
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                :<TablePageB data={clientes} columns={columns} rowSelection={rowSelection}/>
-                }
+                <Table
+                        dataSource={clientes}
+                        columns={columns}
+                        rowSelection={rowSelection}
+                        rowKey={record => record.id}
+                        scroll={{x:650}}
+                        style={{marginBottom:10}}
+                        pagination={{
+                            pageSize: 10,
+                            total:clientesData.count,
+                            onChange:this.handlePagination,
+                            showTotal:total => `Total: ${total} Clientes`
+                        }}
+                    />
+
 
 
 
@@ -288,12 +286,12 @@ class ClientePage extends Component {
                 <Divider type={'vertical'} />
 
                 <Popconfirm title="Are you sure delete this cliente?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Borrar</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
                 <Divider type={'vertical'} />
 
-                <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
+                <Button type="primary" disabled={!canReset} onClick={this.resetFilter}>Borrar filtro</Button>
 
             </Fragment>
         );
@@ -305,8 +303,9 @@ class ClientePage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        clientesData:state.clientes.allData,
         clientes:state.clientes.list,
-        fetched:state.clientes.list!==undefined ,
+        fetched:state.clientes.list!==undefined //&& state.clientes.allData !==undefined,
     }
 }
 

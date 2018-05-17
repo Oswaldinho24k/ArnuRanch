@@ -14,10 +14,12 @@ import {getRazas} from "./ganado/razasActions";
 import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
-import {getBusinessLines} from "./administracion/blinesActions";
 import {getAlmacenes} from "./almacen/almacenActions";
 import { getProducts } from "./sellpoint/products/productActions";
 import { getCategories } from "./sellpoint/products/categoriesActions";
+import {getLines, getLiSearch} from "./blines/blinesActions";
+import {getFacturas, getFaSearch} from "./facturas/facturasActions";
+import { getOrders } from "./sellpoint/orders/orderActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -90,10 +92,14 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getEgresos());
         dispatch(getEmpresas());
         dispatch(getVacunas());
-        dispatch(getBusinessLines());
+        dispatch(getLines());
+        dispatch(getLiSearch());
         dispatch(getAlmacenes());
         dispatch(getProducts());
         dispatch(getCategories())
+        dispatch(getFacturas());
+        dispatch(getFaSearch());
+        dispatch(getOrders())
 
     }
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, Input, Select, Modal, InputNumber, Upload, Button, Icon, Checkbox} from 'antd'
+import {Form, Input, Switch, Select, Modal, InputNumber, Upload, Button, Icon, Checkbox} from 'antd'
 import MainLoader from '../../common/Main Loader';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -115,7 +115,7 @@ class ProductForm extends Component {
                     required: true, message: 'Completa!',
                 }],
             })(
-                <Checkbox>Oferta?</Checkbox>
+                <Switch/>,
             )}
         </FormItem>
         

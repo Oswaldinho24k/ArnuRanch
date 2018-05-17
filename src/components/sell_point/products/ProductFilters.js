@@ -1,55 +1,25 @@
 import React from 'react';
 import {Divider, Select, Button, Input} from 'antd'
 
-export const ProductFilters = () => {
+const {Option} = Select;
+
+export const ProductFilters = ({handleSearch, search, handleCategory, categories, resetFilters}) => {
   return (
     <div style={{padding:'0 0 1% 0'}}>
-       {/*<Input.Search
-            enterButton
-            onSearch={this.onSearch}
-            onChange={this.handleSearch}
-            value={searchText}
+            <Input
+            onChange={handleSearch}
             style={{ width: 400 }}
-            placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
+            value={search}
+            placeholder={'Busca por nombre'}/>
         <Divider
             type={'vertical'}/>
-        <Select
-            value={loteFilter}
-            mode="combobox"
-            style={{ width: 200 }}
-            onChange={this.handleChange}
-            onSelect={this.filterByLote}
-            placeholder="Filtra por nombre de lote"
-            filterOption={false}
-        >
-            {optionsLote.map(d => <Option value={d.name} key={d.id}>{d.name}</Option>)}
+        <Select defaultValue="Todos" style={{ width: 120 }} onChange={handleCategory}>
+           {categories.map((c, key)=>(<Option key={key} value={c.id}>{c.name}</Option>))}
         </Select>
         <Divider
             type={'vertical'}/>
-        <Button
-            type="primary"
-            disabled={!canReset}
-            onClick={this.resetFilters}>Restablecer</Button>*/}
-            <Input.Search
-            enterButton
-            style={{ width: 400 }}
-            placeholder={'Busca por propietario, arete rancho o arete siniga'}/>
-        <Divider
-            type={'vertical'}/>
-        <Select
-           
-            mode="combobox"
-            style={{ width: 200 }}
-            placeholder="Filtra por nombre de lote"
-            filterOption={false}
-        >
-           
-        </Select>
-        <Divider
-            type={'vertical'}/>
-        <Button
-            type="primary"
-           >Restablecer</Button>
+        <Button type="primary" onClick={resetFilters}>Reset</Button>
+       
     </div>
   )
 };

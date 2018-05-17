@@ -73,10 +73,11 @@ class PagarEgreso extends Component {
     onSearch = () => {
         const { searchText } = this.state;
         const reg = new RegExp(searchText, 'gi');
+        let dataFilter = this.props.egresos.filter(f=>{return f.paid===false });
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
-            data: this.props.egresos.map((record) => {
+            data: dataFilter.map((record) => {
                 const match = record.provider.provider.match(reg);
                 if (!match) {
                     return null;
@@ -97,14 +98,16 @@ class PagarEgreso extends Component {
     };
 
     componentWillMount(){
+        let filtrados = this.props.egresos.filter(f=>{return f.paid===false });
         this.setState({
-            data:this.props.egresos
+            data:filtrados
         });
     }
 
     resetFilter = () => {
+        let filtrados = this.props.egresos.filter(f=>{return f.paid===false });
         this.setState({
-            data:this.props.egresos,
+            data:filtrados,
             filterDropdownVisible: false,
             searchText: '',
             filtered: false,
@@ -204,9 +207,10 @@ class PagarEgreso extends Component {
                 }
 
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
-                    <Button hidden={!canDelete} type="primary" >Delete</Button>
+                    <Button disabled={!canDelete} type="primary" >Eliminar</Button>
                 </Popconfirm>
 
+                <Divider type="vertical"/>
 
                 <Button type="primary" hidden={!filtered} onClick={this.resetFilter}>Borrar filtro</Button>
 

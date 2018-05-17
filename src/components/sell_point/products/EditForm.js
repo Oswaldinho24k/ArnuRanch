@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, Input, Select, Modal, InputNumber, Upload, Button, Icon, Checkbox} from 'antd'
+import {Form, Input, Select,Switch, Modal, InputNumber, Upload, Button, Icon, Checkbox} from 'antd'
 import MainLoader from '../../common/Main Loader';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -16,15 +16,14 @@ class EditForm extends Component {
     handleOk = (e) => {
         this.props.form.validateFields((err, values) => {
             if(!err){
-                console.log(values)
-                this.props.productActions.newProduct(values)
+                console.log(values, this.props.match.params.id.toString())
+                values['id']=this.props.match.params.id
+                this.props.productActions.editProduct(values)
                     .then(r=>{
                         this.props.history.push('/admin/sp')
                     }).catch(e=>{
                         console.log(e)
                     })
-                
-                
             }
 
         })
@@ -70,16 +69,15 @@ class EditForm extends Component {
             )}
         </FormItem>
 
-        <FormItem label="Imágen">
+        <FormItem label={product.image?<a href={product.image} target="_blank">Imágen</a>:'Imágen'}>
             {form.getFieldDecorator('image', {
                 rules: [{
-                    required: true, message: 'Completa!',
+                    required: false, message: 'Completa!',
                 }],
             })(
                 <Upload >
-                    <a href={product.image}></a>
                     <Button>
-                    <Icon type="upload" /> Image
+                        <Icon type="upload" /> Image
                     </Button>
                 </Upload>
             )}
@@ -122,14 +120,14 @@ class EditForm extends Component {
                     required: true, message: 'Completa!',
                 }],
             })(
-                <Checkbox>Oferta?</Checkbox>
+                <Switch defaultChecked={product.in_offer} />,
             )}
         </FormItem>
         
         
         <FormItem label="Categoría">
             {form.getFieldDecorator('category_id', {
-                initialValue:product.category.name,
+                initialValue:product.category.id,
                 rules: [{
                     required: true, message: 'Completa!',
                 }],

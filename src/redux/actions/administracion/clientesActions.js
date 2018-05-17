@@ -8,10 +8,20 @@ export function getClientesSuccess(clientes){
     }
 }
 
-export const getClientes=()=>(dispatch, getState)=>{
-    return api.getClientes()
+export const GET_CLIENTES_DATA_SUCCESS = 'GET_CLIENTES_DATA_SUCCESS';
+
+export function getAllDataSuccess(dataClient){
+    return{
+        type:GET_CLIENTES_DATA_SUCCESS, dataClient
+    }
+}
+
+export const getClientes=(url)=>(dispatch, getState)=>{
+    return api.getClientes(url)
         .then(r=>{
-            dispatch(getClientesSuccess(r))
+            console.log(r);
+            dispatch(getClientesSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
         }).catch(e=>{
             throw e
     })
@@ -32,11 +42,9 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
     return api.newCliente(cliente)
         .then(r=>{
             dispatch(saveClienteSuccess(r));
+            dispatch(getClientes());
         }).catch(e=>{
-
-
-        console.log(e)
-
+            console.log(e)
             throw e
     })
 };
@@ -72,7 +80,8 @@ export function deleteClienteSuccess(clienteId){
 export const deleteCliente=(clienteId)=>(dispatch, getState)=>{
     return api.deleteCliente(clienteId)
         .then(r=>{
-            dispatch(deleteClienteSuccess(clienteId))
+            dispatch(deleteClienteSuccess(clienteId));
+            dispatch(getClientes());
         }).catch(e=>{
             throw e
         })

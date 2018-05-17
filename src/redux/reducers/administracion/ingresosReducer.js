@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_INGRESOS_SUCCESS, SAVE_INGRESO_SUCCESS, EDIT_INGRESO_SUCCESS, DELETE_INGRESO_SUCCESS} from "../../actions/administracion/ingresosActions";
+import {GET_INGRESOS_SUCCESS, SAVE_INGRESO_SUCCESS, EDIT_INGRESO_SUCCESS, DELETE_INGRESO_SUCCESS, GET_INGRESOS_DATA_SUCCESS} from "../../actions/administracion/ingresosActions";
 
 
 
@@ -24,9 +24,19 @@ function list(state=[], action){
     }
 }
 
+function allData(state={}, action) {
+    switch (action.type){
+        case GET_INGRESOS_DATA_SUCCESS:
+            return action.dataIngreso;
+        default:
+            return state;
+    }
+}
+
 
 const ingresosReducer = combineReducers({
     list:list,
+    allData:allData,
 });
 
 

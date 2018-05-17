@@ -25,7 +25,10 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
             </SubMenu>:''}
             {user.is_superuser?<SubMenu  key="sub6" title={<span className={'my-icon'}><Icon type="shopping-cart" /><span>Punto de Venta</span></span>}>
                 <Menu.Item key="21" disabled={false}>
-                    <Link to='/admin/sp_products'>  products </Link>
+                    <Link to='/admin/sp'>  Productos </Link>
+                </Menu.Item>
+                <Menu.Item key="22" disabled={false}>
+                    <Link to='/admin/sp/orders'>  Órdenes </Link>
                 </Menu.Item>
             </SubMenu>:''}
             {(user.profile&&user.profile.admin)|| user.is_superuser?
@@ -54,8 +57,14 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="8" disabled={true}>
                         <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                     </Menu.Item>
-                    <Menu.Item key="9" disabled={true}>
+                    {/*<Menu.Item key="9" disabled={true}>
                         <Link to={'/admin/inventario'}>Inventario</Link>
+                    </Menu.Item>*/}
+                    <Menu.Item key="22">
+                        <Link to={'/admin/facturas'}>Facturas</Link>
+                    </Menu.Item>
+                    <Menu.Item key="9" disabled={false}>
+                        <Link to={'/admin/ingresos/blines'} >Bussines Lines</Link>
                     </Menu.Item>
                     <Menu.Item key="11">
                         <Link to='/admin/empresas'> Empresas </Link>
