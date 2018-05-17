@@ -142,7 +142,7 @@ class Blines extends Component {
             <Fragment>
                 <h2>Bussines Line</h2>
                 <Table
-                    
+
                     columns={columns}
                     dataSource={blines}
                     rowKey={record => record.id}

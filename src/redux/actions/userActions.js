@@ -1,6 +1,6 @@
 import api from "../../Api/Django";
-import {getAnimals} from "./ganado/animalsActions";
-import {getLotes} from "./ganado/lotesActions";
+import {getAnimals, getAnSearch} from "./ganado/animalsActions";
+import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
 import {getProveedores} from "./administracion/proveedoresActions";
 import {getClientes} from "./administracion/clientesActions";
@@ -94,6 +94,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getAlmacenes());
         dispatch(getFacturas());
         dispatch(getFaSearch());
+        dispatch(getAnSearch());
+        dispatch(getLoSearch());
 
     }
 };

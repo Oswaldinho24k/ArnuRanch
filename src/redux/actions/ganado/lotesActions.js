@@ -85,3 +85,23 @@ export const deleteLote=(loteId)=>(dispatch, getState)=>{
             throw e;
         })
 };
+
+/*************************searchJlo********************************+*/
+
+export const GET_LOSEARCH_SUCCESS = 'GET_LOSEARCH_SUCCESS';
+
+export function getLoSearchSuccess(loteS){
+    return{
+        type:GET_LOSEARCH_SUCCESS, loteS
+    }
+}
+
+export const getLoSearch=(url)=>(dispatch, getState)=>{
+    return api.getLotes(url)
+        .then(r=>{
+            console.log(r)
+            dispatch(getLoSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};

@@ -118,3 +118,23 @@ export const deleteAnimal=(animalId)=>(dispatch, getState)=>{
             throw e;
         })
 };
+
+
+/*************************searchJlo********************************+*/
+
+export const GET_ANSEARCH_SUCCESS = 'GET_ANSEARCH_SUCCESS';
+
+export function getAnSearchSuccess(animalS){
+    return{
+        type:GET_ANSEARCH_SUCCESS, animalS
+    }
+}
+
+export const getAnSearch=(url)=>(dispatch, getState)=>{
+    return api.getAnimals(url)
+        .then(r=>{
+            dispatch(getAnSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};
