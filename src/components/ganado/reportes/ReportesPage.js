@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {Select, Form, message, Divider, Card, Avatar} from 'antd';
 import MainLoader from "../../common/Main Loader";
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 
 
 const FormItem = Form.Item;
@@ -18,6 +19,7 @@ class ReportesPage extends Component {
         modo:'',
         loading:false,
         info:null,
+        infoLote:null,
     };
 
 
@@ -49,9 +51,9 @@ class ReportesPage extends Component {
         console.log(b, value);
         this.setState({lote:value})
     };
-    saveLoteId=(id)=>{
-        this.setState({loteId:id});
-        console.log(id)
+    saveLoteId=(lote)=>{
+        this.setState({infoLote:lote});
+        console.log(lote)
     };
 
     handleSearchLote=(a)=>{
@@ -72,18 +74,16 @@ class ReportesPage extends Component {
     render() {
         let {fetched, animals, lotes, animalSearch} = this.props;
         let {modo, loading} = this.state;
-        console.log("SEARCH", this.state.info)
-        console.log("LOTE", lotes)
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h2>Reportes</h2>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Ganado
                     <Divider type="vertical" />
                     Reportes
-
                 </div>
+
+                <h2>Reportes</h2>
 
 
                 <div style={{display:'flex', flexWrap:'wrap', justifyContent: 'space-around'}}>
@@ -103,19 +103,17 @@ class ReportesPage extends Component {
                         {modo==='lote'?
                             <FormItem label={'Lote'}>
                                 <Select
-                                    //value={this.state.lote}
+                                    value={this.state.lote}
                                     mode="combobox"
                                     style={{width:'100%'}}
-                                    //onSelect={this.onSelectLote}
+                                    onSelect={this.onSelectLote}
+                                    onSearch={this.handleSearchLote}
 
                                     onChange={this.handleChangeLote}
                                     placeholder="ingresa el nombre del lote"
-                                    filterOption={true}
+                                    filterOption={false}
                                 >
-                                    {
-                                    }
-
-                                    {lotes && lotes.length>0?
+                                    {lotes.length>0?
                                         lotes.map((a, key)=>
                                             <Option value={a.name} key={key}>
                                                 <div onClick={()=>this.saveLoteId(a)}>
@@ -158,8 +156,16 @@ class ReportesPage extends Component {
                     </Card>
                     </div>
 
-                    <div style={{width:'45%', backgroundColor:'yellow', marginLeft:20}}>
-                        <CardInfo {...this.state.info} />
+                    <div style={{width:'45%', marginLeft:20}}>
+                        <Card title={"Resultado: "} type={"inner"} >
+                        {modo === 'lote' ?
+                            <CardLote {...this.state.infoLote}/>
+                            :modo === 'individual'?
+                                <CardInfo {...this.state.info} />
+                                :''
+                        }
+                        </Card>
+
                     </div>
                 </div>
 
@@ -169,10 +175,11 @@ class ReportesPage extends Component {
     }
 }
 
+
 const CardInfo = ({arete_rancho, costo_inicial, fierro_nuevo }) => {
 
     return(
-        <Card title={"Resultado: "} type={"inner"} >
+        <div >
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
                 <Avatar style={{height:150, width:150, backgroundColor:'white'}} src={fierro_nuevo && fierro_nuevo!==null?fierro_nuevo:"http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png"} />
             </div>
@@ -183,7 +190,25 @@ const CardInfo = ({arete_rancho, costo_inicial, fierro_nuevo }) => {
             <p>Rendimiento $90, 000</p>
             <p>Conversión $190, 000</p>
             <p>Ganancia Diaria Promedio $99, 000</p>
-        </Card>
+        </div>
+
+    )
+};
+
+const CardLote = ({name, animals }) => {
+
+    return(
+        <div >
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
+                <Avatar style={{height:150, width:150, backgroundColor:'white'}} src={"http://conceptodefinicion.de/wp-content/uploads/2014/09/ganado.jpg"} />
+            </div>
+            <p>Lote: {name}</p>
+            <p>Inversión Registrada al momento $ 75, 000</p>
+            <p>Cantidad de Animales {animals !==undefined ? animals.length:"No contiene animales"}</p>
+            <p>Rendimiento $90, 000</p>
+            <p>Conversión $190, 000</p>
+            <p>Ganancia Diaria Promedio $99, 000</p>
+        </div>
 
     )
 };
@@ -201,7 +226,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        animalActions: bindActionCreators(animalActions, dispatch)
+        animalActions: bindActionCreators(animalActions, dispatch),
+        lotesActions: bindActionCreators(lotesActions, dispatch)
     }
 }
 

@@ -140,7 +140,13 @@ class Blines extends Component {
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
-                <h2>Bussines Line</h2>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Lineas de Negocio
+                </div>
+
+                <h2>Lineas de Negocio</h2>
                 <Table
 
                     columns={columns}

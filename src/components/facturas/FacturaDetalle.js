@@ -37,6 +37,14 @@ class FacturaDetalle extends Component{
 
         return(
             <div>
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    <Link to={`/admin/facturas/`} style={{color:'black'}} >Facturas</Link>
+                    <Divider type="vertical" />
+                    Detalle
+                </div>
+
                 <Card style={{textAlign:'center'}}>
                     <h2>{factura.factura}</h2>
                     <h3 style={{display:'flex', justifyContent:'flex-end'}}>Total de animales: {factura.animals.length}</h3>
