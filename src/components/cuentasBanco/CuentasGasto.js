@@ -23,7 +23,7 @@ const style={
 };
 
 
-class CuentasBanco extends Component {
+class CuentasGasto extends Component {
     state = {
         selectedRowKeys:[],
 
@@ -222,5 +222,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-CuentasBanco = connect(mapStateToProps, mapDispatchToProps)(CuentasBanco);
-export default CuentasBanco;
+CuentasGasto = connect(mapStateToProps, mapDispatchToProps)(CuentasGasto);
+export default CuentasGasto;

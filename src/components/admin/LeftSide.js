@@ -54,7 +54,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="7" disabled={false}>
                         <Link to={'/admin/proveedores'}>Proovedores</Link>
                     </Menu.Item>
-                    <Menu.Item key="8" disabled={true}>
+                    <Menu.Item key="8" disabled={false}>
                         <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                     </Menu.Item>
                     {/*<Menu.Item key="9" disabled={true}>

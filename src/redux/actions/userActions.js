@@ -20,6 +20,7 @@ import { getCategories } from "./sellpoint/products/categoriesActions";
 import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import { getOrders } from "./sellpoint/orders/orderActions";
+import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -102,6 +103,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getAnSearch());
         dispatch(getLoSearch());
         dispatch(getOrders());
+        dispatch(getCuentas());
+        dispatch(getCuSearch());
 
     }
 };

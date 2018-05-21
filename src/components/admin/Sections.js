@@ -21,7 +21,7 @@ import DetailIngresoPage from "../ingresos/DetailIngresoPage";
 import DetailEgresoPage from "../egresos/DetailEgresoPage";
 import CobrarIngreso from "../ingresos/CobrarIngreso";
 import PagarEgreso from "../egresos/PagarEgreso";
-import CuentasBanco from "../cuentasBanco/CuentasBanco";
+import CuentasBanco from "../cuentasBanco/CuentasGasto";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
 
@@ -45,6 +45,7 @@ import Blines from "../blines/Blines";
 import FacturasPage from "../facturas/FacturasPage";
 import FacturaDetalle from "../facturas/FacturaDetalle";
 import OrdersPage from '../sell_point/orders/OrdersPage';
+import CuentasPage from "../cuentasBanco/Cuentas";
 
 
 export const paths = {
@@ -66,7 +67,7 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
 
-                <Route path={'/admin/cuentas'} component={CuentasBanco}/>
+                <Route path={'/admin/cuentas'} component={CuentasPage}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
                 <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
