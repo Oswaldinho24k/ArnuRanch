@@ -117,7 +117,7 @@ class CuentasPage extends Component{
             {
                 title: 'Cuenta',
                 dataIndex: 'cuenta',
-                //render: (cuenta,obj) =><Link to={`/admin/cuentas/${obj.id}`}>{ cuenta && cuenta !== null ? cuenta: "No cuenta"}</Link>,
+                render: (cuenta,obj) =><Link to={`/admin/cuentas/${obj.id}`}>{ cuenta && cuenta !== null ? cuenta: "No cuenta"}</Link>,
 
             },
 

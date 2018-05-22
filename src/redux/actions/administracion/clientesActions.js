@@ -1,5 +1,28 @@
 import api from "../../../Api/Django";
 
+
+///GET CLIENTES SEARCH
+
+export const GET_CLSEARCH_SUCCESS = 'GET_CLSEARCH_SUCCESS';
+
+export function getClSearchSuccess(clienteS){
+    return{
+        type:GET_CLSEARCH_SUCCESS, clienteS
+    }
+}
+
+export const getClSearch=(url)=>(dispatch, getState)=>{
+    return api.getClientes(url)
+        .then(r=>{
+            dispatch(getClSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};
+
+///end
+
+
 export const GET_CLIENTES_SUCCESS = 'GET_CLIENTES_SUCCESS';
 
 export function getClientesSuccess(clientes){

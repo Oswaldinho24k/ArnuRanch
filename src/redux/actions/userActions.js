@@ -3,7 +3,7 @@ import {getAnimals, getAnSearch} from "./ganado/animalsActions";
 import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
 import {getProveedores} from "./administracion/proveedoresActions";
-import {getClientes} from "./administracion/clientesActions";
+import {getClientes, getClSearch} from "./administracion/clientesActions";
 import {getPesadas} from "./ganado/pesadasActions";
 import {getIngresos} from "./administracion/ingresosActions";
 import {getFormulas} from "./plantaAlimentos/formulasActions";
@@ -105,6 +105,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getOrders());
         dispatch(getCuentas());
         dispatch(getCuSearch());
+        dispatch(getClSearch());
+
 
     }
 };

@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
+import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
+import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import FormIngreso from "./IngresoForm";
 
 
@@ -60,6 +62,8 @@ class IngresosPage extends Component {
         searchText: '',
         filtered: false,
         linea:'',
+        cuenta:'',
+        cliente:'',
     };
 
     showModal = () => {
@@ -110,6 +114,10 @@ class IngresosPage extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             values['business_line']=this.state.linea;
+            values['receivable'] = this.state.cuenta;
+            values['client'] = this.state.cliente;
+
+            console.log("VALUES", values)
             if (!err) {
                 console.log(values);
                 this.props.ingresosActions.saveIngreso(values);
@@ -188,6 +196,38 @@ class IngresosPage extends Component {
 
     };
 
+    //Cuentas
+
+    handleCuenta=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.cuentasActions.getCuSearch(url);
+    };
+
+    changeCuentaS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({cuenta:value});
+
+    };
+
+    //Cliente
+
+    handleCliente=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.clientesActions.getClSearch(url);
+    };
+
+    changeClienteS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({cliente:value});
+
+    };
+
 
 
 
@@ -231,9 +271,9 @@ class IngresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {ingresos, fetched, clientes, ingresosData, blines} = this.props;
+        let {ingresos, fetched, clientes, ingresosData, blines, cuentas} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
-        let options_clientes = clientes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.client}</Option>);
+
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -279,13 +319,20 @@ class IngresosPage extends Component {
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    options_clientes={options_clientes}
-                    options={blines}
                     handleChange={this.handleChange}
                     factura = {this.state.factura}
 
+                    options={blines}
                     searchLine={this.handleSearchLine}
                     lineHandle={this.handleChangeS}
+
+                    cuentas={cuentas}
+                    searchCuenta={this.handleCuenta}
+                    cuentaHandle={this.changeCuentaS}
+
+                    options_clientes={clientes}
+                    searchCliente={this.handleCliente}
+                    clienteHandle={this.changeClienteS}
 
                 />
 
@@ -311,15 +358,18 @@ function mapStateToProps(state, ownProps) {
         ingresos:state.ingresos.list,
         ingresosData:state.ingresos.allData,
         blines:state.blines.lineSearch,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined,
-        clientes:state.clientes.list,
+        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined && state.cuentas.cuentaSearch !== undefined,
+        clientes:state.clientes.clienteSearch,
+        cuentas:state.cuentas.cuentaSearch
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         ingresosActions: bindActionCreators(ingresosActions, dispatch),
-        linesActions: bindActionCreators(linesActions, dispatch)
+        linesActions: bindActionCreators(linesActions, dispatch),
+        cuentasActions: bindActionCreators(cuentasActions, dispatch),
+        clientesActions: bindActionCreators(clientesActions, dispatch),
     }
 }
 

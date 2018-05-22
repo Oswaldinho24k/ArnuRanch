@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-import { Form, Input, Button, Modal, Select } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Modal,  } from 'antd';
 
 
 const FormItem = Form.Item;
-const TextArea = Input;
-const InputGroup = Input.Group;
 
 const styles = {
     form:{

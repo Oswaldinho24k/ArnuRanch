@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-import {Card, Divider, Tabs, Table, Button, message, Icon, Avatar, Popconfirm} from 'antd';
+import {Card, Divider, Table, } from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
-
-
-
-const TabPane = Tabs.TabPane;
-const { Meta } = Card;
-
 
 class FacturaDetalle extends Component{
 

@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, Switch, message, Popconfirm, Tag, Divider, Select, Input, Icon, BackTop} from "antd";
+import {Table, Button, message, Popconfirm, Tag, Divider, Select, BackTop} from "antd";
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';

@@ -33,10 +33,22 @@ function allData(state={}, action) {
     }
 }
 
+/*
+function ingresoSearch(state={}, action) {
+    switch (action.type){
+        case GET_INSEARCH_SUCCESS:
+            return action.ingresoS;
+        default:
+            return state;
+    }
+}
+*/
+
 
 const ingresosReducer = combineReducers({
     list:list,
     allData:allData,
+    //ingresoSearch:ingresoSearch
 });
 
 
