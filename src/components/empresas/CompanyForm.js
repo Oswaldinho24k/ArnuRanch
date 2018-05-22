@@ -24,7 +24,7 @@ const styles = {
 
 const CompanyForm = Form.create()(
     (props)=>{
-        const{visible, onCancel, onCreate, form, rfc, phone, options, handleChange,searchLine, linea, selectLine, saveId} = props;
+        const{visible, onCancel, onCreate, form, rfc, phone, options, handleChange,searchLine,} = props;
         const {getFieldDecorator} = form;
 
         return(

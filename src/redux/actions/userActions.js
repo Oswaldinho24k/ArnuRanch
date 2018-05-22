@@ -1,9 +1,9 @@
 import api from "../../Api/Django";
-import {getAnimals} from "./ganado/animalsActions";
-import {getLotes} from "./ganado/lotesActions";
+import {getAnimals, getAnSearch} from "./ganado/animalsActions";
+import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
 import {getProveedores} from "./administracion/proveedoresActions";
-import {getClientes} from "./administracion/clientesActions";
+import {getClientes, getClSearch} from "./administracion/clientesActions";
 import {getPesadas} from "./ganado/pesadasActions";
 import {getIngresos} from "./administracion/ingresosActions";
 import {getFormulas} from "./plantaAlimentos/formulasActions";
@@ -20,6 +20,7 @@ import { getCategories } from "./sellpoint/products/categoriesActions";
 import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import { getOrders } from "./sellpoint/orders/orderActions";
+import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -96,10 +97,16 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getLiSearch());
         dispatch(getAlmacenes());
         dispatch(getProducts());
-        dispatch(getCategories())
+        dispatch(getCategories());
         dispatch(getFacturas());
         dispatch(getFaSearch());
-        dispatch(getOrders())
+        dispatch(getAnSearch());
+        dispatch(getLoSearch());
+        dispatch(getOrders());
+        dispatch(getCuentas());
+        dispatch(getCuSearch());
+        dispatch(getClSearch());
+
 
     }
 };

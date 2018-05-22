@@ -41,6 +41,9 @@ let productsUrl = 'http://localhost:8000/api/sell_point/products/';
 let categoriesUrl = 'http://localhost:8000/api/sell_point/categories/';
 let saleordersUrl = 'http://localhost:8000/api/sell_point/saleorders/';
 
+//cuentas
+let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
+
 
 
 
@@ -2118,6 +2121,7 @@ const api = {
     },
 
     //FACTURAS
+    //CUENTAS
 
     getFacturas:(url)=>{
         let nUrl = facturasUrl;
@@ -2211,6 +2215,110 @@ const api = {
                 }
             });
             instance.patch(factura.id+'/', dataF)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    //CUENTAS
+
+    getCuentas:(url)=>{
+        let cUrl = cuentasUrl;
+        if(url)cUrl=url;
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: cUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newCuenta:(cuenta)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: cuentasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', cuenta)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteCuenta:(cuenta)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: cuentasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(cuenta+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    editCuenta:(cuenta)=>{
+        let dataC = new FormData();
+        for ( var id in cuenta ) {
+            dataC.append(id, cuenta[id]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: cuentasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(cuenta.id+'/', dataC)
                 .then(function (response) {
                     resolve(response.data);
                 })

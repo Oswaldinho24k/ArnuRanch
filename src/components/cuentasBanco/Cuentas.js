@@ -1,14 +1,16 @@
 import React, {Component, Fragment} from 'react';
-import BLineForm from './BLineForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, message, Divider, Popconfirm} from 'antd';
-import * as blinesActions from '../../redux/actions/blines/blinesActions';
+import {Table, Button, message, Divider, Popconfirm, Modal} from 'antd';
+import {Link} from 'react-router-dom';
+import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
 import MainLoader from "../common/Main Loader";
-import EditBline from './EditBline'
+
+import CuentaForm from './CuentaForm';
+//import EditFactura from './EditFactura';
 
 
-class Blines extends Component {
+class CuentasPage extends Component{
     state = {
         visible:false,
         selectedRowKeys:[],
@@ -16,10 +18,9 @@ class Blines extends Component {
         infoEdit:[]
     };
 
-
     showModal = () => {
         this.setState({
-            visible: true,
+            visible: true
         });
     };
 
@@ -29,11 +30,10 @@ class Blines extends Component {
         });
     };
 
-
-    deleteBline=()=>{
+    deleteCuenta=()=>{
         let keys = this.state.selectedRowKeys;
         for(let i in keys){
-            this.props.blinesActions.deleteLine(keys[i])
+            this.props.cuentasActions.deleteCuenta(keys[i])
                 .then(r=>{
                     console.log(r)
                 }).catch(e=>{
@@ -43,9 +43,7 @@ class Blines extends Component {
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
-        this.deleteBline();
-        console.log("Eliminado")
+        this.deleteCuenta();
         message.success('Deleted successfully');
     };
 
@@ -54,7 +52,6 @@ class Blines extends Component {
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -62,15 +59,14 @@ class Blines extends Component {
         this.form = form;
     };
 
+
     handleCreate = (e) => {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
-                this.props.blinesActions.newLine(values)
+                this.props.cuentasActions.newCuenta(values)
                     .then(r=>{
-                        console.log(r);
                         message.success('Guardado con éxito');
                         form.resetFields();
                     }).catch(e=>{
@@ -87,17 +83,17 @@ class Blines extends Component {
 
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
-        let newUrl = this.props.blinesData.next;
+        let newUrl = this.props.cuentasData.next;
         if(newUrl===null){
-            newUrl = this.props.blinesData.previous;
+            newUrl = this.props.cuentasData.previous;
         }
 
-        if( pagina ==1 && this.props.blinesData.count <= 20){
+        if( pagina ==1 && this.props.cuentasData.count <= 20){
             newUrl='http'+newUrl.slice(4,newUrl.length);
         }else{
             newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
-        this.props.blinesActions.getLines(newUrl);
+        this.props.cuentasActions.getCuentas(newUrl);
     };
 
     visibleEdit=(obj)=>{
@@ -112,58 +108,75 @@ class Blines extends Component {
     };
 
 
+
     render() {
-        let {blines, fetched, blinesData} = this.props;
-        let {visible, selectedRowKeys, infoEdit, visibleEdit} = this.state;
-        const canDelete = selectedRowKeys.length > 0;
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-        };
+        let {cuentas, fetched, cuentasData} = this.props;
+        let {visible, selectedRowKeys, visibleEdit, infoEdit} = this.state;
 
         const columns = [
             {
-                title: 'Nombre',
-                dataIndex: 'name',
+                title: 'Cuenta',
+                dataIndex: 'cuenta',
+                render: (cuenta,obj) =><Link to={`/admin/cuentas/${obj.id}`}>{ cuenta && cuenta !== null ? cuenta: "No cuenta"}</Link>,
 
             },
 
             {
+                title: 'Banco',
+                dataIndex: 'banco',
+
+            },
+
+            /*{
                 title: 'Actions',
                 dataIndex: 'id',
                 render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
                 fixed:'right',
                 width:100
-            },
+            },*/
         ];
 
+        const canDelete = selectedRowKeys.length > 0;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         if(!fetched)return(<MainLoader/>);
+
+
         return (
             <Fragment>
+
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    Lineas de Negocio
+                    Cuentas
                 </div>
 
-                <h2>Lineas de Negocio</h2>
+                <h2>
+                    Cuentas
+                </h2>
+
+
                 <Table
 
                     columns={columns}
-                    dataSource={blines}
+                    dataSource={cuentas}
                     rowKey={record => record.id}
                     scroll={{x:650}}
                     pagination={{
                         pageSize: 10,
-                        total:blinesData.count,
+                        total:cuentasData.count,
                         onChange:this.handlePagination,
-                        showTotal:total => `Total: ${total} Blines`
+                        showTotal:total => `Total: ${total} Cuentas`
                     }}
                     style={{marginBottom:10}}
+                    height={'80vh'}
                 />
-                <Button type="primary" onClick={this.showModal}>Agregar</Button>
-                <BLineForm
 
+
+                <Button type="primary" onClick={this.showModal}>Agregar</Button>
+                <CuentaForm
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
@@ -171,32 +184,35 @@ class Blines extends Component {
                 <Divider
                     type={'vertical'}/>
 
-                <EditBline
+                {/*<EditCuenta
                     onCancel={this.cancelar}
                     visible={visibleEdit}
                     data={this.state.infoEdit}
                     {...infoEdit}
-                    edit={this.props.blinesActions.editLinea}
-                />
+                    edit={this.props.cuentasActions.editCuenta}
+
+
+                />*/}
+
+
             </Fragment>
         );
     }
 }
 
-
 function mapStateToProps(state, ownProps) {
     return {
-        blines: state.blines.list,
-        blinesData:state.blines.allData,
-        fetched:state.blines.list !== undefined
+        cuentas: state.cuentas.list,
+        cuentasData:state.cuentas.allData,
+        fetched:state.cuentas.list !== undefined && state.cuentas.allData !==undefined
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        blinesActions: bindActionCreators(blinesActions, dispatch)
+        cuentasActions: bindActionCreators(cuentasActions, dispatch)
     }
 }
 
-Blines = connect(mapStateToProps, mapDispatchToProps)(Blines);
-export default Blines;
+CuentasPage = connect(mapStateToProps, mapDispatchToProps)(CuentasPage);
+export default CuentasPage;

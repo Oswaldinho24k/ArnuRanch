@@ -1,5 +1,29 @@
 import api from "../../../Api/Django";
 
+
+
+///GET INGRESOS SEARCH
+
+/*export const GET_INSEARCH_SUCCESS = 'GET_INSEARCH_SUCCESS';
+
+export function getInSearchSuccess(ingresoS){
+    return{
+        type:GET_INSEARCH_SUCCESS, ingresoS
+    }
+}
+
+export const getInSearch=(url)=>(dispatch, getState)=>{
+    return api.getIngresos(url)
+        .then(r=>{
+            dispatch(getInSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};*/
+
+///end
+
+
 export const GET_INGRESOS_SUCCESS = 'GET_INGRESOS_SUCCESS';
 
 export function getIngresosSuccess(ingresos){

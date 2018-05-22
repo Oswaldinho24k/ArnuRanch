@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine}=props;
+        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, clienteHandle, searchCliente  }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -41,23 +41,25 @@ const FormIngreso = Form.create()(
             >
                 <Form >
                     <div style={styles.form}>
+
                         <FormItem
                             label={"Razón Social"}
                             hasFeedback
                         >
-                            {getFieldDecorator('client', {
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                                props:{
-                                    placeholder:'Selecciona un Cliente',
+                            <Select
+                                placeholder={"Razón Social"}
+                                showSearch
+                                onChange={clienteHandle}
+                                onSearch={searchCliente}
+                                filterOption={false}
+                            >
+                                {
+                                    options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.id} >{a.client}</Option>):<Option key={999999} disabled >No encontrado</Option>
                                 }
-                            })(
-                                <Select  placeholder={"Selecciona un Cliente"}>
-                                    {options_clientes}
-                                </Select>
-                            )}
+
+                            </Select>
                         </FormItem>
+
 
                         <FormItem
                             label={"Linea de negocio"}
@@ -75,10 +77,20 @@ const FormIngreso = Form.create()(
                                 }
 
                             </Select>
-
-
                         </FormItem>
 
+                        <FormItem
+                            label="Concepto"
+                        >
+                            {getFieldDecorator('concepto', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
 
 
                         <FormItem
@@ -97,6 +109,24 @@ const FormIngreso = Form.create()(
                                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                 />
                             )}
+                        </FormItem>
+
+                        <FormItem
+                            label={"No. Cuenta"}
+                            hasFeedback
+                        >
+                            <Select
+                                placeholder={"No. Cuenta"}
+                                showSearch
+                                onChange={cuentaHandle}
+                                onSearch={searchCuenta}
+                                filterOption={false}
+                            >
+                                {
+                                    cuentas.length >0? cuentas.map((a, key) => <Option key={key} value={a.id} >{a.cuenta}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                }
+
+                            </Select>
                         </FormItem>
 
                         <div style={styles.formSection}>

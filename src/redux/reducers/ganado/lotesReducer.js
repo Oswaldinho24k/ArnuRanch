@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {
     GET_LOTES_DATA_SUCCESS, GET_LOTES_SUCCESS, SAVE_LOTE_SUCCESS, EDIT_LOTE_SUCCESS,
-    DELETE_LOTE_SUCCESS
+    DELETE_LOTE_SUCCESS, GET_LOSEARCH_SUCCESS
 } from "../../actions/ganado/lotesActions";
 import {DELETE_ANIMAL_SUCCESS} from "../../actions/ganado/animalsActions";
 
@@ -37,10 +37,22 @@ function list(state=[], action){
     }
 }*/
 
+/*
+function loteSearch(state={}, action) {
+    switch (action.type){
+        case GET_LOSEARCH_SUCCESS:
+            return action.loteS;
+        default:
+            return state;
+    }
+}
+*/
+
 
 const lotesReducer = combineReducers({
     list:list,
     //allData:allData,
+    //loteSearch:loteSearch
 });
 
 

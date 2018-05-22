@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea, concepto}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -115,6 +115,21 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
 
                         </FormItem>
                     }
+
+                    <FormItem
+                        label="Concepto"
+                    >
+                        {form.getFieldDecorator('concepto', {
+                            initialValue: concepto,
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Input
+                                disabled={!editMode}
+                             />
+                        )}
+                    </FormItem>
 
                     <FormItem
                         label="Monto">

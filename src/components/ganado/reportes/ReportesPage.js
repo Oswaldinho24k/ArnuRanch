@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Select, Form, message, Divider} from 'antd';
+import {Select, Form, message, Divider, Card, Avatar} from 'antd';
 import MainLoader from "../../common/Main Loader";
+import * as animalActions from '../../../redux/actions/ganado/animalsActions';
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 
 
 const FormItem = Form.Item;
@@ -16,44 +18,31 @@ class ReportesPage extends Component {
         loteId:'',
         modo:'',
         loading:false,
+        info:null,
+        infoLote:null,
     };
 
 
-    componentWillMount(){
-        /*const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-        let url = 'http://localhost:8000/api/ganado/animals/';
-        var request = new Request(url, {
-            method: 'GET',
-            //body: data,
-            headers: new Headers({
-                'Authorization':'Token '+userToken,
-                'Content-Type': 'application/json'
-            })
-        });
-        fetch(request)
-            .then(r=>r.json())
-            .then(data=>{
-                console.log(data)
-            })
-            .catch(e=>{
-                console.log(e)
-        })*/
-    }
     onSelect=(value, b)=>{
         console.log(b, value);
         this.setState({areteRancho:value})
     };
-    saveId=(id)=>{
-        this.setState({areteId:id})
-        console.log(id)
+    saveId=(info)=>{
+        this.setState({info:info})
+        //this.setState({areteId:id})
+        console.log(info)
     };
 
     handleSearch=(a)=>{
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        console.log("ONSEARCH", a)
+        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+
         let url = basePath+a;
-        this.props.animalActions.getAnimals(url);
+        this.props.animalActions.getAnSearch(url);
     };
     handleChange=(a)=>{
+        console.log("CHANGE", a)
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
         this.setState({areteRancho:a});
     };
@@ -62,9 +51,9 @@ class ReportesPage extends Component {
         console.log(b, value);
         this.setState({lote:value})
     };
-    saveLoteId=(id)=>{
-        this.setState({loteId:id});
-        console.log(id)
+    saveLoteId=(lote)=>{
+        this.setState({infoLote:lote});
+        console.log(lote)
     };
 
     handleSearchLote=(a)=>{
@@ -83,89 +72,146 @@ class ReportesPage extends Component {
     };
 
     render() {
-        let {fetched, animals, lotes} = this.props;
+        let {fetched, animals, lotes, animalSearch} = this.props;
         let {modo, loading} = this.state;
         if(!fetched)return(<MainLoader/>);
         return (
-            <div>
-                <h2>Reportes</h2>
+            <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Ganado
                     <Divider type="vertical" />
                     Reportes
-
                 </div>
-                <div style={{width:'50%', margin: '0 auto'}}>
+
+                <h2>Reportes</h2>
 
 
-                    <h2>Resúmen de Aretes</h2>
-                    <FormItem label={'Modo'}>
-                        <Select
-                            onChange={this.handleChangeMode}
-                            style={{width:'100%'}}
-                        >
-                            <Option value={'individual'}>Individual</Option>
-                            <Option value={'lote'}>Por Lote</Option>
-                        </Select>
-                    </FormItem>
-                    {modo==='lote'?
-                        <FormItem label={'Lote'}>
+                <div style={{display:'flex', flexWrap:'wrap', justifyContent: 'space-around'}}>
+
+                    <div style={{width:'45%'}}>
+
+                    <Card title={"Búsqueda de reporte"} type="inner">
+                        <FormItem label={'Modo'}>
                             <Select
-                                value={this.state.lote}
-                                mode="combobox"
+                                onChange={this.handleChangeMode}
                                 style={{width:'100%'}}
-                                onSelect={this.onSelectLote}
-
-                                onChange={this.handleChangeLote}
-                                placeholder="ingresa el nombre del lote"
-                                filterOption={true}
                             >
-                                {lotes.map((a, key)=><Option value={a.name} key={key}>
-                                    <div onClick={()=>this.saveLoteId(a)}>
-                                        <span style={{color:'gray', fontSize:'.8em'}}>Corral: {a.corral.no_corral}</span><br/>
-                                        <span >Lote: {a.name}</span>
-                                    </div>
-                                </Option>)}
+                                <Option value={'individual'}>Individual</Option>
+                                <Option value={'lote'}>Por Lote</Option>
                             </Select>
-                        </FormItem>:modo==='individual'?
-                            <FormItem label={"Arete"}>
+                        </FormItem>
+                        {modo==='lote'?
+                            <FormItem label={'Lote'}>
                                 <Select
-                                    value={this.state.areteRancho}
+                                    value={this.state.lote}
                                     mode="combobox"
                                     style={{width:'100%'}}
-                                    onSelect={this.onSelect}
-                                    onSearch={this.handleSearch}
-                                    onChange={this.handleChange}
-                                    placeholder="ingresa el arete de rancho, o siniga para buscarlo"
+                                    onSelect={this.onSelectLote}
+                                    onSearch={this.handleSearchLote}
+
+                                    onChange={this.handleChangeLote}
+                                    placeholder="ingresa el nombre del lote"
                                     filterOption={false}
                                 >
-                                    {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
-                                        <div onClick={()=>this.saveId(a.id)}>
-                                            <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
-                                            <span >Siniga: {a.arete_siniga}</span>
-                                        </div>
-                                    </Option>)}
+                                    {lotes.length>0?
+                                        lotes.map((a, key)=>
+                                            <Option value={a.name} key={key}>
+                                                <div onClick={()=>this.saveLoteId(a)}>
+                                                    <span style={{color:'gray', fontSize:'.8em'}}>Corral: {a.name}</span><br/>
+                                                    <span >Lote: {a.name}</span>
+                                                </div>
+                                            </Option>):
+                                        <Option key={999999} disabled >No encontrado</Option>
+                                    }
                                 </Select>
-                            </FormItem>:''}
+                            </FormItem>
 
-                        <div>
-                            <div>Datos Básicos</div>
-                            <div>
-                                <h4>Peso Estimado actual</h4>
-                                <h4>Inversión Registrada al momento</h4>
-                                <h4>Peso de Salida</h4>
-                                <h4>Rendimiento</h4>
-                                <h4>Conversión</h4>
-                                <h4>Ganancia Diaria Promedio</h4>
+                            :modo==='individual'?
 
-                            </div>
-                        </div>
+                                <FormItem label={"Arete"}>
+                                    <Select
+                                        value={this.state.areteRancho}
+                                        mode="combobox"
+                                        style={{width:'100%'}}
+                                        onSelect={this.onSelect}
+                                        onSearch={this.handleSearch}
+                                        onChange={this.handleChange}
+                                        placeholder="ingresa el arete de rancho, o siniga para buscarlo"
+                                        filterOption={false}
+                                    >
+                                        {animalSearch.length >0 ?
+                                            animalSearch.map((a, key)=>
+                                                <Option value={a.arete_siniga} key={key}>
+                                                    <div onClick={()=>this.saveId(a)}>
+                                                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
+                                                        <span >Siniga: {a.arete_siniga}</span>
+                                                    </div>
+                                                </Option>
+                                            ):<Option key={999999} disabled >No encontrado</Option>
+                                        }
+                                    </Select>
+                                </FormItem>
+                                :''}
 
-            </div>
-            </div>
+                    </Card>
+                    </div>
+
+                    <div style={{width:'45%', marginLeft:20}}>
+                        <Card title={"Resultado: "} type={"inner"} >
+                        {modo === 'lote' ?
+                            <CardLote {...this.state.infoLote}/>
+                            :modo === 'individual'?
+                                <CardInfo {...this.state.info} />
+                                :''
+                        }
+                        </Card>
+
+                    </div>
+                </div>
+
+            </Fragment>
+
         );
     }
 }
+
+
+const CardInfo = ({arete_rancho, costo_inicial, fierro_nuevo }) => {
+
+    return(
+        <div >
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
+                <Avatar style={{height:150, width:150, backgroundColor:'white'}} src={fierro_nuevo && fierro_nuevo!==null?fierro_nuevo:"http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png"} />
+            </div>
+            <p>Arete rancho: {arete_rancho}</p>
+            <p>Peso Estimado actual {costo_inicial}</p>
+            <p>Inversión Registrada al momento $ 75, 000</p>
+            <p>Peso de Salida $500.00 kg</p>
+            <p>Rendimiento $90, 000</p>
+            <p>Conversión $190, 000</p>
+            <p>Ganancia Diaria Promedio $99, 000</p>
+        </div>
+
+    )
+};
+
+const CardLote = ({name, animals }) => {
+
+    return(
+        <div >
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
+                <Avatar style={{height:150, width:150, backgroundColor:'white'}} src={"http://conceptodefinicion.de/wp-content/uploads/2014/09/ganado.jpg"} />
+            </div>
+            <p>Lote: {name}</p>
+            <p>Inversión Registrada al momento $ 75, 000</p>
+            <p>Cantidad de Animales {animals !==undefined ? animals.length:"No contiene animales"}</p>
+            <p>Rendimiento $90, 000</p>
+            <p>Conversión $190, 000</p>
+            <p>Ganancia Diaria Promedio $99, 000</p>
+        </div>
+
+    )
+};
 
 
 
@@ -173,13 +219,15 @@ function mapStateToProps(state, ownProps) {
     return {
         animals:state.animals.list,
         lotes: state.lotes.list,
+        animalSearch:state.animals.animalSearch,
         fetched:state.animals.list!==undefined && state.lotes.list!==undefined
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        animalActions: bindActionCreators(animalActions, dispatch),
+        lotesActions: bindActionCreators(lotesActions, dispatch)
     }
 }
 

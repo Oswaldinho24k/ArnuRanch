@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE_CLIENTE_SUCCESS, GET_CLIENTES_DATA_SUCCESS} from "../../actions/administracion/clientesActions";
+import {GET_CLIENTES_SUCCESS, SAVE_CLIENTE_SUCCESS, EDIT_CLIENTE_SUCCESS, DELETE_CLIENTE_SUCCESS, GET_CLIENTES_DATA_SUCCESS, GET_CLSEARCH_SUCCESS} from "../../actions/administracion/clientesActions";
 
 
 function list(state=[], action){
@@ -33,10 +33,20 @@ function allData(state={}, action) {
     }
 }
 
+function clienteSearch(state = {}, action) {
+    switch (action.type){
+        case GET_CLSEARCH_SUCCESS:
+            return action.clienteS;
+        default:
+            return state;
+    }
+}
+
 
 const clientesReducer = combineReducers({
     list:list,
-    allData:allData
+    allData:allData,
+    clienteSearch:clienteSearch
 });
 
 

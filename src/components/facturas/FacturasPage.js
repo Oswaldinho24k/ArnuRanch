@@ -139,6 +139,13 @@ class FacturasPage extends Component{
 
         return (
             <Fragment>
+
+                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+                    Administración
+                    <Divider type="vertical" />
+                    Facturas
+                </div>
+
                 <h2>
                     Facturas
                 </h2>

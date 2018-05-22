@@ -33,7 +33,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
             </SubMenu>:''}
             {(user.profile&&user.profile.admin)|| user.is_superuser?
                 <SubMenu  key="sub1" title={<span className={'my-icon'}><Icon type="global" /><span>Admin</span></span>}>
-                    <Menu.Item key="1" disabled={true}>
+                    <Menu.Item key="1" disabled={false}>
                         <Link to={'/admin/estadisticas'} >Estadísticas</Link>
                     </Menu.Item>
                     <Menu.Item key="2" disabled={false}>
@@ -54,7 +54,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="7" disabled={false}>
                         <Link to={'/admin/proveedores'}>Proovedores</Link>
                     </Menu.Item>
-                    <Menu.Item key="8" disabled={true}>
+                    <Menu.Item key="8" disabled={false}>
                         <Link to={'/admin/cuentas'}>Cuentas Banco</Link>
                     </Menu.Item>
                     {/*<Menu.Item key="9" disabled={true}>
@@ -86,7 +86,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Link to='/admin/lotes'> Lotes </Link>
                 </Menu.Item>
 
-                <Menu.Item key="16" disabled>
+                <Menu.Item key="16" >
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
 

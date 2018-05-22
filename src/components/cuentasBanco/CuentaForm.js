@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Input, Button, Modal } from 'antd';
+import { Form, Input, Button, Modal,  } from 'antd';
 
 
 const FormItem = Form.Item;
-
 
 const styles = {
     form:{
@@ -22,7 +21,7 @@ const styles = {
 };
 
 
-const BLineForm = Form.create()(
+const CuentaForm = Form.create()(
     (props) => {
         const{visible, onCancel, onCreate, form} = props;
         const{getFieldDecorator} = form;
@@ -31,7 +30,7 @@ const BLineForm = Form.create()(
         return(
             <Modal
                 visible={visible}
-                title={"Nueva Bussines Line"}
+                title={"Nueva Cuenta"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}
@@ -43,9 +42,35 @@ const BLineForm = Form.create()(
                 <Form onSubmit={onCreate} >
                     <div style={styles.form}>
                         <FormItem
-                            label="Nombre de la Bussines Line"
+                            label="Numero de cuenta"
                         >
-                            {getFieldDecorator('name', {
+                            {getFieldDecorator('cuenta', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Banco"
+                        >
+                            {getFieldDecorator('banco', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="CLABE"
+                        >
+                            {getFieldDecorator('clabe', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -61,9 +86,6 @@ const BLineForm = Form.create()(
                         </Button>
                     </FormItem>
 
-
-
-
                 </Form>
 
             </Modal>
@@ -72,4 +94,4 @@ const BLineForm = Form.create()(
     }
 );
 
-export default BLineForm;
+export default CuentaForm;
