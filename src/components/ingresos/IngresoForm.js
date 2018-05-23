@@ -44,12 +44,18 @@ const FormIngreso = Form.create()(
 
                         <FormItem
                             label={"Razón Social"}
-                            hasFeedback
+
                         >
+                            {getFieldDecorator('client_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
                             <Select
                                 placeholder={"Razón Social"}
                                 showSearch
-                                onChange={clienteHandle}
+                                //onChange={clienteHandle}
                                 onSearch={searchCliente}
                                 filterOption={false}
                             >
@@ -58,6 +64,7 @@ const FormIngreso = Form.create()(
                                 }
 
                             </Select>
+                            )}
                         </FormItem>
 
 
@@ -65,18 +72,25 @@ const FormIngreso = Form.create()(
                             label={"Linea de negocio"}
                             hasFeedback
                         >
+                            {getFieldDecorator('business_line_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
                             <Select
                                 placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
+                                showSearch
+                                //onChange={lineHandle}
                                 onSearch={searchLine}
                                 filterOption={false}
                             >
                                 {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
                                 }
 
                             </Select>
+                            )}
                         </FormItem>
 
                         <FormItem
@@ -115,6 +129,12 @@ const FormIngreso = Form.create()(
                             label={"No. Cuenta"}
                             hasFeedback
                         >
+                            {getFieldDecorator('receivable_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
                             <Select
                                 placeholder={"No. Cuenta"}
                                 showSearch
@@ -127,6 +147,7 @@ const FormIngreso = Form.create()(
                                 }
 
                             </Select>
+                            )}
                         </FormItem>
 
                         <div style={styles.formSection}>

@@ -42,6 +42,7 @@ export const getCuentas=(url)=>(dispatch, getState)=>{
             console.log(r)
             dispatch(getCuentasSuccess(r.results));
             dispatch(getAllCuentasSuccess(r));
+            dispatch(getCuSearch());
         }).catch(e=>{
             throw e
         })

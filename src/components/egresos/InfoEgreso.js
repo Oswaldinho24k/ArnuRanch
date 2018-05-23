@@ -6,18 +6,11 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line, provider, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, lineHandle, linea}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egreso, searchProvider, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, lineHandle, linea, provider_egreso}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
-
-            if(linea !== ''){
-                values['business_line']=linea;
-            }else{
-                values['business_line']=business_line;
-            }
-
 
             if (!err) {
                 console.log(values);
@@ -41,27 +34,31 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                    {proveedores?
+                    {provider_egreso?
                         <FormItem
                             label={"Razón Social"}
                         >
-                            {form.getFieldDecorator('provider',{
-                                initialValue:provider.id,
+                            {form.getFieldDecorator('provider_egreso_id',{
+                                initialValue:provider_egreso.id,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Select
                                     disabled={!editMode}
-                                    placeholder={"Proveedor"}>
-                                    {proveedores}
+                                    placeholder={"Proveedor"}
+                                    showSearch
+                                    onSearch={searchProvider}
+                                    filterOption={false}
+                                >
+                                    {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No </Option>}
                                 </Select>
                             )}
                         </FormItem>:
                         <FormItem
                             label={"Razón Social"}
                         >
-                            {form.getFieldDecorator('provider',{
+                            {form.getFieldDecorator('provider_egreso.id',{
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -69,54 +66,62 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_line,
                             })(
                                 <Select
                                     disabled={!editMode}
-
+                                    filterOption={false}
+                                    showSearch
+                                    onSearch={searchProvider}
                                     placeholder={"Proveedor"}>
-                                    {proveedores}
+                                    {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No cliente</Option>}
                                 </Select>
                             )}
                         </FormItem>}
 
 
-                    {business_line?
+                    {business_egreso?
 
                         <FormItem
                             label={"Linea de negocio"}
-                            hasFeedback
                         >
-                            <Select
-                                disabled={!editMode}
-                                defaultValue={business_line}
-                                placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
-                                onSearch={searchLine}
-                                filterOption={false}
-                            >
-                                {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                }
+                            {form.getFieldDecorator('business_egreso_id',{
+                                initialValue:business_egreso.id,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Linea de Negocio"}
+                                    showSearch
+                                    onSearch={searchLine}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                    }
 
-                            </Select>
-
-
-                        </FormItem>:
+                                </Select>
+                            )}</FormItem>:
                         <FormItem
                             label={"Linea de negocio"}
-                            hasFeedback
                         >
-                            <Select
-                                disabled={!editMode}
-                                placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
-                                onSearch={searchLine}
-                                filterOption={false}
-                            >
-                                {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                }
+                            {form.getFieldDecorator('business_egreso_id',{
+                                initialValue:business_egreso.id,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Linea de Negocio"}
+                                    showSearch
+                                    onSearch={searchLine}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                    }
 
-                            </Select>
+                                </Select>
+                            )}
 
 
                         </FormItem>

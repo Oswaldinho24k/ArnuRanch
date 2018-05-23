@@ -156,7 +156,7 @@ class FacturasPage extends Component{
                     columns={columns}
                     dataSource={facturas}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     pagination={{
                         pageSize: 10,
                         total:facturasData.count,

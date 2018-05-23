@@ -1359,9 +1359,10 @@ const api = {
     },
 
     editIngreso:(ingreso)=>{
-        let data = new FormData();
+        console.log("INGRESO", ingreso)
+        let dataIngreso = new FormData();
         for ( var key in ingreso ) {
-            data.append(key, ingreso[key]);
+            dataIngreso.append(key, ingreso[key]);
         }
 
         return new Promise(function (resolve, reject) {
@@ -1374,12 +1375,12 @@ const api = {
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.patch(ingreso.id+'/', data)
+            instance.patch(ingreso.id+'/', ingreso)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
+                    console.log(ingreso);
                     console.log('el error: ', error.response);
                     reject(error);
                 });

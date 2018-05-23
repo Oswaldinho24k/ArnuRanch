@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import * as egresoActions from '../../redux/actions/administracion/egresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
+import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 
@@ -71,6 +72,16 @@ class DetailEgresoPage extends Component{
         //this.props.linesActions.getLiSearch(basePath);
     };
 
+    //PRovider
+
+    searchProvider=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.proveedoresActions.getPrSearch(url);
+    };
+
 
 
 
@@ -80,7 +91,7 @@ class DetailEgresoPage extends Component{
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
-        let options_providers = proveedores.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.provider}</Option>);
+
 
         return(
 
@@ -90,7 +101,7 @@ class DetailEgresoPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/egresos/`} style={{color:'black'}} >Egresos</Link>
                     <Divider type="vertical" />
-                    {egreso.provider.provider}
+                    {egreso.provider_egreso.provider}
                 </div>
 
             <div style={{width:'50%', margin: '0 auto'}} >
@@ -103,12 +114,14 @@ class DetailEgresoPage extends Component{
                         handleEditMode={this.handleEditMode}
                         editMode={editMode}
                         options={blines}
-                        proveedores={options_providers}
+                        proveedores={proveedores}
                         types={tipo}
 
                         searchLine={this.handleSearchLine}
                         lineHandle={this.handleChangeS}
                         linea={linea}
+
+                        searchProvider={this.searchProvider}
 
 
                     />
@@ -129,14 +142,15 @@ function mapStateToProps(state, ownProps) {
         egreso,
         blines:state.blines.lineSearch,
         fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined,
-        proveedores:state.proveedores.list,
+        proveedores:state.proveedores.proveedorSearch,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return{
         egresoActions: bindActionCreators(egresoActions, dispatch),
-        linesActions: bindActionCreators(linesActions, dispatch)
+        linesActions: bindActionCreators(linesActions, dispatch),
+        proveedoresActions: bindActionCreators(proveedoresActions, dispatch)
     }
 }
 

@@ -113,11 +113,7 @@ class IngresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
-            values['business_line']=this.state.linea;
-            values['receivable'] = this.state.cuenta;
-            values['client'] = this.state.cliente;
 
-            console.log("VALUES", values)
             if (!err) {
                 console.log(values);
                 this.props.ingresosActions.saveIngreso(values);
@@ -243,6 +239,7 @@ class IngresosPage extends Component {
             {
                 title: 'Linea de negocio',
                 dataIndex: 'business_line',
+                render: (business_line,obj) =><span>{ business_line && business_line !== null ? business_line.name : "No Linea"}</span>,
             },
             {
                 title: 'No. Factura',
@@ -285,16 +282,16 @@ class IngresosPage extends Component {
 
                 <h1>Ingresos Page</h1>
 
-                {/*<div style={{paddingBottom:'1%'}}>
+                <div style={{paddingBottom:'1%'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
                         onChange={this.handleSearch}
                         value={searchText}
                         style={{ width: 400 }}
-                        placeholder={'Busca por nombre...'}
+                        placeholder={'Buscar ingreso...'}
                     />
-                </div>*/}
+                </div>
 
                 <BackTop visibilityHeight={100} />
 
@@ -303,7 +300,7 @@ class IngresosPage extends Component {
                     columns={columns}
                     rowSelection={rowSelection}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     style={{marginBottom:10}}
                     pagination={{
                         pageSize: 10,

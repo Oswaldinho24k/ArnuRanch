@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Button, message, Popconfirm, Tag, Divider, Select, BackTop} from "antd";
+import {Table, Button, message, Popconfirm, Tag, Divider, Select, BackTop, Input} from "antd";
 import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -10,6 +10,7 @@ import * as egresosActions from '../../redux/actions/administracion/egresosActio
 import FormEgreso from "./EgresoForm";
 
 import * as linesActions from '../../redux/actions/blines/blinesActions';
+import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 
 
 const Option = Select.Option;
@@ -124,8 +125,7 @@ class EgresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
-            values['business_line']=this.state.linea;
-            console.log(values)
+
             if (!err) {
                 console.log(values);
                 this.props.egresosActions.saveEgreso(values);
@@ -212,6 +212,16 @@ class EgresosPage extends Component {
         //this.props.linesActions.getLiSearch(basePath);
     };
 
+    //providers
+
+    handleSearchProvider=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.proveedoresActions.getPrSearch(url);
+    };
+
 
 
     render() {
@@ -219,14 +229,15 @@ class EgresosPage extends Component {
         const columns = [
             {
                 title: 'Razón Social',
-                dataIndex: 'provider',
+                dataIndex: 'provider_egreso',
                 render: (provider,obj) =><Link to={`/admin/egresos/${obj.id}`}>{ provider && provider !== null ? provider.provider  || provider: "No Proveedor"}</Link>,
                 key:'provider',
 
             },
             {
                 title: 'Linea de negocio',
-                dataIndex: 'business_line',
+                dataIndex: 'business_egreso',
+                render: (business_line,obj) =><span>{ business_line && business_line !== null ? business_line.name : "No Linea"}</span>,
             },
             {
                 title: 'No. Factura',
@@ -253,11 +264,11 @@ class EgresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched, egresosData, blines} = this.props;
+        let {egresos, fetched, egresosData, blines, proveedores} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         //let type = type.map((a) => <Option key={a.name}>{a.name}</Option>);
         let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
-        let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
+        //let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -268,7 +279,7 @@ class EgresosPage extends Component {
                 </div>
                 <h1>Egresos Page</h1>
 
-                {/*<div style={{paddingBottom:'1%'}}>
+                <div style={{paddingBottom:'1%'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
@@ -277,7 +288,7 @@ class EgresosPage extends Component {
                         style={{ width: 400 }}
                         placeholder={'Busca por nombre...'}
                     />
-                </div>*/}
+                </div>
 
                 <BackTop visibilityHeight={100} />
 
@@ -286,7 +297,7 @@ class EgresosPage extends Component {
                     columns={columns}
                     rowSelection={rowSelection}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     style={{marginBottom:10}}
                     pagination={{
                         pageSize: 10,
@@ -302,7 +313,11 @@ class EgresosPage extends Component {
                     visible={visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
-                    options_proveedores={options_proveedores}
+
+                    options_proveedores={proveedores}
+                    searchProvider={this.handleSearchProvider}
+
+
                     options={blines}
                     type={tipo}
                     handleChange={this.handleChange}
@@ -336,15 +351,16 @@ function mapStateToProps(state, ownProps) {
         egresos: state.egresos.list,
         egresosData:state.egresos.allData,
         blines:state.blines.lineSearch,
-        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined,
-        proveedores: state.proveedores.list,
+        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined && state.proveedores.proveedorSearch !== undefined,
+        proveedores: state.proveedores.proveedorSearch,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         egresosActions: bindActionCreators(egresosActions, dispatch),
-        linesActions: bindActionCreators(linesActions, dispatch)
+        linesActions: bindActionCreators(linesActions, dispatch),
+        proveedoresActions: bindActionCreators(proveedoresActions, dispatch)
     }
 }
 
