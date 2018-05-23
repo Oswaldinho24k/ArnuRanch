@@ -24,7 +24,7 @@ const FormLote = ({form, lotes, changeLote}) => {
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <Form.Item>
+                <Form.Item label={'Elige el lote de Destino'}>
                     {form.getFieldDecorator('lote_id', {
                     })(
                         <Select>

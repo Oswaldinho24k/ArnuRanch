@@ -8,8 +8,10 @@ import MainLoader from "../../common/Main Loader";
 import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
+import * as pesadasActions from '../../../redux/actions/ganado/pesadasActions';
 import FormAnimalLote from '../animals/FormLote';
 import { AreteCard } from './AreteCard';
+import FormPesada from '../animals/FormPesada';
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -21,7 +23,9 @@ class EventosPage extends Component {
         areteRancho:'',
         areteId:'',
         lote:'',
-        loteId:'',
+        loteId:{
+            animals:[]
+        },
         modo:'',
         loading:false,
         multiple:[],
@@ -180,8 +184,6 @@ class EventosPage extends Component {
         }
     };
     changeMultiplesLote=(animal)=>{
-
-
         let {mIds} = this.state;
         for(let j in mIds){
             animal['id']=mIds[j].id;
@@ -198,9 +200,60 @@ class EventosPage extends Component {
             
         }
     };
+    /*pesadas*/ 
+    changeSinglePesada=(animal)=>{
+    
+        animal['animal']= this.state.areteId.id
+        let toSend = Object.assign({}, animal);
+
+        
+        this.props.pesadasActions.savePesada(toSend)
+            .then(r => {
+                message.success('Modificado con éxito');
+            }).catch(e => {
+            console.log(e)
+        })
+        
+    };
+    changeLotePesada=(animal)=>{
+        let {loteId} = this.state
+        
+        for(let j in loteId.animals){
+            animal['animal']=loteId.animals[j].id;
+            let toSend = Object.assign({}, animal);
+            console.log(toSend)
+            this.props.pesadasActions.savePesada(toSend)
+                .then(r => {
+                    message.success('Modificado con éxito');
+                }).catch(e => {
+               for (let i in e.response.data){
+                   message.error(e.response.data[i])
+               }
+            })
+        
+        }
+    };
+    changeMultiplePesada=(animal)=>{
+        let {mIds} = this.state;
+        for(let j in mIds){
+            animal['animal']=mIds[j].id;
+            let toSend = Object.assign({}, animal);
+
+            this.props.pesadasActions.savePesada(toSend)
+                .then(r => {
+                    message.success('Modificado con éxito');
+                }).catch(e => {
+               for (let i in e.response.data){
+                   message.error(e.response.data[i])
+               }
+            })
+            
+        }
+    };
     handleChangeMode=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
-        this.setState({modo:a});
+        
+        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
@@ -216,11 +269,13 @@ class EventosPage extends Component {
         modo==='individual'?displayList=[areteId]:
         modo==='multiple'?displayList=mIds:
         modo==='lote'?displayList=loteId.animals:displayList=[]
+        console.log(displayList)
         for(let i in displayList){
-            let animal = animals.find(a=>{return a.id===displayList[i].id})
-            newList.push(animal)
-            console.log(newList)
+            let animal = animals.find(a=>{return a.id==displayList[i].id})
+            console.log(animal)
+            
         }
+        console.log(newList)
         if(!fetched)return(<MainLoader/>);
 
         return (
@@ -250,10 +305,11 @@ class EventosPage extends Component {
                         <Select
                            value={event}
                             onChange={this.handleChangeEvent}
-                            style={{width:'100%'}}
-                        >
+                            style={{width:'100%'}}>
+                            
                             <Option value={'gasto'}>Gasto</Option>
                             <Option value={'reubicacion'}>Reubicación</Option>
+                            <Option value={'pesada'}>Pesada</Option>
                             <Option value={'salida'}>Salida</Option>
                            
                         </Select>
@@ -291,8 +347,8 @@ class EventosPage extends Component {
                                 >
                                 {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
                                     <div onClick={()=>this.saveId(a)}>
-                                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
-                                        <span >Siniga: {a.arete_siniga}</span>
+                                        <span style={{color:'gray', fontSize:'.8em'}}>R: {a.arete_rancho}</span><br/>
+                                        <span >S: {a.arete_siniga}</span>
                                     </div>
                                     </Option>)}
                             </Select>
@@ -311,8 +367,8 @@ class EventosPage extends Component {
                                 {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
                                     <div onClick={()=>this.saveIds(a)}>
                                        
-                                        <span>Siniga: {a.arete_siniga}</span><br/>
-                                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span>
+                                        <span>S: {a.arete_siniga}</span><br/>
+                                        <span style={{color:'gray', fontSize:'.8em'}}>R: {a.arete_rancho}</span>
                                     </div>
                                     </Option>)}
                                 </Select>
@@ -320,15 +376,18 @@ class EventosPage extends Component {
                         
                         
                         {event==='gasto'? <FormGasto saveGasto={modo==='individual'?this.saveGasto:modo==='lote'?this.saveLoteGastos:modo==='multiple'?this.saveMultiplesGastos:''}/>:
-                         event==='reubicacion'?<FormAnimalLote lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
-                        event==='salida'?'SalidaForm':'Elige un Evento*'}
+                        event==='reubicacion'?<FormAnimalLote lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
+                        event==='salida'?'SalidaForm':
+                        event==="pesada"?<FormPesada savePesada={modo==='individual'?this.changeSinglePesada:modo==='lote'?this.changeLotePesada:modo==='multiple'?this.changeMultiplePesada:''}/>:'Elige un Evento*'}
                      </div>
                     <div style={{width:'30%', }}>
                         
-                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} title={'Aretes Seleccionados'}>
+                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} title={'Aretes Seleccionados'}>                       
                         <List
                             itemLayout="horizontal"
-                            dataSource={newList}
+                            dataSource={modo==='individual'?[areteId]:
+                                modo==='multiple'?mIds:
+                                modo==='lote'?loteId.animals:''}
                             renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta                            
@@ -338,7 +397,6 @@ class EventosPage extends Component {
                             </List.Item>
                             )}
                         />
-                        
                         </Card>
                     </div>
                 </div>
@@ -361,6 +419,7 @@ function mapDispatchToProps(dispatch) {
         animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
         animalActions:bindActionCreators(animalActions, dispatch),
         lotesAction:bindActionCreators(lotesActions, dispatch),
+        pesadasActions:bindActionCreators(pesadasActions, dispatch),
 
     }
 }

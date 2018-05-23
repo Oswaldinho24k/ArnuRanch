@@ -198,7 +198,7 @@ class ReportesPage extends Component {
     };
     handleChangeMode=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
-        this.setState({modo:a});
+        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
@@ -299,8 +299,8 @@ class ReportesPage extends Component {
                                 {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
                                     <div onClick={()=>this.saveIds(a)}>
                                        
-                                        <span>Siniga: {a.arete_siniga}</span><br/>
-                                        <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span>
+                                        <span>S: {a.arete_siniga}</span><br/>
+                                        <span style={{color:'gray', fontSize:'.8em'}}>R: {a.arete_rancho}</span>
                                     </div>
                                     </Option>)}
                                 </Select>

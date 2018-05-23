@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = false;
+let debug = true;
 
 //Localhost urls
 
@@ -809,7 +809,7 @@ const api = {
                 })
                 .catch(function (error) {
                     
-                    reject(error);
+                    reject(error.response);
                 });
 
 

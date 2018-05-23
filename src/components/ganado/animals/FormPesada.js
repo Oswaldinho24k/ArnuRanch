@@ -11,11 +11,7 @@ class FormPesada extends React.Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(this.props);
-
                 this.props.savePesada(values)
-
-
-
             }
             if (Array.isArray(e)) {
                 return e;
