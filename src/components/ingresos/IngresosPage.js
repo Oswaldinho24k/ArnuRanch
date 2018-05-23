@@ -64,6 +64,7 @@ class IngresosPage extends Component {
         linea:'',
         cuenta:'',
         cliente:'',
+        canReset:false,
     };
 
     showModal = () => {

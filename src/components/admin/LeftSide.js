@@ -67,6 +67,10 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                         <Link to='/admin/empresas'> Empresas </Link>
                     </Menu.Item>
 
+                    <Menu.Item key="23">
+                        <Link to={'/admin/compras'}>Compras</Link>
+                    </Menu.Item>
+
                 </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>

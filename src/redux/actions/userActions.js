@@ -21,6 +21,7 @@ import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import { getOrders } from "./sellpoint/orders/orderActions";
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
+import {getCompras, getCoSearch} from "./compras/comprasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -107,6 +108,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getCuSearch());
         dispatch(getClSearch());
         dispatch(getPrSearch());
+        dispatch(getCompras());
+        dispatch(getCoSearch());
 
 
     }

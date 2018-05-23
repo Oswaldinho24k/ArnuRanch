@@ -44,6 +44,9 @@ let saleordersUrl = 'http://localhost:8000/api/sell_point/saleorders/';
 //cuentas
 let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
 
+//compras
+let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
+
 
 
 
@@ -2320,6 +2323,120 @@ const api = {
                 }
             });
             instance.patch(cuenta.id+'/', dataC)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    //COMPRAS
+
+    getCompras:(url)=>{
+        let cUrl = comprasUrl;
+        if(url)cUrl=url;
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: cUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    newCompra:(compra)=>{
+        let info = new FormData();
+        let fecha;
+        for ( var key in compra ) {
+            info.append(key, compra[key]);
+        }
+        if (compra.fecha_creacion){
+            fecha = compra.fecha_creacion.format("YYYY-MM-DD");
+            info.append('fecha_creacion', fecha);
+        }
+        console.log("COMPRA_ENVIAR", compra)
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: comprasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', info)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    deleteCompra:(compra)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: comprasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(compra+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    editCompra:(compra)=>{
+        let dataC = new FormData();
+        for ( var id in compra ) {
+            dataC.append(id, compra[id]);
+        }
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: comprasUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(compra.id+'/', dataC)
                 .then(function (response) {
                     resolve(response.data);
                 })
