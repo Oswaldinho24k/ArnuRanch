@@ -144,9 +144,9 @@ class AnimalsPage extends Component {
         }
 
         if( pagina ==1 && this.props.animalsData.count <= 40){
-            newUrl='http'+newUrl.slice(4,newUrl.length);
+            newUrl='https'+newUrl.slice(4,newUrl.length);
         }else{
-            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
         this.props.animalActions.getAnimals(newUrl);
     };

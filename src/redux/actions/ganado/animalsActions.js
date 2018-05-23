@@ -92,7 +92,7 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
             // let empresa = getState().empresas.list.find(e=>e.id===r.empresa);
             // r['raza'] = raza;
             // r['lote'] = lote;
-            // r['empresa'] = empresa;
+            // r['empresa'] = empresa;            
             dispatch(editAnimalSuccess(r))
         }).catch(e=>{
             throw e;

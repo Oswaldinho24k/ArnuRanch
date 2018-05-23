@@ -26,20 +26,18 @@ function list(state=[], action){
             let newList = state.filter(a=>{
                 return a.id!=action.animal.id
             });
+            
             return [action.animal, ...newList];
         case SAVE_ANIMAL_GASTO_SUCCESS:
             let animalId = action.gasto.animal;
-            let animal = state.find(a=>{return a.id==animalId});
-            console.log(animal);
-            
+            let animal = state.find(a=>{return a.id==animalId});        
             animal['aliments'] = [...animal.aliments, action.gasto];
-            console.log(animal);
+            
 
             return [...state];
         case SAVE_PESADA_SUCCESS:
             animalId = action.pesada.animal;
-            animal = state.filter(a=>{return a.id==animalId});
-            console.log(animal[0]);
+            animal = state.filter(a=>{return a.id==animalId});            
             animal = animal[0];
             animal['pesadas'] = [...animal.pesadas, action.pesada];
             return [...state];

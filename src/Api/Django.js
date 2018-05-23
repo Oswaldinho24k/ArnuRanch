@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -72,10 +72,14 @@ if(!debug){
     empresasUrl = 'https://rancho.fixter.org/api/ingresos/empresas/';
     blinesUrl = 'https://rancho.fixter.org/api/ingresos/blines/';
     vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
+    almacenesUrl = 'https://rancho.fixter.org/api/inventario/almacenes/';
+    itemsAlmacenUrl = 'https://rancho.fixter.org/api/inventario/items/';
 
     productsUrl = 'https://rancho.fixter.org/api/sell_point/products/';
     categoriesUrl = 'https://rancho.fixter.org/api/sell_point/categories/';
     saleordersUrl = 'https://rancho.fixter.org/api/sell_point/saleorders/';
+    facturasUrl = 'https://rancho.fixter.org/api/ganado/facturas/';
+    cuentasUrl = 'https://rancho.fixter.org/api/ingresos/cuentas/';
 
     /******************************Heroku Urls********************************/
     /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';

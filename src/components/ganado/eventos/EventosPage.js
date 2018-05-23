@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import FormGasto from "../animals/FormGasto";
-
-import {Select, Form, message, Divider} from 'antd';
+import {Link} from 'react-router-dom'
+import {Select, Form, message, Divider, Card, List} from 'antd';
 import MainLoader from "../../common/Main Loader";
 import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import FormAnimalLote from '../animals/FormLote';
+import { AreteCard } from './AreteCard';
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -60,6 +61,7 @@ class EventosPage extends Component {
         console.log(mIds)
     };
     saveLoteId=(id)=>{
+        
         this.setState({loteId:id});
         console.log(id)
     };
@@ -116,7 +118,7 @@ class EventosPage extends Component {
             })
         }
 
-        this.setState({lote:'', loteId:'', modo:'', loading:false, mIds:[]});
+        this.setState({loading:false});
         message.success('Gasto agregado con éxito')
     };
     saveLoteGastos=(gasto)=>{
@@ -143,7 +145,7 @@ class EventosPage extends Component {
             })
         }
 
-        this.setState({lote:'', loteId:'', modo:'', loading:false});
+        this.setState({loading:false});
         message.success('Gasto agregado con éxito')
     };
     changeSingleLote=(animal)=>{
@@ -179,6 +181,7 @@ class EventosPage extends Component {
     };
     changeMultiplesLote=(animal)=>{
 
+
         let {mIds} = this.state;
         for(let j in mIds){
             animal['id']=mIds[j].id;
@@ -207,7 +210,17 @@ class EventosPage extends Component {
 
     render() {
         let {fetched, animals, lotes} = this.props;
-        let {modo, loading, event, multiple} = this.state;
+        let {modo, loading, event, multiple, areteId, mIds, loteId} = this.state;
+        let displayList = [];
+        let newList = [];
+        modo==='individual'?displayList=[areteId]:
+        modo==='multiple'?displayList=mIds:
+        modo==='lote'?displayList=loteId.animals:displayList=[]
+        for(let i in displayList){
+            let animal = animals.find(a=>{return a.id===displayList[i].id})
+            newList.push(animal)
+            console.log(newList)
+        }
         if(!fetched)return(<MainLoader/>);
 
         return (
@@ -310,8 +323,23 @@ class EventosPage extends Component {
                          event==='reubicacion'?<FormAnimalLote lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
                         event==='salida'?'SalidaForm':'Elige un Evento*'}
                      </div>
-                    <div>
-                        <h2>Results</h2>  
+                    <div style={{width:'30%', }}>
+                        
+                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} title={'Aretes Seleccionados'}>
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={newList}
+                            renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta                            
+                                title={<Link to={`/admin/animals/${item.id}`}>{item.arete_siniga}</Link>}
+                                description={<AreteCard {...item}/>}
+                                />
+                            </List.Item>
+                            )}
+                        />
+                        
+                        </Card>
                     </div>
                 </div>
             </div>
