@@ -2,7 +2,6 @@
 @import "./components/admin/admin.css";
 @import "./components/navbar/navbar.css";
 @import "./components/common/loader.css";
-@import "./components/sell_point/products/products.css";
 
 *{
   margin:0;

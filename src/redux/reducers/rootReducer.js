@@ -19,9 +19,7 @@ import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
 import almacenReducer from "./almacen/almacenReducer";
-import productsReducer from './sellpoint/products/productsReducer'
-import ordersReducer from './sellpoint/orders/ordersReducer'
-import categoriesReducer from './sellpoint/products/categories'
+
 import facturasReducer from "./facturas/facturasReducer";
 import cuentasReducer from "./cuentas/cuentasReducer";
 
@@ -48,10 +46,9 @@ const rootReducer = combineReducers({
     blines:blinesReducer,
     almacen:almacenReducer,
     //sellpoint
-    products:productsReducer,
-    categories:categoriesReducer,
+    
     facturas:facturasReducer,
-    orders:ordersReducer,
+    
     cuentas:cuentasReducer,
 
 });

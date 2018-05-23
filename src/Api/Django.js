@@ -117,7 +117,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -139,7 +139,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -160,7 +160,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -182,7 +182,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -204,7 +204,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -226,7 +226,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -258,7 +258,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -271,7 +271,7 @@ const api = {
             data.append(key, product[key]);
         }
         if(product.image){
-            console.log(typeof product.image)
+            
            if(product.image === null || product.image === undefined || typeof product.image === 'string'){
                data.delete('image')
            }else{
@@ -294,7 +294,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -315,7 +315,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -338,7 +338,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -358,7 +358,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -381,7 +381,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -403,7 +403,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -430,7 +430,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -454,7 +454,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -502,8 +502,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -511,7 +511,7 @@ const api = {
         });
     },
     editAnimal:(animal)=>{
-        console.log(animal)
+        
         let data = new FormData();
         for ( var key in animal ) {
             data.append(key, animal[key]);
@@ -522,7 +522,7 @@ const api = {
         }
 
        if(animal.fierro_original){
-            console.log(typeof animal.fierro_original)
+            
            if(animal.fierro_original === null || animal.fierro_original === undefined || typeof animal.fierro_original === 'string'){
                data.delete('fierro_original')
            }else{
@@ -532,7 +532,7 @@ const api = {
            data.delete('fierro_original')
        }
        if(animal.fierro_nuevo){
-           console.log(typeof animal.fierro_nuevo)
+           
            if(animal.fierro_nuevo === null || animal.fierro_nuevo === undefined || typeof animal.fierro_nuevo === 'string'){
                data.delete('fierro_nuevo');
            }else{
@@ -558,8 +558,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -583,7 +583,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -610,7 +610,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -637,7 +637,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -660,7 +660,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -683,7 +683,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -706,7 +706,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -731,7 +731,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -754,7 +754,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -777,7 +777,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -804,7 +804,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -827,7 +827,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -852,7 +852,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -875,7 +875,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -906,7 +906,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -930,7 +930,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -959,8 +959,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -985,7 +985,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1013,7 +1013,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1037,7 +1037,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1065,8 +1065,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1091,7 +1091,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1118,7 +1118,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1142,7 +1142,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1171,7 +1171,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1196,7 +1196,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1221,7 +1221,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1245,7 +1245,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1273,8 +1273,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1299,7 +1299,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1327,7 +1327,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1350,7 +1350,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1379,8 +1379,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1405,7 +1405,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1434,7 +1434,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1456,7 +1456,7 @@ const api = {
                    resolve(response.data)
                })
                .catch( error => {
-                   console.log(error.response);
+                   
                    reject(error);
                });
         });
@@ -1525,7 +1525,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1547,7 +1547,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log(error.response);
+                    
                     reject(error);
                 });
         });
@@ -1616,7 +1616,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1638,7 +1638,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log(error.response);
+                    
                     reject(error);
                 });
         });
@@ -1710,7 +1710,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1733,7 +1733,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1762,8 +1762,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1788,7 +1788,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1812,7 +1812,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1835,7 +1835,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1858,7 +1858,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1884,7 +1884,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1907,7 +1907,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1930,7 +1930,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1960,7 +1960,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1986,7 +1986,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2011,7 +2011,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2036,7 +2036,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2062,7 +2062,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2088,7 +2088,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2112,7 +2112,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2141,7 +2141,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2164,7 +2164,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2187,7 +2187,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2201,8 +2201,8 @@ const api = {
             dataF.append(id, factura[id]);
         }
 
-        console.log("FACTURA_EDIT", factura)
-        console.log("DATAF", dataF)
+        
+        
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -2220,7 +2220,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2248,7 +2248,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2271,7 +2271,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2294,7 +2294,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2324,7 +2324,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 

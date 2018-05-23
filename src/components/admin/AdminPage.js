@@ -58,7 +58,7 @@ class AdminPage extends Component {
 
     render() {
         let {user, fetched} = this.props;
-        console.log(this.props);
+        
         if(!fetched)return(<MainLoader/>);
         return (
             <Layout className={'leftside'}>

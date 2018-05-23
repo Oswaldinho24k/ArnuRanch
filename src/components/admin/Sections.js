@@ -36,15 +36,14 @@ import ListaAlmacen from "../empresas/ListaItems";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
 import EventosPage from "../ganado/eventos/EventosPage";
 import AnimalsDashboard from "../ganado/dashboard/AnimalsDashboard";
-import ProductList from '../sell_point/products/ProductsList';
+
 import LeftSide from './LeftSide';
-import ProductForm  from '../sell_point/products/ProductForm';
-import CheckoutPage  from '../sell_point/products/CheckoutPage';
-import EditForm  from '../sell_point/products/EditForm';
+
+
 import Blines from "../blines/Blines";
 import FacturasPage from "../facturas/FacturasPage";
 import FacturaDetalle from "../facturas/FacturaDetalle";
-import OrdersPage from '../sell_point/orders/OrdersPage';
+
 import CuentasPage from "../cuentasBanco/Cuentas";
 import CuentaDetalle from "../cuentasBanco/CuentaDetalle";
 
@@ -108,12 +107,7 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
                 <Route path={'/admin/vacunas'} component={VacunasPage}/>
-                {/*************************sell point routes************************/}
-                <Route exact path={'/admin/sp'} component={ProductList}/>
-                <Route exact path={'/admin/sp/add'} component={ProductForm}/>
-                <Route exact path={'/admin/sp/manage/:id'} component={EditForm}/>
-                <Route exact path={'/admin/sp/checkout'} component={CheckoutPage}/>
-                <Route exact path={'/admin/sp/orders'} component={OrdersPage}/>
+ 
 
 
 

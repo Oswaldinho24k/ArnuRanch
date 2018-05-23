@@ -23,14 +23,7 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Link to='/admin/usuarios'>  Usuarios </Link>
                 </Menu.Item>
             </SubMenu>:''}
-            {user.is_superuser?<SubMenu  key="sub6" title={<span className={'my-icon'}><Icon type="shopping-cart" /><span>Punto de Venta</span></span>}>
-                <Menu.Item key="21" disabled={false}>
-                    <Link to='/admin/sp'>  Productos </Link>
-                </Menu.Item>
-                <Menu.Item key="22" disabled={false}>
-                    <Link to='/admin/sp/orders'>  Órdenes </Link>
-                </Menu.Item>
-            </SubMenu>:''}
+           
             {(user.profile&&user.profile.admin)|| user.is_superuser?
                 <SubMenu  key="sub1" title={<span className={'my-icon'}><Icon type="global" /><span>Admin</span></span>}>
                     <Menu.Item key="1" disabled={false}>

@@ -15,11 +15,10 @@ import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
 import {getAlmacenes} from "./almacen/almacenActions";
-import { getProducts } from "./sellpoint/products/productActions";
-import { getCategories } from "./sellpoint/products/categoriesActions";
+
 import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
-import { getOrders } from "./sellpoint/orders/orderActions";
+
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 
 
@@ -96,13 +95,12 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getLines());
         dispatch(getLiSearch());
         dispatch(getAlmacenes());
-        dispatch(getProducts());
-        dispatch(getCategories());
+        
         dispatch(getFacturas());
         dispatch(getFaSearch());
         dispatch(getAnSearch());
         dispatch(getLoSearch());
-        dispatch(getOrders());
+        
         dispatch(getCuentas());
         dispatch(getCuSearch());
         dispatch(getClSearch());
