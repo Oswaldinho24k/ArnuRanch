@@ -10,6 +10,7 @@ import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import FormAnimalLote from '../animals/FormLote';
 import {AreteCard} from '../eventos/AreteCard'
+import { ReporteCard } from './ReporteCard';
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -220,7 +221,7 @@ class ReportesPage extends Component {
 
                 </div>
                 <div style={{display:'flex', justifyContent:'space-around'}}>
-                    <div style={{width:'50%'}}>
+                    <div style={{width:'40%'}}>
                     <h2>Generador de Reportes</h2>
                    
                     <FormItem label={'Modo'}>
@@ -234,18 +235,7 @@ class ReportesPage extends Component {
                             <Option value={'multiple'}>Multiple</Option>
                         </Select>
                     </FormItem>
-                    <FormItem label={'Tipo de Reporte'}>
-                        <Select
-                           value={event}
-                            onChange={this.handleChangeEvent}
-                            style={{width:'100%'}}
-                        >
-                            <Option value={'gasto'}>Gasto</Option>
-                            <Option value={'reubicacion'}>Reubicación</Option>
-                            <Option value={'salida'}>Salida</Option>
-                           
-                        </Select>
-                    </FormItem>
+                
                     {modo==='lote'?
                         <FormItem label={'Lote'}>
                             <Select
@@ -308,10 +298,12 @@ class ReportesPage extends Component {
                         
                         
                         {/*Forms de los reportes*/}
-                     </div>
-                    <div style={{width:'30%', }}>
                         
-                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} title={'Aretes Seleccionados'}>
+                     </div>
+                    <div style={{width:'50%', }}>
+                        
+                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} 
+                            title={'Aretes Seleccionados'}>
                         <List
                             itemLayout="horizontal"
                             dataSource={modo==='individual'?[areteId]:
@@ -320,8 +312,11 @@ class ReportesPage extends Component {
                             renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta                            
-                                title={<Link to={`/admin/animals/${item.id}`}>{item.arete_siniga}</Link>}
-                                description={<AreteCard {...item}/>}
+                                title={<div>
+                                        <Link to={`/admin/animals/${item.id}`}>Siniga: {item.arete_siniga}</Link>
+                                        <span>    R: {item.arete_rancho} </span>
+                                    </div>}
+                                description={<ReporteCard {...item}/>}
                                 />
                             </List.Item>
                             )}
