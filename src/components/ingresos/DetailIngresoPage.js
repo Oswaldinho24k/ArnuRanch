@@ -42,6 +42,10 @@ class DetailIngresoPage extends Component{
         cuenta:'',
         cliente:'',
         clientChange:false,
+
+        idCuent:null,
+        idBl:null,
+        idClient:null,
     };
 
     handleEditMode=()=>{
@@ -94,6 +98,23 @@ class DetailIngresoPage extends Component{
 
     };
 
+    //saveIDs
+
+    saveClient=(id)=>{
+        console.log("DD", id)
+        this.setState({idClient:id})
+    };
+
+    saveBl=(id)=>{
+        this.setState({idBl:id})
+    };
+
+    saveCuent=(id)=>{
+        this.setState({idCuent:id})
+    };
+
+
+
     render(){
         let {ingreso, fetched, clientes, blines, cuentas,} = this.props;
         let {editMode, linea} = this.state;
@@ -135,6 +156,18 @@ class DetailIngresoPage extends Component{
                         searchCuenta={this.handleCuenta}
                         cuentas={cuentas}
                         receivableEdit={this.state.cuenta}
+
+
+                        saveClient={this.saveClient}
+                        stateClient={this.state.idClient}
+
+                        saveBline={this.saveBl}
+                        stateBline={this.state.idBl}
+
+                        saveCuentas={this.saveCuent}
+                        stateCuentas={this.state.idCuent}
+
+
 
 
                     />

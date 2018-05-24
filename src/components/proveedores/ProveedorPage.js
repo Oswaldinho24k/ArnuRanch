@@ -48,6 +48,8 @@ class ProovedorPage extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
 

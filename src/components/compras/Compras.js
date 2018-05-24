@@ -18,7 +18,9 @@ class Compras extends Component {
         visibleEdit:false,
         infoEdit:[],
         searchText: '',
-        canReset:false
+        canReset:false,
+        idProv:null,
+        idLn:null,
     };
 
     showModal = () => {
@@ -31,6 +33,8 @@ class Compras extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
     deleteCompra=()=>{
@@ -68,6 +72,8 @@ class Compras extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
+                values['proveedor_id']=this.state.idProv;
+                values['linea_compras_id']=this.state.idLn;
                 this.props.comprasActions.newCompra(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
@@ -122,7 +128,7 @@ class Compras extends Component {
     searchProveedor=(a)=>{
         let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
         let url = basePath+a;
-        this.props.linesActions.getLiSearch(url);
+        this.props.proveedoresActions.getPrSearch(url);
     };
     //search
 
@@ -148,6 +154,15 @@ class Compras extends Component {
             canReset:false
         });
 
+    };
+
+    //saveIDClient
+
+    saveProvider=(id)=>{
+        this.setState({idProv:id})
+    };
+    saveLine=(id)=>{
+        this.setState({idLn:id})
     };
 
 
@@ -238,6 +253,9 @@ class Compras extends Component {
 
                   proveedores={proveedores}
                   searchProveedor={this.searchProveedor}
+
+                  saveProvider={this.saveProvider}
+                  saveLine={this.saveLine}
 
 
 

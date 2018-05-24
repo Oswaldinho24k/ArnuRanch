@@ -6,16 +6,22 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egreso, searchProvider, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, lineHandle, linea, provider_egreso, concepto_purchase, compra_check, compra_egreso, searchCompra, compras}) => {
-    console.log("COMPRAS", compras)
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egreso, searchProvider, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, saveProvider, linea, provider_egreso, concepto_purchase, compra_check, compra_egreso, searchCompra, compras, stateProvider, saveBline, stateLine, saveCompra, stateCompra}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
 
+
             if (!err) {
-                console.log(values);
+
+                values['compra_egreso_id']=stateCompra !==null ? stateCompra: compra_egreso.id ;
+                values['business_egreso_id']=stateLine !== null ? stateLine: business_egreso.id;
+                values['provider_egreso_id']=stateProvider !== null?stateProvider:provider_egreso.id;
+
+
                 values['id']=id;
+                console.log("VALUES", values)
                 editEgreso(values)
                     .then(r=>{
                         console.log("Editado con éxito");
@@ -35,12 +41,11 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                    {provider_egreso?
                         <FormItem
                             label={"Razón Social"}
                         >
                             {form.getFieldDecorator('provider_egreso_id',{
-                                initialValue:provider_egreso.id,
+                                initialValue:provider_egreso?provider_egreso.provider:'',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -52,81 +57,33 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                                     onSearch={searchProvider}
                                     filterOption={false}
                                 >
-                                    {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No </Option>}
+                                    {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado </Option>}
                                 </Select>
                             )}
-                        </FormItem>:
-                        <FormItem
-                            label={"Razón Social"}
-                        >
-                            {form.getFieldDecorator('provider_egreso.id',{
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    filterOption={false}
-                                    showSearch
-                                    onSearch={searchProvider}
-                                    placeholder={"Proveedor"}>
-                                    {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No cliente</Option>}
-                                </Select>
-                            )}
-                        </FormItem>}
-
-
-                    {business_egreso?
-
-                        <FormItem
-                            label={"Linea de negocio"}
-                        >
-                            {form.getFieldDecorator('business_egreso_id',{
-                                initialValue:business_egreso.id,
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    placeholder={"Linea de Negocio"}
-                                    showSearch
-                                    onSearch={searchLine}
-                                    filterOption={false}
-                                >
-                                    {
-                                        options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                    }
-
-                                </Select>
-                            )}</FormItem>:
-                        <FormItem
-                            label={"Linea de negocio"}
-                        >
-                            {form.getFieldDecorator('business_egreso_id',{
-                                initialValue:business_egreso.id,
-                                rules: [{
-                                    required: true, message: 'Completa el campo!',
-                                }],
-                            })(
-                                <Select
-                                    disabled={!editMode}
-                                    placeholder={"Linea de Negocio"}
-                                    showSearch
-                                    onSearch={searchLine}
-                                    filterOption={false}
-                                >
-                                    {
-                                        options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                    }
-
-                                </Select>
-                            )}
-
-
                         </FormItem>
-                    }
+
+                        <FormItem
+                            label={"Linea de negocio"}
+                        >
+                            {form.getFieldDecorator('business_egreso_id',{
+                                initialValue:business_egreso?business_egreso.name:'',
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Linea de Negocio"}
+                                    showSearch
+                                    onSearch={searchLine}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.name}><div onClick={()=>saveBline(a.id)} ><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
+
+                                </Select>
+                            )}</FormItem>
 
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 
@@ -146,13 +103,12 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                             )}
                         </FormItem>
 
-                        {compra_egreso && compra_egreso !== null?
 
                                 <FormItem
                                     style={{width:'200px'}}
                                 >
                                     {form.getFieldDecorator('compra_egreso_id',{
-                                        initialValue:compra_egreso.id,
+                                        initialValue:compra_egreso?compra_egreso.no_factura:'',
                                         rules: [{
                                             required: true, message: 'Completa el campo!',
                                         }],
@@ -165,39 +121,11 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                                             filterOption={false}
                                         >
                                             {
-                                                compras.length >0? compras.map((a, key) => <Option key={key} value={a.id} >{a.no_factura}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                                compras.length >0? compras.map((a, key) => <Option key={key} value={a.no_factura} ><div onClick={()=>saveCompra(a.id)} ><span>{a.no_factura}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                             }
 
                                         </Select>
-                                    )}</FormItem>:
-                                <FormItem
-                                    style={{width:'200px'}}
-                                >
-                                    {form.getFieldDecorator('compra_egreso_id',{
-                                        initialValue:compra_egreso.id,
-                                        rules: [{
-                                            required: true, message: 'Completa el campo!',
-                                        }],
-                                    })(
-                                        <Select
-                                            disabled={!editMode}
-                                            placeholder={"Compra"}
-                                            showSearch
-                                            onSearch={searchCompra}
-                                            filterOption={false}
-                                        >
-                                            {
-                                                compras.length >0? compras.map((a, key) => <Option key={key} value={a.id} >{a.no_factura}</Option>):<Option key={999999} disabled >No encontrado</Option>
-                                            }
-
-                                        </Select>
-                                    )}
-
-
-                                </FormItem>
-
-
-                        }
+                                    )}</FormItem>
                     </div>
 
                     <FormItem

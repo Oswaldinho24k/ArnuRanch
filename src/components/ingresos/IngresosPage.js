@@ -65,6 +65,10 @@ class IngresosPage extends Component {
         cuenta:'',
         cliente:'',
         canReset:false,
+
+        idClient:null,
+        idLine:null,
+        idReceivable:null,
     };
 
     showModal = () => {
@@ -77,6 +81,8 @@ class IngresosPage extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
     deleteIngreso=()=>{
@@ -117,6 +123,9 @@ class IngresosPage extends Component {
 
             if (!err) {
                 console.log(values);
+                values['client_id']=this.state.idClient;
+                values['business_line_id']=this.state.idLine;
+                values['receivable_id']=this.state.idReceivable;
                 this.props.ingresosActions.saveIngreso(values);
                 message.success('Guardado con éxito');
 
@@ -131,11 +140,6 @@ class IngresosPage extends Component {
         this.setState({
             factura: e.target.checked
         })
-    };
-
-    onInputChange = (e) => {
-        this.setState({ searchText: e.target.value });
-
     };
 
     onSearch = () => {
@@ -180,50 +184,40 @@ class IngresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.linesActions.getLiSearch(url);
-    };
-
-    handleChangeS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({linea:value});
-
     };
 
     //Cuentas
 
     handleCuenta=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.cuentasActions.getCuSearch(url);
-    };
-
-    changeCuentaS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({cuenta:value});
-
     };
 
     //Cliente
 
     handleCliente=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.clientesActions.getClSearch(url);
     };
 
-    changeClienteS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({cliente:value});
 
+    //saveIDClient
+
+    saveClient=(id)=>{
+        this.setState({idClient:id})
     };
+    saveLine=(id)=>{
+        this.setState({idLine:id})
+    };
+    saveReceivable=(id)=>{
+        this.setState({idReceivable:id})
+    };
+
 
 
 
@@ -322,15 +316,16 @@ class IngresosPage extends Component {
 
                     options={blines}
                     searchLine={this.handleSearchLine}
-                    lineHandle={this.handleChangeS}
 
                     cuentas={cuentas}
                     searchCuenta={this.handleCuenta}
-                    cuentaHandle={this.changeCuentaS}
 
                     options_clientes={clientes}
                     searchCliente={this.handleCliente}
-                    clienteHandle={this.changeClienteS}
+
+                    saveClient={this.saveClient}
+                    saveLine={this.saveLine}
+                    saveReceivable={this.saveReceivable}
 
                 />
 

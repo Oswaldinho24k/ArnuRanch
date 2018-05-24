@@ -78,6 +78,9 @@ class EgresosPage extends Component {
         filtered: false,
         linea:"",
         compra:true,
+        idCompra:null,
+        idProvider:null,
+        idLineE:null,
     };
 
     showModal = () => {
@@ -90,6 +93,8 @@ class EgresosPage extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
     deleteEgreso=()=>{
@@ -129,7 +134,9 @@ class EgresosPage extends Component {
         form.validateFields((err, values) => {
 
             if (!err) {
-                console.log(values);
+                values['provider_egreso_id']=this.state.idProvider;
+                values['compra_egreso_id']=this.state.idCompra;
+                values['business_egreso_id']=this.state.idLineE;
                 this.props.egresosActions.saveEgreso(values);
                 message.success('Guardado con éxito');
 
@@ -152,10 +159,6 @@ class EgresosPage extends Component {
         })
     };
 
-    onInputChange = (e) => {
-        this.setState({ searchText: e.target.value });
-
-    };
 
     onSearch = () => {
         let basePath= "http://localhost:8000/api/egresos/egresos/?q=";
@@ -200,18 +203,9 @@ class EgresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.linesActions.getLiSearch(url);
-    };
-
-    handleChangeS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({linea:value});
-        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
-        //this.props.linesActions.getLiSearch(basePath);
     };
 
     //providers
@@ -233,6 +227,18 @@ class EgresosPage extends Component {
         this.setState({
             compra: e.target.checked
         })
+    };
+
+    //saveIDs
+
+    saveProvider=(id)=>{
+        this.setState({idProvider:id})
+    };
+    saveLine=(id)=>{
+        this.setState({idLineE:id})
+    };
+    saveCompra=(id)=>{
+        this.setState({idCompra:id})
     };
 
 
@@ -337,12 +343,16 @@ class EgresosPage extends Component {
                     factura = {this.state.factura}
 
                     searchLine={this.handleSearchLine}
-                    lineHandle={this.handleChangeS}
 
                     compras={compras}
                     compraSearch={this.compraSearch}
                     compraChange={this.compraChange}
+
                     compra={this.state.compra}
+
+                    saveProvider={this.saveProvider}
+                    saveLine={this.saveLine}
+                    saveCompra={this.saveCompra}
 
                 />
 

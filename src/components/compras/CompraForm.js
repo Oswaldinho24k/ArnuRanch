@@ -24,7 +24,7 @@ const styles = {
 
 const CompraForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, blines, searchLine, proveedores, searchProveedor} = props;
+        const{visible, onCancel, onCreate, form, blines, searchLine, proveedores, searchProveedor, saveProvider, saveLine} = props;
         const{getFieldDecorator} = form;
 
         console.log("PROVEDOREs",proveedores)
@@ -49,7 +49,7 @@ const CompraForm = Form.create()(
 
                         <FormItem
                             label={"Razón Social"}
-
+                            hasFeedback
                         >
                             {getFieldDecorator('proveedor_id', {
                                 rules: [{
@@ -64,7 +64,7 @@ const CompraForm = Form.create()(
                                     filterOption={false}
                                 >
                                     {
-                                        proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                        proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                     }
 
                                 </Select>
@@ -73,6 +73,7 @@ const CompraForm = Form.create()(
 
                         <FormItem
                             label={"Linea de negocio"}
+                            hasFeedback
                         >
                             {getFieldDecorator('linea_compras_id', {
                                 rules: [{
@@ -87,7 +88,7 @@ const CompraForm = Form.create()(
                                     filterOption={false}
                                 >
                                     {
-                                        blines.length >0? blines.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                        blines.length >0? blines.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveLine(a.id)} ><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
                                     }
 
                                 </Select>

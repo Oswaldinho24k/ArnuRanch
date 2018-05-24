@@ -50,6 +50,9 @@ class DetailEgresoPage extends Component{
     state={
         editMode:false,
         linea:'',
+        idProvider:null,
+        idBline:null,
+        idCompra:null,
 
     };
 
@@ -88,8 +91,19 @@ class DetailEgresoPage extends Component{
         this.props.comprasActions.getCoSearch(url);
     }
 
+    //saveIDs
 
+    saveProvider=(id)=>{
+        this.setState({idProvider:id})
+    };
 
+    saveBline=(id)=>{
+        this.setState({idBline:id})
+    };
+
+    saveCompra=(id)=>{
+        this.setState({idCompra:id})
+    };
 
     render(){
         let {egreso, fetched, proveedores, blines, compras} = this.props;
@@ -97,6 +111,8 @@ class DetailEgresoPage extends Component{
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
+
+        console.log("LLL", this.state.idCompra)
 
 
         return(
@@ -131,6 +147,15 @@ class DetailEgresoPage extends Component{
 
                         searchCompra={this.searchCompra}
                         compras={compras}
+
+                        saveProvider={this.saveProvider}
+                        stateProvider={this.state.idProvider}
+
+                        saveBline={this.saveBline}
+                        stateLine={this.state.idBline}
+
+                        saveCompra={this.saveCompra}
+                        stateCompra={this.state.idCompra}
 
 
                     />

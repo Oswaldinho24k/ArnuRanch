@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, clienteHandle, searchCliente  }=props;
+        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -44,7 +44,7 @@ const FormIngreso = Form.create()(
 
                         <FormItem
                             label={"Razón Social"}
-
+                            hasFeedback
                         >
                             {getFieldDecorator('client_id', {
                                 rules: [{
@@ -55,12 +55,11 @@ const FormIngreso = Form.create()(
                             <Select
                                 placeholder={"Razón Social"}
                                 showSearch
-                                //onChange={clienteHandle}
                                 onSearch={searchCliente}
                                 filterOption={false}
                             >
                                 {
-                                    options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.id} >{a.client}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                 }
 
                             </Select>
@@ -81,12 +80,11 @@ const FormIngreso = Form.create()(
                             <Select
                                 placeholder={"Linea de Negocio"}
                                 showSearch
-                                //onChange={lineHandle}
                                 onSearch={searchLine}
                                 filterOption={false}
                             >
                                 {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveLine(a.id)}><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
                                 }
 
                             </Select>
@@ -143,7 +141,7 @@ const FormIngreso = Form.create()(
                                 filterOption={false}
                             >
                                 {
-                                    cuentas.length >0? cuentas.map((a, key) => <Option key={key} value={a.id} >{a.cuenta}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    cuentas.length >0? cuentas.map((a, key) => <Option key={key} value={a.cuenta} ><div onClick={()=>saveReceivable(a.id)}><span>{a.cuenta}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                 }
 
                             </Select>

@@ -7,9 +7,9 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra} = props;
+        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
         const {getFieldDecorator} = form;
-        
+
         return (
             <Modal
                 visible={visible}
@@ -27,6 +27,7 @@ const FormEgreso = Form.create()(
 
                         <FormItem
                             label={"Razón Social"}
+                            hasFeedback
                         >
                             {getFieldDecorator('provider_egreso_id', {
                                 rules: [{
@@ -45,7 +46,7 @@ const FormEgreso = Form.create()(
                                     filterOption={false}
                                 >
                                     {
-                                        options_proveedores.length >0? options_proveedores.map((a, key) => <Option key={key} value={a.id} >{a.provider}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                        options_proveedores.length >0? options_proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                     }
 
                                 </Select>
@@ -56,7 +57,7 @@ const FormEgreso = Form.create()(
 
                         <FormItem
                             label={"Linea de negocio"}
-
+                            hasFeedback
                         >
                             {getFieldDecorator('business_egreso_id', {
                                 rules: [{
@@ -71,7 +72,7 @@ const FormEgreso = Form.create()(
                                     filterOption={false}
                                 >
                                     {
-                                        options.length >0? options.map((a, key) => <Option key={key} value={a.id} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveLine(a.id)} ><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                     }
 
                                 </Select>
@@ -97,7 +98,7 @@ const FormEgreso = Form.create()(
                                 )}
                             </FormItem>
 
-                            <FormItem style={{width:'200px'}} >
+                            <FormItem style={{width:'200px'}} hasFeedback >
                                 {getFieldDecorator('compra_egreso_id', {
                                     rules: [{
                                         required: false, message: 'Completa el campo!',
@@ -112,7 +113,7 @@ const FormEgreso = Form.create()(
                                         disabled={!compra}
                                     >
                                         {
-                                            compras.length >0? compras.map((a, key) => <Option key={key} value={a.id} >{a.no_factura}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                            compras.length >0? compras.map((a, key) => <Option key={key} value={a.no_factura} ><div onClick={()=>saveCompra(a.id)} ><span>{a.no_factura}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                         }
 
                                     </Select>
@@ -127,7 +128,7 @@ const FormEgreso = Form.create()(
                         >
                             {getFieldDecorator('concepto_purchase', {
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+                                    required: false, message: 'Completa el campo!',
                                 },
                                 ],
                             })(
