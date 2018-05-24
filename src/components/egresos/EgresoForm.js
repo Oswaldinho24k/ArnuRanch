@@ -9,7 +9,7 @@ const FormEgreso = Form.create()(
     (props) => {
         const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra} = props;
         const {getFieldDecorator} = form;
-
+        
         return (
             <Modal
                 visible={visible}
