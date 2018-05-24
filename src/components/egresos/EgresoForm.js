@@ -7,9 +7,8 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider} = props;
+        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra} = props;
         const {getFieldDecorator} = form;
-
 
         return (
             <Modal
@@ -68,7 +67,6 @@ const FormEgreso = Form.create()(
                                 <Select
                                     placeholder={"Linea de Negocio"}
                                     showSearch
-                                    //onChange={lineHandle}
                                     onSearch={searchLine}
                                     filterOption={false}
                                 >
@@ -80,6 +78,63 @@ const FormEgreso = Form.create()(
                             )}
 
                         </FormItem>
+
+                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                            <FormItem>
+                                {getFieldDecorator('compra_check', {
+                                    valuePropName: 'checked',
+                                    initialValue: true,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Checkbox
+                                        value={compra}
+                                        onChange={compraChange}
+                                    >
+                                        Compra?
+                                    </Checkbox>
+                                )}
+                            </FormItem>
+
+                            <FormItem style={{width:'200px'}} >
+                                {getFieldDecorator('compra_egreso_id', {
+                                    rules: [{
+                                        required: false, message: 'Completa el campo!',
+                                    },
+                                    ],
+                                })(
+                                    <Select
+                                        placeholder={"Compra"}
+                                        showSearch
+                                        onSearch={compraSearch}
+                                        filterOption={false}
+                                        disabled={!compra}
+                                    >
+                                        {
+                                            compras.length >0? compras.map((a, key) => <Option key={key} value={a.id} >{a.no_factura}</Option>):<Option key={999999} disabled >No encontrado</Option>
+                                        }
+
+                                    </Select>
+                                )}
+
+                            </FormItem>
+
+                        </div>
+
+                        <FormItem
+                            label="Concepto"
+                        >
+                            {getFieldDecorator('concepto_purchase', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Input disabled={compra}/>
+                            )}
+                        </FormItem>
+
 
                         <FormItem
                             label={"Tipo de egreso"}

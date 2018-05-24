@@ -11,6 +11,7 @@ import FormEgreso from "./EgresoForm";
 
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
+import * as comprasActions from '../../redux/actions/compras/comprasActions';
 
 
 const Option = Select.Option;
@@ -76,6 +77,7 @@ class EgresosPage extends Component {
         canReset:false,
         filtered: false,
         linea:"",
+        compra:true,
     };
 
     showModal = () => {
@@ -215,11 +217,22 @@ class EgresosPage extends Component {
     //providers
 
     handleSearchProvider=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.proveedoresActions.getPrSearch(url);
+    };
+
+    //compras
+    compraSearch =(a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/egresos/compras/?q=';
+        let url = basePath+a;
+        this.props.comprasActions.getCoSearch(url);
+    }
+
+    compraChange=(e)=>{
+        this.setState({
+            compra: e.target.checked
+        })
     };
 
 
@@ -264,11 +277,9 @@ class EgresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched, egresosData, blines, proveedores} = this.props;
+        let {egresos, fetched, egresosData, blines, proveedores, compras} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
-        //let type = type.map((a) => <Option key={a.name}>{a.name}</Option>);
         let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
-        //let options_proveedores = this.props.proveedores.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.provider}</Option>);
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -328,6 +339,11 @@ class EgresosPage extends Component {
                     searchLine={this.handleSearchLine}
                     lineHandle={this.handleChangeS}
 
+                    compras={compras}
+                    compraSearch={this.compraSearch}
+                    compraChange={this.compraChange}
+                    compra={this.state.compra}
+
                 />
 
                 <Divider
@@ -351,7 +367,8 @@ function mapStateToProps(state, ownProps) {
         egresos: state.egresos.list,
         egresosData:state.egresos.allData,
         blines:state.blines.lineSearch,
-        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined && state.proveedores.proveedorSearch !== undefined,
+        compras:state.compras.compraSearch,
+        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined && state.proveedores.proveedorSearch !== undefined && state.compras.compraSearch !== undefined,
         proveedores: state.proveedores.proveedorSearch,
     }
 }
@@ -360,7 +377,8 @@ function mapDispatchToProps(dispatch) {
     return {
         egresosActions: bindActionCreators(egresosActions, dispatch),
         linesActions: bindActionCreators(linesActions, dispatch),
-        proveedoresActions: bindActionCreators(proveedoresActions, dispatch)
+        proveedoresActions: bindActionCreators(proveedoresActions, dispatch),
+        comprasActions:bindActionCreators(comprasActions, dispatch),
     }
 }
 

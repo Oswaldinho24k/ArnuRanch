@@ -8,6 +8,7 @@ import moment from 'moment';
 import * as egresoActions from '../../redux/actions/administracion/egresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
+import * as comprasActions from '../../redux/actions/compras/comprasActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 
@@ -75,18 +76,23 @@ class DetailEgresoPage extends Component{
     //PRovider
 
     searchProvider=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.proveedoresActions.getPrSearch(url);
     };
+
+    //compra
+    searchCompra = (a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/egresos/compras/?q=';
+        let url = basePath+a;
+        this.props.comprasActions.getCoSearch(url);
+    }
 
 
 
 
     render(){
-        let {egreso, fetched, proveedores, blines} = this.props;
+        let {egreso, fetched, proveedores, blines, compras} = this.props;
         let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
@@ -123,6 +129,9 @@ class DetailEgresoPage extends Component{
 
                         searchProvider={this.searchProvider}
 
+                        searchCompra={this.searchCompra}
+                        compras={compras}
+
 
                     />
                 </Card>
@@ -141,7 +150,8 @@ function mapStateToProps(state, ownProps) {
     return {
         egreso,
         blines:state.blines.lineSearch,
-        fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined,
+        compras:state.compras.compraSearch,
+        fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined && state.compras.compraSearch !== undefined,
         proveedores:state.proveedores.proveedorSearch,
     }
 }
@@ -150,7 +160,8 @@ function mapDispatchToProps(dispatch) {
     return{
         egresoActions: bindActionCreators(egresoActions, dispatch),
         linesActions: bindActionCreators(linesActions, dispatch),
-        proveedoresActions: bindActionCreators(proveedoresActions, dispatch)
+        proveedoresActions: bindActionCreators(proveedoresActions, dispatch),
+        comprasActions: bindActionCreators(comprasActions, dispatch)
     }
 }
 
