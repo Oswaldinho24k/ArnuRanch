@@ -60,9 +60,6 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     {/*<Menu.Item key="9" disabled={true}>
                         <Link to={'/admin/inventario'}>Inventario</Link>
                     </Menu.Item>*/}
-                    <Menu.Item key="22">
-                        <Link to={'/admin/facturas'}>Facturas</Link>
-                    </Menu.Item>
                     <Menu.Item key="9" disabled={false}>
                         <Link to={'/admin/ingresos/blines'} >Bussines Lines</Link>
                     </Menu.Item>
@@ -70,11 +67,18 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                         <Link to='/admin/empresas'> Empresas </Link>
                     </Menu.Item>
 
+                    <Menu.Item key="23">
+                        <Link to={'/admin/compras'}>Compras</Link>
+                    </Menu.Item>
+
                 </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?
             <SubMenu key="sub2" title={<span className={'my-icon'}><Icon type="gitlab" /><span>Ganado</span></span>}>
                 <Menu.Item key="21" disabled={false}>
                     <Link to='/admin/dash/animals'>  Dashboard </Link>
+                </Menu.Item>
+                <Menu.Item key="22">
+                    <Link to={'/admin/facturas'}>Facturas</Link>
                 </Menu.Item>
                 <Menu.Item key="15" disabled={false}>
                     <Link to ={'/admin/corrales'}>Corrales</Link>

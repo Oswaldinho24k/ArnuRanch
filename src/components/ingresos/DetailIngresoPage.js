@@ -7,6 +7,8 @@ import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import * as ingresoActions from '../../redux/actions/administracion/ingresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
+import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
+import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import MainLoader from "../common/Main Loader";
 const Option = Select.Option;
 
@@ -37,6 +39,13 @@ class DetailIngresoPage extends Component{
     state={
         editMode:false,
         linea:'',
+        cuenta:'',
+        cliente:'',
+        clientChange:false,
+
+        idCuent:null,
+        idBl:null,
+        idClient:null,
     };
 
     handleEditMode=()=>{
@@ -57,12 +66,61 @@ class DetailIngresoPage extends Component{
         //this.props.linesActions.getLiSearch(basePath);
     };
 
+    //Cuentas
+
+    handleCuenta=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.cuentasActions.getCuSearch(url);
+    };
+
+    changeCuentaS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({cuenta:value});
+
+    };
+
+    //Clientes
+
+    handleClient=(a)=>{
+        console.log(a)
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        let url = basePath+a;
+        console.log(url)
+        this.props.clientesActions.getClSearch(url);
+    };
+
+    changeClientS=(value, obj)=> {
+        console.log(`selected ${value}`);
+        this.setState({cliente:value, handleClient:true});
+
+    };
+
+    //saveIDs
+
+    saveClient=(id)=>{
+        console.log("DD", id)
+        this.setState({idClient:id})
+    };
+
+    saveBl=(id)=>{
+        this.setState({idBl:id})
+    };
+
+    saveCuent=(id)=>{
+        this.setState({idCuent:id})
+    };
+
+
+
     render(){
-        let {ingreso, fetched, clientes, blines} = this.props;
+        let {ingreso, fetched, clientes, blines, cuentas,} = this.props;
         let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
-        let options_clients = clientes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.client}</Option>);
+
         return(
 
             <div>
@@ -84,11 +142,34 @@ class DetailIngresoPage extends Component{
                         handleEditMode={this.handleEditMode}
                         editMode={editMode}
                         options={blines}
-                        clientes={options_clients}
+
+                        clientes={clientes}
+                        searchClient={this.handleClient}
+                        clientHandle={this.changeClientS}
+                        handleClient={this.state.handleClient}
 
                         searchLine={this.handleSearchLine}
                         lineHandle={this.handleChangeS}
                         linea={linea}
+
+                        cuentaHandle={this.changeCuentaS}
+                        searchCuenta={this.handleCuenta}
+                        cuentas={cuentas}
+                        receivableEdit={this.state.cuenta}
+
+
+                        saveClient={this.saveClient}
+                        stateClient={this.state.idClient}
+
+                        saveBline={this.saveBl}
+                        stateBline={this.state.idBl}
+
+                        saveCuentas={this.saveCuent}
+                        stateCuentas={this.state.idCuent}
+
+
+
+
                     />
                 </Card>
             </div>
@@ -106,15 +187,18 @@ function mapStateToProps(state, ownProps) {
     return {
         ingreso,
         blines:state.blines.lineSearch,
-        fetched: ingreso!==undefined && state.ingresos.list!==undefined && state.blines.lineSearch !== undefined,
-        clientes: state.clientes.list,
+        fetched: ingreso!==undefined && state.ingresos.list!==undefined && state.blines.lineSearch !== undefined && state.clientes.clienteSearch !== undefined,
+        clientes: state.clientes.clienteSearch,
+        cuentas:state.cuentas.cuentaSearch
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return{
         ingresoActions: bindActionCreators(ingresoActions, dispatch),
-        linesActions: bindActionCreators(linesActions, dispatch)
+        linesActions: bindActionCreators(linesActions, dispatch),
+        cuentasActions: bindActionCreators(cuentasActions, dispatch),
+        clientesActions: bindActionCreators(clientesActions, dispatch),
     }
 }
 

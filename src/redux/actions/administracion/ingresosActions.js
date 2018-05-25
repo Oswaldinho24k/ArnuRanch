@@ -85,8 +85,6 @@ export function editIngresoSucces(ingreso) {
 export const editIngreso=(ingreso)=>(dispatch, getState)=>{
     return api.editIngreso(ingreso)
         .then(r=>{
-            let client= getState().clientes.list.find(l=>l.id===r.client);
-            r['client'] = client
             dispatch(editIngresoSucces(r))
         }).catch(e=>{
             console.log(e)

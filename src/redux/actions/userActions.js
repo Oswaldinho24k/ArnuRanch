@@ -2,7 +2,7 @@ import api from "../../Api/Django";
 import {getAnimals, getAnSearch} from "./ganado/animalsActions";
 import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
-import {getProveedores} from "./administracion/proveedoresActions";
+import {getProveedores, getPrSearch} from "./administracion/proveedoresActions";
 import {getClientes, getClSearch} from "./administracion/clientesActions";
 import {getPesadas} from "./ganado/pesadasActions";
 import {getIngresos} from "./administracion/ingresosActions";
@@ -21,6 +21,7 @@ import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import { getOrders } from "./sellpoint/orders/orderActions";
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
+import {getCompras, getCoSearch} from "./compras/comprasActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -106,6 +107,9 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getCuentas());
         dispatch(getCuSearch());
         dispatch(getClSearch());
+        dispatch(getPrSearch());
+        dispatch(getCompras());
+        dispatch(getCoSearch());
 
 
     }

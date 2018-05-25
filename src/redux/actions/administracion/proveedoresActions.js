@@ -1,5 +1,26 @@
 import api from "../../../Api/Django";
 
+///GET CLIENTES SEARCH
+
+export const GET_PRSEARCH_SUCCESS = 'GET_PRSEARCH_SUCCESS';
+
+export function getPrSearchSuccess(proveedorS){
+    return{
+        type:GET_PRSEARCH_SUCCESS, proveedorS
+    }
+}
+
+export const getPrSearch=(url)=>(dispatch, getState)=>{
+    return api.getProveedores(url)
+        .then(r=>{
+            dispatch(getPrSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};
+
+///end
+
 
 export const GET_PROVEEDORES_SUCCESS = 'GET_PROVEEDORES_SUCCESS';
 

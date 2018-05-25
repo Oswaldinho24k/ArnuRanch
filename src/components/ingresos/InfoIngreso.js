@@ -6,19 +6,20 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea, concepto}) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, cuentas, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea, concepto, receivable, cuentaHandle, searchCuenta, clientHandle, searchClient, saveClient, stateClient, saveBline, stateBline, saveCuentas, stateCuentas  }) => {
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
-            if(linea !== ''){
-                values['business_line']=linea;
-            }else{
-                values['business_line']=business_line;
-            }
 
             if (!err) {
-                console.log(values);
+
+                values['receivable_id']=stateCuentas !==null ? stateCuentas: receivable.id ;
+                values['business_line_id']=stateBline !== null ? stateBline: business_line.id;
+                values['client_id']=stateClient !== null?stateClient:client.id;
+
                 values['id']=id;
+                console.log("ENVIADO", values)
                 editIngreso(values)
                     .then(r=>{
                         console.log("Editado con éxito");
@@ -36,85 +37,53 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
-                    {clientes?
                         <FormItem
                             label={"Razón Social"}
                         >
-                            {form.getFieldDecorator('client',{
-                                initialValue:client.id,
+                            {form.getFieldDecorator('client_id',{
+                                initialValue:client?client.client:'',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Select
                                     disabled={!editMode}
-                                    placeholder={"Cliente"}>
-                                    {clientes}
+                                    placeholder={"Cliente"}
+                                    showSearch
+                                    onChange={clientHandle}
+                                    onSearch={searchClient}
+                                    filterOption={false}
+                                >
+                                    {clientes.length >0? clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No </Option>}
                                 </Select>
                             )}
-                        </FormItem>:
+                        </FormItem>
+
                         <FormItem
-                            label={"Razón Social"}
+                            label={"Linea de negocio"}
                         >
-                            {form.getFieldDecorator('client',{
+                            {form.getFieldDecorator('business_line_id',{
+                                initialValue:business_line ? business_line.name:'',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-
                             })(
-                                <Select
-                                    disabled={!editMode}
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"Linea de Negocio"}
+                                showSearch
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveBline(a.id)}><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
 
-                                    placeholder={"Cliente"}>
-                                    {clientes}
-                                </Select>
+                            </Select>
                             )}
-                        </FormItem>}
-
-                    {business_line?
-
-                        <FormItem
-                            label={"Linea de negocio"}
-                            hasFeedback
-                        >
-                            <Select
-                                disabled={!editMode}
-                                defaultValue={business_line}
-                                placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
-                                onSearch={searchLine}
-                                filterOption={false}
-                            >
-                                {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                }
-
-                            </Select>
-
-
-                        </FormItem>:
-                        <FormItem
-                            label={"Linea de negocio"}
-                            hasFeedback
-                        >
-                            <Select
-                                disabled={!editMode}
-                                placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
-                                onSearch={searchLine}
-                                filterOption={false}
-                            >
-                                {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                }
-
-                            </Select>
-
 
                         </FormItem>
-                    }
 
                     <FormItem
                         label="Concepto"
@@ -149,6 +118,34 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             />
                         )}
                     </FormItem>
+
+
+                        <FormItem
+                            label={"No. Cuenta"}
+                        >
+                            {form.getFieldDecorator('receivable_id',{
+                                initialValue:receivable?receivable.cuenta:'',
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"No. Cuenta"}
+                                showSearch
+                                onChange={cuentaHandle}
+                                onSearch={searchCuenta}
+                                filterOption={false}
+                            >
+                                {
+                                    cuentas.length >0? cuentas.map((a, key) => <Option key={key} value={a.cuenta} ><div onClick={()=>saveCuentas(a.id)}><span>{a.cuenta}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                }
+
+                            </Select>
+                            )}
+
+
+                        </FormItem>
 
                     <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
 

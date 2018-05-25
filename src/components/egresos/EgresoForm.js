@@ -7,9 +7,8 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine} = props;
+        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
         const {getFieldDecorator} = form;
-
 
         return (
             <Modal
@@ -28,8 +27,9 @@ const FormEgreso = Form.create()(
 
                         <FormItem
                             label={"Razón Social"}
+                            hasFeedback
                         >
-                            {getFieldDecorator('provider', {
+                            {getFieldDecorator('provider_egreso_id', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -39,8 +39,16 @@ const FormEgreso = Form.create()(
                             })(
 
 
-                                <Select  placeholder={"Selecciona un Proveedor"}>
-                                    {options_proveedores}
+                                <Select
+                                    placeholder={"Razón Social"}
+                                    showSearch
+                                    onSearch={searchProvider}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options_proveedores.length >0? options_proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
+
                                 </Select>
                             )}
 
@@ -51,21 +59,83 @@ const FormEgreso = Form.create()(
                             label={"Linea de negocio"}
                             hasFeedback
                         >
-                            <Select
-                                placeholder={"Linea de Negocio"}
-                                mode={'combobox'}
-                                onChange={lineHandle}
-                                onSearch={searchLine}
-                                filterOption={false}
-                            >
-                                {
-                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} >{a.name}</Option>):<Option key={999999} disabled >No Lineas</Option>
-                                }
+                            {getFieldDecorator('business_egreso_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Select
+                                    placeholder={"Linea de Negocio"}
+                                    showSearch
+                                    onSearch={searchLine}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveLine(a.id)} ><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
 
-                            </Select>
-
+                                </Select>
+                            )}
 
                         </FormItem>
+
+                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap' }}>
+                            <FormItem>
+                                {getFieldDecorator('compra_check', {
+                                    valuePropName: 'checked',
+                                    initialValue: true,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Checkbox
+                                        value={compra}
+                                        onChange={compraChange}
+                                    >
+                                        Compra?
+                                    </Checkbox>
+                                )}
+                            </FormItem>
+
+                            <FormItem style={{width:'200px'}} hasFeedback >
+                                {getFieldDecorator('compra_egreso_id', {
+                                    rules: [{
+                                        required: false, message: 'Completa el campo!',
+                                    },
+                                    ],
+                                })(
+                                    <Select
+                                        placeholder={"Compra"}
+                                        showSearch
+                                        onSearch={compraSearch}
+                                        filterOption={false}
+                                        disabled={!compra}
+                                    >
+                                        {
+                                            compras.length >0? compras.map((a, key) => <Option key={key} value={a.no_factura} ><div onClick={()=>saveCompra(a.id)} ><span>{a.no_factura}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                        }
+
+                                    </Select>
+                                )}
+
+                            </FormItem>
+
+                        </div>
+
+                        <FormItem
+                            label="Concepto"
+                        >
+                            {getFieldDecorator('concepto_purchase', {
+                                rules: [{
+                                    required: false, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Input disabled={compra}/>
+                            )}
+                        </FormItem>
+
 
                         <FormItem
                             label={"Tipo de egreso"}
