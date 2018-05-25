@@ -311,11 +311,7 @@ class ReportesPage extends Component {
                                 modo==='lote'?loteId.animals:''}
                             renderItem={item => (
                             <List.Item>
-                                <List.Item.Meta                            
-                                title={<div>
-                                        <Link to={`/admin/animals/${item.id}`}>Siniga: {item.arete_siniga}</Link>
-                                        <span>    R: {item.arete_rancho} </span>
-                                    </div>}
+                                <List.Item.Meta                                                            
                                 description={<ReporteCard {...item}/>}
                                 />
                             </List.Item>
