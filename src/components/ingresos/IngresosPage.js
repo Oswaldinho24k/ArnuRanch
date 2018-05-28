@@ -71,6 +71,10 @@ class IngresosPage extends Component {
         idReceivable:null,
     };
 
+    componentWillMount(){
+        this.props.ingresosActions.getIngresos();
+    }
+
     showModal = () => {
         this.setState({
             visible: true,

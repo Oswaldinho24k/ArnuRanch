@@ -549,6 +549,10 @@ const api = {
            data.delete('fierro_nuevo');
        }
 
+        if(animal.ref_factura_original_id === null || animal.ref_factura_original_id === undefined || typeof animal.ref_factura_original_id === 'string'){
+            data.delete('ref_factura_original_id')
+        }
+
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
