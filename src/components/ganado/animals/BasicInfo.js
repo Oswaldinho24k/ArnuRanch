@@ -10,8 +10,7 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options}) => {
-
+const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options, facturas, searchFactura, saveFactura, stateFactura}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,11 +23,13 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                 if(!values.raza_id) values['raza_id'] = null;
                 if(!values.empresa_id) values['empresa_id'] = null;*/
                 if(!values.tipo_animal) delete values.tipo_animal;
+                if(!values.ref_factura_original_id) delete values.ref_factura_original_id;
                 /* if(!values.costo_inicial) delete values.costo_inicial;
                  if(!values.costo_kilo) delete values.costo_kilo;
                  if(!values.peso_entrada) delete values.peso_entrada;*/
                 console.log(values);
                 values['id']=id;
+                values['ref_factura_original_id'] = stateFactura !==null ? stateFactura:ref_factura_original && ref_factura_original !==null?ref_factura_original.id:null;
                 editAnimal(values)
                     .then(r=>{
                         message.success('Editado con éxito');
@@ -162,12 +163,24 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                     <FormItem
                         label="Factura Inicial"
                         style={{width:'200px'}}>
-                        {form.getFieldDecorator('ref_factura_original', {
-                                    initialValue:ref_factura_original
+                        {form.getFieldDecorator('ref_factura_original_id', {
+                                    initialValue:ref_factura_original?ref_factura_original.factura:null,
+                            rules: [{
+                                required: false, message: 'Completa el campo!',
+                            }],
                             })(
-                            <Input
+                            <Select
                                 disabled={!editMode}
-                               />
+                                placeholder={"Factura"}
+                                showSearch
+                                onSearch={searchFactura}
+                                filterOption={false}
+                            >
+                                {
+                                    facturas.length >0? facturas.map((a, key) => <Option key={key} value={a.factura} ><div onClick={()=>saveFactura(a.id)} ><span>{a.factura}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                }
+
+                            </Select>
 
                             )}
                     </FormItem>

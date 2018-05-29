@@ -22,6 +22,7 @@ import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import { getOrders } from "./sellpoint/orders/orderActions";
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 import {getCompras, getCoSearch} from "./compras/comprasActions";
+import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -110,6 +111,8 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getPrSearch());
         dispatch(getCompras());
         dispatch(getCoSearch());
+        dispatch(getGgSearch());
+        dispatch(getGastos());
 
 
     }

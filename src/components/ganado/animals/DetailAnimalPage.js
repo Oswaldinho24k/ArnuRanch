@@ -9,6 +9,7 @@ import FormGasto from "./FormGasto";
 import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as pesadasActions from '../../../redux/actions/ganado/pesadasActions';
+import * as facturasActions from '../../../redux/actions/facturas/facturasActions';
 import MainLoader from "../../common/Main Loader";
 import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
@@ -48,6 +49,7 @@ class DetailAnimalPage extends Component {
         visible: false,
         visible2:false,
         wEmpresa:true,
+        idFactura:null,
     };
 
     componentDidMount(){
@@ -119,10 +121,22 @@ class DetailAnimalPage extends Component {
         this.setState({wEmpresa:e})
     };
 
+    //Facturas
+
+    searchFactura=(a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/?q=';
+        let url = basePath+a;
+        this.props.facturasActions.getFaSearch(url);
+    };
+
+    saveFactura=(id)=>{
+        this.setState({idFactura:id})
+    };
+
 
 
     render() {
-        const {animal, fetched, razas, lotes, empresas} = this.props;
+        const {animal, fetched, razas, lotes, empresas, facturas} = this.props;
 
         const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
         const rowSelection = {
@@ -149,6 +163,10 @@ class DetailAnimalPage extends Component {
                 editAnimal={this.props.animalActions.editAnimal}
                 handleEditMode={this.handleEditMode}
                 editMode={editMode}
+                 facturas={facturas}
+                 searchFactura={this.searchFactura}
+                 saveFactura={this.saveFactura}
+                 stateFactura={this.state.idFactura}
                 options={options_lote}
                 options_raza={options_raza}
                 options_empresa={options_empresa}
@@ -234,8 +252,9 @@ function mapStateToProps(state, ownProps) {
         animal:state.animals.object,
         lotes:state.lotes.list,
         razas:state.razas.list,
+        facturas:state.facturas.facturaSearch,
         empresas:state.empresas.list,
-        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined,
+        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined && state.facturas.list !== undefined,
     }
 }
 
@@ -246,7 +265,8 @@ function mapDispatchToProps(dispatch, oP) {
     return {
         animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
         animalActions:bindActionCreators(animalActions, dispatch),
-        pesadasActions:bindActionCreators(pesadasActions, dispatch)
+        pesadasActions:bindActionCreators(pesadasActions, dispatch),
+        facturasActions: bindActionCreators(facturasActions, dispatch)
     }
 }
 

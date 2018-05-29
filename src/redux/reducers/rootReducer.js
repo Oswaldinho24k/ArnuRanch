@@ -25,6 +25,7 @@ import categoriesReducer from './sellpoint/products/categories'
 import facturasReducer from "./facturas/facturasReducer";
 import cuentasReducer from "./cuentas/cuentasReducer";
 import comprasReducer from "./compras/comprasReducer";
+import gastosGanadoReducer from "./gastoGanado/gastoGanadoReducer";
 
 
 
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
     orders:ordersReducer,
     cuentas:cuentasReducer,
     compras:comprasReducer,
+    gastosGanado:gastosGanadoReducer,
 
 
 });
