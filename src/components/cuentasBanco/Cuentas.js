@@ -28,6 +28,8 @@ class CuentasPage extends Component{
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
     deleteCuenta=()=>{
@@ -163,7 +165,7 @@ class CuentasPage extends Component{
                     columns={columns}
                     dataSource={cuentas}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     pagination={{
                         pageSize: 10,
                         total:cuentasData.count,

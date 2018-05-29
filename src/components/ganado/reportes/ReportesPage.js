@@ -11,6 +11,7 @@ import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import FormAnimalLote from '../animals/FormLote';
 import {AreteCard} from '../eventos/AreteCard'
 import { ReporteCard } from './ReporteCard';
+import {ResumenCard} from './ResumenCard';
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -20,7 +21,7 @@ class ReportesPage extends Component {
         aretes:[],
         aretesId:[],
         areteRancho:'',
-        areteId:'',
+        areteId:{},
         lote:'',
         loteId:'',
         modo:'',
@@ -298,22 +299,25 @@ class ReportesPage extends Component {
                         
                         
                         {/*Forms de los reportes*/}
+                       <ResumenCard 
+                                aretes={modo==='individual'?[areteId]:
+                                modo==='multiple'?mIds:
+                                modo==='lote'?loteId.animals:[]}/>
                         
                      </div>
                     <div style={{width:'50%', }}>
                         
-                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll'}} 
+                        <Card style={{width:'100%', height:'80vh', overflowY:'scroll' ,padding:'0%'}} 
                             title={'Aretes Seleccionados'}>
                         <List
+                            style={{width:'100%', padding:0}}                        
                             itemLayout="horizontal"
                             dataSource={modo==='individual'?[areteId]:
                                 modo==='multiple'?mIds:
                                 modo==='lote'?loteId.animals:''}
                             renderItem={item => (
                             <List.Item>
-                                <List.Item.Meta                                                            
-                                description={<ReporteCard {...item}/>}
-                                />
+                                <ReporteCard {...item}/>                                
                             </List.Item>
                             )}
                         />

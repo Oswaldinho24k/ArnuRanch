@@ -62,9 +62,6 @@ export function editEgresoSucces(egreso) {
 export const editEgreso=(egreso)=>(dispatch, getState)=>{
     return api.editEgreso(egreso)
         .then(r=>{
-
-            let provider= getState().proveedores.list.find(l=>l.id===r.provider);
-            r['provider'] = provider;
             dispatch(editEgresoSucces(r))
         }).catch(e=>{
                 throw e

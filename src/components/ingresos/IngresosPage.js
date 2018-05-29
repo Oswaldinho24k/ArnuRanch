@@ -64,6 +64,11 @@ class IngresosPage extends Component {
         linea:'',
         cuenta:'',
         cliente:'',
+        canReset:false,
+
+        idClient:null,
+        idLine:null,
+        idReceivable:null,
     };
 
     showModal = () => {
@@ -76,6 +81,8 @@ class IngresosPage extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
     deleteIngreso=()=>{
@@ -113,13 +120,12 @@ class IngresosPage extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
-            values['business_line']=this.state.linea;
-            values['receivable'] = this.state.cuenta;
-            values['client'] = this.state.cliente;
 
-            console.log("VALUES", values)
             if (!err) {
                 console.log(values);
+                values['client_id']=this.state.idClient;
+                values['business_line_id']=this.state.idLine;
+                values['receivable_id']=this.state.idReceivable;
                 this.props.ingresosActions.saveIngreso(values);
                 message.success('Guardado con éxito');
 
@@ -134,11 +140,6 @@ class IngresosPage extends Component {
         this.setState({
             factura: e.target.checked
         })
-    };
-
-    onInputChange = (e) => {
-        this.setState({ searchText: e.target.value });
-
     };
 
     onSearch = () => {
@@ -183,50 +184,40 @@ class IngresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.linesActions.getLiSearch(url);
-    };
-
-    handleChangeS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({linea:value});
-
     };
 
     //Cuentas
 
     handleCuenta=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.cuentasActions.getCuSearch(url);
-    };
-
-    changeCuentaS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({cuenta:value});
-
     };
 
     //Cliente
 
     handleCliente=(a)=>{
-        console.log(a)
         let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
         let url = basePath+a;
-        console.log(url)
         this.props.clientesActions.getClSearch(url);
     };
 
-    changeClienteS=(value, obj)=> {
-        console.log(`selected ${value}`);
-        this.setState({cliente:value});
 
+    //saveIDClient
+
+    saveClient=(id)=>{
+        this.setState({idClient:id})
     };
+    saveLine=(id)=>{
+        this.setState({idLine:id})
+    };
+    saveReceivable=(id)=>{
+        this.setState({idReceivable:id})
+    };
+
 
 
 
@@ -243,6 +234,7 @@ class IngresosPage extends Component {
             {
                 title: 'Linea de negocio',
                 dataIndex: 'business_line',
+                render: (business_line,obj) =><span>{ business_line && business_line !== null ? business_line.name : "No Linea"}</span>,
             },
             {
                 title: 'No. Factura',
@@ -285,16 +277,16 @@ class IngresosPage extends Component {
 
                 <h1>Ingresos Page</h1>
 
-                {/*<div style={{paddingBottom:'1%'}}>
+                <div style={{paddingBottom:'1%'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
                         onChange={this.handleSearch}
                         value={searchText}
                         style={{ width: 400 }}
-                        placeholder={'Busca por nombre...'}
+                        placeholder={'Buscar ingreso...'}
                     />
-                </div>*/}
+                </div>
 
                 <BackTop visibilityHeight={100} />
 
@@ -303,7 +295,7 @@ class IngresosPage extends Component {
                     columns={columns}
                     rowSelection={rowSelection}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     style={{marginBottom:10}}
                     pagination={{
                         pageSize: 10,
@@ -324,15 +316,16 @@ class IngresosPage extends Component {
 
                     options={blines}
                     searchLine={this.handleSearchLine}
-                    lineHandle={this.handleChangeS}
 
                     cuentas={cuentas}
                     searchCuenta={this.handleCuenta}
-                    cuentaHandle={this.changeCuentaS}
 
                     options_clientes={clientes}
                     searchCliente={this.handleCliente}
-                    clienteHandle={this.changeClienteS}
+
+                    saveClient={this.saveClient}
+                    saveLine={this.saveLine}
+                    saveReceivable={this.saveReceivable}
 
                 />
 

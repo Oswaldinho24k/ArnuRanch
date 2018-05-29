@@ -48,6 +48,8 @@ class ProovedorPage extends Component {
         this.setState({
             visible: false,
         });
+        const form = this.form;
+        form.resetFields();
     };
 
 
@@ -251,7 +253,7 @@ class ProovedorPage extends Component {
                     columns={columns}
                     rowSelection={rowSelection}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
+                    scroll={{x:650, y:400}}
                     style={{marginBottom:10}}
                     pagination={{
                         pageSize: 10,
