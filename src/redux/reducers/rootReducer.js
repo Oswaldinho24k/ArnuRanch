@@ -23,6 +23,7 @@ import almacenReducer from "./almacen/almacenReducer";
 import facturasReducer from "./facturas/facturasReducer";
 import cuentasReducer from "./cuentas/cuentasReducer";
 import comprasReducer from "./compras/comprasReducer";
+import gastosGanadoReducer from "./gastoGanado/gastoGanadoReducer";
 
 
 
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
     
     cuentas:cuentasReducer,
     compras:comprasReducer,
+    gastosGanado:gastosGanadoReducer,
 
 
 });

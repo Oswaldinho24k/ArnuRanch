@@ -1,13 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
-import {Button, message, Popconfirm, Tag, Divider, Input, Icon, BackTop} from "antd";
+import {Button, message, Popconfirm, Tag, Divider, Input, Icon, BackTop, Table} from "antd";
 import MainLoader from "../common/Main Loader";
 import moment from 'moment';
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
-import TablePageB from "../clientes/TablePageB";
 
 const style={
     customFilterDropdown: {
@@ -31,6 +29,7 @@ class PagarEgreso extends Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
+        searchPaid:false,
     };
 
     showModal = () => {
@@ -98,10 +97,11 @@ class PagarEgreso extends Component {
     };
 
     componentWillMount(){
-        let filtrados = this.props.egresos.filter(f=>{return f.paid===false });
-        this.setState({
-            data:filtrados
-        });
+        let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
+        //let basePath = 'https://rancho.fixter.org/api/egresos/egresos/?paid=';
+        let url = basePath+`${"False"}`;
+        this.props.egresosActions.getEgresos(url);
+
     }
 
     resetFilter = () => {
@@ -158,8 +158,8 @@ class PagarEgreso extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched} = this.props;
-        let filtrados = egresos.filter(f=>{return f.paid===false });
+        let {egresos, fetched, egresosData} = this.props;
+
         if(!fetched)return(<MainLoader/>);
         return (
             <Fragment>
@@ -173,19 +173,20 @@ class PagarEgreso extends Component {
 
                 <BackTop visibilityHeight={100} />
 
-                {/*<Table
-                    rowSelection={rowSelection}
+                <Table
+                    dataSource={egresos}
                     columns={columns}
-                    dataSource={filtrados}
+                    rowSelection={rowSelection}
                     rowKey={record => record.id}
-                    scroll={{x:650}}
-                    pagination={false}
+                    scroll={{x:650, y:400}}
                     style={{marginBottom:10}}
-                />*/}
-
-                {filtered?<TablePageB data={data} columns={columns} rowSelection={rowSelection}/>
-                    :<TablePageB data={filtrados} columns={columns} rowSelection={rowSelection}/>
-                }
+                    pagination={{
+                        pageSize: 10,
+                        total:egresosData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Egresos por pagar`
+                    }}
+                />
 
                 <Popconfirm title="Are you sure delete this egreso?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canDelete} type="primary" >Eliminar</Button>
@@ -204,7 +205,8 @@ class PagarEgreso extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         egresos: state.egresos.list,
-        fetched: state.egresos.list !==undefined,
+        egresosData: state.egresos.allData,
+        fetched: state.egresos.list !==undefined && state.egresos.allData !== undefined,
     }
 }
 

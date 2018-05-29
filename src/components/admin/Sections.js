@@ -47,6 +47,7 @@ import FacturaDetalle from "../facturas/FacturaDetalle";
 import CuentasPage from "../cuentasBanco/Cuentas";
 import CuentaDetalle from "../cuentasBanco/CuentaDetalle";
 import Compras from "../compras/Compras";
+import GastosGanado from "../gastosGanado/GastosGanado";
 
 
 export const paths = {
@@ -67,6 +68,8 @@ const Sections = ({props}) => {
 
                 {/*<Route path={'/admin/compras/:in'} component={DetailIngresoPage} />*/}
                 <Route path={'/admin/compras/'} component={Compras} />
+
+                <Route path={'/admin/gastos/'} component={GastosGanado}/>
 
                 <Route path={'/admin/ingresos'} component={IngresosPage}/>
 

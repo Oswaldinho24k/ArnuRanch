@@ -89,6 +89,10 @@ class EgresosPage extends Component {
         });
     };
 
+    componentWillMount(){
+        this.props.egresosActions.getEgresos();
+    }
+
     handleCancel = () => {
         this.setState({
             visible: false,
