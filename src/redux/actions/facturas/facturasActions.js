@@ -61,6 +61,7 @@ export const newFactura=(factura)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(newFacturaSuccess(r));
             dispatch(getFacturas());
+            dispatch(getFaSearch());
         }).catch(e=>{
             throw e
         })
