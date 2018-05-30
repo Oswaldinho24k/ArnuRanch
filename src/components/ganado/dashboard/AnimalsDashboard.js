@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import Dashboard from "../../admin/Dashboard";
 import { Pie, ChartCard, Radar, Bar, MiniArea,
     MiniBar,
-    MiniProgress, Field,  } from 'ant-design-pro/lib/Charts';
+    MiniProgress, Field, TimelineChart  } from 'ant-design-pro/lib/Charts';
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import numeral from 'numeral';
 import moment from 'moment';
@@ -30,7 +30,7 @@ import {
 const { TabPane } = Tabs;
 
 const rankingListData = [];
-for (let i = 1; i < 6; i += 1) {
+for (let i = 1; i < 9; i += 1) {
     rankingListData.push({
         title: `Arete Rancho ${i}`,
         total: 323234,
@@ -68,6 +68,15 @@ const topColResponsiveProps = {
     style: { marginBottom: 24 },
 };
 
+const topColResponsiveProps2 = {
+    xs: 24,
+    sm: 12,
+    md: 12,
+    lg: 12,
+    xl: 12,
+    style: { marginBottom: 24 },
+};
+
 
 class AnimalsDashboard extends Component {
     state = {};
@@ -75,7 +84,6 @@ class AnimalsDashboard extends Component {
     render() {
         return (
             <Fragment>
-                <h2>Dash of Animal Section</h2>
 
                 <Row gutter={24}>
                     <Col {...topColResponsiveProps}>
@@ -102,155 +110,127 @@ class AnimalsDashboard extends Component {
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="运营活动效果"
+                            title="总销售额"
                             action={
                                 <Tooltip title="指标说明">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total="78%"
-                            footer={
-                                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                                    <Trend flag="up" style={{ marginRight: 16 }}>
-                                        周同比<span >12%</span>
-                                    </Trend>
-                                    <Trend flag="down">
-                                        日环比<span >11%</span>
-                                    </Trend>
-                                </div>
-                            }
+                            total={'$12 6560'}
+                            footer={<Field label="日均销售额" value={'$45, 000'} />}
                             contentHeight={46}
                         >
-                            <MiniProgress percent={78} strokeWidth={8} target={100} color="#13C2C2" />
+                            <Trend flag="up" style={{ marginRight: 16 }}>
+                                周同比<span >12%</span>
+                            </Trend>
+                            <Trend flag="down">
+                                日环比<span >11%</span>
+                            </Trend>
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="运营活动效果"
+                            title="总销售额"
                             action={
                                 <Tooltip title="指标说明">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total="18%"
-                            footer={
-                                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                                    <Trend flag="up" style={{ marginRight: 16 }}>
-                                        周同比<span >12%</span>
-                                    </Trend>
-                                    <Trend flag="down">
-                                        日环比<span >11%</span>
-                                    </Trend>
-                                </div>
-                            }
+                            total={'$12 6560'}
+                            footer={<Field label="日均销售额" value={'$45, 000'} />}
                             contentHeight={46}
                         >
-                            <MiniProgress percent={18} strokeWidth={8} target={100} color="#13C2C2" />
+                            <Trend flag="up" style={{ marginRight: 16 }}>
+                                周同比<span >12%</span>
+                            </Trend>
+                            <Trend flag="down">
+                                日环比<span >11%</span>
+                            </Trend>
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="运营活动效果"
+                            title="总销售额"
                             action={
                                 <Tooltip title="指标说明">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total="48%"
-                            footer={
-                                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                                    <Trend flag="up" style={{ marginRight: 16 }}>
-                                        周同比<span >12%</span>
-                                    </Trend>
-                                    <Trend flag="down">
-                                        日环比<span >11%</span>
-                                    </Trend>
-                                </div>
-                            }
+                            total={'$12 6560'}
+                            footer={<Field label="日均销售额" value={'$45, 000'} />}
                             contentHeight={46}
                         >
-                            <MiniProgress percent={58} strokeWidth={8} target={100} color="#13C2C2" />
+                            <Trend flag="up" style={{ marginRight: 16 }}>
+                                周同比<span >12%</span>
+                            </Trend>
+                            <Trend flag="down">
+                                日环比<span >11%</span>
+                            </Trend>
                         </ChartCard>
+                    </Col>
+                </Row>
+
+                <Row gutter={24} >
+                    <Col {...topColResponsiveProps2} >
+                        <Card bordered={false} bodyStyle={{ padding: 0 }} >
+
+                            <Tabs size="large" >
+                                <TabPane tab="Activos" key="activos" style={{padding: 16}} >
+                                    <div style={{overflow: 'hidden' }}>
+                                        <Bar height={292} width={'100%'} title="Fixter" data={salesPieData} />
+                                    </div>
+
+
+
+
+
+
+
+                                </TabPane>
+
+                                <TabPane tab="Inactivos" key="inactivos" style={{padding: 16, }}>
+                                    <Row>
+                                        <Col xl={16} lg={12} md={12} sm={24} xs={24} style={{overflow: 'hidden'}}>
+                                            <div >
+
+                                                <TimelineChart
+                                                    height={400}
+                                                    data={salesPieData}
+                                                    titleMap={{ y1: '客流量', y2: '支付笔数' }}
+                                                />
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </TabPane>
+                            </Tabs>
+
+                        </Card>
+                    </Col>
+                    <Col {...topColResponsiveProps2} >
+
+                        <Card title={"Próximos a vender"} bordered={false} bodyStyle={{ padding: 16 }} >
+                        <List
+                            size="small"
+                            header={null}
+                            footer={null}
+                            bordered
+                            dataSource={rankingListData}
+                            renderItem={item => (<List.Item style={{display:'flex', justifyContent:'center'}} >
+                                <span style={{display:'flex', justifyContent:'center', width:'100%' }}>{item.title}</span>
+                                <span style={{display:'flex', justifyContent:'center', width:'100%' }}>Status: true</span>
+                            </List.Item>)}
+
+                        />
+                        </Card>
+
                     </Col>
                 </Row>
 
 
 
-                <Card bordered={false} bodyStyle={{ padding: 0 }}>
 
-                        <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
-                            <TabPane tab="Activos" key="activos" style={{padding: 16, }}>
-                                <Row>
-                                    <Col xl={16} lg={12} md={12} sm={24} xs={24} style={{overflow: 'hidden'}}>
-                                        <div >
-                                            <Bar height={292} title="Fixter" data={salesPieData} />
-                                        </div>
-                                    </Col>
-                                    <Col xl={8} lg={12} md={12} sm={24} xs={24}
-                                         style={{
-                                             alignItems: 'center',
-                                             flexWrap: 'wrap',
-                                             justifyContent: 'center',
-                                         }}
-                                    >
-                                        <List
-                                            size="small"
-                                            header={<div style={{textAlign:'center'}}>Próximos a vender</div>}
-                                            footer={null}
-                                            bordered
-                                            dataSource={rankingListData}
-                                            renderItem={item => (<List.Item style={{display:'flex', justifyContent:'center'}} >
-                                                <span style={{display:'flex', justifyContent:'center', width:'100%' }}>{item.title}</span>
-                                                <span style={{display:'flex', justifyContent:'center', width:'100%' }}>Status: true</span>
-                                            </List.Item>)}
-                                            style={{margin:20}}
-
-                                        />
-
-
-
-                                    </Col>
-                                </Row>
-                            </TabPane>
-
-                            <TabPane tab="Inactivos" key="inactivos" style={{padding: 16, }}>
-                                <Row>
-                                    <Col xl={16} lg={12} md={12} sm={24} xs={24} style={{overflow: 'hidden'}}>
-                                        <div >
-                                            <Bar height={292} title="Fixter" data={salesPieData} />
-                                        </div>
-                                    </Col>
-                                    <Col xl={8} lg={12} md={12} sm={24} xs={24}
-                                        style={{
-                                            alignItems: 'center',
-                                            flexWrap: 'wrap',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                            <List
-                                                size="small"
-                                                header={<div style={{textAlign:'center'}}>Animales muertos</div>}
-                                                footer={null}
-                                                bordered
-                                                dataSource={rankingListData}
-                                                renderItem={item => (<List.Item style={{display:'flex', justifyContent:'center'}} >
-                                                    <span style={{display:'flex', justifyContent:'center', width:'100%' }}>{item.title}</span>
-                                                    <span style={{display:'flex', justifyContent:'center', width:'100%' }}>Status: false</span>
-                                                    </List.Item>)}
-                                                style={{margin:20}}
-
-                                            />
-
-
-
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </Tabs>
-
-                </Card>
 
 
 
