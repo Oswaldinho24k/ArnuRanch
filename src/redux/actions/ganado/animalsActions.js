@@ -1,4 +1,5 @@
 import api from "../../../Api/Django";
+import {getFacturas} from "../facturas/facturasActions";
 
 
 
@@ -68,6 +69,7 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
            // r['lote'] = lote;
             dispatch(saveAnimalSuccess(r));
             dispatch(getAnimals());
+            dispatch(getFacturas());
         })
         .catch(e=>{
             throw e;
@@ -93,7 +95,8 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
             // r['raza'] = raza;
             // r['lote'] = lote;
             // r['empresa'] = empresa;
-            dispatch(editAnimalSuccess(r))
+            dispatch(editAnimalSuccess(r));
+            dispatch(getFacturas());
         }).catch(e=>{
             throw e;
     })
