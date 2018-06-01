@@ -44,6 +44,7 @@ export const getProveedores=(url)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getProveedoresSuccess(r.results));
             dispatch(getAllDataSuccess(r));
+            dispatch(getPrSearch());
         }).catch(e=>{
         console.log(e)
             throw e

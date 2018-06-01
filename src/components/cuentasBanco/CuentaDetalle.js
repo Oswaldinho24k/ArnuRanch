@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
+import moment from 'moment';
 
 
 class CuentaDetalle extends Component{
@@ -23,6 +24,16 @@ class CuentaDetalle extends Component{
                 title: 'Total',
                 dataIndex: 'total',
             },
+            {
+                title:'Razon Social',
+                dataIndex:'client',
+                render:(client)=><span>{client && client !== undefined ?client.client:"No registradp"}</span>
+            },
+            {
+                title:'Registro',
+                dataIndex:'created',
+                render: created => moment(created).startOf(3, 'days').calendar()
+            }
 
         ];
 
@@ -48,6 +59,10 @@ class CuentaDetalle extends Component{
                         scroll={{x:650}}
                         style={{marginBottom:10}}
                         height={'80vh'}
+                        pagination={{
+                            style: { marginBottom: 0 },
+                            pageSize: 10,
+                        }}
                     />
 
                 </Card>
