@@ -1,12 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Dashboard from "../../admin/Dashboard";
-import { Pie, ChartCard, Radar, Bar, MiniArea,
-    MiniBar,
-    MiniProgress, Field, TimelineChart  } from 'ant-design-pro/lib/Charts';
-import NumberInfo from 'ant-design-pro/lib/NumberInfo';
-import numeral from 'numeral';
+import {ChartCard, Bar, Field, TimelineChart  } from 'ant-design-pro/lib/Charts';
+
 import moment from 'moment';
 import Trend from 'ant-design-pro/lib/Trend';
 import {
@@ -16,13 +12,9 @@ import {
     Card,
     Tabs,
     Table,
-    Radio,
-    DatePicker,
     Tooltip,
-    Menu,
-    Dropdown,
-    List
 } from 'antd';
+import MainLoader from "../../common/Main Loader";
 
 
 
@@ -162,36 +154,47 @@ class AnimalsDashboard extends Component {
     state = {};
 
     render() {
+
+        let {fetched, dataGanado, activos, inactivos} = this.props;
+        if(activos === undefined)return(<MainLoader/>);
+        console.log("DD", activos)
+        console.log("LLL", inactivos)
+        let dat=[{
+            x:"Activos",
+            y:activos.count
+        },{
+            x:"Inactivos",
+            y:inactivos
+        }
+        ];
+
+        console.log("II", dat)
+
+        console.log("DATA", dataGanado)
+
         const columns = [
             {
-                title: 'ID',
-                dataIndex: 'index',
-                key: 'index',
+                title: 'Arete Rancho',
+                dataIndex: 'arete_rancho',
+                key: 'arete_rancho',
             },
             {
-                title: 'ARETE',
-                dataIndex: 'keyword',
-                key: 'keyword',
-                render: text => <a href="/">{text}</a>,
+                title: 'Tipo',
+                dataIndex: 'tipo_animal',
+                key: 'tipo_animal',
             },
             {
-                title: 'PESO',
-                dataIndex: 'count',
-                key: 'count',
-                sorter: (a, b) => a.count - b.count,
-                //className: styles.alignRight,
+                title: 'Peso',
+                dataIndex: 'pesadas',
+                key: 'pesadas',
+                render:(pesadas)=><span>{pesadas && pesadas.peso !==undefined?pesadas.peso+" kg":"0 kg"}</span>
+
             },
             {
-                title: 'GANANCIA',
-                dataIndex: 'range',
-                key: 'range',
-                sorter: (a, b) => a.range - b.range,
-                render: (text, record) => (
-                    <Trend flag={record.status === 1 ? 'down' : 'up'}>
-                        <span style={{ marginRight: 4 }}>{text}%</span>
-                    </Trend>
-                ),
-                align: 'right',
+                title: 'Factura',
+                dataIndex: 'ref_factura_original',
+                key: 'ref_factura_original',
+                render:(ref_factura_original)=><span>{ref_factura_original && ref_factura_original.factura !==undefined?ref_factura_original.factura:"No factura"}</span>
             },
         ];
 
@@ -202,77 +205,78 @@ class AnimalsDashboard extends Component {
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="Rancho"
+                            title="Aretes Activos"
                             action={
-                                <Tooltip title="Ranchon">
+                                <Tooltip title="Aretes Activos Gastos">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={'$12 6560'}
-                            footer={<Field label="Meta" value={'$45, 000'} />}
+                            total={dataGanado.aretes_activos && dataGanado.aretes_activos.gastos_cash !==null ?"$ "+dataGanado.aretes_activos.gastos_cash:"$0"}
+                            footer={<Field label="Valor Inicial" value={dataGanado.aretes_activos && dataGanado.aretes_activos.valor_inicial !==null ?"$ "+dataGanado.aretes_activos.valor_inicial:"$0"} />}
                             contentHeight={46}
                         >
-                            <Trend flag="up" style={{marginRight: 5 }}>
+                            {/*<Trend flag="up" style={{marginRight: 5 }}>
                                 Pérdida 12%
                             </Trend>
-                            <Trend flag="down"  >Ganancia 11%</Trend>
+                            <Trend flag="down"  >Ganancia 11%</Trend>*/}
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="Rancho"
+                            title="Gastos Alimentos"
                             action={
-                                <Tooltip title="Ranchon">
+                                <Tooltip title="Gastos Alimentos">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={'$12 6560'}
-                            footer={<Field label="Meta" value={'$45, 000'} />}
+                            total={dataGanado.gastos_alimento && dataGanado.gastos_alimento.costo_alimento !==null ?"$ "+dataGanado.gastos_alimento.costo_alimento:"$0"}
+                            footer={<Field label="Kg Alimento" value={dataGanado.gastos_alimento && dataGanado.gastos_alimento !==null ?dataGanado.gastos_alimento.kg_alimento+" kg":"$0"} />}
                             contentHeight={46}
                         >
-                            <Trend flag="up"  style={{marginRight: 5 }}>
+                            {/*<Trend flag="up"  style={{marginRight: 5 }}>
                                 Pérdida 12%
                             </Trend>
-                            <Trend flag="down" >Ganancia 11%</Trend>
+                            <Trend flag="down" >Ganancia 11%</Trend>*/}
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="Rancho"
+                            title="Gastos"
                             action={
-                                <Tooltip title="Ranchon">
+                                <Tooltip title="Gastos">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={'$12 6560'}
-                            footer={<Field label="Meta" value={'$45, 000'} />}
+                            total={dataGanado.gastos && dataGanado.gastos.suma_gastos !==null ?"$ "+dataGanado.gastos.suma_gastos:"$0"}
+                            footer={<Field label="" value={''} />}
                             contentHeight={46}
                         >
-                            <Trend flag="up"  style={{marginRight: 5 }}>
+                            {/*<Trend flag="up"  style={{marginRight: 5 }}>
                                 Pérdida 12%
                             </Trend>
-                            <Trend flag="down" >Ganancia 11%</Trend>
+                            <Trend flag="down" >Ganancia 11%</Trend>*/}
                         </ChartCard>
+
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
-                            title="Rancho"
+                            title="Gasto Vacuna"
                             action={
-                                <Tooltip title="Ranchon">
+                                <Tooltip title="Gastos Vacuna">
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={'$12 6560'}
-                            footer={<Field label="Meta" value={'$45, 000'} />}
+                            total={dataGanado.gastos_vacuna && dataGanado.gastos_vacuna.suma_gastos_vacuna !==null ?dataGanado.gastos_vacuna.suma_gastos_vacuna:"$0"}
+                            footer={<Field label="" value={''} />}
                             contentHeight={46}
                         >
-                            <Trend flag="up" style={{marginRight: 5 }}>
+                           {/* <Trend flag="up" style={{marginRight: 5 }}>
                                 Pérdida 12%
                             </Trend>
-                            <Trend flag="down" >Ganancia 11%</Trend>
+                            <Trend flag="down" >Ganancia 11%</Trend>*/}
                         </ChartCard>
                     </Col>
                 </Row>
@@ -284,11 +288,8 @@ class AnimalsDashboard extends Component {
                             <Tabs size="large" >
                                 <TabPane tab="Activos" key="activos" style={{padding: 16}} >
                                     <div style={{overflow: 'hidden' }}>
-                                        <TimelineChart
-                                            height={400}
-                                            data={chartDataNice}
-                                            titleMap={{ y1: 'Rancho', y2: 'Arnulfo' }}
-                                        />
+                                        <Bar height={292} width={'100%'} title="Fixter" data={dat} />
+
                                     </div>
 
 
@@ -303,7 +304,12 @@ class AnimalsDashboard extends Component {
                                     <Row>
 
                                             <div style={{overflow: 'hidden' }} >
-                                                <Bar height={292} width={'100%'} title="Fixter" data={salesPieData} />
+                                                <TimelineChart
+                                                    height={400}
+                                                    data={chartDataNice}
+                                                    titleMap={{ y1: 'Rancho', y2: 'Arnulfo' }}
+                                                />
+
 
                                             </div>
 
@@ -318,10 +324,10 @@ class AnimalsDashboard extends Component {
                         <Card title={"Próximos a vender"} bordered={false} bodyStyle={{ padding: 16 }} >
 
                             <Table
-                                rowKey={record => record.index}
+                                rowKey={record => record.id}
                                 size="small"
                                 columns={columns}
-                                dataSource={dataTable}
+                                dataSource={dataGanado.proximos}
                                 pagination={{
                                     style: { marginBottom: 0 },
                                     pageSize: 8,
@@ -346,8 +352,14 @@ class AnimalsDashboard extends Component {
 
 
 function mapStateToProps(state, ownProps) {
+    let info = state.dataDash.dataDash;
+    let activos = info.aretes_activos;
+    let inactivos = info.aretes_inactivos;
     return {
-        state: state
+        activos,
+        inactivos,
+        dataGanado: state.dataDash.dataDash,
+        //fetch:state.dataDash.dataDash !== null,
     }
 }
 

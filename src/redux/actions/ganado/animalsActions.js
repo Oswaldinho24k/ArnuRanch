@@ -1,5 +1,6 @@
 import api from "../../../Api/Django";
 import {getFacturas} from "../facturas/facturasActions";
+import {getDataDash} from "../dashGanado/dashGanadoActions";
 
 
 
@@ -26,6 +27,7 @@ export const getAnimals=(url)=>(dispatch, getState)=>{
 
             dispatch(getAnimalsSuccess(r.results));
             dispatch(getAllDataSuccess(r));
+            dispatch(getDataDash());
         }).catch(e=>{
             throw e
     })
