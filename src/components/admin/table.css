@@ -1,0 +1,14 @@
+.ant-table-wrapper{
+    min-height: 400px;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+ul.ant-table-pagination.ant-pagination {
+    margin: 16px;
+}
+
+.ant-table-content{
+    min-height: 400px;
+}

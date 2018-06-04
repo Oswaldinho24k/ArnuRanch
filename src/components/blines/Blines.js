@@ -154,7 +154,7 @@ class Blines extends Component {
                     columns={columns}
                     dataSource={blines}
                     rowKey={record => record.id}
-                    scroll={{x:650, y:400}}
+                    scroll={{x:650}}
                     pagination={{
                         pageSize: 10,
                         total:blinesData.count,

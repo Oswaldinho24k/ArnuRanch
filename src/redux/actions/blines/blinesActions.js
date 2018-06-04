@@ -41,6 +41,7 @@ export const getLines=(url)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getLinesSuccess(r.results));
             dispatch(getAllLinesSuccess(r));
+            dispatch(getLiSearch());
         }).catch(e=>{
             throw e
         })

@@ -1,12 +1,13 @@
 import React, {Fragment, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, message, Divider, Popconfirm, Modal, Input} from 'antd';
+import {Table, Button, message, Divider, Input} from 'antd';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as comprasActions from '../../redux/actions/compras/comprasActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
+import moment from 'moment';
 
 import CompraForm from './CompraForm';
 
@@ -180,17 +181,23 @@ class Compras extends Component {
             {
                 title: 'No. Factura',
                 dataIndex: 'no_factura',
-                //render: (factura,obj) =><Link to={`/admin/facturas/${obj.id}`}>{ factura && factura !== null ? factura: "No Factura"}</Link>,
-
             },
+            {
+                title:'Monto',
+                dataIndex:'costo_final',
+                render:(costo_final) => <span>{costo_final && costo_final !==null ? "$ "+costo_final:'$ 0'}</span>
+            },
+            {
+                title:'Descripcion',
+                dataIndex:'descripcion',
+            },
+            {
+                title:'Registro',
+                dataIndex:'fecha_creacion'
+            }
 
-            /*{
-                title: 'Actions',
-                dataIndex: 'id',
-                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
-                fixed:'right',
-                width:100
-            },*/
+
+
         ];
 
         const canDelete = selectedRowKeys.length > 0;
@@ -219,7 +226,7 @@ class Compras extends Component {
                       onChange={this.handleSearch}
                       value={searchText}
                       style={{ width: 400 }}
-                      placeholder={'Buscar ingreso...'}
+                      placeholder={'Buscar compra...'}
                   />
               </div>
 
