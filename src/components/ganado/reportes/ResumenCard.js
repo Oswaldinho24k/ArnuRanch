@@ -41,6 +41,7 @@ export const ResumenCard =({aretes}) => {
                 let resultQuantity = a.aliments.map( (item, ix) => {
                     if(item.tipo==='Alimento')return alimentsQuantityTotal += parseFloat(item.cantidad)
                 });
+                parseFloat(alimentsQuantityTotal)
                 kgAlimentosTotales += alimentsQuantityTotal.toFixed(2);
                 //obtiene la diferencia en dias desde su llegada hasta hoy
                 var given = moment(a.fecha_entrada, "YYYY-MM-DD");
@@ -69,7 +70,7 @@ export const ResumenCard =({aretes}) => {
                 // //peso actual aprox en base a la gdp
                 // let pesoAproxToday = (diffToday*gdp) + parseFloat(lastPesada)*/
                 return(
-                    <p key={key}>{a.arete_siniga}</p>
+                    <p key={key}></p>
                 )
             })
 

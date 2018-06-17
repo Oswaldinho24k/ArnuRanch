@@ -215,7 +215,6 @@ function mapStateToProps (state, ownProps) {
          animalGastoActions:bindActionCreators(animalGastoActions, dispatch),
          lotesActions:bindActionCreators(lotesActions, dispatch),
      }
-
 }
 
 

@@ -71,31 +71,7 @@ class CorralPage extends Component {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
-    deleteCorrales=()=>{
-        let keys = this.state.selectedRowKeys;
-        for(let i in keys){
-            this.props.corralesActions.deleteCorral(keys[i])
-                .then(r=>{
-                    console.log(r);
-                    message.success('Deleted successfully');
-                }).catch(e=>{
-
-                message.error('No puedes eliminar este Lote')
-                /*for (let i in this.props.errors){
-                    console.log(this.props.errors[i])
-                    message.error(this.props.errors[i])
-                }*/
-
-            })
-        }
-        this.setState({selectedRowKeys:[]})
-    };
-    confirm=()=>{
-        this.deleteCorrales()
-    };
-    cancel=()=>{
-        console.log('ño')
-    }
+   
 
     render() {
         const { visible, selectedRowKeys } = this.state;

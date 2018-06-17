@@ -22,7 +22,7 @@ export const getEmpresas=(url)=>(dispatch, getState)=>{
             dispatch(getEmpresasSuccess(r.results));
             dispatch(getAllEmpresasSuccess(r));
         }).catch(e=>{
-            console.log(e)
+           
         })
 };
 
@@ -43,7 +43,7 @@ export const saveEmpresa=(empresa)=>(dispatch, getState)=>{
             dispatch(saveEmpresaSuccess(r));
             dispatch(getEmpresas());
         }).catch(e=>{
-            console.log(e)
+           
             throw e
         })
 };
@@ -61,9 +61,9 @@ export const editEmpresa=(empresa)=>(dispatch, getState)=>{
     return api.editEmpresa(empresa)
         .then(r=>{
             dispatch(editEmpresaSucces(r))
-            console.log(r);
+           
         }).catch(e=>{
-            console.log(e)
+           
         })
 };
 
@@ -83,6 +83,6 @@ export const deleteEmpresa=(empresaId)=>(dispatch, getState)=>{
             dispatch(deleteEmpresaSuccess(empresaId));
             dispatch(getEmpresas());
         }).catch(e=>{
-            console.log(e)
+           
         })
 };

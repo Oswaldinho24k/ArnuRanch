@@ -41,7 +41,7 @@ export function getSingleAnimalSuccess(animal){
 export const getSingleAnimal=(id)=>(dispatch, getState)=>{
     return api.getSingleAnimal(id)
         .then(r=>{
-            console.log(r)
+            
             dispatch(getSingleAnimalSuccess(r))
         }).catch(e=>{
             throw e
@@ -134,6 +134,25 @@ export const getAnSearch=(url)=>(dispatch, getState)=>{
     return api.getAnimals(url)
         .then(r=>{
             dispatch(getAnSearchSuccess(r.results));
+        }).catch(e=>{
+            throw e
+        })
+};
+
+/*reportes endpoint */
+
+export const GET_REPORTE_SUCCESS = 'GET_REPORTE_SUCCESS';
+
+export function getReporteSuccess(report){
+    return{
+        type:GET_REPORTE_SUCCESS, report
+    }
+}
+
+export const getReporte=()=>(dispatch, getState)=>{
+    return api.getReporte()
+        .then(r=>{            
+            dispatch(getReporteSuccess(r));
         }).catch(e=>{
             throw e
         })

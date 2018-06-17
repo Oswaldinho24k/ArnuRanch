@@ -39,7 +39,7 @@ export function getAllFacturasSuccess(dataFac){
 export const getFacturas=(url)=>(dispatch, getState)=>{
     return api.getFacturas(url)
         .then(r=>{
-            console.log(r)
+            
             dispatch(getFacturasSuccess(r.results));
             dispatch(getAllFacturasSuccess(r));
         }).catch(e=>{

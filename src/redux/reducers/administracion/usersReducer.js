@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_USERS_SUCCESS, NEW_USER_SUCCESS, SAVE_USER_PROFILE, DELETE_USER_SUCCESS} from "../../actions/administracion/usersActions";
+import {GET_USERS_SUCCESS, NEW_USER_SUCCESS, SAVE_USER_PROFILE, DELETE_USER_SUCCESS, EDIT_USER_SUCCESS} from "../../actions/administracion/usersActions";
 
 
 
@@ -23,6 +23,15 @@ function list(state=[], action){
                 return u.id!==action.user;
             });
             return list;
+        case EDIT_USER_SUCCESS:
+            user = state.find(u=>{
+                return u.id===action.user.id
+            });
+            uList = state.filter(u=>{
+                return u.id!==action.user.id;
+            });
+            
+            return [action.user, ...uList];
         default:
             return state;
     }

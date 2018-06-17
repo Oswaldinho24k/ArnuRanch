@@ -13,7 +13,7 @@ export const getVacunas=()=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getVacunasSuccess(r))
         }).catch(e=>{
-            console.log(e)
+           
         })
 };
 
@@ -31,10 +31,10 @@ export function saveVacunaSuccess(vacuna){
 export const saveVacuna=(vacuna)=>(dispatch, getState)=>{
     return api.newVacuna(vacuna)
         .then(r=>{
-            console.log(r);
+           
             dispatch(saveVacunaSuccess(r));
         }).catch(e=>{
-            console.log(e)
+           
             throw e
         })
 };
@@ -53,7 +53,7 @@ export const editVacuna=(vacuna)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editVacunaSucces(r))
         }).catch(e=>{
-            console.log(e)
+           
         })
 };
 
@@ -72,6 +72,6 @@ export const deleteVacuna=(vacunaId)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(deleteVacunaSuccess(vacunaId))
         }).catch(e=>{
-            console.log(e)
+           
         })
 };

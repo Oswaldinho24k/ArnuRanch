@@ -89,13 +89,13 @@ class BatchPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
-        let basePath = 'https://rancho.fixter.org/api/ganado/lotes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
         let url = basePath+this.state.searchText;
         this.props.loteActions.getLotes(url)
     };
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/';
-        let basePath = 'https://rancho.fixter.org/api/ganado/lotes/';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/';
         this.props.loteActions.getLotes(basePath);
         this.setState({searchText:''});
     };

@@ -12,10 +12,10 @@ export const getFormulasSuccess = formulas => ({
 export const getFormulas = url => (dispatch, getState) => {
     api.getFormulas( url )
         .then( r => {
-            //console.log(r);
+            
             dispatch(getFormulasSuccess(r));
         }).catch( e => {
-            console.log( e );
+            
     });
 };
 
@@ -31,18 +31,18 @@ export const saveFormulaSuccess = formula => ({
 export const saveFormula = formula => (dispatch, getState) => {
     return api.newFormula(formula)
         .then( r => {
-            console.log(formula.items);
+            
             r['items'] = formula['items'];
             let rForRedux = JSON.parse(JSON.stringify(r));
             for(let item of rForRedux.items){
                 item.insumo = getState().insumos.list.find( insumo => insumo.id == item.insumo);
             }
-            console.log(rForRedux);
+            
             dispatch(saveFormulaSuccess(rForRedux));
             return r;
         })
         .catch(e=>{
-            console.log(e);
+            
     });
 };
 
@@ -60,18 +60,18 @@ export const editFormula = formula => (dispatch, getState) => {
     return api.updateFormula(formula)
         .then( r => {
             r['items'] = formula['items'];
-            console.log('R normal',r);
+            
             let rForRedux = JSON.parse(JSON.stringify(r));
-            console.log('R clonado',rForRedux);
+            
             for(let item of rForRedux.items){
                 item.insumo = getState().insumos.list.find( insumo => insumo.id == item.insumo);
             }
-            console.log(rForRedux);
+            
             dispatch(editFormulaSuccess(rForRedux));
-            console.log(r);
+            
             return r;
         }).catch(e=>{
-            console.log(e);
+            
             return e;
     });
 };

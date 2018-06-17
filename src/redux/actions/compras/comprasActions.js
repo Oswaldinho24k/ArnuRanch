@@ -39,7 +39,7 @@ export function getAllComprasSuccess(dataCom){
 export const getCompras=(url)=>(dispatch, getState)=>{
     return api.getCompras(url)
         .then(r=>{
-            console.log(r)
+           
             dispatch(getComprasSuccess(r.results));
             dispatch(getAllComprasSuccess(r));
         }).catch(e=>{

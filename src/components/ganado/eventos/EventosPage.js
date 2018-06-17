@@ -9,9 +9,11 @@ import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalAc
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import * as pesadasActions from '../../../redux/actions/ganado/pesadasActions';
+import * as saleNotesActions from '../../../redux/actions/ganado/salenotesActions';
 import FormAnimalLote from '../animals/FormLote';
 import { AreteCard } from './AreteCard';
 import FormPesada from '../animals/FormPesada';
+import FormSalidas from '../animals/FormSalida'
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -33,13 +35,13 @@ class EventosPage extends Component {
     };
 
     handleSearch=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
     handleChange=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         this.setState({areteRancho:a});
     };
 
@@ -71,18 +73,51 @@ class EventosPage extends Component {
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 
     };
     handleChangeLote=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         this.setState({lote:a});
     };
     handleMultiple=(a)=>{
         this.setState({multiple:a});
     }
+    //sale Notes functions
+    saveSalida=(sn)=>{
+        let {modo, mIds, loteId, areteId} = this.state
+        sn['animals_id'] = [];
+        if(modo==='individual'){
+            sn.animals_id.push(areteId.id)
+            this.props.animalActions.editAnimal({id:areteId.id,status:false})
+        }else if(modo==='multiple'){
+            for(let j in mIds){
+                sn.animals_id.push(mIds[j].id)
+                this.props.animalActions.editAnimal({id:mIds[j].id,status:false})
+            }
+        }else if(modo==='lote'){
+            for(let i in loteId.animals){
+                sn.animals_id.push(loteId.animals[i].id)
+                this.props.animalActions.editAnimal({id:loteId.animals[i].id,status:false})
+            }
+        }
+        
+        console.log(sn)
+        this.props.saleNotesActions.newSaleNote(sn)
+            .then(r=>{
+                message.success('Nota creada con éxito');
+                this.setState({areteRancho:'', areteId:'', modo:''});
+                this.handleSearch('')
+            }).catch(e=>{
+                console.log(e.response)
+                for (let i in e.response.data){
+                    message.error(e.response.data[i])
+                }
+            })
+    };
+   
 
     saveGasto=(gasto)=>{
         gasto['animal'] = this.state.areteId.id;
@@ -251,18 +286,19 @@ class EventosPage extends Component {
         }
     };
     handleChangeMode=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         
         this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         this.setState({event:a});
     };
 
 
     render() {
-        let {fetched, animals, lotes} = this.props;
+        let {fetched, animals, lotes, clients} = this.props;
+        animals = animals.filter(a=>{return a.status === true})
         let {modo, loading, event, multiple, areteId, mIds, loteId} = this.state;
         let displayList = [];
         let newList = [];
@@ -377,7 +413,7 @@ class EventosPage extends Component {
                         
                         {event==='gasto'? <FormGasto saveGasto={modo==='individual'?this.saveGasto:modo==='lote'?this.saveLoteGastos:modo==='multiple'?this.saveMultiplesGastos:''}/>:
                         event==='reubicacion'?<FormAnimalLote lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
-                        event==='salida'?'SalidaForm':
+                        event==='salida'?<FormSalidas saveSalida={this.saveSalida} clients={clients}/>:
                         event==="pesada"?<FormPesada savePesada={modo==='individual'?this.changeSinglePesada:modo==='lote'?this.changeLotePesada:modo==='multiple'?this.changeMultiplePesada:''}/>:'Elige un Evento*'}
                      </div>
                     <div style={{width:'30%', }}>
@@ -410,7 +446,8 @@ function mapStateToProps(state, ownProps) {
     return {
         animals:state.animals.list,
         lotes: state.lotes.list,
-        fetched:state.animals.list!==undefined && state.lotes.list!==undefined
+        clients:state.clientes.list,
+        fetched:state.animals.list!==undefined && state.lotes.list!==undefined && state.clientes.list!==undefined
     }
 }
 
@@ -420,6 +457,7 @@ function mapDispatchToProps(dispatch) {
         animalActions:bindActionCreators(animalActions, dispatch),
         lotesAction:bindActionCreators(lotesActions, dispatch),
         pesadasActions:bindActionCreators(pesadasActions, dispatch),
+        saleNotesActions:bindActionCreators(saleNotesActions, dispatch),
 
     }
 }

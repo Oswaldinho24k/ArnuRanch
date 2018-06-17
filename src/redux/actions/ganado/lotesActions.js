@@ -40,7 +40,7 @@ export const saveLote=(batch)=>(dispatch, getState)=>{
         .then(r=>{
             let corral = getState().corrales.list.find(c=>c.id===r.corral);
             r['corral']=corral;
-            console.log(r);
+            
             dispatch(saveLoteSuccess(r))
         }).catch(e=>{
        throw e
@@ -99,7 +99,7 @@ export function getLoSearchSuccess(loteS){
 export const getLoSearch=(url)=>(dispatch, getState)=>{
     return api.getLotes(url)
         .then(r=>{
-            console.log(r)
+            
             dispatch(getLoSearchSuccess(r.results));
         }).catch(e=>{
             throw e

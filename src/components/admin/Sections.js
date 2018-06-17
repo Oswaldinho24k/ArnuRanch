@@ -24,6 +24,7 @@ import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasGasto";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
+import UserDetail from "../users/UserDetail";
 
 import RazasPage from "../ganado/razas/RazasPage";
 
@@ -48,6 +49,8 @@ import CuentasPage from "../cuentasBanco/Cuentas";
 import CuentaDetalle from "../cuentasBanco/CuentaDetalle";
 import Compras from "../compras/Compras";
 import GastosGanado from "../gastosGanado/GastosGanado";
+import SaleNotesPage from '../ganado/saleNotes/SaleNotesPage';
+import SaleNoteDetail from '../ganado/saleNotes/SaleNoteDetail';
 
 
 export const paths = {
@@ -75,6 +78,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/cuentas/:cu'} component={CuentaDetalle}/>
                 <Route path={'/admin/cuentas'} component={CuentasPage}/>
+
+                <Route path={'/admin/usuarios/:id'} component={UserDetail}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
                 <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
@@ -103,7 +108,9 @@ const Sections = ({props}) => {
                 <Route path='/admin/razas' component={RazasPage}/>
                 <Route path='/admin/eventos' component={EventosPage}/>
                 <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
-
+                <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>
+                <Route path='/admin/saleNotes' component={SaleNotesPage}/>
+                
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
                 {/* Planta alimentos routes begin*/}

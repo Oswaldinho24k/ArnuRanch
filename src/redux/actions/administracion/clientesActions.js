@@ -42,7 +42,7 @@ export function getAllDataSuccess(dataClient){
 export const getClientes=(url)=>(dispatch, getState)=>{
     return api.getClientes(url)
         .then(r=>{
-            console.log(r);
+           
             dispatch(getClientesSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
@@ -67,7 +67,7 @@ export const saveCliente=(cliente)=>(dispatch, getState)=>{
             dispatch(saveClienteSuccess(r));
             dispatch(getClientes());
         }).catch(e=>{
-            console.log(e)
+           
             throw e
     })
 };

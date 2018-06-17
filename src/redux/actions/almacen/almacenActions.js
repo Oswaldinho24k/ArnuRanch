@@ -13,7 +13,7 @@ export const getAlmacenes=()=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getAlmacenesSuccess(r))
         }).catch(e=>{
-            console.log(e)
+            
         })
 };
 
@@ -31,10 +31,10 @@ export function saveAlmacenSuccess(almacen){
 export const saveAlmacen=(almacen)=>(dispatch, getState)=>{
     return api.newAlmacen(almacen)
         .then(r=>{
-            console.log(r);
+            
             dispatch(saveAlmacenSuccess(r));
         }).catch(e=>{
-            console.log(e)
+            
             throw e
         })
 };
@@ -52,9 +52,9 @@ export const editAlmacen=(almacen)=>(dispatch, getState)=>{
     return api.editAlmacen(almacen)
         .then(r=>{
             dispatch(editAlmacenSuccess(r))
-            console.log(r);
+            
         }).catch(e=>{
-            console.log(e)
+            
         })
 };
 

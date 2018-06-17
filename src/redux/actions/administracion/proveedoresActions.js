@@ -45,7 +45,7 @@ export const getProveedores=(url)=>(dispatch, getState)=>{
             dispatch(getProveedoresSuccess(r.results));
             dispatch(getAllDataSuccess(r));
         }).catch(e=>{
-        console.log(e)
+        
             throw e
     })
 };
@@ -85,7 +85,7 @@ export const editProveedor=(proveedor)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editProveedorSucces(r))
         }).catch(e=>{
-            console.log(e)
+            
         })
 };
 
@@ -105,6 +105,6 @@ export const deleteProveedor=(proveedorId)=>(dispatch, getState)=>{
             dispatch(deleteProveedorSuccess(proveedorId));
             dispatch(getProveedores());
         }).catch(e=>{
-            console.log(e)
+            
         })
 };

@@ -1,5 +1,5 @@
 import api from "../../Api/Django";
-import {getAnimals, getAnSearch} from "./ganado/animalsActions";
+import {getAnimals, getAnSearch, getReporte} from "./ganado/animalsActions";
 import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
 import {getProveedores, getPrSearch} from "./administracion/proveedoresActions";
@@ -22,6 +22,7 @@ import {getFacturas, getFaSearch} from "./facturas/facturasActions";
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 import {getCompras, getCoSearch} from "./compras/comprasActions";
 import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
+import { getSaleNotes } from "./ganado/salenotesActions";
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -74,7 +75,7 @@ export const logOut=()=>(dispatch)=>{
 };
 
 export const checkIfUser=()=>(dispatch, getState)=>{
-    console.log(getState());
+    
     const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
     if(userToken){
         //dispatch the functions
@@ -111,6 +112,10 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getCoSearch());
         dispatch(getGgSearch());
         dispatch(getGastos());
+
+        dispatch(getSaleNotes());
+
+        dispatch(getReporte());
 
 
     }

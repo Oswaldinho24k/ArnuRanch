@@ -7,7 +7,7 @@ const SubMenu = Menu.SubMenu;
 
 
 
-const Navbar=({logOut, user, collapsed, toggle, username, is_staff, is_superuser, profile})=> (
+const Navbar=({logOut, user, collapsed, toggle, username, is_staff, is_superuser, profile, first_name})=> (
             <div className={'osw-navbar'}>
                 <span>
                     <Icon
@@ -19,7 +19,7 @@ const Navbar=({logOut, user, collapsed, toggle, username, is_staff, is_superuser
                 <span>
                     <Menu
                         mode="horizontal">
-                        <SubMenu key={'sub1'} title={<span>Hello, {username}</span>}>
+                        <SubMenu key={'sub1'} title={<span>Hello, {first_name?first_name:username}</span>}>
                            {/* <Menu.Item>
                                 <Icon type="pie-chart" />
                                 <span>Option 1</span>

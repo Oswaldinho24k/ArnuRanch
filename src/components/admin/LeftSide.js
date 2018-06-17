@@ -73,6 +73,9 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                 <Menu.Item key="22">
                     <Link to={'/admin/facturas'}>Facturas</Link>
                 </Menu.Item>
+                <Menu.Item key="26">
+                    <Link to={'/admin/saleNotes'}>Notas de Venta</Link>
+                </Menu.Item>
                 <Menu.Item key="15" disabled={false}>
                     <Link to ={'/admin/corrales'}>Corrales</Link>
                 </Menu.Item>
