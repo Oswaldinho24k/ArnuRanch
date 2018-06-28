@@ -39,7 +39,7 @@ export function getAllCuentasSuccess(dataCue){
 export const getCuentas=(url)=>(dispatch, getState)=>{
     return api.getCuentas(url)
         .then(r=>{
-            console.log(r)
+            
             dispatch(getCuentasSuccess(r.results));
             dispatch(getAllCuentasSuccess(r));
             dispatch(getCuSearch());

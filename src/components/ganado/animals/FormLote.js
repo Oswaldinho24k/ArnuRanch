@@ -10,9 +10,8 @@ const FormLote = ({form, lotes, changeLote}) => {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                changeLote(values);
-
-
+                changeLote(values); 
+                form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;
@@ -24,7 +23,7 @@ const FormLote = ({form, lotes, changeLote}) => {
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <Form.Item>
+                <Form.Item label={'Elige el lote de Destino'}>
                     {form.getFieldDecorator('lote_id', {
                     })(
                         <Select>

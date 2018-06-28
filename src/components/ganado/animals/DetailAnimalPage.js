@@ -195,9 +195,8 @@ class DetailAnimalPage extends Component {
                     </Link>
                     <Divider type="vertical" />
 
-                    {animal.arete_rancho}
-
-
+                    {animal.arete_rancho} <span>{animal.status?'':'Inactivo'}</span>
+                    <p>{!animal.status?<Link to={`/admin/saleNotes/${animal.sale_note}`}>Nota {animal.sale_note}</Link>:''}</p>
 
                 </div>
                 <h2>Arete {animal.arete_rancho}</h2>

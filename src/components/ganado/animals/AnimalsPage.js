@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
+import {Table, Button, Switch, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
@@ -27,6 +27,10 @@ class AnimalsPage extends Component {
         canReset:false,
 
     };
+
+    componentWillUnmount() {
+        this.resetFilters()
+    }
 
 
 
@@ -113,7 +117,7 @@ class AnimalsPage extends Component {
 
     filterByLote=(lote)=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?lote=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -124,17 +128,26 @@ class AnimalsPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
+        console.log(url)
         this.setState({canReset:true})
     };
 
+    handleStatus=(v)=>{
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?s=';
+        
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?s=';
+        let url = basePath + v
+        console.log(url)
+        this.props.animalActions.getAnimals(url);
+    }
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'https://rancho.fixter.org/api/ganado/animals/';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
-        this.setState({searchText:'', loteFilter:''});
+        this.setState({searchText:'', loteFilter:'', status:true});
     };
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
@@ -144,9 +157,9 @@ class AnimalsPage extends Component {
         }
 
         if( pagina ==1 && this.props.animalsData.count <= 40){
-            newUrl='http'+newUrl.slice(4,newUrl.length);
+            newUrl='https'+newUrl.slice(4,newUrl.length);
         }else{
-            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
         this.props.animalActions.getAnimals(newUrl);
     };
@@ -219,6 +232,8 @@ class AnimalsPage extends Component {
 
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
+        
+            //animals = animals.filter(a=>a.status===true)
 
         if(!fetched)return(<MainLoader/>);
         return (
@@ -254,6 +269,13 @@ class AnimalsPage extends Component {
                     </Select>
                     <Divider
                         type={'vertical'}/>
+                     <Switch 
+                        onChange={this.handleStatus}
+                        checkedChildren="Activos" 
+                        unCheckedChildren="Inactivos" 
+                        defaultChecked />
+                    <Divider
+                        type={'vertical'}/>
                     <Button
                         type="primary"
                         disabled={!canReset}
@@ -262,7 +284,6 @@ class AnimalsPage extends Component {
 
                 {/*table of animals*/}
                 <Table
-
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={animals}

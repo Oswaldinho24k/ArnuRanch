@@ -14,7 +14,7 @@ export const getItems = url => (dispatch, getState) => {
         .then( r => {
             dispatch(getItemsSuccess(r));
         }).catch( e => {
-        console.log( e );
+        
     });
 };
 
@@ -30,14 +30,14 @@ export const saveItemSuccess = item => ({
 export const saveItem = item => (dispatch, getState) => {
     return api.newItem(item)
         .then( r => {
-            console.log(r);
+            
             const provider = getState().proveedores.list.find( provider => provider.id === r.provider);
             r.provider = provider;
             dispatch(saveItemSuccess(r));
             return r;
         })
         .catch(e=>{
-            console.log(e);
+            
         });
 };
 
@@ -51,15 +51,15 @@ export const editItemSuccess = item => ({
 });
 
 export const editItem = item => (dispatch, getState) => {
-    console.log(item);
+    
     return api.updateItem(item)
         .then( r => {
             const provider = getState().proveedores.list.find( provider => provider.id === r.provider);
             r.provider = provider;
             dispatch(editItemSuccess(r));
-            console.log(r)
+            
         }).catch(e=>{
-            console.log(e)
+            
         });
 };
 
@@ -79,7 +79,7 @@ export const deleteItem = itemId => (dispatch, getState) =>{
             return r;
         }).
         catch(e=>{
-            console.log(e);
+            
             return e;
         });
 };

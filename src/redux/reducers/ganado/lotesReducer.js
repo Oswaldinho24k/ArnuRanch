@@ -3,12 +3,28 @@ import {
     GET_LOTES_DATA_SUCCESS, GET_LOTES_SUCCESS, SAVE_LOTE_SUCCESS, EDIT_LOTE_SUCCESS,
     DELETE_LOTE_SUCCESS, GET_LOSEARCH_SUCCESS
 } from "../../actions/ganado/lotesActions";
-import {DELETE_ANIMAL_SUCCESS} from "../../actions/ganado/animalsActions";
+import {DELETE_ANIMAL_SUCCESS, EDIT_ANIMAL_SUCCESS} from "../../actions/ganado/animalsActions";
 
 
 
 function list(state=[], action){
     switch(action.type){
+        case EDIT_ANIMAL_SUCCESS:
+            console.log('editado')
+            let lotesFiltrados = state.filter(lote=>lote.id != action.animal.lote.id)            
+            lotesFiltrados = lotesFiltrados.map(lote=>{
+                let lanimals = lote.animals.filter(a=>{return a.id!=action.animal.id})
+                lote.animals = lanimals
+                return lote
+            })
+
+            let loteToUpdate = state.find(lote=>lote.id == action.animal.lote.id)
+            
+            let animals = [...loteToUpdate.animals, action.animal]
+            loteToUpdate.animals = animals
+            console.log(loteToUpdate, lotesFiltrados, action.animal)
+
+            return [...lotesFiltrados, loteToUpdate]
         case GET_LOTES_SUCCESS:
             return action.lotes;
         case SAVE_LOTE_SUCCESS:

@@ -35,7 +35,7 @@ const columns = [
         title: 'No. de Aretes',
         dataIndex:'animals',
         key:'animals',
-        render:val=><p>{val?val.length:0}</p>,
+        render:val=><p>{val?val.filter(a=>a.status===true).length:0}</p>,
         width:100
     },
     /*{
@@ -89,13 +89,13 @@ class BatchPage extends Component {
     };
     onSearch=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
-        let basePath = 'https://rancho.fixter.org/api/ganado/lotes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
         let url = basePath+this.state.searchText;
         this.props.loteActions.getLotes(url)
     };
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/lotes/';
-        let basePath = 'https://rancho.fixter.org/api/ganado/lotes/';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/';
         this.props.loteActions.getLotes(basePath);
         this.setState({searchText:''});
     };
@@ -204,9 +204,9 @@ class BatchPage extends Component {
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <Divider
                     type={'vertical'}/>
-                <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                {/* <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canUse} type="primary">Delete</Button>
-                </Popconfirm>
+                </Popconfirm> */}
 
                 <Modal title="Nuevo Lote"
                        visible={visible}

@@ -15,7 +15,7 @@ export const saveItem=(item)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(saveItemSuccess(r));
         }).catch(e=>{
-            console.log(e)
+            
             throw e
         })
 };

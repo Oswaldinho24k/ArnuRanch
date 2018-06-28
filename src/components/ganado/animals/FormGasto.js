@@ -78,7 +78,7 @@ class FormGasto extends React.Component{
                                             initialValue:'Kg'
                                         })(
                                             <Select  style={{ width: 100 }}>
-                                                <Option value="Kg">g</Option>
+                                                <Option value="Kg">Kg</Option>
                                             </Select>
                                         )}
                                     </FormItem>}

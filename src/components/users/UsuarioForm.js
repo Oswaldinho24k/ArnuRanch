@@ -26,6 +26,8 @@ const UsuarioForm = Form.create()(
         const{visible, onCancel, onCreate, form, options_sections, options_permissions, user ,canEdit} = props;
         const{getFieldDecorator} = form;
 
+        let section = []
+        
 
         return(
             <Modal
@@ -49,9 +51,9 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                                initialValue:''
+                                initialValue:user.first_name?user.first_name:user.username
                             })(
-                                <Input disabled={canEdit}/>
+                                <Input />
                             )}
                         </FormItem>
                         <FormItem
@@ -63,7 +65,7 @@ const UsuarioForm = Form.create()(
                                 }],
                                 initialValue:user.email
                             })(
-                                <Input disabled={canEdit}/>
+                                <Input />
                             )}
                         </FormItem>
                        
@@ -75,23 +77,23 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                                initialValue:canEdit?'********':''
+                                initialValue:user.password?user.password:''
                             })(
-                                <Input type={'password'} disabled={canEdit}/>
+                                <Input type={'password'} />
                             )}
                         </FormItem>
 
                         <FormItem
                             label={"Sección de Trabajo"}
                         >
-                            {getFieldDecorator('section', {
+                            {getFieldDecorator('section', {                                                                
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
                            //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
-
+                                
                             })(
-                                <Select mode="multiple" placeholder={"Selecciona un Permiso"} disabled={canEdit} >
+                                <Select mode="multiple" placeholder={"Selecciona un Permiso"}  >
                                     {options_sections}
                                 </Select>
                             )}
@@ -104,10 +106,9 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
-
+                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null                            
                             })(
-                                <Select mode="multiple" placeholder={"Selecciona un Permiso"} disabled={canEdit} >
+                                <Select mode="multiple" placeholder={"Selecciona un Permiso"}  >
                                     {options_permissions}
                                 </Select>
                             )}
@@ -116,15 +117,12 @@ const UsuarioForm = Form.create()(
 
 
                     </div>
-                    {!canEdit?<FormItem>
+                    <FormItem>
                         <Button type="primary" htmlType={'submit'} size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
-                            Guardar
+                            {canEdit?'Editar':'Guardar'}
                         </Button>
-                    </FormItem>:''}
-                    {/*canEdit?<Button type="primary" size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>Editar</Button >:''*/}
-
-
-
+                    </FormItem>
+                    
                 </Form>
 
             </Modal>

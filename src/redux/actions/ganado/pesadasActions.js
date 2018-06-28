@@ -13,10 +13,10 @@ export function savePesadaSuccess(pesada){
 export const savePesada=(pesada)=>(dispatch, getState)=>{
     return api.newPesada(pesada)
         .then(r=>{
-            console.log(r);
+            
             dispatch(savePesadaSuccess(r))
         }).catch(e=>{
-            console.log(e)
+            
         })
 };
 
@@ -34,6 +34,6 @@ export const getPesadas=()=>(dispatch, getState)=>{
       .then(r=>{
           dispatch(getPesadasSuccess(r))
       }).catch(e=>{
-          console.log(e)
+          
       })
 };

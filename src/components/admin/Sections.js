@@ -11,6 +11,7 @@ import ProovedorPage from "../proveedores/ProveedorPage";
 import ClientesPage from "../clientes/ClientePage"
 
 import ReportesPage from "../ganado/reportes/ReportesPage";
+import ReporteFechaPage from "../ganado/reportes/ReporteFechaPage";
 
 import DetailClientPage from "../clientes/DetailClientPage";
 import DetailProviderPage from "../proveedores/DetailProviderPage";
@@ -24,6 +25,7 @@ import PagarEgreso from "../egresos/PagarEgreso";
 import CuentasBanco from "../cuentasBanco/CuentasGasto";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
+import UserDetail from "../users/UserDetail";
 
 import RazasPage from "../ganado/razas/RazasPage";
 
@@ -36,19 +38,20 @@ import ListaAlmacen from "../empresas/ListaItems";
 import ListaAlmacenDetail from "../empresas/ListaAlmacenDetail";
 import EventosPage from "../ganado/eventos/EventosPage";
 import AnimalsDashboard from "../ganado/dashboard/AnimalsDashboard";
-import ProductList from '../sell_point/products/ProductsList';
+
 import LeftSide from './LeftSide';
-import ProductForm  from '../sell_point/products/ProductForm';
-import CheckoutPage  from '../sell_point/products/CheckoutPage';
-import EditForm  from '../sell_point/products/EditForm';
+
+
 import Blines from "../blines/Blines";
 import FacturasPage from "../facturas/FacturasPage";
 import FacturaDetalle from "../facturas/FacturaDetalle";
-import OrdersPage from '../sell_point/orders/OrdersPage';
+
 import CuentasPage from "../cuentasBanco/Cuentas";
 import CuentaDetalle from "../cuentasBanco/CuentaDetalle";
 import Compras from "../compras/Compras";
 import GastosGanado from "../gastosGanado/GastosGanado";
+import SaleNotesPage from '../ganado/saleNotes/SaleNotesPage';
+import SaleNoteDetail from '../ganado/saleNotes/SaleNoteDetail';
 
 
 export const paths = {
@@ -76,6 +79,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/cuentas/:cu'} component={CuentaDetalle}/>
                 <Route path={'/admin/cuentas'} component={CuentasPage}/>
+
+                <Route path={'/admin/usuarios/:id'} component={UserDetail}/>
                 <Route path={'/admin/usuarios'} component={Users}/>
 
                 <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
@@ -104,9 +109,12 @@ const Sections = ({props}) => {
                 <Route path='/admin/razas' component={RazasPage}/>
                 <Route path='/admin/eventos' component={EventosPage}/>
                 <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
-
+                <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>
+                <Route path='/admin/saleNotes' component={SaleNotesPage}/>
+                
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
+                <Route path={'/admin/historico'} component={ReporteFechaPage}/>
                 {/* Planta alimentos routes begin*/}
                 <Route path={paths.formulas} component={FormulasPage}/>
                 <Route path={paths.insumos} component={InsumosPage}/>
@@ -114,12 +122,7 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
                 <Route path={'/admin/vacunas'} component={VacunasPage}/>
-                {/*************************sell point routes************************/}
-                <Route exact path={'/admin/sp'} component={ProductList}/>
-                <Route exact path={'/admin/sp/add'} component={ProductForm}/>
-                <Route exact path={'/admin/sp/manage/:id'} component={EditForm}/>
-                <Route exact path={'/admin/sp/checkout'} component={CheckoutPage}/>
-                <Route exact path={'/admin/sp/orders'} component={OrdersPage}/>
+ 
 
 
 

@@ -48,7 +48,7 @@ export const getIngresos=(url)=>(dispatch, getState)=> {
             dispatch(getAllIngresosSuccess(r));
             dispatch(getCuentas());
         }).catch(e => {
-        console.log(e)
+        
     })
 };
 
@@ -65,13 +65,13 @@ export function saveIngresoSuccess(ingreso){
 export const saveIngreso=(ingreso)=>(dispatch, getState)=>{
     api.newIngreso(ingreso)
         .then(r=>{
-            console.log(r);
+            
             let client= getState().clientes.list.find(l=>l.id===r.client);
             r['client'] = client
             dispatch(saveIngresoSuccess(r));
             dispatch(getIngresos());
         }).catch(e=>{
-        console.log(e)
+        
     })
 };
 
@@ -89,7 +89,7 @@ export const editIngreso=(ingreso)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editIngresoSucces(r))
         }).catch(e=>{
-            console.log(e)
+            
         })
 };
 
@@ -109,6 +109,6 @@ export const deleteIngreso=(ingresoId)=>(dispatch, getState)=>{
             dispatch(deleteIngresoSuccess(ingresoId));
             dispatch(getIngresos());
         }).catch(e=>{
-            console.log(e)
+            
         })
 };

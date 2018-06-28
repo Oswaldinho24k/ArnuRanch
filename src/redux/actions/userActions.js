@@ -1,5 +1,5 @@
 import api from "../../Api/Django";
-import {getAnimals, getAnSearch} from "./ganado/animalsActions";
+import {getAnimals, getAnSearch, getReporte} from "./ganado/animalsActions";
 import {getLoSearch, getLotes} from "./ganado/lotesActions";
 import {getCorrales} from './ganado/corralesActions';
 import {getProveedores, getPrSearch} from "./administracion/proveedoresActions";
@@ -15,15 +15,18 @@ import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
 import {getAlmacenes} from "./almacen/almacenActions";
-import { getProducts } from "./sellpoint/products/productActions";
-import { getCategories } from "./sellpoint/products/categoriesActions";
+
 import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
-import { getOrders } from "./sellpoint/orders/orderActions";
+
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 import {getCompras, getCoSearch} from "./compras/comprasActions";
 import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
+
+import { getSaleNotes } from "./ganado/salenotesActions";
+
 import {getDataDash} from "./dashGanado/dashGanadoActions";
+
 
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -76,7 +79,7 @@ export const logOut=()=>(dispatch)=>{
 };
 
 export const checkIfUser=()=>(dispatch, getState)=>{
-    console.log(getState());
+    
     const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
     if(userToken){
         //dispatch the functions
@@ -99,13 +102,12 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getLines());
         dispatch(getLiSearch());
         dispatch(getAlmacenes());
-        dispatch(getProducts());
-        dispatch(getCategories());
+        
         dispatch(getFacturas());
         dispatch(getFaSearch());
         dispatch(getAnSearch());
         dispatch(getLoSearch());
-        dispatch(getOrders());
+        
         dispatch(getCuentas());
         dispatch(getCuSearch());
         dispatch(getClSearch());
@@ -115,6 +117,10 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getGgSearch());
         dispatch(getGastos());
         dispatch(getDataDash());
+
+        dispatch(getSaleNotes());
+
+        dispatch(getReporte());
 
 
     }

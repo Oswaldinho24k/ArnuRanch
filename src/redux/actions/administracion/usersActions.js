@@ -81,3 +81,33 @@ export const deleteUser=(user)=>(dispatch, getState)=>{
             throw e
         })
 }
+
+
+export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
+
+export function editUserSuccess(user){
+    return{
+        type: EDIT_USER_SUCCESS, user
+    }
+}
+
+export const editUser=(user)=>(dispatch, getState)=>{
+    return api.editUser(user)
+        .then(r=>{
+            dispatch(editUserSuccess(r))
+
+            // let profile={};
+            // profile['user']=r.id;
+            // if(user.permiso){
+            //     if(user.permiso === 'ganado'){
+            //         profile['ganado']=true;
+            //     }
+            //     if(user.permiso === 'admin'){
+            //         profile['admin']=true;
+            //     }
+            // }
+            //dispatch(saveProfile(profile));
+        }).catch(e=>{
+            throw e
+        })
+};

@@ -19,14 +19,16 @@ import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
 import almacenReducer from "./almacen/almacenReducer";
-import productsReducer from './sellpoint/products/productsReducer'
-import ordersReducer from './sellpoint/orders/ordersReducer'
-import categoriesReducer from './sellpoint/products/categories'
+
 import facturasReducer from "./facturas/facturasReducer";
 import cuentasReducer from "./cuentas/cuentasReducer";
 import comprasReducer from "./compras/comprasReducer";
 import gastosGanadoReducer from "./gastoGanado/gastoGanadoReducer";
+
+import saleNotesReducer from './ganado/salenotesReducer';
+
 import dataDashReducer from "./dashGanado/dashGanadoReducer";
+
 
 
 
@@ -51,14 +53,17 @@ const rootReducer = combineReducers({
     blines:blinesReducer,
     almacen:almacenReducer,
     //sellpoint
-    products:productsReducer,
-    categories:categoriesReducer,
+    
     facturas:facturasReducer,
-    orders:ordersReducer,
+    
     cuentas:cuentasReducer,
     compras:comprasReducer,
     gastosGanado:gastosGanadoReducer,
+
+    saleNotes:saleNotesReducer,
+
     dataDash:dataDashReducer,
+
 
 
 });

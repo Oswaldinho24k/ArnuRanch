@@ -184,9 +184,9 @@ class BatchDetailPage extends Component {
                     pagination={false}
                     scroll={{x:650, y:500}}
                     rowSelection={rowSelection}
-                    columns={columns} dataSource={animals}
+                    columns={columns} dataSource={animals.filter(a=>a.status===true)}
                     rowKey={record => record.id}/>
-                <Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
+                {/*<Button disabled={!disablebutton} onClick={this.showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>*/}
             </Fragment>
 
         );
@@ -215,7 +215,6 @@ function mapStateToProps (state, ownProps) {
          animalGastoActions:bindActionCreators(animalGastoActions, dispatch),
          lotesActions:bindActionCreators(lotesActions, dispatch),
      }
-
 }
 
 

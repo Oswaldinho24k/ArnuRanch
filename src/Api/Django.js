@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -35,24 +35,22 @@ let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
 let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
 //facturas
 let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
-
-//punto de venta
-let productsUrl = 'http://localhost:8000/api/sell_point/products/';
-let categoriesUrl = 'http://localhost:8000/api/sell_point/categories/';
-let saleordersUrl = 'http://localhost:8000/api/sell_point/saleorders/';
-
 //cuentas
 let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
-
 //compras
 let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
-
 //gastoGanado
-
 let gastosGanadoUrl = 'http://localhost:8000/api/egresos/gastos/';
+
+//notas de venta 
+let saleNotesUrl = 'http://localhost:8000/api/ganado/sale_notes/';
+//endpoint de resumen de reportes
+let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
+
 
 //DashGanado
 let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
+
 
 
 
@@ -61,49 +59,45 @@ let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
 if(!debug){
 
     /******************************AWS Urls********************************/
-    animalsUrl = 'https://rancho.fixter.org/api/ganado/animals/';
-    tokenUrl = 'https://rancho.fixter.org/api/auth/token-auth/';
-    userUrl = 'https://rancho.fixter.org/api/auth/me/';
-    lotesUrl = 'https://rancho.fixter.org/api/ganado/lotes/';
-    corralesUrl = 'https://rancho.fixter.org/api/ganado/corrales/';
-    animalGastoUrl = 'https://rancho.fixter.org/api/ganado/alimentos/';
-    pesadasUrl = 'https://rancho.fixter.org/api/ganado/pesadas/';
-    proveedoresUrl = 'https://rancho.fixter.org/api/egresos/proveedores/';
-    clientesUrl = 'https://rancho.fixter.org/api/ingresos/clientes/';
-    salesUrl = 'https://rancho.fixter.org/api/ingresos/ingresos/';
-    allUsersUrl = 'https://rancho.fixter.org/api/auth/users/';
-    profilesUrl = 'https://rancho.fixter.org/api/auth/profiles/';
-    razasUrl = 'https://rancho.fixter.org/api/ganado/razas/';
-// planta_alimentos
-    insumosUrl = 'https://rancho.fixter.org/api/planta_alimentos/insumos/';
-    itemsUrl = 'https://rancho.fixter.org/api/planta_alimentos/items/';
-    formulasUrl = 'https://rancho.fixter.org/api/planta_alimentos/formulas/';
-    egresosUrl = 'https://rancho.fixter.org/api/egresos/egresos/';
-    empresasUrl = 'https://rancho.fixter.org/api/ingresos/empresas/';
-    blinesUrl = 'https://rancho.fixter.org/api/ingresos/blines/';
-    vacunasUrl = 'https://rancho.fixter.org/api/vacunas/vacunas/';
+    animalsUrl = 'https://rancho.davidzavala.me/api/ganado/animals/';
+    tokenUrl = 'https://rancho.davidzavala.me/api/auth/token-auth/';
+    userUrl = 'https://rancho.davidzavala.me/api/auth/me/';
+    lotesUrl = 'https://rancho.davidzavala.me/api/ganado/lotes/';
+    corralesUrl = 'https://rancho.davidzavala.me/api/ganado/corrales/';
+    animalGastoUrl = 'https://rancho.davidzavala.me/api/ganado/alimentos/';
+    pesadasUrl = 'https://rancho.davidzavala.me/api/ganado/pesadas/';
+    proveedoresUrl = 'https://rancho.davidzavala.me/api/egresos/proveedores/';
+    clientesUrl = 'https://rancho.davidzavala.me/api/ingresos/clientes/';
+    salesUrl = 'https://rancho.davidzavala.me/api/ingresos/ingresos/';
+    allUsersUrl = 'https://rancho.davidzavala.me/api/auth/users/';
+    profilesUrl = 'https://rancho.davidzavala.me/api/auth/profiles/';
+    razasUrl = 'https://rancho.davidzavala.me/api/ganado/razas/';
+    // planta_alimentos
+    insumosUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/items/';
+    formulasUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/formulas/';
+    egresosUrl = 'https://rancho.davidzavala.me/api/egresos/egresos/';
 
-    productsUrl = 'https://rancho.fixter.org/api/sell_point/products/';
-    categoriesUrl = 'https://rancho.fixter.org/api/sell_point/categories/';
-    saleordersUrl = 'https://rancho.fixter.org/api/sell_point/saleorders/';
-
-    /******************************Heroku Urls********************************/
-    /*animalsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/animals/';
-    tokenUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/token-auth/';
-    userUrl = 'https://arnu-ranch-backend.herokuapp.com/api/auth/me/';
-    lotesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/lotes/';
-    corralesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/corrales/';
-    animalGastoUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/alimentos/';
-    pesadasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ganado/pesadas/';
-    proveedoresUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/proveedores/';
-    clientesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/clientes/';
-    salesUrl = 'https://arnu-ranch-backend.herokuapp.com/api/ingresos/ingresos/';
-
-// planta_alimentos
-    insumosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/insumos/';
-    itemsUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/items/';
-    formulasUrl = 'https://arnu-ranch-backend.herokuapp.com/api/planta_alimentos/formulas/';
-    egresosUrl = 'https://arnu-ranch-backend.herokuapp.com/api/egresos/egresos/';*/
+    //empresas
+    empresasUrl = 'https://rancho.davidzavala.me/api/ingresos/empresas/';
+    blinesUrl = 'https://rancho.davidzavala.me/api/ingresos/blines/';
+    //vacunas
+    vacunasUrl = 'https://rancho.davidzavala.me/api/vacunas/vacunas/';
+    //almacen
+    almacenesUrl = 'https://rancho.davidzavala.me/api/inventario/almacenes/';
+    itemsAlmacenUrl = 'https://rancho.davidzavala.me/api/inventario/items/';
+    //facturas
+    facturasUrl = 'https://rancho.davidzavala.me/api/ganado/facturas/';
+    //cuentas
+    cuentasUrl = 'https://rancho.davidzavala.me/api/ingresos/cuentas/';
+    //compras
+    comprasUrl = 'https://rancho.davidzavala.me/api/egresos/compras/';
+    //gastoGanado
+    gastosGanadoUrl = 'https://rancho.davidzavala.me/api/egresos/gastos/';
+    //notas de venta 
+    saleNotesUrl = 'https://rancho.davidzavala.me/api/ganado/sale_notes/';
+    //resumen reportes
+    resumenUrl = 'https://rancho.davidzavala.me/api/ganado/resumen/';
 }
 
 
@@ -111,12 +105,12 @@ if(!debug){
 
 
 const api = {
-     /*----------------------SellPoint functions------------------------*/ 
-     getOrders:()=>{
+    /***********************Reporte********************/
+    getReporte:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
-                baseURL: saleordersUrl,
+                baseURL: resumenUrl,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
@@ -127,39 +121,17 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
-
-    },
-    saveOrder:(order)=>{
-        
+     },
+     /***********************Sale Notes********************/
+     getSaleNotes:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
-                baseURL: saleordersUrl,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + userToken
-                }
-            });
-            instance.post('', order)
-                .then(function (response) {
-                    resolve(response.data);
-                })
-                .catch(function (error) {
-                    console.log('el error: ', error.response);
-                    reject(error);
-                });
-        })
-
-    },
-     getCategories:()=>{
-        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-        return new Promise(function (resolve, reject){
-            const instance = axios.create({
-                baseURL: categoriesUrl,
+                baseURL: saleNotesUrl,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
@@ -170,168 +142,72 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
-
-    },
-    newCategory:(cat)=>{
-        
+     },
+     newSaleNote:(saleNote)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
-                baseURL: categoriesUrl,
+                baseURL: saleNotesUrl,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.post('', cat)
+            instance.post('', saleNote)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
-
     },
-    editCategory:(cat)=>{
-        
+    editSaleNote:(saleNote)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
-                baseURL: categoriesUrl,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Token ' + userToken
-                }
-            });
-            instance.patch(cat.id+'/', cat)
-                .then(function (response) {
-                    resolve(response.data);
-                })
-                .catch(function (error) {
-                    console.log('el error: ', error.response);
-                    reject(error);
-                });
-        })
-
-    },
-    /*----------------------SellPoint functions------------------------*/ 
-    getAllProducts:()=>{
-        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-        return new Promise(function (resolve, reject){
-            const instance = axios.create({
-                baseURL: productsUrl,
+                baseURL: saleNotesUrl,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.get('')
+            instance.post(saleNote.id+'/', saleNote)
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
-
     },
-    newProduct:(product)=>{
-        let data = new FormData();
-        let date;
-        for ( var key in product ) {
-            data.append(key, product[key]);
-        }
-
-        if(product.image === null || product.image === undefined){
-            data.delete('image')
-        }else{
-            data.append('image', product.image.file.originFileObj);
-        }
+    deleteSaleNote:(snId)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
-                baseURL: productsUrl,
+                baseURL: saleNotesUrl,
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                     'Authorization': 'Token ' + userToken
                 }
             });
-            instance.post('', data)
+            instance.delete(snId+'/')
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
-
     },
-    editProduct:(product)=>{
-        let data = new FormData();
-        
-        for ( var key in product ) {
-            data.append(key, product[key]);
-        }
-        if(product.image){
-            console.log(typeof product.image)
-           if(product.image === null || product.image === undefined || typeof product.image === 'string'){
-               data.delete('image')
-           }else{
-               data.append('image', product.image.file.originFileObj);
-           }
-       }else{
-           data.delete('image')
-       }
-        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-        return new Promise(function (resolve, reject){
-            const instance = axios.create({
-                baseURL: productsUrl,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Token ' + userToken
-                }
-            });
-            instance.patch(product.id+'/', data)
-                .then(function (response) {
-                    resolve(response.data);
-                })
-                .catch(function (error) {
-                    console.log('el error: ', error.response);
-                    reject(error);
-                });
-        })
 
-    },
-    deleteProduct:(product)=>{
-        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
-        return new Promise(function (resolve, reject){
-            const instance = axios.create({
-                baseURL: productsUrl,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Token ' + userToken
-                }
-            });
-            instance.delete(product.id+'/')
-                .then(function (response) {
-                    resolve(response.data);
-                })
-                .catch(function (error) {
-                    console.log('el error: ', error.response);
-                    reject(error);
-                });
-        })
-
-    },
-      
     /*-----------------Users functions-----------------------*/
     getAllUsers:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -348,7 +224,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -368,7 +244,28 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
+                    reject(error);
+                });
+        })
+    },
+    editUser:(user)=>{
+        if(user.password==='********')delete user.password
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: allUsersUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(user.id+'/', user)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    
                     reject(error);
                 });
         })
@@ -391,7 +288,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -413,7 +310,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         })
@@ -440,7 +337,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -464,7 +361,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -512,8 +409,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -521,7 +418,7 @@ const api = {
         });
     },
     editAnimal:(animal)=>{
-        console.log(animal)
+        
         let data = new FormData();
         for ( var key in animal ) {
             data.append(key, animal[key]);
@@ -532,7 +429,7 @@ const api = {
         }
 
        if(animal.fierro_original){
-            console.log(typeof animal.fierro_original)
+            
            if(animal.fierro_original === null || animal.fierro_original === undefined || typeof animal.fierro_original === 'string'){
                data.delete('fierro_original')
            }else{
@@ -542,7 +439,7 @@ const api = {
            data.delete('fierro_original')
        }
        if(animal.fierro_nuevo){
-           console.log(typeof animal.fierro_nuevo)
+           
            if(animal.fierro_nuevo === null || animal.fierro_nuevo === undefined || typeof animal.fierro_nuevo === 'string'){
                data.delete('fierro_nuevo');
            }else{
@@ -563,7 +460,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',                    
                     'Authorization': 'Token ' + userToken
                 }
             });
@@ -572,8 +469,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -597,7 +494,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -624,7 +521,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -651,7 +548,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -674,7 +571,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -697,7 +594,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -720,7 +617,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -745,7 +642,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -768,7 +665,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -791,7 +688,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -818,8 +715,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
-                    reject(error);
+                    
+                    reject(error.response);
                 });
 
 
@@ -841,7 +738,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -866,7 +763,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -889,7 +786,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -920,7 +817,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -944,7 +841,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -973,8 +870,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -999,7 +896,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1027,7 +924,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1051,7 +948,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1079,8 +976,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1105,7 +1002,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1132,7 +1029,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1156,7 +1053,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1185,7 +1082,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1210,7 +1107,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1235,7 +1132,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1259,7 +1156,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1287,8 +1184,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1313,7 +1210,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1341,7 +1238,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1364,7 +1261,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1394,6 +1291,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
+                    
+                    
                     console.log(ingreso);
                     console.log('el error: ', error.response);
                     reject(error);
@@ -1420,7 +1319,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1449,7 +1348,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1471,7 +1370,7 @@ const api = {
                    resolve(response.data)
                })
                .catch( error => {
-                   console.log(error.response);
+                   
                    reject(error);
                });
         });
@@ -1540,7 +1439,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1562,7 +1461,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log(error.response);
+                    
                     reject(error);
                 });
         });
@@ -1631,7 +1530,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
         });
@@ -1653,7 +1552,7 @@ const api = {
                     resolve(response.data)
                 })
                 .catch( error => {
-                    console.log(error.response);
+                    
                     reject(error);
                 });
         });
@@ -1725,7 +1624,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1748,7 +1647,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1777,8 +1676,8 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(data);
-                    console.log('el error: ', error.response);
+                    
+                    
                     reject(error);
                 });
 
@@ -1803,7 +1702,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1827,7 +1726,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1850,7 +1749,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1873,7 +1772,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1899,7 +1798,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1922,7 +1821,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1945,7 +1844,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -1975,7 +1874,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2001,7 +1900,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2026,7 +1925,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2051,7 +1950,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2077,7 +1976,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2103,7 +2002,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2127,7 +2026,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2156,7 +2055,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2179,7 +2078,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2202,7 +2101,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2216,8 +2115,8 @@ const api = {
             dataF.append(id, factura[id]);
         }
 
-        console.log("FACTURA_EDIT", factura)
-        console.log("DATAF", dataF)
+        
+        
 
         return new Promise(function (resolve, reject) {
             const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -2235,7 +2134,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2263,7 +2162,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2286,7 +2185,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2309,7 +2208,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 
@@ -2339,7 +2238,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+                    
                     reject(error);
                 });
 

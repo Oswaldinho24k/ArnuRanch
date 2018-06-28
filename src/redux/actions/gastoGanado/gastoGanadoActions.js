@@ -39,7 +39,7 @@ export function getAllGastosSuccess(dataGastos){
 export const getGastos=(url)=>(dispatch, getState)=>{
     return api.getGastoGanado(url)
         .then(r=>{
-            console.log(r)
+            
             dispatch(getGastosSuccess(r.results));
             dispatch(getAllGastosSuccess(r));
         }).catch(e=>{
