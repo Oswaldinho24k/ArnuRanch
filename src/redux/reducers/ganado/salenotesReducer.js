@@ -1,6 +1,15 @@
 import {combineReducers} from 'redux';
-import { NEW_SALENOTE_SUCCESS, GET_SALENOTES_SUCCESS, DELETE_SALENOTE_SUCCESS, EDIT_SALENOTE_SUCCESS } from '../../actions/ganado/salenotesActions';
+import { NEW_SALENOTE_SUCCESS, GET_SALENOTES_SUCCESS, DELETE_SALENOTE_SUCCESS, EDIT_SALENOTE_SUCCESS, GET_SALENOTES_DATA_SUCCESS } from '../../actions/ganado/salenotesActions';
 
+
+function allData(state={}, action){
+    switch(action.type){
+        case GET_SALENOTES_DATA_SUCCESS:
+            return action.data
+        default:
+            return state
+    }
+}
 
 function list(state=[], action){
     switch(action.type){
@@ -26,6 +35,7 @@ function list(state=[], action){
 
 const saleNotesReducer = combineReducers({
     list:list,
+    allData:allData
 });
 
 

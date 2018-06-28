@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
+import {Table, Button, Switch, Modal, message, Popconfirm, Select, Divider, Input} from "antd";
 import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
@@ -27,6 +27,10 @@ class AnimalsPage extends Component {
         canReset:false,
 
     };
+
+    componentWillUnmount() {
+        this.resetFilters()
+    }
 
 
 
@@ -127,14 +131,23 @@ class AnimalsPage extends Component {
         let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
+        console.log(url)
         this.setState({canReset:true})
     };
 
+    handleStatus=(v)=>{
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?s=';
+        
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?s=';
+        let url = basePath + v
+        console.log(url)
+        this.props.animalActions.getAnimals(url);
+    }
     resetFilters=()=>{
         //let basePath = 'http://localhost:8000/api/ganado/animals/';
         let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
-        this.setState({searchText:'', loteFilter:''});
+        this.setState({searchText:'', loteFilter:'', status:true});
     };
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;
@@ -220,7 +233,7 @@ class AnimalsPage extends Component {
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
         
-            animals = animals.filter(a=>a.status===true)
+            //animals = animals.filter(a=>a.status===true)
 
         if(!fetched)return(<MainLoader/>);
         return (
@@ -256,6 +269,13 @@ class AnimalsPage extends Component {
                     </Select>
                     <Divider
                         type={'vertical'}/>
+                     <Switch 
+                        onChange={this.handleStatus}
+                        checkedChildren="Activos" 
+                        unCheckedChildren="Inactivos" 
+                        defaultChecked />
+                    <Divider
+                        type={'vertical'}/>
                     <Button
                         type="primary"
                         disabled={!canReset}
@@ -264,7 +284,6 @@ class AnimalsPage extends Component {
 
                 {/*table of animals*/}
                 <Table
-
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={animals}

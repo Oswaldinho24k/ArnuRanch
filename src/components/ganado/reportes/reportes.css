@@ -1,0 +1,19 @@
+@media print{
+    .ant-layout-sider-children {
+        display: none;
+    }
+    .ant-card{
+        display: none;
+    }
+    .osw-navbar{
+        display: none;
+    }
+    .toprint{
+        display: block;
+        width: 100%;
+        height: 100vh;
+    }
+   #print{
+    display: block;
+   }
+}

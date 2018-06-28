@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -452,7 +452,7 @@ const api = {
                 baseURL: animalsUrl,
                 // timeout: 2000,
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',                    
                     'Authorization': 'Token ' + userToken
                 }
             });

@@ -12,6 +12,7 @@ class FormPesada extends React.Component{
             if (!err) {
                 console.log(this.props);
                 this.props.savePesada(values)
+                this.props.form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;

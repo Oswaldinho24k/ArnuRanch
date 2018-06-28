@@ -10,9 +10,8 @@ const FormLote = ({form, lotes, changeLote}) => {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                changeLote(values);
-
-
+                changeLote(values); 
+                form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;

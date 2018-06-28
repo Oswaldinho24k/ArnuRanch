@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import FormSalidas from '../animals/FormSalida';
-import {Card, List} from 'antd'
+import {Card, List, Divider} from 'antd'
 import {Link} from 'react-router-dom'
 import MainLoader from '../../common/Main Loader';
 import {bindActionCreators} from "redux";
@@ -23,7 +23,14 @@ class SaleNoteDetail extends Component {
     return (
       <div style={{display:'flex', justifyContent:'space-around'}}>
         <div style={{width:'40%'}}>
-            Detalle {match.params.id}
+        <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>                    
+                    <Link to={'/admin/saleNotes'}>
+                        Notas de Venta
+                    </Link>
+                    <Divider type="vertical" />
+                    Nota {match.params.id}
+                </div>
+           
             <FormSalidas clients={list} disabled={disabled} {...saleNote}/>
         </div>
         <Card style={{width:'40%'}}>

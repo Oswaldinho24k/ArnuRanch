@@ -70,15 +70,38 @@ class SaleNotesPage extends Component {
     cancel=()=>{
         console.log('ño')
     }
+
+    //
+    handlePagination=(pagina)=>{
+        let nextLength = pagina.toString().length;
+        let newUrl = this.props.allData.next;
+        if(newUrl===null){
+            newUrl = this.props.allData.previous;
+        }
+
+        if( pagina ==1 && this.props.allData.count <= 40){
+            newUrl='https'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.animalActions.getAnimals(newUrl);
+    };
     
   render() {
-      let {saleNotes, fetched} = this.props;
-      let {visible, canUse, selectedRowKeys} = this.state;
-      const rowSelection = {
+    let {saleNotes, fetched, allData} = this.props;
+    let {visible, canUse, selectedRowKeys} = this.state;
+    const rowSelection = {
         selectedRowKeys,
         onChange: this.onSelectChange,
     };
-      if(!fetched)return<MainLoader/>
+    let count = 0
+    for(let i in saleNotes){
+        for(let j in saleNotes[i].animals){
+            count ++
+        }
+    }
+    console.log(count)
+    if(!fetched)return<MainLoader/>
 
     return (
       <div>
@@ -89,13 +112,19 @@ class SaleNotesPage extends Component {
                 Notas de Venta
 
             </div>
-            <h2>Notas de Venta</h2>
+            <h2>Notas de Venta</h2> 
+            <h5>Animales Vendidos: {count}</h5>
             <Table
                 pagination={false}
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={saleNotes}
                 rowKey={record => record.id}
+                pagination={{
+                    pageSize: 20,
+                    total:allData.count,
+                    onChange:this.handlePagination,
+                    showTotal:total => `Total: ${total} aretes`}}                
                 scroll={{x:650, y:500}}
             />
 
@@ -104,9 +133,9 @@ class SaleNotesPage extends Component {
             </Link>
             <Divider
                 type={'vertical'}/>
-            <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+            {/* <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                 <Button disabled={selectedRowKeys.length===0} type="primary">Delete</Button>
-            </Popconfirm>
+            </Popconfirm> */}
             <Modal title="Agregar nuevo corral"
                     visible={visible}
                     onCancel={this.handleCancel}
@@ -127,8 +156,10 @@ class SaleNotesPage extends Component {
 
 function mapStateToProps (state, ownProps) {    
     return {
+        
+        allData:state.saleNotes.allData,
         saleNotes:state.saleNotes.list,
-        fetched:state.saleNotes.list!==undefined
+        fetched:state.saleNotes.list!==undefined && state.animals.report !== undefined
     }
 }
  function mapDispatchToProps(dispatch){

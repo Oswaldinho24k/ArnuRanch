@@ -4,7 +4,7 @@ import moment from 'moment';
 import { ReporteCard } from './ReporteCard';
 
 
-export const ResumenCard =({aretes}) => {
+export const ResumenCard =({aretes, date}) => {
  
     console.log(aretes)
     let kgHechosTotales = 0;
@@ -42,7 +42,7 @@ export const ResumenCard =({aretes}) => {
                     if(item.tipo==='Alimento')return alimentsQuantityTotal += parseFloat(item.cantidad)
                 });
                 parseFloat(alimentsQuantityTotal)
-                kgAlimentosTotales += alimentsQuantityTotal.toFixed(2);
+                kgAlimentosTotales += alimentsQuantityTotal
                 //obtiene la diferencia en dias desde su llegada hasta hoy
                 var given = moment(a.fecha_entrada, "YYYY-MM-DD");
                 var current = moment().startOf('day');
@@ -75,14 +75,30 @@ export const ResumenCard =({aretes}) => {
             })
 
            }
-            <h2>Datos de la Selección</h2>
-            <p>Kg Hechos {kgHechosTotales}</p>
-            <p>Costos de Alimentación: {costosAlimentosTotales}</p>
-            <p>Kg de Alimento: {kgAlimentosTotales}</p>
-            <p>Costos de Vacunación: {costosVacunasTotales}</p>
-            <p>GDP: {gdpPromedio} Kg</p>
-            <p>Rendimiento: {rendimientopPromedio}Kg</p>
-            <p>Conversion: {conversionPromedio}%</p>
+            <h2>Datos de la Selección </h2>
+            {date?<h3>{`Entre ${date[0]} y ${date[1]}`}</h3>:''}
+            {date?
+            <div>                
+                <p>GDP: {gdpPromedio.toFixed(2)} Kg</p>
+                <p>Rendimiento: {rendimientopPromedio}Kg</p>
+                <p>Conversion: {conversionPromedio}%</p>
+                <p>Consumo diario promedio en kgs en base seca</p>
+                <p>Consumo diario promedio en dinero</p>
+                <p>Precio promedio de compra </p>
+                <p>Precio promedio de venta </p>
+                <p>Utilidad diaria</p>
+                <p>Utilidad neta por cabeza</p>
+                <p>Conversión por etapa de peso vivo</p>
+            </div>:
+            <div>
+                <p>Kg Hechos {kgHechosTotales}</p>
+                <p>Costos de Alimentación: {costosAlimentosTotales}</p>
+                <p>Kg de Alimento: {kgAlimentosTotales}</p>
+                <p>Costos de Vacunación: {costosVacunasTotales}</p>
+                <p>GDP: {gdpPromedio} Kg</p>
+                <p>Rendimiento: {rendimientopPromedio}Kg</p>
+                <p>Conversion: {conversionPromedio}%</p>
+            </div>}
         </div>
     )
 }

@@ -102,9 +102,9 @@ class CorralPage extends Component {
                 <Button type="primary" onClick={this.showModal} style={{margin:'1% 0'}}>Agregar</Button>
                 <Divider
                     type={'vertical'}/>
-                <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
+                {/* <Popconfirm title="Are you sure delete this animals?" onConfirm={this.confirm} onCancel={this.cancel} okText="Yes" cancelText="No">
                     <Button disabled={!canUse} type="primary">Delete</Button>
-                </Popconfirm>
+                </Popconfirm> */}
                 <Modal title="Agregar nuevo corral"
                        visible={visible}
                        onCancel={this.handleCancel}

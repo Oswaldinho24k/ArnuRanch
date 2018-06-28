@@ -96,8 +96,6 @@ const salesPieData = [
     },
     
 
-   
-
 ];
 
 
@@ -112,6 +110,22 @@ class AnimalsDashboard extends Component {
             <Fragment>
 
                 <Row gutter={24}>
+                <Col {...topColResponsiveProps2} >
+
+                        <Card title={"Próximos a vender"} bordered={false} bodyStyle={{ padding: 16 }} >
+                        <Table 
+                            dataSource={report.proximos} 
+                            columns={columns} 
+                            pagination={{
+                                pageSize: 8,
+                                total:report.proximos?report.proximos.length:0,           
+                                showTotal:total => `Total: ${total} aretes`}}/>
+                       
+                        </Card>
+
+                    </Col>
+                <Col {...topColResponsiveProps3}>
+                    <Row gutter={12}> 
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
@@ -172,14 +186,28 @@ class AnimalsDashboard extends Component {
                            
                         </ChartCard>
                     </Col>
+                    </Row>
+                </Col>
                 </Row>
 
                 <Row gutter={24} >
-                    <Col {...topColResponsiveProps2} >
+                    {/* <Col {...topColResponsiveProps2} >
                         <Card bordered={false} bodyStyle={{ padding: 0 }} >
 
                             <Tabs size="large" >                               
 
+                                <TabPane tab="GDP" key="1" style={{padding: 16, }}>
+                                    <Row>
+                                        <Col xl={16} lg={12} md={12} sm={24} xs={24}>                                            
+                                        <MiniArea
+                                            line
+                                            color="#cceafe"
+                                            height={45}
+                                            data={salesPieData}
+                                        />                                          
+                                        </Col>
+                                    </Row>
+                                </TabPane>
                                 <TabPane tab="GDP" key="gdp" style={{padding: 16, }}>
                                     <Row>
                                         <Col xl={16} lg={12} md={12} sm={24} xs={24}>                                            
@@ -194,8 +222,8 @@ class AnimalsDashboard extends Component {
                             </Tabs>
 
                         </Card>
-                    </Col>
-                    <Col {...topColResponsiveProps2} >
+                    </Col> */}
+                    {/* <Col {...topColResponsiveProps2} >
 
                         <Card title={"Próximos a vender"} bordered={false} bodyStyle={{ padding: 16 }} >
                         <Table 
@@ -208,7 +236,7 @@ class AnimalsDashboard extends Component {
                        
                         </Card>
 
-                    </Col>
+                    </Col> */}
                 </Row>
 
             </Fragment>
@@ -237,18 +265,26 @@ export default AnimalsDashboard;
 
 const topColResponsiveProps = {
     xs: 24,
-    sm: 12,
-    md: 12,
-    lg: 12,
-    xl: 6,
+    sm: 24,
+    md: 24,
+    lg: 24,
+    xl: 24,
     style: { marginBottom: 24 },
 };
 
 const topColResponsiveProps2 = {
     xs: 24,
-    sm: 12,
-    md: 12,
-    lg: 12,
-    xl: 12,
+    sm: 24,
+    md: 18,
+    lg: 18,
+    xl: 18,
+    style: { marginBottom: 24 },
+};
+const topColResponsiveProps3 = {
+    xs: 24,
+    sm: 24,
+    md: 6,
+    lg: 6,
+    xl: 6,
     style: { marginBottom: 24 },
 };

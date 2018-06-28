@@ -12,6 +12,7 @@ const FormSalida=({clients, form, saveSalida, disabled, price, kilograms, client
             if (!err) {
                 console.log(values);
                 saveSalida(values);
+                form.resetFields()
             }
             if (Array.isArray(e)) {
                 return e;

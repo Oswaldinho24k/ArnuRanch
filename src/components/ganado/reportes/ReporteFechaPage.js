@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import FormGasto from "../animals/FormGasto";
 import {Link} from 'react-router-dom'
-import {Select, Form, message, Divider, Card, List, Button} from 'antd';
+import {Select, Form, message, Divider, Card, List, DatePicker, Button} from 'antd';
 import MainLoader from "../../common/Main Loader";
 import * as animalGastoActions from '../../../redux/actions/ganado/gastoAnimalActions';
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
@@ -16,8 +16,9 @@ import './reportes.css'
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
+const {  RangePicker } = DatePicker;
 
-class ReportesPage extends Component {
+class ReporteFechaPage extends Component {
     state = {
         aretes:[],
         aretesId:[],
@@ -28,7 +29,8 @@ class ReportesPage extends Component {
         modo:'',
         loading:false,
         multiple:[],
-        mIds:[]
+        mIds:[],
+        rango:'',
     };
 
     handleSearch=(a)=>{
@@ -95,9 +97,6 @@ class ReportesPage extends Component {
                 }
             })
     };
-    print=()=>{
-        window.print()
-    }
     saveMultiplesGastos=(gasto)=>{
         this.setState({loading:true});
         let {mIds} = this.state;
@@ -184,6 +183,10 @@ class ReportesPage extends Component {
         
         }
     };
+    onChangeDate=(a, b, c)=>{
+        console.log(a, b, c)
+        this.setState({rango:b})
+    }
     changeMultiplesLote=(animal)=>{
 
         let {mIds} = this.state;
@@ -214,7 +217,7 @@ class ReportesPage extends Component {
 
     render() {
         let {fetched, animals, lotes} = this.props;
-        let {modo, loading, event, multiple, areteId, mIds, loteId} = this.state;
+        let {modo, loading, event, multiple, areteId, mIds, loteId, rango} = this.state;
         if(!fetched)return(<MainLoader/>);
 
         return (
@@ -226,11 +229,12 @@ class ReportesPage extends Component {
 
                 </div>
                 <div style={{display:'flex', justifyContent:'space-around'}}>
-                    <div style={{width:'40%'}} >
-                    <h2>Generador de Reportes</h2>
+                    <div style={{width:'40%'}}>
+                    <h2>Histórico de Indicadores</h2>
                    
                     <FormItem label={'Modo'}>
                         <Select
+                            
                            value={modo}
                             onChange={this.handleChangeMode}
                             style={{width:'100%'}}
@@ -300,18 +304,21 @@ class ReportesPage extends Component {
                                     </Option>)}
                                 </Select>
                         </FormItem>:'Elige un Modo* '}
+
+                        <FormItem label="Rango de Tiempo">
+                            <RangePicker onChange={this.onChangeDate} style={{width:'100%'}}/>
+                        </FormItem>
                         
                         
                         {/*Forms de los reportes*/}
-
-                       <div id="print" className="toprint">                       
+                       <div id="print" className="toprint">
                        <ResumenCard 
+                                date={rango}
                                 aretes={modo==='individual'?[areteId]:
                                 modo==='multiple'?mIds:
-                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.status==true):[]:[]}/>                                
+                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.status==true):[]:[]}/>
                        </div>
-                       <Button type="primary" onClick={this.print}>Print</Button>
-                        
+                        <Button type="primary" onClick={this.print}>Print</Button>
                      </div>
                     <div style={{width:'50%', }}>
                         
@@ -356,7 +363,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-ReportesPage = connect(mapStateToProps, mapDispatchToProps)(ReportesPage);
-export default ReportesPage;
+ReporteFechaPage = connect(mapStateToProps, mapDispatchToProps)(ReporteFechaPage);
+export default ReporteFechaPage;
 
 

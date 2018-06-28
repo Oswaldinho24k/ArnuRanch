@@ -89,6 +89,9 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                 <Menu.Item key="16" >
                     <Link to='/admin/reportes'>  Reportes </Link>
                 </Menu.Item>
+                <Menu.Item key="27" >
+                    <Link to='/admin/historico'>  Histórico </Link>
+                </Menu.Item>
 
                 <Menu.Item key="14" disabled={false}>
                     <Link to='/admin/razas'>  Razas </Link>

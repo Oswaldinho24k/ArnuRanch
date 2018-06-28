@@ -49,27 +49,26 @@ class EventosPage extends Component {
         let {mIds} = this.state;
         mIds = mIds.filter(i=>{return i.arete_siniga!== a})
         this.setState({mIds})
-        console.log(mIds)
+        
     }
 
     onSelectLote=(value, b)=>{
-        console.log(b, value);
+        
         this.setState({lote:value})
     };
     saveId=(id)=>{
         this.setState({areteId:id});
-        console.log(id)
+        
     };
     saveIds=(id)=>{
         let {mIds}=this.state;
         mIds.push(id)
         this.setState({mIds});
-        console.log(mIds)
-    };
-    saveLoteId=(id)=>{
         
+    };
+    saveLoteId=(id)=>{        
         this.setState({loteId:id});
-        console.log(id)
+        
     };
 
     handleSearchLote=(a)=>{
@@ -91,25 +90,32 @@ class EventosPage extends Component {
         sn['animals_id'] = [];
         if(modo==='individual'){
             sn.animals_id.push(areteId.id)
-            this.props.animalActions.editAnimal({id:areteId.id,status:false})
+            //this.props.animalActions.editAnimal({id:areteId.id,status:false, lote_id:null,lote:null})
         }else if(modo==='multiple'){
             for(let j in mIds){
                 sn.animals_id.push(mIds[j].id)
-                this.props.animalActions.editAnimal({id:mIds[j].id,status:false})
+                //this.props.animalActions.editAnimal({id:mIds[j].id,status:false, lote_id:null, lote:null})
             }
         }else if(modo==='lote'){
             for(let i in loteId.animals){
+                
                 sn.animals_id.push(loteId.animals[i].id)
-                this.props.animalActions.editAnimal({id:loteId.animals[i].id,status:false})
+                //this.props.animalActions.editAnimal({id:loteId.animals[i].id,status:false, lote_id:null, lote:null})
             }
         }
         
         console.log(sn)
         this.props.saleNotesActions.newSaleNote(sn)
             .then(r=>{
-                message.success('Nota creada con éxito');
+                for(let j in sn.animals_id){
+                    console.log(sn.animals_id[j])
+                    this.props.animalActions.editAnimal({id:sn.animals_id[j],status:false})
+                        .then(r=>{console.log(r)})
+                        .catch(e=>{console.log(e.response)})
+                }
+                message.success('Nota creada con éxito');                                
                 this.setState({areteRancho:'', areteId:'', modo:''});
-                this.handleSearch('')
+                
             }).catch(e=>{
                 console.log(e.response)
                 for (let i in e.response.data){
@@ -305,11 +311,11 @@ class EventosPage extends Component {
         modo==='individual'?displayList=[areteId]:
         modo==='multiple'?displayList=mIds:
         modo==='lote'?displayList=loteId.animals:displayList=[]
-        console.log(displayList)
+        console.log(displayList, 'antes del filtro')
+        displayList=displayList?displayList.filter(a=>a.status===true):[]
         for(let i in displayList){
             let animal = animals.find(a=>{return a.id==displayList[i].id})
             console.log(animal)
-            
         }
         console.log(newList)
         if(!fetched)return(<MainLoader/>);
@@ -423,7 +429,7 @@ class EventosPage extends Component {
                             itemLayout="horizontal"
                             dataSource={modo==='individual'?[areteId]:
                                 modo==='multiple'?mIds:
-                                modo==='lote'?loteId.animals:''}
+                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.status===true):[]:[]}
                             renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta                            

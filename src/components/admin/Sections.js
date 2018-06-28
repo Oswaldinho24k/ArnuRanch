@@ -11,6 +11,7 @@ import ProovedorPage from "../proveedores/ProveedorPage";
 import ClientesPage from "../clientes/ClientePage"
 
 import ReportesPage from "../ganado/reportes/ReportesPage";
+import ReporteFechaPage from "../ganado/reportes/ReporteFechaPage";
 
 import DetailClientPage from "../clientes/DetailClientPage";
 import DetailProviderPage from "../proveedores/DetailProviderPage";
@@ -113,6 +114,7 @@ const Sections = ({props}) => {
                 
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
+                <Route path={'/admin/historico'} component={ReporteFechaPage}/>
                 {/* Planta alimentos routes begin*/}
                 <Route path={paths.formulas} component={FormulasPage}/>
                 <Route path={paths.insumos} component={InsumosPage}/>

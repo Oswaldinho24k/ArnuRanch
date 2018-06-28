@@ -1,6 +1,8 @@
 import api from '../../../Api/Django';
 
 
+
+
 export const GET_SALENOTES_SUCCESS = 'GET_SALENOTES_SUCCESS';
 
 export function getSaleNotesSuccess(saleNotes){
@@ -8,10 +10,20 @@ export function getSaleNotesSuccess(saleNotes){
         type:GET_SALENOTES_SUCCESS, saleNotes
     }
 }
+
+export const GET_SALENOTES_DATA_SUCCESS = 'GET_SALENOTES_DATA_SUCCESS';
+
+export function getAllDataSuccess(data){
+    return{
+        type:GET_SALENOTES_DATA_SUCCESS, data
+    }
+}
+
 export const getSaleNotes=()=>(dispatch, getState)=>{
     return api.getSaleNotes()
         .then(r=>{
-            dispatch(getSaleNotesSuccess(r))
+            dispatch(getSaleNotesSuccess(r.results))
+            dispatch(getAllDataSuccess(r))
         }).catch(e=>{
             throw e
         })
