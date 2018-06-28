@@ -41,10 +41,18 @@ let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
 let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
 //gastoGanado
 let gastosGanadoUrl = 'http://localhost:8000/api/egresos/gastos/';
+
 //notas de venta 
 let saleNotesUrl = 'http://localhost:8000/api/ganado/sale_notes/';
 //endpoint de resumen de reportes
 let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
+
+
+//DashGanado
+let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
+
+
+
 
 
 //heroku urls
@@ -2444,6 +2452,33 @@ const api = {
                 })
                 .catch(function (error) {
 
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    //DASH GANADO
+
+    getDataDash:()=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: dashGanadoUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
                     console.log('el error: ', error.response);
                     reject(error);
                 });

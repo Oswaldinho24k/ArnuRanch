@@ -42,6 +42,7 @@ export const getFacturas=(url)=>(dispatch, getState)=>{
             
             dispatch(getFacturasSuccess(r.results));
             dispatch(getAllFacturasSuccess(r));
+            dispatch(getFaSearch());
         }).catch(e=>{
             throw e
         })

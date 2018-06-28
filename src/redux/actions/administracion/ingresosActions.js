@@ -1,4 +1,5 @@
 import api from "../../../Api/Django";
+import {getCuentas} from "../cuentas/cuentasActions";
 
 
 
@@ -45,6 +46,7 @@ export const getIngresos=(url)=>(dispatch, getState)=> {
         .then(r => {
             dispatch(getIngresosSuccess(r.results));
             dispatch(getAllIngresosSuccess(r));
+            dispatch(getCuentas());
         }).catch(e => {
         
     })

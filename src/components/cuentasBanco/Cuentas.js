@@ -129,13 +129,12 @@ class CuentasPage extends Component{
 
             },
 
-            /*{
-                title: 'Actions',
-                dataIndex: 'id',
-                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
-                fixed:'right',
-                width:100
-            },*/
+            {
+                title:'Compras',
+                dataIndex:'sales',
+                render:(sales)=><span>{sales && sales !== undefined? sales.length:"0"}</span>,
+                align:'center'
+            }
         ];
 
         const canDelete = selectedRowKeys.length > 0;
@@ -165,7 +164,7 @@ class CuentasPage extends Component{
                     columns={columns}
                     dataSource={cuentas}
                     rowKey={record => record.id}
-                    scroll={{x:650, y:400}}
+                    scroll={{x:650}}
                     pagination={{
                         pageSize: 10,
                         total:cuentasData.count,

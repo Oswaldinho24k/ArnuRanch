@@ -28,6 +28,8 @@ class FacturaDetalle extends Component{
             }
         ];
 
+        console.log("FACTURA", factura)
+
 
         return(
             <div>
@@ -48,12 +50,9 @@ class FacturaDetalle extends Component{
                         dataSource={factura.animals}
                         rowKey={record => record.id}
                         scroll={{x:650}}
-                        /*pagination={{
-                            pageSize: 1,
-                            total:facturasData.count,
-                            onChange:this.handlePagination,
-                            showTotal:total => `Total: ${total} Facturas`
-                        }}*/
+                        pagination={{
+                            pageSize: 5,
+                        }}
                         style={{marginBottom:10}}
                         height={'80vh'}
                     />

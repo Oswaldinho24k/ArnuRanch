@@ -45,6 +45,7 @@ export const getClientes=(url)=>(dispatch, getState)=>{
            
             dispatch(getClientesSuccess(r.results));
             dispatch(getAllDataSuccess(r));
+            dispatch(getClSearch());
         }).catch(e=>{
             throw e
     })

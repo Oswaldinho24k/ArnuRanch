@@ -1,4 +1,6 @@
 import api from "../../../Api/Django";
+import {getFacturas} from "../facturas/facturasActions";
+import {getDataDash} from "../dashGanado/dashGanadoActions";
 
 
 
@@ -25,6 +27,7 @@ export const getAnimals=(url)=>(dispatch, getState)=>{
 
             dispatch(getAnimalsSuccess(r.results));
             dispatch(getAllDataSuccess(r));
+            dispatch(getDataDash());
         }).catch(e=>{
             throw e
     })
@@ -68,6 +71,7 @@ export const saveAnimal=(animal)=>(dispatch, getState)=>{
            // r['lote'] = lote;
             dispatch(saveAnimalSuccess(r));
             dispatch(getAnimals());
+            dispatch(getFacturas());
         })
         .catch(e=>{
             throw e;
@@ -92,8 +96,14 @@ export const editAnimal=(animal)=>(dispatch, getState)=>{
             // let empresa = getState().empresas.list.find(e=>e.id===r.empresa);
             // r['raza'] = raza;
             // r['lote'] = lote;
+
             // r['empresa'] = empresa;            
             dispatch(editAnimalSuccess(r))
+
+            // r['empresa'] = empresa;
+            dispatch(editAnimalSuccess(r));
+            dispatch(getFacturas());
+
         }).catch(e=>{
             throw e;
     })
