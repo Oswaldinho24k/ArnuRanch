@@ -8,23 +8,12 @@ import { Pie, ChartCard, Radar, Bar, MiniArea,MiniBar,MiniProgress, Field, Timel
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import numeral from 'numeral';
 import moment from 'moment';
-import Trend from 'ant-design-pro/lib/Trend';
+
 import {Row,Col,Icon,Card,Tabs,Table,Radio,DatePicker,Tooltip,Menu,Dropdown,List, Divider} from 'antd';
-import MainLoader from '../../common/Main Loader';
 
-import {ChartCard, Bar, Field, TimelineChart  } from 'ant-design-pro/lib/Charts';
 
-import moment from 'moment';
 import Trend from 'ant-design-pro/lib/Trend';
-import {
-    Row,
-    Col,
-    Icon,
-    Card,
-    Tabs,
-    Table,
-    Tooltip,
-} from 'antd';
+
 import MainLoader from "../../common/Main Loader";
 
 
@@ -202,13 +191,8 @@ const salesPieData = [
 class AnimalsDashboard extends Component {
     state = {};
 
-    render() {
-
-        let {report, fetched} = this.props
-        if(!fetched) return(<MainLoader/>)
-
-
-        let {fetched, dataGanado, activos, inactivos} = this.props;
+    render() {        
+        let {fetched, dataGanado, activos, inactivos, report} = this.props;
         if(activos === undefined)return(<MainLoader/>);
         console.log("DD", activos)
         console.log("LLL", inactivos)
@@ -509,7 +493,7 @@ function mapStateToProps(state, ownProps) {
     return {
 
         report:state.animals.report,
-        fetched:state.animals.report!==undefined
+        fetched:state.animals.report!==undefined,
 
         activos,
         inactivos,
