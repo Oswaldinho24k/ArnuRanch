@@ -113,6 +113,18 @@ const CompanyForm = Form.create()(
                                 <Input minLength={"10"} maxLength={"10"}  placeholder={"Teléfono a 10 dígitos"}/>
                             )}
                         </FormItem>
+                        <FormItem
+                            label="Dirección fiscal"
+                        >
+                            {getFieldDecorator('direction_company', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input  />
+                            )}
+                        </FormItem>
+
 
 
 

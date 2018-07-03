@@ -40,7 +40,36 @@ const FormEgreso = Form.create()(
 
 
                                 <Select
-                                    placeholder={"Razón Social"}
+                                    placeholder={"Razón Social del Proveedor"}
+                                    showSearch
+                                    onSearch={searchProvider}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options_proveedores.length >0? options_proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
+
+                                </Select>
+                            )}
+
+                        </FormItem>
+
+                        <FormItem
+                            label={"Razón Social"}
+                            hasFeedback
+                        >
+                            {getFieldDecorator('empresa_egreso_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                                props:{
+                                    placeholder:'Selecciona un Empresa',
+                                }
+                            })(
+
+
+                                <Select
+                                    placeholder={"Razón Social de la Empresa"}
                                     showSearch
                                     onSearch={searchProvider}
                                     filterOption={false}

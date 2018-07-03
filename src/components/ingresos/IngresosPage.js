@@ -65,6 +65,7 @@ class IngresosPage extends Component {
         cuenta:'',
         cliente:'',
         canReset:false,
+        venta:false,
 
         idClient:null,
         idLine:null,
@@ -84,6 +85,7 @@ class IngresosPage extends Component {
     handleCancel = () => {
         this.setState({
             visible: false,
+            venta:false,
         });
         const form = this.form;
         form.resetFields();
@@ -141,10 +143,21 @@ class IngresosPage extends Component {
     };
 
     handleChange = e => {
-        this.setState({
-            factura: e.target.checked
-        })
+        console.log("name", e.target.id)
+        if(e.target.id === "sale_check"){
+            this.setState({
+                factura: e.target.checked
+            })
+        }
+        if(e.target.id === "venta_check"){
+            this.setState({
+                venta: e.target.checked
+            })
+        }
+
+
     };
+
 
     onSearch = () => {
         let basePath= "http://localhost:8000/api/ingresos/ingresos/?q=";
@@ -317,7 +330,7 @@ class IngresosPage extends Component {
                     onCreate={this.handleCreate}
                     handleChange={this.handleChange}
                     factura = {this.state.factura}
-
+                    venta ={this.state.venta}
                     options={blines}
                     searchLine={this.handleSearchLine}
 

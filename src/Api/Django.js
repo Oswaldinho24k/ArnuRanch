@@ -56,7 +56,7 @@ let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
 
 
 //heroku urls
-if(!debug){
+if(debug){
 
     /******************************AWS Urls********************************/
     animalsUrl = 'https://rancho.davidzavala.me/api/ganado/animals/';

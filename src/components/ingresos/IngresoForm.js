@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, Select, InputNumber, Checkbox, Modal } from 'antd';
-
+import { Form, Input, Button, Select, InputNumber, Checkbox, Modal,DatePicker } from 'antd';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 const TextArea = Input;
@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
+        const{visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -39,7 +39,7 @@ const FormIngreso = Form.create()(
                     null,
                 ]}
             >
-                <Form >
+                <Form style={{overflow:'auto', maxHeight:'600px'}} >
                     <div style={styles.form}>
 
                         <FormItem
@@ -171,6 +171,118 @@ const FormIngreso = Form.create()(
                             </FormItem>
 
                         </div>
+                        <div>
+                            <FormItem>
+                                {getFieldDecorator('venta_check', {
+                                    valuePropName: 'checked',
+                                    initialValue: false,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Checkbox
+                                        value={venta}
+                                        onChange={handleChange}
+                                    >
+                                        Venta?
+                                    </Checkbox>
+                                )}
+                            </FormItem>
+
+                            <FormItem>
+                                {getFieldDecorator('no_seller_check', {initialValue: ""})(
+                                   <div>
+                                       {venta ?
+                                           <div>
+                                               <FormItem
+                                                   label={"Razón Social"}
+                                                   hasFeedback
+                                               >
+                                                   {getFieldDecorator('seller_id', {
+                                                       rules: [{
+                                                           required: true, message: 'Completa el campo!',
+                                                       },
+                                                       ],
+                                                   })(
+                                                       <Select
+                                                           placeholder={"Razón Social Vendedor"}
+                                                           showSearch
+                                                           onSearch={searchCliente}
+                                                           filterOption={false}
+                                                       >
+                                                           {
+                                                               options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                                           }
+
+                                                       </Select>
+                                                   )}
+                                               </FormItem>
+
+                                               <FormItem
+                                                   label="Fecha de venta"
+                                               >
+                                                   {getFieldDecorator('fecha_venta', {
+                                                       initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                                       rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
+                                                   })(
+                                                       <DatePicker style={{width:'100%'}} />
+                                                   )}
+                                               </FormItem>
+
+                                               <FormItem
+                                                   label="Cantidad"
+                                               >
+                                                   {getFieldDecorator('cantidad', {
+                                                       initialValue:0,
+                                                       rules: [{  required: true, message: 'Complete el campo!' }],
+                                                   })(
+                                                       <InputNumber min={0}   />
+                                                   )}
+                                               </FormItem>
+                                               <FormItem
+                                                   label="Unidad"
+                                               >
+                                                   {getFieldDecorator('unidad', {
+                                                       initialValue:0,
+                                                       rules: [{  required: true, message: 'Complete el campo!' }],
+                                                   })(
+                                                       <InputNumber min={0}   />
+                                                   )}
+                                               </FormItem>
+                                               <FormItem
+                                                   label="Concepto de venta"
+                                               >
+                                                   {getFieldDecorator('conceptoVenta', {
+                                                       rules: [{
+                                                           required: true, message: 'Completa el campo!',
+                                                       },
+                                                       ],
+                                                   })(
+                                                       <Input />
+                                                   )}
+                                               </FormItem>
+                                               <FormItem
+                                                   label="Comentarios"
+                                               >
+                                                   {getFieldDecorator('comentarios', {
+                                                       rules: [{
+                                                           required: true, message: 'Completa el campo!',
+                                                       },
+                                                       ],
+                                                   })(
+                                                       <Input />
+                                                   )}
+                                               </FormItem>
+                                           </div>
+                                            :
+                                           null
+                                       }
+                                   </div>
+
+                                )}
+                            </FormItem>
+
+                        </div>
 
                         <div style={styles.sectionCheck}>
 
@@ -185,6 +297,7 @@ const FormIngreso = Form.create()(
                                     <Checkbox>Cobrado</Checkbox>
                                 )}
                             </FormItem>
+
 
                         </div>
                     </div>
