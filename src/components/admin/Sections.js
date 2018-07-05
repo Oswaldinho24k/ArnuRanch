@@ -26,6 +26,10 @@ import CuentasBanco from "../cuentasBanco/CuentasGasto";
 import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
 import UserDetail from "../users/UserDetail";
+import CatalogoPage from '../catalogo/CatalogoPage';
+
+
+
 
 import RazasPage from "../ganado/razas/RazasPage";
 
@@ -100,6 +104,8 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
+
+                <Route path={'/admin/catalogo'} component={CatalogoPage}/>
                 {/***************************** Ganado ROUTES *****************************/}
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
                 <Route path={'/admin/animals'} component={AnimalsPage}/>

@@ -147,6 +147,19 @@ const ClienteForm = Form.create()(
                         </FormItem>
 
 
+                        <FormItem
+                            label="Plazo de crédito"
+                        >
+                            {getFieldDecorator('credito', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input placeholder={"Plazo de crédito"} />
+                            )}
+                        </FormItem>
+
+
 
                     </div>
                     <FormItem>

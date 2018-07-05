@@ -7,7 +7,7 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
+        const {options_empresas,saveCompany,searchEmpresas,visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
         const {getFieldDecorator} = form;
 
         return (
@@ -40,13 +40,42 @@ const FormEgreso = Form.create()(
 
 
                                 <Select
-                                    placeholder={"Razón Social"}
+                                    placeholder={"Razón Social del Proveedor"}
                                     showSearch
                                     onSearch={searchProvider}
                                     filterOption={false}
                                 >
                                     {
                                         options_proveedores.length >0? options_proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
+
+                                </Select>
+                            )}
+
+                        </FormItem>
+
+                        <FormItem
+                            label={"Razón Social"}
+                            hasFeedback
+                        >
+                            {getFieldDecorator('empresa_egreso_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                                props:{
+                                    placeholder:'Selecciona un Empresa',
+                                }
+                            })(
+
+
+                                <Select
+                                    placeholder={"Razón Social Vendedor"}
+                                    showSearch
+                                    onSearch={searchEmpresas}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                     }
 
                                 </Select>

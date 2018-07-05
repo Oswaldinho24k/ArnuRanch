@@ -42,7 +42,7 @@ const ProveedorForm = Form.create()(
                     null,
                 ]}
             >
-                <Form onSubmit={this.handleSubmit} >
+                <Form onSubmit={this.handleSubmit} style={{overflow:'auto', maxHeight:'600px'}}>
                     <div style={styles.form}>
                         <FormItem
                             label="Nombre del Proveedor/Razón Social"
@@ -141,6 +141,51 @@ const ProveedorForm = Form.create()(
                                 }, {validator: phone}],
                             })(
                                 <Input minLength={"10"} maxLength={"10"} />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Nombre del Banco"
+                        >
+                            {getFieldDecorator('banco_name', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="No. de cuenta"
+                        >
+                            {getFieldDecorator('num_account', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }, {validator: phone}],
+                            })(
+                                <Input minLength={"10"} maxLength={"10"} />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Clabe"
+                        >
+                            {getFieldDecorator('clabe', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }, {validator: phone}],
+                            })(
+                                <Input minLength={"18"} maxLength={"18"} />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Beneficiario"
+                        >
+                            {getFieldDecorator('beneficiary', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input />
                             )}
                         </FormItem>
 
