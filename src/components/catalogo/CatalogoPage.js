@@ -181,6 +181,8 @@ class CatalogoPage extends Component {
                    this.setState({visible:false})
                }
                if(activeTab==="budget"){
+                   console.log("Presupuesto", values)
+                   var ob={name:values.name,code:values.code,date:values.date,concept:values.concept,monto:values.monto}
                    datos7.push(ob)
                    this.setState({visible:false})
                }
@@ -232,7 +234,7 @@ class CatalogoPage extends Component {
 
     render() {
 
-        let {visible,canReset,datos,datos2,datos3,datos4,datos5,datos6,datos7}=this.state;
+        let {visible,canReset,datos,datos2,datos3,datos4,datos5,datos6,datos7,activeTab}=this.state;
         const TabPane = Tabs.TabPane;
         const columns = [
             {
@@ -246,6 +248,13 @@ class CatalogoPage extends Component {
                 key:'code'
             }
 
+        ];
+        const columnsP =[
+            {title:'Código', dataIndex:'code',key:'code'},
+            {title:'Nombre', dataIndex:'name',key:'name'},
+            {title:'Fecha de pago', dataIndex:'date',key:'date'},
+            {title:'Concepto', dataIndex:'concept',key:'concept'},
+            {title:'Monto', dataIndex:'monto',key:'monto', render:(costo_final) => <span>{costo_final && costo_final !==null ? "$ "+costo_final:'$ 0'}</span>}
         ];
 
         return (
@@ -309,7 +318,7 @@ class CatalogoPage extends Component {
                         </TabPane>
                         <TabPane tab="Presupuestos" key="budget">
                             <Table
-                                columns={columns}
+                                columns={columnsP}
                                 dataSource={datos7}
                             />
                         </TabPane>
@@ -318,6 +327,7 @@ class CatalogoPage extends Component {
                 </div>
                 <Button type="primary" onClick={this.showModal}>Agregar</Button>
                 <FormCatalogo
+                    activeTab={activeTab}
                     ref={this.saveFormRef}
                     visible={visible}
                     onCancel={this.handleCancel}
