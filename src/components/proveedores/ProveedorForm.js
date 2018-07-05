@@ -158,7 +158,7 @@ const ProveedorForm = Form.create()(
                         <FormItem
                             label="No. de cuenta"
                         >
-                            {getFieldDecorator('no_cuenta', {
+                            {getFieldDecorator('num_account', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }, {validator: phone}],
@@ -180,7 +180,7 @@ const ProveedorForm = Form.create()(
                         <FormItem
                             label="Beneficiario"
                         >
-                            {getFieldDecorator('beneficiario', {
+                            {getFieldDecorator('beneficiary', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],

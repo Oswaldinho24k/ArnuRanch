@@ -9,6 +9,7 @@ import * as ingresosActions from '../../redux/actions/administracion/ingresosAct
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
+import * as empresasActions from  '../../redux/actions/empresasActions';
 import FormIngreso from "./IngresoForm";
 
 
@@ -70,6 +71,7 @@ class IngresosPage extends Component {
         idClient:null,
         idLine:null,
         idReceivable:null,
+        idCompany:null
     };
 
     componentWillMount(){
@@ -222,8 +224,19 @@ class IngresosPage extends Component {
         this.props.clientesActions.getClSearch(url);
     };
 
+    //Cuentas
+
+    handleEmpresas=(a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/empresas/?q=';
+        let url = basePath+a;
+        //this.props.cuentasActions.getCuSearch(url);
+    };
+
 
     //saveIDClient
+    saveCompany=(id)=>{
+        this.setState({idCompany:id})
+    };
 
     saveClient=(id)=>{
         this.setState({idClient:id})
@@ -280,10 +293,11 @@ class IngresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {ingresos, fetched, clientes, ingresosData, blines, cuentas} = this.props;
+        let {ingresos, fetched, clientes, ingresosData, blines, cuentas,empresas} = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
 
         if(!fetched)return(<MainLoader/>);
+        console.log("empresas",empresas)
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -337,6 +351,10 @@ class IngresosPage extends Component {
                     cuentas={cuentas}
                     searchCuenta={this.handleCuenta}
 
+                    options_empresas={empresas}
+                    searchEmpresas={this.handleEmpresas}
+                    saveCompany={this.saveCompany}
+
                     options_clientes={clientes}
                     searchCliente={this.handleCliente}
 
@@ -365,10 +383,11 @@ class IngresosPage extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
+        empresas:state.empresas.list,
         ingresos:state.ingresos.list,
         ingresosData:state.ingresos.allData,
         blines:state.blines.lineSearch,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined && state.cuentas.cuentaSearch !== undefined,
+        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined && state.cuentas.cuentaSearch !== undefined && state.empresas.list,
         clientes:state.clientes.clienteSearch,
         cuentas:state.cuentas.cuentaSearch
     }
@@ -377,6 +396,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         ingresosActions: bindActionCreators(ingresosActions, dispatch),
+        empresasActions:bindActionCreators(empresasActions,dispatch),
         linesActions: bindActionCreators(linesActions, dispatch),
         cuentasActions: bindActionCreators(cuentasActions, dispatch),
         clientesActions: bindActionCreators(clientesActions, dispatch),

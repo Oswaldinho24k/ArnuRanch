@@ -12,6 +12,7 @@ import FormEgreso from "./EgresoForm";
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
 import * as comprasActions from '../../redux/actions/compras/comprasActions';
+import * as empresasActions from '../../redux/actions/empresasActions';
 
 
 const Option = Select.Option;
@@ -81,6 +82,7 @@ class EgresosPage extends Component {
         idCompra:null,
         idProvider:null,
         idLineE:null,
+        idCompany:null
     };
 
     showModal = () => {
@@ -233,7 +235,17 @@ class EgresosPage extends Component {
         })
     };
 
+    handleEmpresas=(a)=>{
+        let basePath = 'http://127.0.0.1:8000/api/ingresos/empresas/?q=';
+        let url = basePath+a;
+        //this.props.cuentasActions.getCuSearch(url);
+    };
+
     //saveIDs
+    saveCompany=(id)=>{
+        this.setState({idCompany:id})
+    };
+
 
     saveProvider=(id)=>{
         this.setState({idProvider:id})
@@ -287,7 +299,7 @@ class EgresosPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {egresos, fetched, egresosData, blines, proveedores, compras} = this.props;
+        let {egresos, fetched, egresosData, blines, proveedores, compras,empresas   } = this.props;
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
         let tipo = type.map((a)=><Option key={a.name}>{a.name}</Option>);
         if(!fetched)return(<MainLoader/>);
@@ -338,6 +350,10 @@ class EgresosPage extends Component {
                     options_proveedores={proveedores}
                     searchProvider={this.handleSearchProvider}
 
+                    options_empresas={empresas}
+                    searchEmpresas={this.handleEmpresas}
+                    saveCompany={this.saveCompany}
+
 
                     options={blines}
                     type={tipo}
@@ -382,7 +398,8 @@ function mapStateToProps(state, ownProps) {
         egresosData:state.egresos.allData,
         blines:state.blines.lineSearch,
         compras:state.compras.compraSearch,
-        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined && state.proveedores.proveedorSearch !== undefined && state.compras.compraSearch !== undefined,
+        empresas:state.empresas.list,
+        fetched: state.egresos.list !==undefined && state.blines.lineSearch !== undefined && state.proveedores.proveedorSearch !== undefined && state.compras.compraSearch !== undefined && state.empresas.list !== undefined,
         proveedores: state.proveedores.proveedorSearch,
     }
 }
@@ -393,6 +410,7 @@ function mapDispatchToProps(dispatch) {
         linesActions: bindActionCreators(linesActions, dispatch),
         proveedoresActions: bindActionCreators(proveedoresActions, dispatch),
         comprasActions:bindActionCreators(comprasActions, dispatch),
+        empresasActions:bindActionCreators(empresasActions,dispatch)
     }
 }
 

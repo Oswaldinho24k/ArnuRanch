@@ -63,6 +63,9 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="23">
                         <Link to={'/admin/compras'}>Compras</Link>
                     </Menu.Item>
+                    <Menu.Item key="25">
+                        <Link to='/admin/catalogo'> Catálogos </Link>
+                    </Menu.Item>
 
                 </SubMenu>:''}
             {(user.profile&&user.profile.ganado)|| user.is_superuser?

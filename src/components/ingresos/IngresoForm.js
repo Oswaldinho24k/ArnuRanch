@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
+        const{searchEmpresas,options_empresas,saveCompany,visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -207,11 +207,11 @@ const FormIngreso = Form.create()(
                                                        <Select
                                                            placeholder={"Razón Social Vendedor"}
                                                            showSearch
-                                                           onSearch={searchCliente}
+                                                           onSearch={searchEmpresas}
                                                            filterOption={false}
                                                        >
                                                            {
-                                                               options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                                               options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
                                                            }
 
                                                        </Select>
@@ -221,7 +221,7 @@ const FormIngreso = Form.create()(
                                                <FormItem
                                                    label="Fecha de venta"
                                                >
-                                                   {getFieldDecorator('fecha_venta', {
+                                                   {getFieldDecorator('date_seller', {
                                                        initialValue:moment( new Date(), 'YYYY-MM-DD'),
                                                        rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
                                                    })(
@@ -232,7 +232,7 @@ const FormIngreso = Form.create()(
                                                <FormItem
                                                    label="Cantidad"
                                                >
-                                                   {getFieldDecorator('cantidad', {
+                                                   {getFieldDecorator('quantity', {
                                                        initialValue:0,
                                                        rules: [{  required: true, message: 'Complete el campo!' }],
                                                    })(
@@ -242,7 +242,7 @@ const FormIngreso = Form.create()(
                                                <FormItem
                                                    label="Unidad"
                                                >
-                                                   {getFieldDecorator('unidad', {
+                                                   {getFieldDecorator('unit', {
                                                        initialValue:0,
                                                        rules: [{  required: true, message: 'Complete el campo!' }],
                                                    })(
@@ -252,7 +252,7 @@ const FormIngreso = Form.create()(
                                                <FormItem
                                                    label="Concepto de venta"
                                                >
-                                                   {getFieldDecorator('conceptoVenta', {
+                                                   {getFieldDecorator('concept_seller', {
                                                        rules: [{
                                                            required: true, message: 'Completa el campo!',
                                                        },
@@ -264,7 +264,7 @@ const FormIngreso = Form.create()(
                                                <FormItem
                                                    label="Comentarios"
                                                >
-                                                   {getFieldDecorator('comentarios', {
+                                                   {getFieldDecorator('comments_seller', {
                                                        rules: [{
                                                            required: true, message: 'Completa el campo!',
                                                        },
