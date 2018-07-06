@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, Modal,  } from 'antd';
+import { Form, Input, Button, Modal,DatePicker,InputNumber  } from 'antd';
+import moment from 'moment';
 
 
 const FormItem = Form.Item;
@@ -23,7 +24,7 @@ const styles = {
 
 const CatalogoForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form,handleChange} = props;
+        const{visible, onCancel, onCreate, form,activeTab} = props;
         const{getFieldDecorator} = form;
 
 
@@ -66,6 +67,56 @@ const CatalogoForm = Form.create()(
                                 <Input />
                             )}
                         </FormItem>
+                        {activeTab === "budget" ?
+                            <div>
+                                <FormItem
+                                    label="Concepto"
+                                >
+                                    {getFieldDecorator('concept', {
+                                        rules: [{
+                                            required: true, message: 'Completa el campo!',
+                                        }],
+
+                                    })(
+                                        <Input />
+                                    )}
+                                </FormItem>
+
+                                <FormItem
+                                    label="Monto"
+
+                                >
+                                    {getFieldDecorator('monto', {
+                                        initialValue:0,
+                                        rules: [{
+                                            required:true
+                                        }],
+                                    })(
+                                        <InputNumber
+                                            style={{width:'100%'}}
+                                            step={0.01}
+                                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                        />
+                                    )}
+                                </FormItem>
+
+                                <FormItem
+                                    label="Fecha"
+                                >
+                                    {getFieldDecorator('date', {
+                                        initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                        rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
+                                    })(
+                                        <DatePicker style={{width:'100%'}} />
+                                    )}
+                                </FormItem>
+                            </div>
+
+
+
+                            : null
+                        }
 
                     </div>
                     <FormItem>
