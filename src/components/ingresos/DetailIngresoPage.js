@@ -112,11 +112,13 @@ class DetailIngresoPage extends Component{
     saveCuent=(id)=>{
         this.setState({idCuent:id})
     };
-
+    saveCompany=(id)=>{
+        this.setState({idCompany:id})
+    };
 
 
     render(){
-        let {ingreso, fetched, clientes, blines, cuentas,} = this.props;
+        let {ingreso, fetched, clientes, blines, cuentas,companies} = this.props;
         let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
@@ -129,7 +131,7 @@ class DetailIngresoPage extends Component{
                     <Divider type="vertical" />
                     <Link to={`/admin/ingresos/`} style={{color:'black'}} >Ingresos</Link>
                     <Divider type="vertical" />
-                    {ingreso.client.client}
+                    {ingreso.id}
                 </div>
 
             <div style={{width:'50%', margin: '0 auto'}} >
@@ -147,7 +149,7 @@ class DetailIngresoPage extends Component{
                         searchClient={this.handleClient}
                         clientHandle={this.changeClientS}
                         handleClient={this.state.handleClient}
-
+                        companies={companies}
                         searchLine={this.handleSearchLine}
                         lineHandle={this.handleChangeS}
                         linea={linea}
@@ -166,6 +168,8 @@ class DetailIngresoPage extends Component{
 
                         saveCuentas={this.saveCuent}
                         stateCuentas={this.state.idCuent}
+                        saveCompany={this.saveCompany}
+                        stateCompany={this.state.idCompany}
 
 
 
@@ -186,8 +190,9 @@ function mapStateToProps(state, ownProps) {
     ingreso = ingreso[0];
     return {
         ingreso,
+        companies:state.empresas.list,
         blines:state.blines.lineSearch,
-        fetched: ingreso!==undefined && state.ingresos.list!==undefined && state.blines.lineSearch !== undefined && state.clientes.clienteSearch !== undefined,
+        fetched: ingreso!==undefined && state.ingresos.list!==undefined && state.blines.lineSearch !== undefined && state.clientes.clienteSearch !== undefined && state.empresas.list!==undefined,
         clientes: state.clientes.clienteSearch,
         cuentas:state.cuentas.cuentaSearch
     }

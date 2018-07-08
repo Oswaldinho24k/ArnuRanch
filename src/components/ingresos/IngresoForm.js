@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{searchEmpresas,options_empresas,saveCompany,visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable  }=props;
+        const{searchEmpresas,options_empresas,saveCompany,visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable, handleSale  }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -42,27 +42,28 @@ const FormIngreso = Form.create()(
                 <Form style={{overflow:'auto', maxHeight:'600px'}} >
                     <div style={styles.form}>
 
-                        <FormItem
+                       
+
+                         <FormItem
                             label={"Razón Social"}
-                            hasFeedback
-                        >
-                            {getFieldDecorator('client_id', {
+                            hasFeedback>
+                            {getFieldDecorator('empresa_id', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
                                 ],
                             })(
-                            <Select
-                                placeholder={"Razón Social"}
-                                showSearch
-                                onSearch={searchCliente}
-                                filterOption={false}
-                            >
-                                {
-                                    options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
-                                }
+                                <Select
+                                    placeholder={"Razón Social de Empresa"}
+                                    showSearch
+                                    onSearch={searchEmpresas}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                    }
 
-                            </Select>
+                                </Select>
                             )}
                         </FormItem>
 
@@ -173,7 +174,7 @@ const FormIngreso = Form.create()(
                         </div>
                         <div>
                             <FormItem>
-                                {getFieldDecorator('venta_check', {
+                                {getFieldDecorator('is_sale', {
                                     valuePropName: 'checked',
                                     initialValue: false,
                                     rules: [{
@@ -189,98 +190,95 @@ const FormIngreso = Form.create()(
                                 )}
                             </FormItem>
 
-                            <FormItem>
-                                {getFieldDecorator('no_seller_check', {initialValue: ""})(
+                            {venta?
+                             <div>
+                             <FormItem
+                                 label={"Razón Social Cliente"}
+                                 hasFeedback
+                             >
+                                 {getFieldDecorator('client_id', {
+                                     rules: [{
+                                         required: false, message: 'Completa el campo!',
+                                     },
+                                     ],
+                                 })(
+                                 <Select
+                                     placeholder={"Razón Social de Cliente"}
+                                     showSearch
+                                 onSearch={searchCliente}
+                                 filterOption={false}
+                             >
+                                 {
+                                     options_clientes.length >0? options_clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
+                                 }
+
+                             </Select>
+                             )}
+                         </FormItem>
+                       
+
+                        <FormItem
+                            label="Fecha de venta"
+                        >
+                            {getFieldDecorator('sale_date', {
+                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
+                            })(
+                                <DatePicker style={{width:'100%'}} />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Cantidad"
+                        >
+                            {getFieldDecorator('cantidad', {
+                                initialValue:0,
+                                rules: [{  required: false, message: 'Complete el campo!' }],
+                            })(
+                             <Input addonAfter={
+                                 
+                                     <FormItem style={{height:5, padding:0}}>
+                                         {getFieldDecorator('unidad',{
+                                             initialValue:'ml'
+                                         })(
+                                             <Select  style={{ width: 100 }}>
+                                                 <Option value="ml">ml</Option>
+                                                 <Option value="ml">l</Option>
+                                                 <Option value="ml">Kg</Option>
+                                                 <Option value="ml">g</Option>
+                                                 <Option value="unidad">unidad</Option>
+                                             </Select>
+                                         )}
+                                     </FormItem>
+                             }/>
+                            )}
+                        </FormItem>
+                                                                     
+                        <FormItem
+                            label="Comentarios"
+                        >
+                            {getFieldDecorator('comment', {
+                                rules: [{
+                                    required: false, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+                    </div>:''
+                    }
+
+                            {/* <FormItem>
+                                {getFieldDecorator('no_seller_check', {initialValue: false})(
                                    <div>
-                                       {venta ?
-                                           <div>
-                                               <FormItem
-                                                   label={"Razón Social"}
-                                                   hasFeedback
-                                               >
-                                                   {getFieldDecorator('seller_id', {
-                                                       rules: [{
-                                                           required: true, message: 'Completa el campo!',
-                                                       },
-                                                       ],
-                                                   })(
-                                                       <Select
-                                                           placeholder={"Razón Social Vendedor"}
-                                                           showSearch
-                                                           onSearch={searchEmpresas}
-                                                           filterOption={false}
-                                                       >
-                                                           {
-                                                               options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
-                                                           }
 
-                                                       </Select>
-                                                   )}
-                                               </FormItem>
-
-                                               <FormItem
-                                                   label="Fecha de venta"
-                                               >
-                                                   {getFieldDecorator('date_seller', {
-                                                       initialValue:moment( new Date(), 'YYYY-MM-DD'),
-                                                       rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
-                                                   })(
-                                                       <DatePicker style={{width:'100%'}} />
-                                                   )}
-                                               </FormItem>
-
-                                               <FormItem
-                                                   label="Cantidad"
-                                               >
-                                                   {getFieldDecorator('quantity', {
-                                                       initialValue:0,
-                                                       rules: [{  required: true, message: 'Complete el campo!' }],
-                                                   })(
-                                                       <InputNumber min={0}   />
-                                                   )}
-                                               </FormItem>
-                                               <FormItem
-                                                   label="Unidad"
-                                               >
-                                                   {getFieldDecorator('unit', {
-                                                       initialValue:0,
-                                                       rules: [{  required: true, message: 'Complete el campo!' }],
-                                                   })(
-                                                       <InputNumber min={0}   />
-                                                   )}
-                                               </FormItem>
-                                               <FormItem
-                                                   label="Concepto de venta"
-                                               >
-                                                   {getFieldDecorator('concept_seller', {
-                                                       rules: [{
-                                                           required: true, message: 'Completa el campo!',
-                                                       },
-                                                       ],
-                                                   })(
-                                                       <Input />
-                                                   )}
-                                               </FormItem>
-                                               <FormItem
-                                                   label="Comentarios"
-                                               >
-                                                   {getFieldDecorator('comments_seller', {
-                                                       rules: [{
-                                                           required: true, message: 'Completa el campo!',
-                                                       },
-                                                       ],
-                                                   })(
-                                                       <Input />
-                                                   )}
-                                               </FormItem>
-                                           </div>
-                                            :
-                                           null
-                                       }
+                                           
+                                       
                                    </div>
 
                                 )}
-                            </FormItem>
+                            </FormItem> */}
 
                         </div>
 

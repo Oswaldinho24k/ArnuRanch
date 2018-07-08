@@ -164,10 +164,10 @@ class CobrarIngreso extends Component {
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    Ingresos por cobrar
+                    Cuentas por cobrar
                 </div>
 
-                <h1>Ingresos por Cobrar</h1>
+                <h1>Cuentas por Cobrar</h1>
 
                 <BackTop visibilityHeight={100} />
 

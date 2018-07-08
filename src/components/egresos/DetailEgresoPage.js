@@ -53,6 +53,7 @@ class DetailEgresoPage extends Component{
         idProvider:null,
         idBline:null,
         idCompra:null,
+        idCompany:null,
 
     };
 
@@ -79,14 +80,19 @@ class DetailEgresoPage extends Component{
     //PRovider
 
     searchProvider=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/egresos/proveedores/?q=';
+        let basePath = 'https://davidzavala.me/api/egresos/proveedores/?q=';
         let url = basePath+a;
         this.props.proveedoresActions.getPrSearch(url);
     };
+    // searchEmpresa=(a)=>{
+    //     let basePath = 'https://davidzavala.me/api/ingresos/empresas/?q=';
+    //     let url = basePath+a;
+    //     this.props.proveedoresActions.getPrSearch(url);
+    // };
 
     //compra
     searchCompra = (a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/egresos/compras/?q=';
+        let basePath = 'https://davidzavala.me/api/egresos/compras/?q=';
         let url = basePath+a;
         this.props.comprasActions.getCoSearch(url);
     }
@@ -105,14 +111,18 @@ class DetailEgresoPage extends Component{
         this.setState({idCompra:id})
     };
 
+    saveCompany=(id)=>{
+        this.setState({idCompany:id})
+    };
+
     render(){
-        let {egreso, fetched, proveedores, blines, compras} = this.props;
+        let {egreso, fetched, proveedores, blines, compras, companies} = this.props;
         let {editMode, linea} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map(o => <Option title={o.name} value={o.name} key={o.id}>{o.name}</Option>);
         let tipo = type.map((a)=><Option title={a.name} value={a.name} key={a.id}>{a.name}</Option>);
 
-        console.log("LLL", this.state.idCompra)
+        console.log(egreso)
 
 
         return(
@@ -137,6 +147,7 @@ class DetailEgresoPage extends Component{
                         editMode={editMode}
                         options={blines}
                         proveedores={proveedores}
+
                         types={tipo}
 
                         searchLine={this.handleSearchLine}
@@ -144,6 +155,7 @@ class DetailEgresoPage extends Component{
                         linea={linea}
 
                         searchProvider={this.searchProvider}
+                       
 
                         searchCompra={this.searchCompra}
                         compras={compras}
@@ -156,6 +168,10 @@ class DetailEgresoPage extends Component{
 
                         saveCompra={this.saveCompra}
                         stateCompra={this.state.idCompra}
+
+                        saveCompany={this.saveCompany}
+                        stateCompany={this.state.idCompany}
+                        companies={companies}
 
 
                     />
@@ -174,10 +190,12 @@ function mapStateToProps(state, ownProps) {
     egreso = egreso[0];
     return {
         egreso,
+        companies:state.empresas.list,
         blines:state.blines.lineSearch,
         compras:state.compras.compraSearch,
-        fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined && state.compras.compraSearch !== undefined,
+        fetched: egreso!==undefined && state.egresos.list!==undefined && state.blines.lineSearch !== undefined && state.compras.compraSearch !== undefined && state.empresas.list!==undefined,
         proveedores:state.proveedores.proveedorSearch,
+        
     }
 }
 
