@@ -143,6 +143,7 @@ class EgresosPage extends Component {
                 values['provider_egreso_id']=this.state.idProvider;
                 values['compra_egreso_id']=this.state.idCompra;
                 values['business_egreso_id']=this.state.idLineE;
+                values['empresa_id']=this.state.idCompany;
                 this.props.egresosActions.saveEgreso(values);
                 message.success('Guardado con éxito');
 
@@ -264,9 +265,9 @@ class EgresosPage extends Component {
         const columns = [
             {
                 title: 'Razón Social',
-                dataIndex: 'provider_egreso',
-                render: (provider,obj) =><Link to={`/admin/egresos/${obj.id}`}>{ provider && provider !== null ? provider.provider  || provider: "No Proveedor"}</Link>,
-                key:'provider',
+                dataIndex: 'empresa',
+                render: (empresa,obj) =><Link to={`/admin/egresos/${obj.id}`}>{ empresa && empresa !== null ? empresa.company  || empresa: "None"}</Link>,
+                key:'empresa',
 
             },
             {

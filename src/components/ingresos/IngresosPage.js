@@ -134,11 +134,19 @@ class IngresosPage extends Component {
                 values['client_id']=this.state.idClient;
                 values['business_line_id']=this.state.idLine;
                 values['receivable_id']=this.state.idReceivable;
-                this.props.ingresosActions.saveIngreso(values);
-                message.success('Guardado con éxito');
+                values['empresa_id']=this.state.idCompany;
 
-                form.resetFields();
-                this.setState({ visible: false });
+                this.props.ingresosActions.saveIngreso(values)
+                    .then(()=>{
+                        message.success('Guardado con éxito');
+                        form.resetFields();
+                        this.setState({ visible: false });
+                    }).catch(e=>{
+                        console.log(e.response)
+                    })
+                
+
+                
             }else{message.error('Algo fallo, verifica los campos');}
 
         });
@@ -151,7 +159,7 @@ class IngresosPage extends Component {
                 factura: e.target.checked
             })
         }
-        if(e.target.id === "venta_check"){
+        if(e.target.id === "is_sale"){
             this.setState({
                 venta: e.target.checked
             })
@@ -159,6 +167,9 @@ class IngresosPage extends Component {
 
 
     };
+    handleSale = () =>{
+
+    }
 
 
     onSearch = () => {
@@ -257,9 +268,9 @@ class IngresosPage extends Component {
         const columns = [
             {
                 title: 'Razón Social',
-                dataIndex: 'client',
-                render: (client,obj) =><Link to={`/admin/ingresos/${obj.id}`}>{ client && client !== null ? client.client  || client: "No Cliente"}</Link>,
-                key:'client',
+                dataIndex: 'empresa',
+                render: (empresa,obj) =><Link to={`/admin/ingresos/${obj.id}`}>{ empresa && empresa !== null ? empresa.company  || empresa: "None"}</Link>,
+                key:'empresa',
             },
             {
                 title: 'Linea de negocio',

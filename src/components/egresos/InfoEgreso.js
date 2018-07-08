@@ -6,7 +6,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egreso, searchProvider, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, saveProvider, linea, provider_egreso, concepto_purchase, compra_check, compra_egreso, searchCompra, compras, stateProvider, saveBline, stateLine, saveCompra, stateCompra}) => {
+const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egreso, searchProvider, searchEmpresa, paid, purchase_check, no_check, options, proveedores, total, types, type, searchLine, saveProvider, linea, provider_egreso, concepto_purchase, compra_check, compra_egreso, searchCompra, compras, stateProvider, saveBline, stateLine, saveCompra, saveCompany, stateCompra, empresa, companies, stateCompany}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,9 +15,13 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
 
             if (!err) {
 
-                values['compra_egreso_id']=stateCompra !==null ? stateCompra: compra_egreso.id ;
+                if(values['compra_egreso_id']){
+                    values['compra_egreso_id']=stateCompra !==null ? stateCompra: compra_egreso.id ;
+                }else {delete values['compra_egreso_id']}
                 values['business_egreso_id']=stateLine !== null ? stateLine: business_egreso.id;
                 values['provider_egreso_id']=stateProvider !== null?stateProvider:provider_egreso.id;
+                values['empresa_id']=stateCompany !== null?stateCompany:empresa.id;
+                
 
 
                 values['id']=id;
@@ -28,7 +32,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                         handleEditMode();
                         message.success('Guardado con éxito');
                     }).catch(e=>{
-                    console.log(e)
+                    console.log(e.response)
                 })
             }else{message.error('Algo fallo, verifica los campos');}
         });
@@ -42,7 +46,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                         <FormItem
-                            label={"Razón Social"}
+                            label={"Razón Social del Proveedor"}
                         >
                             {form.getFieldDecorator('provider_egreso_id',{
                                 initialValue:provider_egreso?provider_egreso.provider:'',
@@ -60,6 +64,35 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                                     {proveedores.length >0? proveedores.map((a, key) => <Option key={key} value={a.provider} ><div onClick={()=>saveProvider(a.id)} ><span>{a.provider}</span></div></Option>):<Option key={999999} disabled >No encontrado </Option>}
                                 </Select>
                             )}
+                        </FormItem>
+                        <FormItem
+                            label={"Razón Social"}
+                            hasFeedback
+                        >
+                            {form.getFieldDecorator('empresa_id', {
+                                initialValue:empresa?empresa.company:'',
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                                props:{
+                                    placeholder:'Selecciona un Empresa',
+                                }
+                            })(
+
+
+                                <Select
+                                    placeholder={"Razón Social de Comprador"}
+                                    showSearch
+                                    disabled={!editMode}
+                                    filterOption={false}
+                                >
+                                    {
+                                        companies?companies.length >0? companies.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>:''
+                                    }
+
+                                </Select>
+                            )}
+
                         </FormItem>
 
                         <FormItem
@@ -110,7 +143,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                                     {form.getFieldDecorator('compra_egreso_id',{
                                         initialValue:compra_egreso?compra_egreso.no_factura:'',
                                         rules: [{
-                                            required: true, message: 'Completa el campo!',
+                                            required: false, message: 'Completa el campo!',
                                         }],
                                     })(
                                         <Select
@@ -208,8 +241,7 @@ const InfoEgreso = ({form,editEgreso,id,editMode, handleEditMode, business_egres
                                 }],
                             })(
                                 <Checkbox
-                                    disabled={!editMode}
-                                >
+                                    disabled={!editMode}>
                                     Factura?
                                 </Checkbox>
                             )}

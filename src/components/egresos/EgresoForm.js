@@ -26,7 +26,7 @@ const FormEgreso = Form.create()(
                     <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
                         <FormItem
-                            label={"Razón Social"}
+                            label={"Razón Social del Proveedor"}
                             hasFeedback
                         >
                             {getFieldDecorator('provider_egreso_id', {
@@ -37,8 +37,6 @@ const FormEgreso = Form.create()(
                                     placeholder:'Selecciona un Proveedor',
                                 }
                             })(
-
-
                                 <Select
                                     placeholder={"Razón Social del Proveedor"}
                                     showSearch
@@ -58,7 +56,7 @@ const FormEgreso = Form.create()(
                             label={"Razón Social"}
                             hasFeedback
                         >
-                            {getFieldDecorator('empresa_egreso_id', {
+                            {getFieldDecorator('empresa_id', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -69,7 +67,7 @@ const FormEgreso = Form.create()(
 
 
                                 <Select
-                                    placeholder={"Razón Social Vendedor"}
+                                    placeholder={"Razón Social de Comprador"}
                                     showSearch
                                     onSearch={searchEmpresas}
                                     filterOption={false}
@@ -113,7 +111,7 @@ const FormEgreso = Form.create()(
                             <FormItem>
                                 {getFieldDecorator('compra_check', {
                                     valuePropName: 'checked',
-                                    initialValue: true,
+                                    initialValue: false,
                                     rules: [{
                                         required: true, message: 'Completa el campo!',
                                     }],
@@ -161,7 +159,7 @@ const FormEgreso = Form.create()(
                                 },
                                 ],
                             })(
-                                <Input disabled={compra}/>
+                                <Input disabled={false}/>
                             )}
                         </FormItem>
 

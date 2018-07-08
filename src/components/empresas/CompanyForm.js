@@ -116,7 +116,7 @@ const CompanyForm = Form.create()(
                         <FormItem
                             label="Dirección fiscal"
                         >
-                            {getFieldDecorator('direction_company', {
+                            {getFieldDecorator('address', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -124,19 +124,12 @@ const CompanyForm = Form.create()(
                                 <Input  />
                             )}
                         </FormItem>
-
-
-
-
                     </div>
                     <FormItem>
                         <Button type="primary" onClick={onCreate} size="large" style={{borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                             Guardar
                         </Button>
                     </FormItem>
-
-
-
                 </Form>
 
             </Modal>

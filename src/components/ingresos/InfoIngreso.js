@@ -1,12 +1,13 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Select, Button, Checkbox, InputNumber, message} from 'antd';
+import {Form, Input,DatePicker, Select, Button, Checkbox, InputNumber, message} from 'antd';
 import {editIngreso} from "../../redux/actions/administracion/ingresosActions";
+import moment from 'moment'
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, cuentas, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea, concepto, receivable, cuentaHandle, searchCuenta, clientHandle, searchClient, saveClient, stateClient, saveBline, stateBline, saveCuentas, stateCuentas  }) => {
+const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_line, cuentas, client, paid, sale_check, no_scheck, options, clientes, total, contact_check, contact, searchLine, lineHandle, linea, concepto, receivable, cuentaHandle, searchCuenta, clientHandle, searchClient, saveClient, stateClient, saveBline, stateBline, saveCuentas, stateCuentas, empresa, saveCompany, venta , companies, is_sale, cantidad, unidad, comment, sale_date, stateCompany  }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,7 +17,12 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
 
                 values['receivable_id']=stateCuentas !==null ? stateCuentas: receivable.id ;
                 values['business_line_id']=stateBline !== null ? stateBline: business_line.id;
-                values['client_id']=stateClient !== null?stateClient:client.id;
+                values['empresa_id']=stateCompany !== null ? stateCompany: empresa.id;
+                if( values['client_id']){
+                    values['client_id']=stateClient !== null?stateClient:client.id;
+                }else {
+                    delete  values['client_id']
+                }
 
                 values['id']=id;
                 console.log("ENVIADO", values)
@@ -37,27 +43,31 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
             <Form style={{width:'100%'}} onSubmit={handleSubmit}>
                 <div style={{display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap' }}>
 
+
                         <FormItem
                             label={"Razón Social"}
-                        >
-                            {form.getFieldDecorator('client_id',{
-                                initialValue:client?client.client:'',
+                            hasFeedback>
+                            {form.getFieldDecorator('empresa_id', {
+                                initialValue:empresa?empresa.company:'',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
-                                }],
+                                },
+                                ],
                             })(
                                 <Select
-                                    disabled={!editMode}
-                                    placeholder={"Cliente"}
+                                    placeholder={"Razón Social de Empresa"}
                                     showSearch
-                                    onChange={clientHandle}
-                                    onSearch={searchClient}
+                                    disabled={!editMode}
                                     filterOption={false}
                                 >
-                                    {clientes.length >0? clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No </Option>}
+                                    {
+                                        companies?companies.length >0? companies.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>:''
+                                    }
+
                                 </Select>
                             )}
                         </FormItem>
+                       
 
                         <FormItem
                             label={"Linea de negocio"}
@@ -176,6 +186,114 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                         </FormItem>
 
                     </div>
+                    <div>
+                            <FormItem>
+                                {form.getFieldDecorator('is_sale', {
+                                    valuePropName: 'checked',
+                                    initialValue: false,
+                                    rules: [{
+                                        required: true, message: 'Completa el campo!',
+                                    }],
+                                })(
+                                    <Checkbox
+                                        value={venta}
+                                        disabled={!editMode}
+                                    >
+                                        Venta?
+                                    </Checkbox>
+                                )}
+                            </FormItem>
+
+                            {is_sale?
+                             <div>
+                           <FormItem
+                            label={"Razón Social del Cliente"}
+                        >
+                            {form.getFieldDecorator('client_id',{
+                                initialValue:client?client.client:'',
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Select
+                                    disabled={!editMode}
+                                    placeholder={"Cliente"}
+                                    showSearch
+                                    onChange={clientHandle}
+                                    onSearch={searchClient}
+                                    filterOption={false}
+                                >
+                                    {clientes.length >0? clientes.map((a, key) => <Option key={key} value={a.client} ><div onClick={()=>saveClient(a.id)}><span>{a.client}</span></div></Option>):<Option key={999999} disabled >No </Option>}
+                                </Select>
+                            )}
+                        </FormItem>
+                       
+
+                        <FormItem
+                            label="Fecha de venta"
+                        >
+                            {form.getFieldDecorator('sale_date', {
+                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
+                            })(
+                                <DatePicker style={{width:'100%'}} />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label="Cantidad"
+                        >
+                            {form.getFieldDecorator('cantidad', {
+                                initialValue:0,
+                                rules: [{  required: false, message: 'Complete el campo!' }],
+                            })(
+                             <Input addonAfter={
+                                 
+                                     <FormItem style={{height:5, padding:0}}>
+                                         {form.getFieldDecorator('unidad',{
+                                             initialValue:'ml'
+                                         })(
+                                             <Select  style={{ width: 100 }}>
+                                                 <Option value="ml">ml</Option>
+                                                 <Option value="ml">l</Option>
+                                                 <Option value="ml">Kg</Option>
+                                                 <Option value="ml">g</Option>
+                                                 <Option value="unidad">unidad</Option>
+                                             </Select>
+                                         )}
+                                     </FormItem>
+                             }/>
+                            )}
+                        </FormItem>
+                                                                     
+                        <FormItem
+                            label="Comentarios"
+                        >
+                            {form.getFieldDecorator('comment', {
+                                rules: [{
+                                    required: false, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Input />
+                            )}
+                        </FormItem>
+                    </div>:''
+                    }
+
+                            {/* <FormItem>
+                                {getFieldDecorator('no_seller_check', {initialValue: false})(
+                                   <div>
+
+                                           
+                                       
+                                   </div>
+
+                                )}
+                            </FormItem> */}
+
+                        </div>
+
 
                     <FormItem>
                         {form.getFieldDecorator('paid', {

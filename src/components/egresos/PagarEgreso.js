@@ -166,10 +166,10 @@ class PagarEgreso extends Component {
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Administración
                     <Divider type="vertical" />
-                    Egresos por pagar
+                    Cuentas por pagar
                 </div>
 
-                <h1>Egresos por Pagar</h1>
+                <h1>Cuentas por Pagar</h1>
 
                 <BackTop visibilityHeight={100} />
 

@@ -5,7 +5,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, line_comp, options, phone_compa, rfc_comp, email_comp, phone, rfcR, searchLine, lineHandle, linea }) => {
+const InfoCompany = ({form,editEmpresa,id,editMode,address, handleEditMode, company, line_comp, options, phone_compa, rfc_comp, email_comp, phone, rfcR, searchLine, lineHandle, linea }) => {
 
     let blineselected = [];
     if(line_comp){
@@ -157,6 +157,19 @@ const InfoCompany = ({form,editEmpresa,id,editMode, handleEditMode, company, lin
                             <Input disabled={!editMode}/>
                         )}
                     </FormItem>
+
+                     <FormItem
+                            label="Dirección fiscal"
+                        >
+                            {form.getFieldDecorator('address', {
+                                initialValue: address,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input  disabled={!editMode}/>
+                            )}
+                        </FormItem>
 
 
                 </div>
