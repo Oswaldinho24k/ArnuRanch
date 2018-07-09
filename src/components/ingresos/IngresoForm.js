@@ -243,9 +243,9 @@ const FormIngreso = Form.create()(
                                          })(
                                              <Select  style={{ width: 100 }}>
                                                  <Option value="ml">ml</Option>
-                                                 <Option value="ml">l</Option>
-                                                 <Option value="ml">Kg</Option>
-                                                 <Option value="ml">g</Option>
+                                                 <Option value="l">L</Option>
+                                                 <Option value="kg">Kg</Option>
+                                                 <Option value="g">g</Option>
                                                  <Option value="unidad">unidad</Option>
                                              </Select>
                                          )}

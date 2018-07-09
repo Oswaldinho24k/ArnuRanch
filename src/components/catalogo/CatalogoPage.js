@@ -240,6 +240,7 @@ class CatalogoPage extends Component {
             {
                 title: 'Nombre',
                 dataIndex: 'name',
+                render: (name,obj)=> <Link to={'/admin/catalogo/catalogito'}>{name && name !== null ? name: "No Cliente"}</Link>,
                 key:'name',
             },
             {
@@ -250,11 +251,11 @@ class CatalogoPage extends Component {
 
         ];
         const columnsP =[
-            {title:'Código', dataIndex:'code',key:'code'},
+            {title:'Código', dataIndex:'code',key:'code',render: (code,obj)=> <Link to={'/admin/catalogo/presupuestito'}>{code && code !== null ? code: "Ningun código"}</Link>,},
             {title:'Nombre', dataIndex:'name',key:'name'},
             {title:'Fecha de pago', dataIndex:'date',key:'date'},
             {title:'Concepto', dataIndex:'concept',key:'concept'},
-            {title:'Monto', dataIndex:'monto',key:'monto', render:(costo_final) => <span>{costo_final && costo_final !==null ? "$ "+costo_final:'$ 0'}</span>}
+            {title:'Monto', dataIndex:'monto',key:'monto'}
         ];
 
         return (

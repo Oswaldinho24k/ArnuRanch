@@ -21,8 +21,9 @@ const styles = {
 };
 
 
-const InfoClient = ({form,editCliente,credit,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,
-                        comments_contact}) => {
+const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,
+                        comments_contact, credit}) => {
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -159,18 +160,18 @@ const InfoClient = ({form,editCliente,credit,id,editMode, handleEditMode, client
                     </FormItem>
 
                     <FormItem
-                        label="Plazo de crédito"
-                    >
-                        {form.getFieldDecorator('credit', {
-                            initialValue: credit,
-                            rules: [{
-                                required: true, message: 'Completa el campo!',
-                            }],
+                            label="Plazo de crédito"
+                        >
+                            {form.getFieldDecorator('credit', {
+                                initialValue:credit,
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                }],
+                            })(
+                                <Input placeholder={"Plazo de crédito"} disabled={!editMode}/>
+                            )}
+                        </FormItem>
 
-                        })(
-                            <Input disabled={!editMode}/>
-                        )}
-                    </FormItem>
 
                 </div>
                 <FormItem>
