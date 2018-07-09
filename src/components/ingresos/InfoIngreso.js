@@ -236,7 +236,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                                 initialValue:moment( new Date(), 'YYYY-MM-DD'),
                                 rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
                             })(
-                                <DatePicker style={{width:'100%'}} />
+                                <DatePicker style={{width:'100%'}}  disabled={!editMode}/>
                             )}
                         </FormItem>
 
@@ -244,18 +244,20 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             label="Cantidad"
                         >
                             {form.getFieldDecorator('cantidad', {
-                                initialValue:0,
+                                initialValue:cantidad,
                                 rules: [{  required: false, message: 'Complete el campo!' }],
                             })(
-                             <Input addonAfter={
+                             <Input 
+                                disabled={!editMode}
+                                addonAfter={
                                  
                                      <FormItem style={{height:5, padding:0}}>
                                          {form.getFieldDecorator('unidad',{
-                                             initialValue:'ml'
+                                             initialValue:unidad
                                          })(
-                                             <Select  style={{ width: 100 }}>
+                                             <Select  style={{ width: 100 }}  disabled={!editMode}>
                                                  <Option value="ml">ml</Option>
-                                                 <Option value="ml">l</Option>
+                                                 <Option value="ml">L</Option>
                                                  <Option value="ml">Kg</Option>
                                                  <Option value="ml">g</Option>
                                                  <Option value="unidad">unidad</Option>
@@ -270,12 +272,13 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             label="Comentarios"
                         >
                             {form.getFieldDecorator('comment', {
+                                initialValue:comment,
                                 rules: [{
                                     required: false, message: 'Completa el campo!',
                                 },
                                 ],
                             })(
-                                <Input />
+                                <Input  disabled={!editMode} />
                             )}
                         </FormItem>
                     </div>:''
