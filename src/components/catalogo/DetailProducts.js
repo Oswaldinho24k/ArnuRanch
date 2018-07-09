@@ -10,6 +10,7 @@ import Info from "./Info";
 class DetailProducts extends Component{
     state={
         editMode:false,
+        options:{}
     };
 
     handleEditMode=()=>{
@@ -36,6 +37,8 @@ class DetailProducts extends Component{
                         <Info
                             handleEditMode={this.handleEditMode}
                             editMode={editMode}
+                            options={this.state.options}
+
 
                         />
                     </Card>

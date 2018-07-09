@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react';
-import {Form, Input, Button, Select, message, Checkbox} from 'antd';
+import {Form, Input, Button, Select, message,} from 'antd';
 
 const Option = Select.Option;
-
 const FormItem = Form.Item;
 const styles = {
     form:{
@@ -21,7 +20,7 @@ const styles = {
 };
 
 
-const Info = ({form,editCliente,id,editMode, handleEditMode, name,code}) => {
+const Info = ({form,editCliente,id,editMode, handleEditMode, name,code,saveBline,searchLine,business_line,options,lineHandle}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -77,6 +76,33 @@ const Info = ({form,editCliente,id,editMode, handleEditMode, name,code}) => {
                             <Input disabled={!editMode}/>
                         )}
                     </FormItem>
+
+                    <FormItem
+                        label={"Linea de negocio"}
+                    >
+                        {form.getFieldDecorator('business_line_id',{
+                            initialValue:business_line ? business_line.name:'',
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"Linea de Negocio"}
+                                showSearch
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveBline(a.id)}><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
+
+                            </Select>
+                        )}
+
+                    </FormItem>
+
 
 
                 </div>

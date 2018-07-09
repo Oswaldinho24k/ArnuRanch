@@ -10,6 +10,7 @@ import InfoPresupuesto from "./InfoPresupuesto";
 class DetailPresupuesto extends Component{
     state={
         editMode:false,
+        options:{},
     };
 
     handleEditMode=()=>{
@@ -36,6 +37,7 @@ class DetailPresupuesto extends Component{
                         <InfoPresupuesto
                             handleEditMode={this.handleEditMode}
                             editMode={editMode}
+                            options={this.state.options}
 
                         />
                     </Card>

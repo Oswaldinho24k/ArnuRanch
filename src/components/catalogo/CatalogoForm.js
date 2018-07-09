@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Modal,DatePicker,InputNumber  } from 'antd';
+import { Form, Input, Button, Modal,DatePicker,InputNumber,Select  } from 'antd';
 import moment from 'moment';
 
 
 const FormItem = Form.Item;
-
+const Option = Select.Option;
 const styles = {
     form:{
         display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
@@ -24,7 +24,7 @@ const styles = {
 
 const CatalogoForm = Form.create()(
     (props) => {
-        const{visible, onCancel, onCreate, form,activeTab} = props;
+        const{visible, onCancel, onCreate, form,activeTab,saveLine,options,searchLine} = props;
         const{getFieldDecorator} = form;
 
 
@@ -65,6 +65,29 @@ const CatalogoForm = Form.create()(
 
                             })(
                                 <Input />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label={"Linea de negocio"}
+                            hasFeedback
+                        >
+                            {getFieldDecorator('business_line_id', {
+                                rules: [{
+                                    required: true, message: 'Completa el campo!',
+                                },
+                                ],
+                            })(
+                                <Select
+                                    placeholder={"Linea de Negocio"}
+                                    showSearch
+                                    onSearch={searchLine}
+                                    filterOption={false}
+                                >
+                                    {
+                                        options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveLine(a.id)}><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
+                                    }
+
+                                </Select>
                             )}
                         </FormItem>
                         {activeTab === "budget" ?

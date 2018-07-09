@@ -5,10 +5,7 @@ import {Button, message, Popconfirm, Tabs, Divider, Select, Input, BackTop,Table
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
-import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
-import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import FormCatalogo from "./CatalogoForm";
 import './catalogos.css'
 
@@ -77,7 +74,7 @@ class CatalogoPage extends Component {
         datos:[
             {id:1, name:"Perros", code:"4DHS2"},
             {id:2, name:"Gatos", code:"5VX32"},
-            {id:3, name:"Patos", code:"5VX32"},
+            {id:3, name:"Patos", code:"5VX32",},
         ],
         datos2:[
             {id:1, name:"Perros", code:"4DHS2"},
@@ -149,7 +146,7 @@ class CatalogoPage extends Component {
 
         e.preventDefault();
         form.validateFields((err, values) => {
-            var ob={name:values.name,code:values.code}
+            var ob={name:values.name,code:values.code,business_line_id:values.business_line_id}
 
 
            if (!err) {
@@ -182,7 +179,8 @@ class CatalogoPage extends Component {
                }
                if(activeTab==="budget"){
                    console.log("Presupuesto", values)
-                   var ob={name:values.name,code:values.code,date:values.date,concept:values.concept,monto:values.monto}
+                   var ob={name:values.name,code:values.code,date:values.date,concept:values.concept,monto:values.monto,business_line_id:values.business_line_id}
+                   console.log("el objeto", ob)
                    datos7.push(ob)
                    this.setState({visible:false})
                }
@@ -227,7 +225,9 @@ class CatalogoPage extends Component {
         this.setState({activeTab:e})
     }
 
-
+    saveLine=(id)=>{
+        this.setState({idLine:id})
+    };
 
 
 
@@ -247,7 +247,8 @@ class CatalogoPage extends Component {
                 title: 'Código',
                 dataIndex: 'code',
                 key:'code'
-            }
+            },
+            {title:'Linea de Negocio', dataIndex:'business_line_id',key:'business_line_id'}
 
         ];
         const columnsP =[
@@ -255,8 +256,13 @@ class CatalogoPage extends Component {
             {title:'Nombre', dataIndex:'name',key:'name'},
             {title:'Fecha de pago', dataIndex:'date',key:'date'},
             {title:'Concepto', dataIndex:'concept',key:'concept'},
-            {title:'Monto', dataIndex:'monto',key:'monto'}
+            {title:'Monto', dataIndex:'monto',key:'monto'},
+            {title:'Liena de Negocio', dataIndex:'business_line_id',key:'business_line_id'}
         ];
+
+        let { fetched, blines} = this.props;
+
+        if(!fetched)return(<MainLoader/>);
 
         return (
             <Fragment>
@@ -331,8 +337,10 @@ class CatalogoPage extends Component {
                     activeTab={activeTab}
                     ref={this.saveFormRef}
                     visible={visible}
+                    options={blines}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
+                    saveLine={this.saveLine}
                 />
 
 
@@ -351,26 +359,21 @@ class CatalogoPage extends Component {
     }
 }
 
-/*
+
 function mapStateToProps(state, ownProps) {
     return {
-        ingresos:state.ingresos.list,
-        ingresosData:state.ingresos.allData,
+
         blines:state.blines.lineSearch,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined && state.cuentas.cuentaSearch !== undefined,
-        clientes:state.clientes.clienteSearch,
-        cuentas:state.cuentas.cuentaSearch
+        fetched: state.blines.lineSearch !== undefined,
+
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        ingresosActions: bindActionCreators(ingresosActions, dispatch),
         linesActions: bindActionCreators(linesActions, dispatch),
-        cuentasActions: bindActionCreators(cuentasActions, dispatch),
-        clientesActions: bindActionCreators(clientesActions, dispatch),
     }
 }
 
-CatalogoPage = connect(mapStateToProps, mapDispatchToProps)(CatalogoPage);*/
+CatalogoPage = connect(mapStateToProps, mapDispatchToProps)(CatalogoPage);
 export default CatalogoPage;

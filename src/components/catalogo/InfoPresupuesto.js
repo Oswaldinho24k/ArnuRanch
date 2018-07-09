@@ -21,7 +21,7 @@ const styles = {
 };
 
 
-const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,code}) => {
+const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,code,business_line,lineHandle,searchLine,options,saveBline}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -77,6 +77,32 @@ const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,cod
                         })(
                             <Input disabled={!editMode}/>
                         )}
+                    </FormItem>
+
+                    <FormItem
+                        label={"Linea de negocio"}
+                    >
+                        {form.getFieldDecorator('business_line_id',{
+                            initialValue:business_line ? business_line.name:'',
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+                        })(
+                            <Select
+                                disabled={!editMode}
+                                placeholder={"Linea de Negocio"}
+                                showSearch
+                                onChange={lineHandle}
+                                onSearch={searchLine}
+                                filterOption={false}
+                            >
+                                {
+                                    options.length >0? options.map((a, key) => <Option key={key} value={a.name} ><div onClick={()=>saveBline(a.id)}><span>{a.name}</span></div></Option>):<Option key={999999} disabled >No Lineas</Option>
+                                }
+
+                            </Select>
+                        )}
+
                     </FormItem>
                     <FormItem
                         label="Concepto"
