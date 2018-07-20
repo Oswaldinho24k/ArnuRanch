@@ -4,12 +4,12 @@ export const GET_UNIDADMEDIDA_SUCCESS = 'GET_UNIDADMEDIDA_SUCCESS';
 
 export function getUnidadMSuccess(unindadM){
     return{
-        type:GET_UNIDADMEDIDA_SUCCESS, productos
+        type:GET_UNIDADMEDIDA_SUCCESS, unindadM
     }
 }
 
-export const getUnidadM=()=>(dispatch, getState)=>{
-    return api.getUnidadM()
+export const getCatUnidades=()=>(dispatch, getState)=>{
+    return api.getCatUnidades()
         .then(r=>{
             dispatch(getUnidadMSuccess(r))
         }).catch(e=>{
@@ -28,10 +28,11 @@ export function saveUnidadMSuccess(unidadM){
     }
 }
 
-export const saveUnidadM=(unidadM)=>(dispatch, getState)=>{
-    return api.newUnidadM(unidadM)
+export const newCatUnidad=(unidadM)=>(dispatch, getState)=>{
+    console.log( "antes dela promesaunidadM",unidadM)
+   return api.newCatUnidad(unidadM)
         .then(r=>{
-
+            console.log("unidades",r)
             dispatch(saveUnidadMSuccess(r));
         }).catch(e=>{
 
@@ -48,8 +49,8 @@ export function editUnidadMSuccess(unidadM) {
     }
 }
 
-export const editUnidadM=(unidadM)=>(dispatch, getState)=>{
-    return api.editUnidadM(unidadM)
+export const editCatUnidad=(unidadM)=>(dispatch, getState)=>{
+    return api.editCatUnidad(unidadM)
         .then(r=>{
             dispatch(editUnidadMSuccess(r))
 
@@ -70,8 +71,8 @@ export function deleteUnidadMSuccess(unidadM){
     }
 }
 
-export const deleteUnidadM=(unidadM)=>(dispatch, getState)=> {
-    return api.deleteProductos(unidadM.id)
+export const deleteCatUnidad=(unidadM)=>(dispatch, getState)=> {
+    return api.deleteCatUnidad(unidadM.id)
         .then(r => {
             dispatch(deleteUnidadMSuccess(unidadM))
         }).catch(e => {

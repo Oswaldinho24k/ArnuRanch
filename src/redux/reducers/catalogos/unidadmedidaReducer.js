@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { GET_UNIDADMEDIDA_SUCCESS, SAVE_UNIDADMEDIDA_SUCCESS, DELETE_UNIDADMEDIDA_SUCCESS, EDIT_UNIDADMEDIDA_SUCCESS} from "../actions/catalogos/unidadmedidaActions";
+import { GET_UNIDADMEDIDA_SUCCESS, SAVE_UNIDADMEDIDA_SUCCESS, DELETE_UNIDADMEDIDA_SUCCESS, EDIT_UNIDADMEDIDA_SUCCESS} from "../../actions/catalogos/unidadmedidaActions";
 
 function list(state=[], action){
     switch(action.type){

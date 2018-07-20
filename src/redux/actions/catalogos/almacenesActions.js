@@ -1,17 +1,17 @@
 import api from "../../../Api/Django";
 
-export const GET_ALMACENES_SUCCESS = 'GET_ALMACENES_SUCCESS';
+export const GET_CATALMACEN_SUCCESS = 'GET_CATALMACEN_SUCCESS';
 
-export function getAlmacenesSuccess(almacenes){
+export function getCatAlmacenesSuccess(catAlmacenes){
     return{
-        type:GET_ALMACENES_SUCCESS, almacenes
+        type:GET_CATALMACEN_SUCCESS, catAlmacenes
     }
 }
 
-export const getAlmacenes=()=>(dispatch, getState)=>{
-    return api.getAlmacenes()
+export const getCatAlmacenes=()=>(dispatch, getState)=>{
+    return api.getCatAlmacenes()
         .then(r=>{
-            dispatch(getAlmacenesSuccess(r))
+            dispatch(getCatAlmacenesSuccess(r))
         }).catch(e=>{
 
         })
@@ -19,17 +19,18 @@ export const getAlmacenes=()=>(dispatch, getState)=>{
 
 
 
+
 //save
 export const SAVE_ALMACENES_SUCCESS = 'SAVE_ALMACENES_SUCCESS';
 
-export function saveAlmacenesSuccess(almacenes){
+export function saveAlmacenesSuccess(catAlmacen){
     return{
-        type:SAVE_ALMACENES_SUCCESS, almacenes
+        type:SAVE_ALMACENES_SUCCESS, catAlmacen
     }
 }
 
-export const saveAlmacenes=(almacenes)=>(dispatch, getState)=>{
-    return api.newAlmacenes(almacenes)
+export const newCatAlmacen=(catAlmacen)=>(dispatch, getState)=>{
+    return api.newCatAlmacen(catAlmacen)
         .then(r=>{
             dispatch(saveAlmacenesSuccess(r));
         }).catch(e=>{
@@ -40,14 +41,14 @@ export const saveAlmacenes=(almacenes)=>(dispatch, getState)=>{
 //EDIT
 
 export const EDIT_ALMACENES_SUCCESS = 'EDIT_ALMACENES_SUCCESS';
-export function editAlmacenesSuccess(almacenes) {
+export function editAlmacenesSuccess(catAlmacen) {
     return{
-        type: EDIT_ALMACENES_SUCCESS, almacenes
+        type: EDIT_ALMACENES_SUCCESS, catAlmacen
     }
 }
 
-export const editAlmacenes=(almacenes=>(dispatch, getState)=>{
-    return api.editAlmacenes(almacenes)
+export const editCatAlmacen=(catAlmacen)=>(dispatch, getState)=>{
+    return api.editCatAlmacen(catAlmacen)
         .then(r=>{
             dispatch(editAlmacenesSuccess(r))
 
@@ -62,16 +63,16 @@ export const editAlmacenes=(almacenes=>(dispatch, getState)=>{
 
 export const DELETE_ALMACENES_SUCCESS = 'DELETE_ALMACENES_SUCCESS';
 
-export function deleteAlmacenesSuccess(almacenes){
+export function deleteAlmacenesSuccess(catAlmacen){
     return {
-        type:DELETE_ALMACENES_SUCCESS, almacenes
+        type:DELETE_ALMACENES_SUCCESS, catAlmacen
     }
 }
 
-export const deleteAlmacen=(almacenes)=>(dispatch, getState)=> {
-    return api.deleteProductos(almacenes.id)
+export const deleteCatAlmacen=(catAlmacenesId)=>(dispatch, getState)=> {
+    return api.deleteCatAlmacen(catAlmacenesId)
         .then(r => {
-            dispatch(deleteAlmacenesSuccess(almacenes))
+            dispatch(deleteAlmacenesSuccess(catAlmacenesId))
         }).catch(e => {
             throw e;
         })

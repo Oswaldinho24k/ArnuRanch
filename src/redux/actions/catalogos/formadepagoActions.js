@@ -8,8 +8,8 @@ export function getFormaPSuccess(formaP){
     }
 }
 
-export const getFormaP=()=>(dispatch, getState)=>{
-    return api.getFormaP()
+export const getCatPagos=()=>(dispatch, getState)=>{
+    return api.getCatPagos()
         .then(r=>{
             dispatch(getFormaPSuccess(r))
         }).catch(e=>{
@@ -28,8 +28,8 @@ export function saveFormaPSuccess(formaP){
     }
 }
 
-export const saveFormaP=(formaP)=>(dispatch, getState)=>{
-    return api.newFormaP(formaP)
+export const newCatPago=(formaP)=>(dispatch, getState)=>{
+    return api.newCatPago(formaP)
         .then(r=>{
             dispatch(saveFormaPSuccess(r));
         }).catch(e=>{
@@ -46,8 +46,8 @@ export function editFormaPSuccess(formaP) {
     }
 }
 
-export const editFormaP=(formaP=>(dispatch, getState)=>{
-    return api.editFormaP(formaP)
+export const editCatPago=(formaP)=>(dispatch, getState)=>{
+    return api.editCatPago(formaP)
         .then(r=>{
             dispatch(editFormaPSuccess(r))
 
@@ -68,10 +68,10 @@ export function deleteFormaPSuccess(formaP){
     }
 }
 
-export const deleteFormaP=(formaP)=>(dispatch, getState)=> {
-    return api.deleteFormaP(formaP.id)
+export const deleteCatPago=(formaPId)=>(dispatch, getState)=> {
+    return api.deleteCatPago(formaPId)
         .then(r => {
-            dispatch(deleteFormaPSuccess(formaP))
+            dispatch(deleteFormaPSuccess(formaPId))
         }).catch(e => {
             throw e;
         })

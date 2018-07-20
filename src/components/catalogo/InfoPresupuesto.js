@@ -21,7 +21,7 @@ const styles = {
 };
 
 
-const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,code,business_line,lineHandle,searchLine,options,saveBline}) => {
+const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,code,business_line,lineHandle,searchLine,options,saveBline,pay_date,concepto,monto}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -107,7 +107,8 @@ const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,cod
                     <FormItem
                         label="Concepto"
                     >
-                        {getFieldDecorator('concept', {
+                        {getFieldDecorator('concepto', {
+                            initialValue:concepto,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
@@ -122,7 +123,7 @@ const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,cod
 
                     >
                         {getFieldDecorator('monto', {
-                            initialValue:0,
+                            initialValue:monto ? monto: 0,
                             rules: [{
                                 required:true
                             }],
@@ -141,7 +142,7 @@ const InfoPresupuesto = ({form,editCliente,id,editMode, handleEditMode, name,cod
                     <FormItem
                         label="Fecha"
                     >
-                        {getFieldDecorator('date', {
+                        {getFieldDecorator('pay_date', {
                             initialValue:moment( new Date(), 'YYYY-MM-DD'),
                             rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
                         })(

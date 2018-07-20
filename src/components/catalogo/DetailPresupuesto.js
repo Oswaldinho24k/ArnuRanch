@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Card, Divider} from 'antd';
 import {Link} from 'react-router-dom';
-/*import * as clienteActions from '../../redux/actions/administracion/clientesActions';
+import * as presupuestosActions from '../../redux/actions/catalogos/presupuestosActions';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';*/
+import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
 import InfoPresupuesto from "./InfoPresupuesto";
 
@@ -20,9 +20,9 @@ class DetailPresupuesto extends Component{
 
 
     render(){
-        // let {cliente, fetched} = this.props;
+        let {catPresupuesto, fetched} = this.props;
         let {editMode} = this.state;
-        //if(!fetched)return(<MainLoader/>);
+        if(!fetched)return(<MainLoader/>);
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -38,6 +38,7 @@ class DetailPresupuesto extends Component{
                             handleEditMode={this.handleEditMode}
                             editMode={editMode}
                             options={this.state.options}
+                            {...catPresupuesto}
 
                         />
                     </Card>
@@ -47,23 +48,23 @@ class DetailPresupuesto extends Component{
     }
 }
 
-/*function mapStateToProps(state, ownProps) {
-    let id = ownProps.match.params.i;
-    let cliente = state.clientes.list.filter(a=>{
+function mapStateToProps(state, ownProps) {
+    let id = ownProps.match.params.pre;
+    let catPresupuesto = state.catPresupuesto.list.filter(a=>{
         return id == a.id;
     });
-    cliente = cliente[0];
+    catPresupuesto = catPresupuesto[0];
     return {
-        cliente,
-        fetched: cliente!==undefined && state.clientes.list!==undefined,
+        catPresupuesto,
+        fetched: catPresupuesto!==undefined && state.catPresupuesto.list!==undefined,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return{
-        clienteActions: bindActionCreators(clienteActions, dispatch)
+        presupuestosActions: bindActionCreators(presupuestosActions, dispatch)
     }
 }
 
-DetailClientPage = connect(mapStateToProps, mapDispatchToProps)(DetailClientPage);*/
+DetailPresupuesto = connect(mapStateToProps, mapDispatchToProps)(DetailPresupuesto);
 export default DetailPresupuesto
