@@ -46,7 +46,6 @@ const CatalogoForm = Form.create()(
                             label="Nombre"
                         >
                             {getFieldDecorator('name', {
-                                initialValue:'name',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],

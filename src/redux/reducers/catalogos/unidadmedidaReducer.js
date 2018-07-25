@@ -4,7 +4,7 @@ import { GET_UNIDADMEDIDA_SUCCESS, SAVE_UNIDADMEDIDA_SUCCESS, DELETE_UNIDADMEDID
 function list(state=[], action){
     switch(action.type){
         case GET_UNIDADMEDIDA_SUCCESS:
-            return action.unindadM;
+            return action.unidadMe;
         case SAVE_UNIDADMEDIDA_SUCCESS:
             return [...state, action.unindadM];
         case EDIT_UNIDADMEDIDA_SUCCESS:

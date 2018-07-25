@@ -152,7 +152,7 @@ class CatalogoPage extends Component {
                }
                if(activeTab==="unitMeasure"){
                    console.log("mira unidad:",values)
-                   this.props.unidadmedidaActions.newCatUnidad(values)
+                   //this.props.unidadmedidaActions.newCatUnidad(values)
                    this.setState({visible:false})
 
                }
@@ -363,12 +363,13 @@ class CatalogoPage extends Component {
                                 dataSource={catProducts}
                             />
                         </TabPane>
-                        <TabPane tab="Unidad de medida" key="unitMeasure">
+                        <TabPane  tab="Unidad de medida" key="unitMeasure">
                             <Table
-                                columns={columns}
                                 dataSource={catUnidad}
-                            />
+                                columns={columns}
+                                   />
                         </TabPane>
+
                         <TabPane tab="Usos CFDI" key="useCFDI">
                             <Table
                                 columns={columns}

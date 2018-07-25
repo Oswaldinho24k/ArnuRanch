@@ -1,17 +1,19 @@
 import api from "../../../Api/Django";
+import {saveFormaPSuccess} from "./formadepagoActions";
 
 export const GET_UNIDADMEDIDA_SUCCESS = 'GET_UNIDADMEDIDA_SUCCESS';
 
-export function getUnidadMSuccess(unindadM){
+export function getUnidadMedidaSuccess(unidadMe){
     return{
-        type:GET_UNIDADMEDIDA_SUCCESS, unindadM
+        type:GET_UNIDADMEDIDA_SUCCESS, unidadMe
     }
 }
 
 export const getCatUnidades=()=>(dispatch, getState)=>{
     return api.getCatUnidades()
         .then(r=>{
-            dispatch(getUnidadMSuccess(r))
+            console.log("Respuesta: ",r)
+            dispatch(getUnidadMedidaSuccess(r))
         }).catch(e=>{
 
         })
@@ -29,16 +31,17 @@ export function saveUnidadMSuccess(unidadM){
 }
 
 export const newCatUnidad=(unidadM)=>(dispatch, getState)=>{
-    console.log( "antes dela promesaunidadM",unidadM)
-   return api.newCatUnidad(unidadM)
+    return api.newCatUnidad(unidadM)
         .then(r=>{
-            console.log("unidades",r)
+
             dispatch(saveUnidadMSuccess(r));
         }).catch(e=>{
 
             throw e
         })
-};
+}
+
+
 
 //EDIT
 
@@ -71,11 +74,12 @@ export function deleteUnidadMSuccess(unidadM){
     }
 }
 
-export const deleteCatUnidad=(unidadM)=>(dispatch, getState)=> {
+export const deleteCatUnidad=(unidadM)=>(dispatch, getState)=>{
     return api.deleteCatUnidad(unidadM.id)
-        .then(r => {
+        .then(r=>{
             dispatch(deleteUnidadMSuccess(unidadM))
-        }).catch(e => {
+        }).catch(e=>{
             throw e;
         })
 };
+
