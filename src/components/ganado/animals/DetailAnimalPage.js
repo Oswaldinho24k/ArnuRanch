@@ -124,7 +124,7 @@ class DetailAnimalPage extends Component {
     //Facturas
 
     searchFactura=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/?q=';
+        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
         let url = basePath+a;
         this.props.facturasActions.getFaSearch(url);
     };
@@ -132,7 +132,6 @@ class DetailAnimalPage extends Component {
     saveFactura=(id)=>{
         this.setState({idFactura:id})
     };
-
 
 
     render() {

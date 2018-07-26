@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = true;
+let debug = false;
 
 //Localhost urls
 
@@ -162,7 +162,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    
+                    console.log(error.response.data)
                     reject(error);
                 });
         })
@@ -2467,7 +2467,7 @@ const api = {
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
-                baseURL: dashGanadoUrl,
+                baseURL: resumenUrl,
                 // timeout: 2000,
                 headers: {
                     'Content-Type': 'application/json',

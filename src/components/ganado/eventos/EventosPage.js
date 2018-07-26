@@ -229,14 +229,14 @@ class EventosPage extends Component {
         for(let j in mIds){
             animal['id']=mIds[j].id;
             let toSend = Object.assign({}, animal);
-
+            
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
                     message.success('Modificado con éxito');
                 }).catch(e => {
-               for (let i in e.response.data){
-                   message.error(e.response.data[i])
-               }
+                    console.log(e)
+                   //message.error(e.response.data[i])
+               
             })
             
         }

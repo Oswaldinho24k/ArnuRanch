@@ -117,8 +117,8 @@ class GastosGanado extends Component {
     //search
 
     onSearch = () => {
-        let basePath= "http://localhost:8000/api/egresos/gastos/?q=";
-        //let basePath = 'https://rancho.fixter.org/api/egresos/gastos/?q=';
+        //let basePath= "http://localhost:8000/api/egresos/gastos/?q=";
+        let basePath = 'https://rancho.davidzavala.me/api/egresos/gastos/?q=';
 
         let url = basePath+this.state.searchText;
         this.props.gastosGanadoActions.getGastos(url);
@@ -130,8 +130,8 @@ class GastosGanado extends Component {
     };
     //resetFilter
     resetFilter = () => {
-        let basePath= "http://localhost:8000/api/egresos/gastos/";
-        //let basePath = 'https://rancho.fixter.org/api/egresos/gastos/';
+        //let basePath= "http://localhost:8000/api/egresos/gastos/";
+        let basePath = 'https://rancho.davidzavala.me/api/egresos/gastos/?q=';
         this.props.gastosGanadoActions.getGastos(basePath);
         this.setState({
             searchText:'',

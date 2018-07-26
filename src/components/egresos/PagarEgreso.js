@@ -97,8 +97,8 @@ class PagarEgreso extends Component {
     };
 
     componentWillMount(){
-        let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
-        //let basePath = 'https://rancho.fixter.org/api/egresos/egresos/?paid=';
+        //let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
+        let basePath = 'https://rancho.davidzavala.me/api/egresos/egresos/?paid=';
         let url = basePath+`${"False"}`;
         this.props.egresosActions.getEgresos(url);
 

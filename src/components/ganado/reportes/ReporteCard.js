@@ -33,6 +33,7 @@ export const ReporteCard = ({id, arete_rancho, arete_siniga, peso_entrada, lote,
     let differenceLastPesada = moment.duration(lastPesadaDate.diff(given)).asDays().toFixed(0);
     //ganancia diaria promedio y otros indicadores
     let gdp = ((lastPesada-peso_entrada)/differenceLastPesada).toFixed(2)
+    console.log(gdp)
     let conversion = ((lastPesada-peso_entrada)/alimentsQuantityTotal).toFixed(2)
     let rendimiento = (alimentsQuantityTotal/(lastPesada-peso_entrada)).toFixed(2)
     //dias de la ultima pesada al dia de hoy

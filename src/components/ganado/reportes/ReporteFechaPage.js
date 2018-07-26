@@ -34,13 +34,13 @@ class ReporteFechaPage extends Component {
     };
 
     handleSearch=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
     handleChange=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         this.setState({areteRancho:a});
     };
 
@@ -71,13 +71,14 @@ class ReporteFechaPage extends Component {
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 
     };
     handleChangeLote=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         this.setState({lote:a});
     };
     handleMultiple=(a)=>{
@@ -213,13 +214,22 @@ class ReporteFechaPage extends Component {
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
         this.setState({event:a});
     };
+    print=()=>{
+        window.print()
+    }
 
 
     render() {
         let {fetched, animals, lotes} = this.props;
         let {modo, loading, event, multiple, areteId, mIds, loteId, rango} = this.state;
+        
         if(!fetched)return(<MainLoader/>);
-
+        if(animals[0]){
+            console.log(animals[0].fecha_entrada)
+            console.log(rango[0])
+            console.log(animals[0].fecha_entrada>rango[0])
+        }
+        
         return (
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -231,10 +241,13 @@ class ReporteFechaPage extends Component {
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                     <div style={{width:'40%'}}>
                     <h2>Histórico de Indicadores</h2>
+
+                    <FormItem label="Rango de Tiempo">
+                        <RangePicker onChange={this.onChangeDate} style={{width:'100%'}}/>
+                    </FormItem>
                    
                     <FormItem label={'Modo'}>
-                        <Select
-                            
+                        <Select                            
                            value={modo}
                             onChange={this.handleChangeMode}
                             style={{width:'100%'}}
@@ -276,7 +289,7 @@ class ReporteFechaPage extends Component {
                                 placeholder="ingresa el arete de rancho, o siniga para buscarlo"
                                 filterOption={false}
                                 >
-                                {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
+                                {animals.filter(a=>a.fecha_entrada>rango[0]&&a.fecha_entrada<rango[1]).map((a, key)=><Option value={a.arete_siniga} key={key}>
                                     <div onClick={()=>this.saveId(a)}>
                                         <span style={{color:'gray', fontSize:'.8em'}}>Rancho: {a.arete_rancho}</span><br/>
                                         <span >Siniga: {a.arete_siniga}</span>
@@ -295,7 +308,7 @@ class ReporteFechaPage extends Component {
                                 onChange={this.handleMultiple}
                                 style={{ width: '100%' }}
                                 >
-                                {animals.map((a, key)=><Option value={a.arete_siniga} key={key}>
+                                {animals.filter(a=>a.fecha_entrada>rango[0]&&a.fecha_entrada<rango[1]).map((a, key)=><Option value={a.arete_siniga} key={key}>
                                     <div onClick={()=>this.saveIds(a)}>
                                        
                                         <span>S: {a.arete_siniga}</span><br/>
@@ -305,9 +318,7 @@ class ReporteFechaPage extends Component {
                                 </Select>
                         </FormItem>:'Elige un Modo* '}
 
-                        <FormItem label="Rango de Tiempo">
-                            <RangePicker onChange={this.onChangeDate} style={{width:'100%'}}/>
-                        </FormItem>
+                        
                         
                         
                         {/*Forms de los reportes*/}
@@ -316,7 +327,7 @@ class ReporteFechaPage extends Component {
                                 date={rango}
                                 aretes={modo==='individual'?[areteId]:
                                 modo==='multiple'?mIds:
-                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.status==true):[]:[]}/>
+                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.fecha_entrada>rango[0]&&a.fecha_entrada<rango[1]).filter(a=>a.status==true):[]:[]}/>
                        </div>
                         <Button type="primary" onClick={this.print}>Print</Button>
                      </div>
@@ -329,7 +340,7 @@ class ReporteFechaPage extends Component {
                             itemLayout="horizontal"
                             dataSource={modo==='individual'?[areteId]:
                                 modo==='multiple'?mIds:
-                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.status==true):'':''}
+                                modo==='lote'?loteId.animals?loteId.animals.filter(a=>a.fecha_entrada>rango[0]&&a.fecha_entrada<rango[1]).filter(a=>a.status==true):'':''}
                             renderItem={item => (
                             <List.Item>
                                 <ReporteCard {...item}/>                                

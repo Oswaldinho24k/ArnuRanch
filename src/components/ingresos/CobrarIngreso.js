@@ -100,8 +100,8 @@ class CobrarIngreso extends Component {
     };
 
     componentWillMount(){
-        let basePath= "http://localhost:8000/api/ingresos/ingresos/?cobrado=";
-        //let basePath = 'https://rancho.fixter.org/api/ingresos/ingresos/?cobrado=';
+        //let basePath= "http://localhost:8000/api/ingresos/ingresos/?cobrado=";
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?cobrado=';
         let url = basePath+`${"False"}`;
         this.props.ingresosActions.getIngresos(url);
     }

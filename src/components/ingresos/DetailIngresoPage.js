@@ -53,7 +53,8 @@ class DetailIngresoPage extends Component{
     };
     handleSearchLine=(a)=>{
         console.log(a)
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/blines/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
         console.log(url)
         this.props.linesActions.getLiSearch(url);
@@ -70,7 +71,8 @@ class DetailIngresoPage extends Component{
 
     handleCuenta=(a)=>{
         console.log(a)
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/cuentas/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
         let url = basePath+a;
         console.log(url)
         this.props.cuentasActions.getCuSearch(url);
@@ -86,7 +88,8 @@ class DetailIngresoPage extends Component{
 
     handleClient=(a)=>{
         console.log(a)
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/clientes/?q=';
         let url = basePath+a;
         console.log(url)
         this.props.clientesActions.getClSearch(url);

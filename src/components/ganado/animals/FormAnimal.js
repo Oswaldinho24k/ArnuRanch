@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as facturasActions from '../../../redux/actions/facturas/facturasActions';
 import MainLoader from "../../common/Main Loader";
 
-const MonthPicker = DatePicker.MonthPicker;
+//const MonthPicker = DatePicker.MonthPicker;
 const FormItem = Form.Item;
 const {TextArea} = Input;
 const Option = Select.Option;
@@ -78,12 +78,12 @@ class FormAnimal extends Component {
 
     handleChange=(value, obj)=> {
         this.setState({linea:value});
-        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/';
+        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/';
         this.props.facturasActions.getFaSearch(basePath);
     };
 
     handleSearchLine=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ganado/facturas/?q=';
+        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
         let url = basePath+a;
         this.props.facturasActions.getFaSearch(url);
     };
@@ -98,9 +98,9 @@ class FormAnimal extends Component {
         let {wEmpresa} = this.state;
         if(!fetched)return(<MainLoader/>);
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
-        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id)} key={a.id}>{a.name}</Option>);
-        let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.name}</Option>);
-        let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id)} key={key}>{a.company}</Option>);
+        let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id, 10)} key={a.id}>{a.name}</Option>);
+        let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.name}</Option>);
+        let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.company}</Option>);
 
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>

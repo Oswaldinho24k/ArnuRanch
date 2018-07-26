@@ -9,11 +9,14 @@
         display: none;
     }
     .toprint{
-        display: block;
-        width: 100%;
-        height: 100vh;
+        display: block;        
+        min-width: 600px;
+        padding: 0;
+        margin:0;
+        
     }
    #print{
     display: block;
+    width: 100%;
    }
 }

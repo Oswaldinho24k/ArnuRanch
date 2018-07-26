@@ -104,8 +104,8 @@ class PagarEgreso extends Component {
             data:filtrados
         });
 
-        let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
-        //let basePath = 'https://rancho.fixter.org/api/egresos/egresos/?q=';
+        //let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?cobrado=';
 
         let url = basePath+`${"False"}`;
         console.log("URL", url)

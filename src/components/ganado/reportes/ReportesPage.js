@@ -32,8 +32,8 @@ class ReportesPage extends Component {
     };
 
     handleSearch=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
+        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
@@ -69,7 +69,7 @@ class ReportesPage extends Component {
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 

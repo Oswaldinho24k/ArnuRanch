@@ -8,12 +8,12 @@ import {saveFormula, editFormula} from '../../redux/actions/plantaAlimentos/form
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const style = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap'
-};
+// const style = {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     justifyContent: 'space-around',
+//     flexWrap: 'wrap'
+// };
 
 let uuid = 0;
 

@@ -7,7 +7,7 @@ const Option = Select.Option;
 
 const FormEgreso = Form.create()(
     (props) => {
-        const {options_empresas,saveCompany,searchEmpresas,visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, lineHandle, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
+        const {options_empresas,saveCompany,searchEmpresas,visible, onCancel, onCreate, form, options_proveedores, options, handleChange, factura, type, searchLine, searchProvider, compras, compraSearch, compraChange, compra, saveProvider, saveLine, saveCompra} = props;
         const {getFieldDecorator} = form;
 
         return (

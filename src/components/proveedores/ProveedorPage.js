@@ -147,8 +147,8 @@ class ProovedorPage extends Component {
     };
 
     onSearch = () => {
-        let basePath = 'http://localhost:8000/api/egresos/proveedores/?q=';
-
+        //let basePath = 'http://localhost:8000/api/egresos/proveedores/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/egresos/proveedores/?q=';
         let url = basePath+this.state.searchText;
         this.props.proveedoresActions.getProveedores(url);
         this.setState({canReset:true})
@@ -157,7 +157,8 @@ class ProovedorPage extends Component {
 
 
     resetFilter = () => {
-        let basePath = 'http://localhost:8000/api/egresos/proveedores/';
+        //let basePath = 'http://localhost:8000/api/egresos/proveedores/';
+        let basePath = 'https://rancho.davidzavala.me/api/egresos/proveedores/?q=';
         this.props.proveedoresActions.getProveedores(basePath)
         this.setState({
             searchText: '',
@@ -181,9 +182,9 @@ class ProovedorPage extends Component {
         }
 
         if( pagina ==1 && this.props.proveedoresData.count <= 20){
-            newUrl='http'+newUrl.slice(4,newUrl.length);
+            newUrl='https'+newUrl.slice(4,newUrl.length);
         }else{
-            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
         this.props.proveedoresActions.getProveedores(newUrl);
     };

@@ -49,7 +49,7 @@ class AnimalsPage extends Component {
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        
         this.setState({ selectedRowKeys });
     };
     saveAnimal=(animal)=>{
@@ -68,14 +68,14 @@ class AnimalsPage extends Component {
         for(let i in keys){
           this.props.animalActions.deleteAnimal(keys[i])
               .then(r=>{
-                  console.log(r)
+                  
                   message.success('Deleted successfully');
 
               }).catch(e=>{
 
                 message.error('No puedes eliminar aretes con gastos o pesadas registradas')
               /*for (let i in this.props.errors){
-                  console.log(this.props.errors[i])
+                  
                   message.error(this.props.errors[i])
               }*/
 
@@ -107,7 +107,7 @@ class AnimalsPage extends Component {
     };
 
     cancel=(e) =>{
-        console.log(e);
+        
     };
 
     handleChange=(loteFilter)=>{
@@ -131,7 +131,7 @@ class AnimalsPage extends Component {
         let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
-        console.log(url)
+        
         this.setState({canReset:true})
     };
 
@@ -140,7 +140,7 @@ class AnimalsPage extends Component {
         
         let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?s=';
         let url = basePath + v
-        console.log(url)
+        
         this.props.animalActions.getAnimals(url);
     }
     resetFilters=()=>{
@@ -169,7 +169,7 @@ class AnimalsPage extends Component {
 
 
         let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset} = this.state;
-        console.log(this.props.animalsData)
+        
 
         const columns = [
             {

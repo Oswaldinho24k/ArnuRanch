@@ -89,7 +89,7 @@ class AdminPage extends Component {
 
 
 function mapStateToProps(state, ownProps) {
-    console.log(state)
+
     return {
         user: state.user.object,
         fetched:state.user.object!==undefined,

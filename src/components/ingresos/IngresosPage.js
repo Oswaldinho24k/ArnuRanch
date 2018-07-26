@@ -173,8 +173,8 @@ class IngresosPage extends Component {
 
 
     onSearch = () => {
-        let basePath= "http://localhost:8000/api/ingresos/ingresos/?q=";
-        //let basePath = 'https://rancho.fixter.org/api/ingresos/ingresos/?q=';
+       // let basePath= "http://localhost:8000/api/ingresos/ingresos/?q=";
+       let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?q=';
 
         let url = basePath+this.state.searchText;
         this.props.ingresosActions.getIngresos(url);
@@ -183,8 +183,8 @@ class IngresosPage extends Component {
     };
 
     resetFilter = () => {
-        let basePath= "http://localhost:8000/api/ingresos/ingresos/";
-        //let basePath = 'https://rancho.fixter.org/api/ingresos/ingresos/';
+        //let basePath= "http://localhost:8000/api/ingresos/ingresos/";
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/';
 
         this.props.ingresosActions.getIngresos(basePath);
         this.setState({
@@ -214,7 +214,8 @@ class IngresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+       // let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/blines/?q=';
         let url = basePath+a;
         this.props.linesActions.getLiSearch(url);
     };
@@ -222,7 +223,8 @@ class IngresosPage extends Component {
     //Cuentas
 
     handleCuenta=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/cuentas/?q=';
         let url = basePath+a;
         this.props.cuentasActions.getCuSearch(url);
     };
@@ -230,7 +232,8 @@ class IngresosPage extends Component {
     //Cliente
 
     handleCliente=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/clientes/?q=';
         let url = basePath+a;
         this.props.clientesActions.getClSearch(url);
     };
@@ -238,7 +241,8 @@ class IngresosPage extends Component {
     //Cuentas
 
     handleEmpresas=(a)=>{
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/empresas/?q=';
+        //let basePath = 'http://127.0.0.1:8000/api/ingresos/empresas/?q=';
+        let basePath = 'https://rancho.davidzavala.me/api/ingresos/empresas/?q=';
         let url = basePath+a;
         //this.props.cuentasActions.getCuSearch(url);
     };

@@ -14,6 +14,9 @@ export const ResumenCard =({aretes, date}) => {
     let costosAlimentosTotales = 0;
     let costosVacunasTotales = 0;
     let kgAlimentosTotales = 0;
+    let promedioalimentsCostTotalGeneral = 0;
+    let promedioCompra = 0;
+    let promedioVenta = 0;
 
     return(
         <div>
@@ -22,6 +25,8 @@ export const ResumenCard =({aretes, date}) => {
             <p>Selecciona al menos un arete</p>:
 
             aretes.map((a, key)=>{
+
+                promedioCompra+=parseFloat(a.costo_inicial)
                 
 
                 let alimentsCostTotal = 0;
@@ -35,7 +40,13 @@ export const ResumenCard =({aretes, date}) => {
                     if(item.tipo==='Alimento')return alimentsCostTotal += parseFloat(item.costo)
                    else return vacunasCostTotal += parseFloat(item.costo)        
                 });
-                costosAlimentosTotales += alimentsCostTotal
+                costosAlimentosTotales += parseFloat(alimentsCostTotal)
+                //promedio en costos de alimentos por animal
+                
+                let promedioalimentsCostTotal = costosAlimentosTotales/a.aliments.filter(a=>a.tipo==='Alimento').length
+                
+                promedioalimentsCostTotalGeneral += parseFloat(promedioalimentsCostTotal.toFixed(2))
+                console.log(promedioalimentsCostTotalGeneral)
                 costosVacunasTotales += vacunasCostTotal
                 // //suma la cantidad de todos los gastos
                 let resultQuantity = a.aliments.map( (item, ix) => {
@@ -52,6 +63,9 @@ export const ResumenCard =({aretes, date}) => {
                 let lastPesada = a.pesadas.length>=1?a.pesadas[a.pesadas.length-1].peso:0;
                 kgHechosTotales += parseFloat((lastPesada - a.peso_entrada))
                 // //dias de la llegada a la ultima pesada
+                //precio venta actual :)
+                let precioVenta = a.costo_kilo*lastPesada
+                promedioVenta += parseFloat(precioVenta)
                 let differenceLastPesada = moment.duration(lastPesadaDate.diff(given)).asDays().toFixed(0);
                 //ganancia diaria promedio y otros indicadores
                 let gdp = ((lastPesada-a.peso_entrada)/differenceLastPesada).toFixed(2)
@@ -69,6 +83,7 @@ export const ResumenCard =({aretes, date}) => {
                 // let diffToday = moment.duration(current.diff(lastPesadaDate)).asDays().toFixed(0);
                 // //peso actual aprox en base a la gdp
                 // let pesoAproxToday = (diffToday*gdp) + parseFloat(lastPesada)*/
+                
                 return(
                     <p key={key}></p>
                 )
@@ -76,19 +91,19 @@ export const ResumenCard =({aretes, date}) => {
 
            }
             <h2>Datos de la Selección </h2>
-            {date?<h3>{`Entre ${date[0]} y ${date[1]}`}</h3>:''}
+            {/* {date?<h3>{`Entre ${date[0]} y ${date[1]}`}</h3>:''} */}
             {date?
             <div>                
                 <p>GDP: {gdpPromedio.toFixed(2)} Kg</p>
-                <p>Rendimiento: {rendimientopPromedio}Kg</p>
-                <p>Conversion: {conversionPromedio}%</p>
-                <p>Consumo diario promedio en kgs en base seca</p>
-                <p>Consumo diario promedio en dinero</p>
-                <p>Precio promedio de compra </p>
-                <p>Precio promedio de venta </p>
-                <p>Utilidad diaria</p>
-                <p>Utilidad neta por cabeza</p>
-                <p>Conversión por etapa de peso vivo</p>
+                <p>Rendimiento: {rendimientopPromedio.toFixed(2)}Kg</p>
+                <p>Conversion: {conversionPromedio.toFixed(2)}%</p>
+                {/* <p>Consumo diario promedio en kgs en base seca</p> */}
+                <p>Consumo diario promedio en dinero: ${promedioalimentsCostTotalGeneral/aretes.length}</p>
+                <p>Precio promedio de compra: ${promedioCompra/aretes.length}</p>
+                <p>Precio promedio de venta: ${promedioVenta/aretes.length} </p>
+                {/* <p>Utilidad diaria: </p> */}
+                <p>Utilidad neta por cabeza:{(promedioVenta/aretes.length)-(promedioCompra/aretes.length)}</p>
+                {/* <p>Conversión por etapa de peso vivo: </p> */}
             </div>:
             <div>
                 <p>Kg Hechos {kgHechosTotales}</p>
@@ -96,8 +111,8 @@ export const ResumenCard =({aretes, date}) => {
                 <p>Kg de Alimento: {kgAlimentosTotales}</p>
                 <p>Costos de Vacunación: {costosVacunasTotales}</p>
                 <p>GDP: {gdpPromedio} Kg</p>
-                <p>Rendimiento: {rendimientopPromedio}Kg</p>
-                <p>Conversion: {conversionPromedio}%</p>
+                <p>Rendimiento: {rendimientopPromedio.toFixed(2)}Kg</p>
+                <p>Conversion: {conversionPromedio.toFixed(2)}%</p>
             </div>}
         </div>
     )
