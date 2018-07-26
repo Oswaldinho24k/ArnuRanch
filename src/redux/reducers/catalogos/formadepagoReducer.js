@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { GET_FORMA_PAGO_SUCCESS, SAVE_FORMA_PAGO_SUCCESS, DELETE_FORMA_PAGO_SUCCESS, EDIT_FORMA_PAGO_SUCCESS} from "../actions/catalogos/formadepagoActions";
+import { GET_FORMA_PAGO_SUCCESS, SAVE_FORMA_PAGO_SUCCESS, DELETE_FORMA_PAGO_SUCCESS, EDIT_FORMA_PAGO_SUCCESS} from "../../actions/catalogos/formadepagoActions";
 
 function list(state=[], action){
     switch(action.type){

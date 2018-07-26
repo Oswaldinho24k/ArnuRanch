@@ -105,6 +105,7 @@ const Sections = ({props}) => {
                 <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
 
+                {/*****************************Catalogo*************************************/}
                 <Route path={'/admin/catalogo'} component={CatalogoPage}/>
                 {/***************************** Ganado ROUTES *****************************/}
                 <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>

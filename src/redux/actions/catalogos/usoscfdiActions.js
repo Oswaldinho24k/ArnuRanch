@@ -2,14 +2,14 @@ import api from "../../../Api/Django";
 
 export const GET_USOS_SUCCESS = 'GET_USOS_SUCCESS';
 
-export function getUsosSuccess(usos){
+export function getUsosSuccess(catCfdis){
     return{
-        type:GET_USOS_SUCCESS, usos
+        type:GET_USOS_SUCCESS, catCfdis
     }
 }
 
-export const getUsos=()=>(dispatch, getState)=>{
-    return api.getUsos()
+export const getCatCfdis=()=>(dispatch, getState)=>{
+    return api.getCatCfdis()
         .then(r=>{
             dispatch(getUsosSuccess(r))
         }).catch(e=>{
@@ -22,14 +22,14 @@ export const getUsos=()=>(dispatch, getState)=>{
 //save
 export const SAVE_USOS_SUCCESS = 'SAVE_USOS_SUCCESS';
 
-export function saveUsosSuccess(usos){
+export function saveUsosSuccess(catCfdis){
     return{
-        type:SAVE_USOS_SUCCESS, usos
+        type:SAVE_USOS_SUCCESS, catCfdis
     }
 }
 
-export const saveUsos=(usos)=>(dispatch, getState)=>{
-    return api.newUsos(usos)
+export const newCatCfdis=(usos)=>(dispatch, getState)=>{
+    return api.newCatCfdis(usos)
         .then(r=>{
 
             dispatch(saveUsosSuccess(r));
@@ -42,21 +42,22 @@ export const saveUsos=(usos)=>(dispatch, getState)=>{
 //EDIT
 
 export const EDIT_USOS_SUCCESS = 'EDIT_USOS_SUCCESS';
-export function editUsosSuccess(usos) {
+export function editUsosSuccess(catCfdis) {
     return{
-        type: EDIT_UNIDADMEDIDA_SUCCESS, usos
+        type: EDIT_USOS_SUCCESS, catCfdis
     }
 }
 
-export const editUsos=(usos=>(dispatch, getState)=>{
-    return api.editUsos(usos)
+export const editCatCfdis=(catCfdis)=>(dispatch, getState)=>{
+    return api.editCatCfdis(catCfdis)
         .then(r=>{
             dispatch(editUsosSuccess(r))
 
         }).catch(e=>{
 
         })
-};
+}
+
 
 
 
@@ -64,16 +65,16 @@ export const editUsos=(usos=>(dispatch, getState)=>{
 
 export const DELETE_USOS_SUCCESS = 'DELETE_USOS_SUCCESS';
 
-export function deleteUsosSuccess(usos){
+export function deleteUsosSuccess(catCfdis){
     return {
-        type:DELETE_USOS_SUCCESS, usos
+        type:DELETE_USOS_SUCCESS, catCfdis
     }
 }
 
-export const deleteUsos=(usos)=>(dispatch, getState)=> {
-    return api.deleteProductos(usos.id)
+export const deleteCatCfdis=(catCfdisId)=>(dispatch, getState)=> {
+    return api.deleteCatCfdis(catCfdisId)
         .then(r => {
-            dispatch(deleteUsosSuccess(usos))
+            dispatch(deleteUsosSuccess(catCfdisId))
         }).catch(e => {
             throw e;
         })

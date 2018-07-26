@@ -51,7 +51,15 @@ let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
 //DashGanado
 let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
 
+//Catalogos
 
+let catProductsUrl = 'http://127.0.0.1:8000/api/catalogos/products/';
+let catUnidadesUrl ='http://127.0.0.1:8000/api/catalogos/unidades/'
+let catCfdisUrl = 'http://127.0.0.1:8000/api/catalogos/cfdis/';
+let catPagosUrl = 'http://127.0.0.1:8000/api/catalogos/pagos/';
+let catBankUrl ='http://127.0.0.1:8000/api/catalogos/banks/';
+let catAlmacenUrl = 'http://localhost:8000/api/catalogos/almacenes/';
+let catPresupuestosUrl = 'http://127.0.0.1:8000/api/catalogos/presupuestos/';
 
 
 
@@ -2487,8 +2495,675 @@ const api = {
         });
     },
 
+    //Catálogo
+ /*-----Products------*/
+   getCatProduts:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catProductsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatProduct:(catProduct)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catProductsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catProduct)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
 
 
+        });
+    },
+
+    deleteCatProducts:(catProduct)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catProductsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+          instance.delete(catProduct+'/' )
+              .then(function (response) {
+                  resolve(response.data);
+              })
+              .catch(function (error) {
+                  console.log('el error: ', error.response);
+                  reject(error);
+              });
+
+        })
+    },
+    editCatProduct:(catProduct)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catProductsUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catProduct.id+'/', catProduct)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    /*--------Unidades-------*/
+
+    getCatUnidades:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catUnidadesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatUnidad:(catUnidad)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catUnidadesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catUnidad)
+                .then(function (response) {
+                    console.log("django r:",response.data)
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatUnidad:(catUnidad)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catUnidadesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catUnidad+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatUnidad:(catUnidad)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catUnidadesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catUnidad.id+'/', catUnidad)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    /*----------------------CFDIS-------------------------*/
+
+
+    getCatCfdis:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catCfdisUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatCfdis:(catCfdis)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catCfdisUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catCfdis)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatCfdis:(catCfdis)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catCfdisUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catCfdis+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatCfdis:(catCfdis)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catCfdisUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catCfdis.id+'/', catCfdis)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    /*----------Pagos------------*/
+
+    getCatPagos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPagosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatPago:(catPago)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPagosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catPago)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatPago:(catPago)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPagosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catPago+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatPago:(catPago)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPagosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catPago.id+'/', catPago)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+
+    /*---------Banks-----------*/
+
+    getCatBanks:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catBankUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatBank:(catBank)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catBankUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catBank)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatBank:(catBank)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catBankUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catBank+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatBank:(catBank)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catBankUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catBank.id+'/', catBank)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+  /*-----------------Almacenes---------------------*/
+    getCatAlmacenes:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatAlmacen:(catAlmacen)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catAlmacen)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatAlmacen:(catAlmacen)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catAlmacen+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatAlmacen:(catAlmacen)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catAlmacenUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catAlmacen.id+'/', catAlmacen)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+    /*-------------Presupuesto----------*/
+
+    getCatPresupuestos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPresupuestosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error', error.response)
+                    reject(error);
+                });
+        })
+    },
+
+    newCatPresupuesto:(catPresupuesto)=>{
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPresupuestosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', catPresupuesto)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
+
+    deleteCatPresupuesto:(catPresupuesto)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPresupuestosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(catPresupuesto+'/' )
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+        })
+    },
+    editCatPresupuesto:(catPresupuesto)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL: catPresupuestosUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(catPresupuesto.id+'/', catPresupuesto)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    console.log('el error: ', error.response);
+                    reject(error);
+                });
+
+
+        });
+    },
 
 };
 

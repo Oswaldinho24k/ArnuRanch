@@ -198,6 +198,10 @@ class ClientePage extends Component {
                 title: 'RFC',
                 dataIndex: 'rfc'
             },
+            {
+                title: 'Plazo de Crédito',
+                dataIndex: 'credit'
+            },
 
         ];
 

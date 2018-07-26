@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { GET_CUENTASBAN_SUCCESS, SAVE_CUENTASBAN_SUCCESS, DELETE_CUENTASBAN_SUCCESS, EDIT_CUENTASBAN_SUCCESS} from "../actions/catalogos/cuentasbancariasActions";
+import { GET_CUENTASBAN_SUCCESS, SAVE_CUENTASBAN_SUCCESS, DELETE_CUENTASBAN_SUCCESS, EDIT_CUENTASBAN_SUCCESS} from "../../actions/catalogos/cuentasbancariasActions";
 
 function list(state=[], action){
     switch(action.type){

@@ -5,11 +5,16 @@ import {Button, message, Popconfirm, Tabs, Divider, Select, Input, BackTop,Table
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
-import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
-import * as clientesActions from '../../redux/actions/administracion/clientesActions';
+import * as catProductsActions from '../../redux/actions/catalogos/catProductosActions'
+import * as unidadmedidaActions from '../../redux/actions/catalogos/unidadmedidaActions'
+import * as usoscfdiActions from '../../redux/actions/catalogos/usoscfdiActions'
+import * as formadepagoActions from '../../redux/actions/catalogos/formadepagoActions'
+import * as cuentasbancariasActions from '../../redux/actions/catalogos/cuentasbancariasActions'
+import * as almacenesActions from '../../redux/actions/catalogos/almacenesActions'
+import * as presupuestosActions from '../../redux/actions/catalogos/presupuestosActions'
 import FormCatalogo from "./CatalogoForm";
+import EditCatalogos from './EditCatalogos'
 import './catalogos.css'
 
 
@@ -74,21 +79,8 @@ class CatalogoPage extends Component {
 
 
         activeTab:"products",
-        datos:[
-            {id:1, name:"Perros", code:"4DHS2"},
-            {id:2, name:"Gatos", code:"5VX32"},
-            {id:3, name:"Patos", code:"5VX32"},
-        ],
-        datos2:[
-            {id:1, name:"Perros", code:"4DHS2"},
-            {id:2, name:"Gatos", code:"5VX32"},
-            {id:3, name:"Patos", code:"5VX32"},
-        ],
-        datos3:[],
-        datos4:[],
-        datos5:[],
-        datos6:[],
-        datos7:[],
+        visibleEdit:false,
+        infoEdit:{},
 
 
     };
@@ -145,45 +137,44 @@ class CatalogoPage extends Component {
 
     handleCreate = (e) => {
         const form = this.form;
-        let {activeTab,datos,datos2,datos3,datos4,datos5,datos6,datos7} = this.state;
+        let {activeTab} = this.state;
 
         e.preventDefault();
         form.validateFields((err, values) => {
-            var ob={name:values.name,code:values.code}
-
+            var ob={name:values.name,code:values.code,business_line_id:values.business_line_id}
 
            if (!err) {
                if(activeTab==="products"){
                    console.log("mira",values)
-                   datos.push(ob)
-                   this.setState({datos:datos, visible:false},console.log("mira",this.state.datos))
+                   this.props.catProductsActions.newCatProduct(values)
+                   this.setState({visible:false})
 
                }
-               if(activeTab==="unitMeasure"){console.log("mira",values)
-                   datos2.push(ob)
+               if(activeTab==="unitMeasure"){
+                   console.log("mira unidad:",values)
+                   //this.props.unidadmedidaActions.newCatUnidad(values)
                    this.setState({visible:false})
 
                }
                if(activeTab==="useCFDI"){
-                   datos3.push(ob)
+                   this.props.usoscfdiActions.newCatCfdis(values)
                    this.setState({visible:false})
                }
                if(activeTab==="pay"){
-                   datos4.push(ob)
+                   this.props.formadepagoActions.newCatPago(values)
                    this.setState({visible:false})
                }
                if(activeTab==="account"){
-                   datos5.push(ob)
+                   this.props.cuentasbancariasActions.newCatBank(values)
                    this.setState({visible:false})
                }
                if(activeTab==="warehouse"){
-                   datos6.push(ob)
+                   this.props.almacenesActions.newCatAlmacen(values)
                    this.setState({visible:false})
                }
                if(activeTab==="budget"){
                    console.log("Presupuesto", values)
-                   var ob={name:values.name,code:values.code,date:values.date,concept:values.concept,monto:values.monto}
-                   datos7.push(ob)
+                  this.props.presupuestosActions.newCatPresupuesto(values)
                    this.setState({visible:false})
                }
                 message.success('Guardado con éxito');
@@ -193,6 +184,60 @@ class CatalogoPage extends Component {
         });
     };
 
+    handleEdit = (values) => {
+
+        let {activeTab} = this.state;
+
+                if(activeTab==="products"){
+                    console.log("mira Productos",values)
+                    this.props.catProductsActions.editCatProduct(values)
+                        console.log("Editado con éxito");
+                        message.success('Guardado con éxito');
+
+                    this.setState({visible:false})
+
+                }
+                if(activeTab==="unitMeasure"){
+                    console.log("mira unidad:",values)
+                    this.props.unidadmedidaActions.editCatUnidad(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+
+                }
+                if(activeTab==="useCFDI"){
+                    this.props.usoscfdiActions.editCatCfdis(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+                }
+                if(activeTab==="pay"){
+                    this.props.formadepagoActions.editCatPago(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+                }
+                if(activeTab==="account"){
+                    this.props.cuentasbancariasActions.editCatBank(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+                }
+                if(activeTab==="warehouse"){
+                    this.props.almacenesActions.editCatAlmacen(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+                }
+                if(activeTab==="budget"){
+                    console.log("Presupuesto", values)
+                    this.props.presupuestosActions.editCatPresupuesto(values)
+                    console.log("Editado con éxito");
+                    message.success('Guardado con éxito');
+                    this.setState({visible:false})
+                }
+
+    };
 
 
     onSearch = () => {
@@ -227,14 +272,27 @@ class CatalogoPage extends Component {
         this.setState({activeTab:e})
     }
 
+    saveLine=(id)=>{
+        this.setState({idLine:id})
+    };
 
+    visibleEdit=(obj)=>{
+        this.setState({visibleEdit:true, infoEdit:obj});
+
+    };
+
+    cancelar = () => {
+        this.setState({
+            visibleEdit: false,
+        });
+    };
 
 
 
 
     render() {
 
-        let {visible,canReset,datos,datos2,datos3,datos4,datos5,datos6,datos7,activeTab}=this.state;
+        let {visible,canReset,activeTab,infoEdit,visibleEdit}=this.state;
         const TabPane = Tabs.TabPane;
         const columns = [
             {
@@ -246,17 +304,36 @@ class CatalogoPage extends Component {
                 title: 'Código',
                 dataIndex: 'code',
                 key:'code'
-            }
+            },
+            {title:'Linea de Negocio', dataIndex:'business_line_id',key:'business_line_id'},
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
+                fixed:'right',
+                width:100
+            },
 
         ];
         const columnsP =[
             {title:'Código', dataIndex:'code',key:'code'},
             {title:'Nombre', dataIndex:'name',key:'name'},
-            {title:'Fecha de pago', dataIndex:'date',key:'date'},
-            {title:'Concepto', dataIndex:'concept',key:'concept'},
-            {title:'Monto', dataIndex:'monto',key:'monto', render:(costo_final) => <span>{costo_final && costo_final !==null ? "$ "+costo_final:'$ 0'}</span>}
+            {title:'Fecha de pago', dataIndex:'pay_date',key:'pay_date'},
+            {title:'Concepto', dataIndex:'concepto',key:'concepto'},
+            {title:'Monto', dataIndex:'monto',key:'monto'},
+            {title:'Liena de Negocio', dataIndex:'business_line_id',key:'business_line_id'},
+            {
+                title: 'Actions',
+                dataIndex: 'id',
+                render: (id, obj) => <p onClick={()=>this.visibleEdit(obj)}>Editar</p>,
+                fixed:'right',
+                width:100
+            },
         ];
 
+        let { fetched, blines,catProducts,catUnidad,catCfdis,catPago,catBank,catAlmacenes,catPresupuesto} = this.props;
+        if(!fetched)return(<MainLoader/>);
+        console.log(catPresupuesto)
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -283,43 +360,44 @@ class CatalogoPage extends Component {
                         <TabPane  tab="Productos" key="products">
                             <Table
                                 columns={columns}
-                                dataSource={datos}
+                                dataSource={catProducts}
                             />
                         </TabPane>
-                        <TabPane tab="Unidad de medida" key="unitMeasure">
+                        <TabPane  tab="Unidad de medida" key="unitMeasure">
                             <Table
+                                dataSource={catUnidad}
                                 columns={columns}
-                                dataSource={datos2}
-                            />
+                                   />
                         </TabPane>
+
                         <TabPane tab="Usos CFDI" key="useCFDI">
                             <Table
                                 columns={columns}
-                                dataSource={datos3}
+                                dataSource={catCfdis}
                             />
                         </TabPane>
                         <TabPane tab="Forma de pago" key="pay">
                             <Table
                                 columns={columns}
-                                dataSource={datos4}
+                                dataSource={catPago}
                             />
                         </TabPane>
                         <TabPane tab="Cuentas bancarias" key="account">
                             <Table
                                 columns={columns}
-                                dataSource={datos5}
+                                dataSource={catBank}
                             />
                         </TabPane>
                         <TabPane tab="Almacenes" key="warehouse">
                             <Table
                                 columns={columns}
-                                dataSource={datos6}
+                                dataSource={catAlmacenes}
                             />
                         </TabPane>
                         <TabPane tab="Presupuestos" key="budget">
                             <Table
                                 columns={columnsP}
-                                dataSource={datos7}
+                                dataSource={catPresupuesto}
                             />
                         </TabPane>
 
@@ -330,8 +408,22 @@ class CatalogoPage extends Component {
                     activeTab={activeTab}
                     ref={this.saveFormRef}
                     visible={visible}
+                    options={blines}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
+                    saveLine={this.saveLine}
+
+                />
+                <EditCatalogos
+                    onEdit={this.handleEdit}
+                    activeTab={activeTab}
+                    onCancel={this.cancelar}
+                    visible={visibleEdit}
+                    data={this.state.infoEdit}
+                    saveLine={this.saveLine}
+                    options={blines}
+                    {...infoEdit}
+
                 />
 
 
@@ -350,26 +442,38 @@ class CatalogoPage extends Component {
     }
 }
 
-/*
+
 function mapStateToProps(state, ownProps) {
+
     return {
-        ingresos:state.ingresos.list,
-        ingresosData:state.ingresos.allData,
+        catProducts:state.catProducts.list,
+        catUnidad:state.catUnidad.list,
+        catCfdis:state.catCfdis.list,
+        catPago:state.catPago.list,
+        catBank:state.catBank.list,
+        catAlmacenes:state.catAlmacenes.list,
+        catPresupuesto:state.catPresupuesto.list,
         blines:state.blines.lineSearch,
-        fetched: state.ingresos.list !== undefined && state.clientes.list !==undefined && state.blines.lineSearch !== undefined && state.cuentas.cuentaSearch !== undefined,
-        clientes:state.clientes.clienteSearch,
-        cuentas:state.cuentas.cuentaSearch
+        fetched: state.blines.lineSearch !== undefined && state.catProducts.list !== undefined &&
+        state.catUnidad.list !== undefined && state.catCfdis.list !== undefined && state.catPago.list !== undefined
+        && state.catBank.list !== undefined && state.catAlmacenes.list !== undefined && state.catPresupuesto.list !== undefined,
+
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        ingresosActions: bindActionCreators(ingresosActions, dispatch),
         linesActions: bindActionCreators(linesActions, dispatch),
-        cuentasActions: bindActionCreators(cuentasActions, dispatch),
-        clientesActions: bindActionCreators(clientesActions, dispatch),
+        catProductsActions: bindActionCreators(catProductsActions, dispatch),
+        unidadmedidaActions:bindActionCreators(unidadmedidaActions,dispatch),
+        usoscfdiActions:bindActionCreators(usoscfdiActions,dispatch),
+        formadepagoActions:bindActionCreators(formadepagoActions,dispatch),
+        cuentasbancariasActions:bindActionCreators(cuentasbancariasActions,dispatch),
+        almacenesActions:bindActionCreators(almacenesActions,dispatch),
+        presupuestosActions:bindActionCreators(presupuestosActions,dispatch),
+
     }
 }
 
-CatalogoPage = connect(mapStateToProps, mapDispatchToProps)(CatalogoPage);*/
+CatalogoPage = connect(mapStateToProps, mapDispatchToProps)(CatalogoPage);
 export default CatalogoPage;

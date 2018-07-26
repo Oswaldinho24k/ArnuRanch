@@ -1,17 +1,19 @@
 import api from "../../../Api/Django";
+import {saveFormaPSuccess} from "./formadepagoActions";
 
 export const GET_UNIDADMEDIDA_SUCCESS = 'GET_UNIDADMEDIDA_SUCCESS';
 
-export function getUnidadMSuccess(unindadM){
+export function getUnidadMedidaSuccess(unidadMe){
     return{
-        type:GET_UNIDADMEDIDA_SUCCESS, productos
+        type:GET_UNIDADMEDIDA_SUCCESS, unidadMe
     }
 }
 
-export const getUnidadM=()=>(dispatch, getState)=>{
-    return api.getUnidadM()
+export const getCatUnidades=()=>(dispatch, getState)=>{
+    return api.getCatUnidades()
         .then(r=>{
-            dispatch(getUnidadMSuccess(r))
+            console.log("Respuesta: ",r)
+            dispatch(getUnidadMedidaSuccess(r))
         }).catch(e=>{
 
         })
@@ -28,8 +30,8 @@ export function saveUnidadMSuccess(unidadM){
     }
 }
 
-export const saveUnidadM=(unidadM)=>(dispatch, getState)=>{
-    return api.newUnidadM(unidadM)
+export const newCatUnidad=(unidadM)=>(dispatch, getState)=>{
+    return api.newCatUnidad(unidadM)
         .then(r=>{
 
             dispatch(saveUnidadMSuccess(r));
@@ -37,7 +39,9 @@ export const saveUnidadM=(unidadM)=>(dispatch, getState)=>{
 
             throw e
         })
-};
+}
+
+
 
 //EDIT
 
@@ -48,8 +52,8 @@ export function editUnidadMSuccess(unidadM) {
     }
 }
 
-export const editUnidadM=(unidadM)=>(dispatch, getState)=>{
-    return api.editUnidadM(unidadM)
+export const editCatUnidad=(unidadM)=>(dispatch, getState)=>{
+    return api.editCatUnidad(unidadM)
         .then(r=>{
             dispatch(editUnidadMSuccess(r))
 
@@ -70,11 +74,12 @@ export function deleteUnidadMSuccess(unidadM){
     }
 }
 
-export const deleteUnidadM=(unidadM)=>(dispatch, getState)=> {
-    return api.deleteProductos(unidadM.id)
-        .then(r => {
+export const deleteCatUnidad=(unidadM)=>(dispatch, getState)=>{
+    return api.deleteCatUnidad(unidadM.id)
+        .then(r=>{
             dispatch(deleteUnidadMSuccess(unidadM))
-        }).catch(e => {
+        }).catch(e=>{
             throw e;
         })
 };
+
