@@ -26,8 +26,14 @@ import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
 import { getSaleNotes } from "./ganado/salenotesActions";
 
 import {getDataDash} from "./dashGanado/dashGanadoActions";
-
-
+//catalogos
+import {getCatProduts} from "./catalogos/catProductosActions";
+import {getCatUnidades} from "./catalogos/unidadmedidaActions";
+import {getCatCfdis} from './catalogos/usoscfdiActions'
+import {getCatPagos} from "./catalogos/formadepagoActions";
+import {getCatBanks} from "./catalogos/cuentasbancariasActions";
+import {getCatAlmacenes} from "./catalogos/almacenesActions";
+import {getCatPresupuestos} from "./catalogos/presupuestosActions";
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -121,6 +127,14 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getSaleNotes());
 
         dispatch(getReporte());
+        //catalaogos
+        dispatch(getCatProduts());
+        dispatch(getCatUnidades());
+        dispatch(getCatCfdis());
+        dispatch(getCatPagos());
+        dispatch(getCatBanks());
+        dispatch(getCatAlmacenes());
+        dispatch(getCatPresupuestos());
 
 
     }

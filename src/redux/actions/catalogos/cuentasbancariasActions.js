@@ -8,8 +8,8 @@ export function getCuentasBSuccess(cuentasB){
     }
 }
 
-export const getCuentasB=()=>(dispatch, getState)=>{
-    return api.getCuentasB()
+export const getCatBanks=()=>(dispatch, getState)=>{
+    return api.getCatBanks()
         .then(r=>{
             dispatch(getCuentasBSuccess(r))
         }).catch(e=>{
@@ -28,8 +28,8 @@ export function saveCuentasBSuccess(cuentasB){
     }
 }
 
-export const saveCuentasB=(cuentasB)=>(dispatch, getState)=>{
-    return api.newCuentasB(cuentasB)
+export const newCatBank=(cuentasB)=>(dispatch, getState)=>{
+    return api.newCatBank(cuentasB)
         .then(r=>{
 
             dispatch(saveCuentasBSuccess(r));
@@ -48,8 +48,8 @@ export function editCuentasBSuccess(cuentasB) {
     }
 }
 
-export const editCuentasB=(cuentasB)=>(dispatch, getState)=>{
-    return api.editAlmacen(cuentasB)
+export const editCatBank=(cuentasB)=>(dispatch, getState)=>{
+    return api.editCatBank(cuentasB)
         .then(r=>{
             dispatch(editCuentasBSuccess(r))
 
@@ -70,8 +70,8 @@ export function deleteCuentasBSuccess(cuentasB){
     }
 }
 
-export const deleteCuentasB=(cuentasB)=>(dispatch, getState)=>{
-    return api.deleteCuentasB(cuentasB.id)
+export const deleteCatBank=(cuentasB)=>(dispatch, getState)=>{
+    return api.deleteCatBank(cuentasB.id)
         .then(r=>{
             dispatch(deleteCuentasBSuccess(cuentasB))
         }).catch(e=>{

@@ -1,10 +1,10 @@
-import React from 'react';
-import { Form, Input, Button, Modal,DatePicker,InputNumber,Select  } from 'antd';
-import moment from 'moment';
+import React, {Fragment} from 'react';
+import {Form, Input, Select, Button, Checkbox, InputNumber, message, Modal,DatePicker} from 'antd';
 
 
-const FormItem = Form.Item;
+import moment from 'moment'
 const Option = Select.Option;
+const FormItem = Form.Item;
 const styles = {
     form:{
         display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
@@ -21,17 +21,41 @@ const styles = {
     }
 };
 
+const InfoCatalogo = ({form,onCancel, visible, data,activeTab,onEdit,options,searchLine,saveLine }) => {
+    const{getFieldDecorator} = form;
 
-const CatalogoForm = Form.create()(
-    (props) => {
-        const{visible, onCancel, onCreate, form,activeTab,saveLine,options,searchLine} = props;
-        const{getFieldDecorator} = form;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        form.validateFields((err, values) => {
+
+            if (!err) {
+                console.log("VALUES",values);
+                values['id']=data.id;
+                console.log("ENVIAR", values)
+
+                onEdit(values)
+                    /*.then(r=>{
+                        console.log("Editado con éxito");
+                        message.success('Guardado con éxito');
+                        onCancel()
+                        form.resetFields();
+                    }).catch(e=>{
+                    console.log(e)
+                })*/
+                    onCancel()
+                form.resetFields();
+
+            }else{message.error('Algo fallo, verifica los campos');}
+        });
+    };
 
 
-        return(
+
+    return (
+        <Fragment>
             <Modal
                 visible={visible}
-                title={"Agregar a Catálogo"}
+                title={"Editar a Catálogo"}
                 onCancel={onCancel}
                 width={'30%'}
                 maskClosable={true}
@@ -40,12 +64,13 @@ const CatalogoForm = Form.create()(
                     null,
                 ]}
             >
-                <Form onSubmit={onCreate} >
+                <Form onSubmit={handleSubmit} >
                     <div style={styles.form}>
                         <FormItem
                             label="Nombre"
                         >
                             {getFieldDecorator('name', {
+                                initialValue:data.name,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -59,6 +84,7 @@ const CatalogoForm = Form.create()(
                             label="Código"
                         >
                             {getFieldDecorator('code', {
+                                initialValue:data.code,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
@@ -72,6 +98,7 @@ const CatalogoForm = Form.create()(
                             hasFeedback
                         >
                             {getFieldDecorator('business_line_id', {
+                                initialValue:data.business_line_id,
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
@@ -96,6 +123,7 @@ const CatalogoForm = Form.create()(
                                     label="Concepto"
                                 >
                                     {getFieldDecorator('concepto', {
+                                        initialValue:data.concepto,
                                         rules: [{
                                             required: true, message: 'Completa el campo!',
                                         }],
@@ -110,7 +138,7 @@ const CatalogoForm = Form.create()(
 
                                 >
                                     {getFieldDecorator('monto', {
-                                        initialValue:0,
+                                        initialValue:data.monto,
                                         rules: [{
                                             required:true
                                         }],
@@ -151,9 +179,8 @@ const CatalogoForm = Form.create()(
                 </Form>
 
             </Modal>
-
-        )
-    }
-);
-
-export default CatalogoForm;
+        </Fragment>
+    )
+};
+const EditCatalogos = Form.create()(InfoCatalogo);
+export default EditCatalogos;

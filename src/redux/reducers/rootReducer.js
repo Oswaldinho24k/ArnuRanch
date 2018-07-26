@@ -29,7 +29,14 @@ import saleNotesReducer from './ganado/salenotesReducer';
 
 import dataDashReducer from "./dashGanado/dashGanadoReducer";
 
-
+/*--------Catalogos-------*/
+import catProductosReducer from "././catalogos/catProductosReducer"
+import unidadmedidaReducer from "./catalogos/unidadmedidaReducer";
+import usoscfdiReducer from "./catalogos/usoscfdiReducer";
+import formadepagoReducer from "./catalogos/formadepagoReducer";
+import cuentasbancariasReducer from './catalogos/cuentasbancariasReducer'
+import almacenesReducer from "./catalogos/almacenesReducer";
+import presupuestosReducer from "./catalogos/presupuestosReducer";
 
 
 
@@ -63,7 +70,14 @@ const rootReducer = combineReducers({
     saleNotes:saleNotesReducer,
 
     dataDash:dataDashReducer,
-
+    //Catalogos,
+    catProducts:catProductosReducer,
+    catUnidad:unidadmedidaReducer,
+    catCfdis:usoscfdiReducer,
+    catPago:formadepagoReducer,
+    catBank:cuentasbancariasReducer,
+    catAlmacenes:almacenesReducer,
+    catPresupuesto:presupuestosReducer
 
 
 });

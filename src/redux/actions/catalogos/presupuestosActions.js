@@ -8,8 +8,8 @@ export function getPresupuestosSuccess(presupuestos){
     }
 }
 
-export const getPresupuestos=()=>(dispatch, getState)=>{
-    return api.getPresupuestos()
+export const getCatPresupuestos=()=>(dispatch, getState)=>{
+    return api.getCatPresupuestos()
         .then(r=>{
             dispatch(getPresupuestosSuccess(r))
         }).catch(e=>{
@@ -28,8 +28,8 @@ export function savePresupuestosSuccess(presupuestos){
     }
 }
 
-export const savePresupuestos=(presupuestos)=>(dispatch, getState)=>{
-    return api.newPresupuestos(presupuestos)
+export const newCatPresupuesto=(presupuestos)=>(dispatch, getState)=>{
+    return api.newCatPresupuesto(presupuestos)
         .then(r=>{
 
             dispatch(savePresupuestosSuccess(r));
@@ -48,8 +48,8 @@ export function editPresupuestosSuccess(presupuestos) {
     }
 }
 
-export const editPresupuestos=(presupuestos)=>(dispatch, getState)=>{
-    return api.editPresupuestos(presupuestos)
+export const editCatPresupuesto=(presupuestos)=>(dispatch, getState)=>{
+    return api.editCatPresupuesto(presupuestos)
         .then(r=>{
             dispatch(editPresupuestosSuccess(r))
 
@@ -70,8 +70,8 @@ export function deletePresupuestosSuccess(presupuestos){
     }
 }
 
-export const deletePresupuestos=(presupuestos)=>(dispatch, getState)=>{
-    return api.deleteCuentasB(presupuestos.id)
+export const deleteCatPresupuesto=(presupuestos)=>(dispatch, getState)=>{
+    return api.deleteCatPresupuesto(presupuestos.id)
         .then(r=>{
             dispatch(deletePresupuestosSuccess(presupuestos))
         }).catch(e=>{

@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { GET_PRESUPUESTOS_SUCCESS, SAVE_PRESUPUESTOS_SUCCESS, DELETE_PRESUPUESTOS_SUCCESS, EDIT_PRESUPUESTOS_SUCCESS} from "../actions/catalogos/presupuestosActions";
+import { GET_PRESUPUESTOS_SUCCESS, SAVE_PRESUPUESTOS_SUCCESS, DELETE_PRESUPUESTOS_SUCCESS, EDIT_PRESUPUESTOS_SUCCESS} from "../../actions/catalogos/presupuestosActions";
 
 function list(state=[], action){
     switch(action.type){

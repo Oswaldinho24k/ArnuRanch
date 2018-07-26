@@ -23,6 +23,7 @@ const styles = {
 
 const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,
                         comments_contact, credit}) => {
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
@@ -170,6 +171,7 @@ const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, addre
                                 <Input placeholder={"Plazo de crédito"} disabled={!editMode}/>
                             )}
                         </FormItem>
+
 
                 </div>
                 <FormItem>
