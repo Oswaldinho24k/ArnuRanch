@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let debug = false;
+let debug = true;
 
 //Localhost urls
 
@@ -53,13 +53,13 @@ let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
 
 //Catalogos
 
-let catProductsUrl = 'http://127.0.0.1:8000/api/catalogos/products/';
-let catUnidadesUrl ='http://127.0.0.1:8000/api/catalogos/unidades/'
-let catCfdisUrl = 'http://127.0.0.1:8000/api/catalogos/cfdis/';
-let catPagosUrl = 'http://127.0.0.1:8000/api/catalogos/pagos/';
-let catBankUrl ='http://127.0.0.1:8000/api/catalogos/banks/';
+let catProductsUrl = 'http://localhost:8000/api/catalogos/products/';
+let catUnidadesUrl ='http://localhost:8000/api/catalogos/unidades/'
+let catCfdisUrl = 'http://localhost:8000/api/catalogos/cfdis/';
+let catPagosUrl = 'http://localhost:8000/api/catalogos/pagos/';
+let catBankUrl ='http://localhost:8000/api/catalogos/banks/';
 let catAlmacenUrl = 'http://localhost:8000/api/catalogos/almacenes/';
-let catPresupuestosUrl = 'http://127.0.0.1:8000/api/catalogos/presupuestos/';
+let catPresupuestosUrl = 'http://localhost:8000/api/catalogos/presupuestos/';
 
 
 

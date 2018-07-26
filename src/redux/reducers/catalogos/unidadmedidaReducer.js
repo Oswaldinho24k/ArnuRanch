@@ -6,7 +6,7 @@ function list(state=[], action){
         case GET_UNIDADMEDIDA_SUCCESS:
             return action.unidadMe;
         case SAVE_UNIDADMEDIDA_SUCCESS:
-            return [...state, action.unindadM];
+            return [...state, action.unidadM];
         case EDIT_UNIDADMEDIDA_SUCCESS:
             let newL = state.filter(a=>{
                 return a.id!=action.unindadM.id

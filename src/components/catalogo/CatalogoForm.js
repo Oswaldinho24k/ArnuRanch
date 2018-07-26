@@ -71,7 +71,7 @@ const CatalogoForm = Form.create()(
                             label={"Linea de negocio"}
                             hasFeedback
                         >
-                            {getFieldDecorator('business_line_id', {
+                            {getFieldDecorator('bl', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },

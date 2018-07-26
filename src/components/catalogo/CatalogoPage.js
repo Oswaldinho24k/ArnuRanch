@@ -141,7 +141,8 @@ class CatalogoPage extends Component {
 
         e.preventDefault();
         form.validateFields((err, values) => {
-            var ob={name:values.name,code:values.code,business_line_id:values.business_line_id}
+            var ob={name:values.name,code:values.code,bl:values.bl}
+            values.bl = this.state.idLine
 
            if (!err) {
                if(activeTab==="products"){
@@ -152,7 +153,7 @@ class CatalogoPage extends Component {
                }
                if(activeTab==="unitMeasure"){
                    console.log("mira unidad:",values)
-                   //this.props.unidadmedidaActions.newCatUnidad(values)
+                   this.props.unidadmedidaActions.newCatUnidad(values)
                    this.setState({visible:false})
 
                }
@@ -332,6 +333,7 @@ class CatalogoPage extends Component {
         ];
 
         let { fetched, blines,catProducts,catUnidad,catCfdis,catPago,catBank,catAlmacenes,catPresupuesto} = this.props;
+
         if(!fetched)return(<MainLoader/>);
         console.log(catPresupuesto)
         return (
