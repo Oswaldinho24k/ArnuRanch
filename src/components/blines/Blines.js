@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import BLineForm from './BLineForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, message, Divider, Popconfirm} from 'antd';
+import {Table, Button, message, Divider} from 'antd';
 import * as blinesActions from '../../redux/actions/blines/blinesActions';
 import MainLoader from "../common/Main Loader";
 import EditBline from './EditBline'
@@ -116,12 +116,12 @@ class Blines extends Component {
 
     render() {
         let {blines, fetched, blinesData} = this.props;
-        let {visible, selectedRowKeys, infoEdit, visibleEdit} = this.state;
-        const canDelete = selectedRowKeys.length > 0;
-        const rowSelection = {
+        let {visible, infoEdit, visibleEdit} = this.state;
+        //const canDelete = selectedRowKeys.length > 0;
+       /* const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
-        };
+        };*/
 
         const columns = [
             {

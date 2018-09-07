@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import FacturaForm from './FacturaForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Table, Button, message, Divider, Popconfirm, Modal} from 'antd';
+import {Table, Button, message, Divider} from 'antd';
 import {Link} from 'react-router-dom';
 import * as facturasActions from '../../redux/actions/facturas/facturasActions';
 import MainLoader from "../common/Main Loader";
@@ -110,7 +110,7 @@ class FacturasPage extends Component{
 
     render() {
         let {facturas, fetched, facturasData} = this.props;
-        let {visible, selectedRowKeys, visibleEdit, infoEdit} = this.state;
+        let {visible, visibleEdit, infoEdit} = this.state;
 
         const columns = [
             {
@@ -129,11 +129,11 @@ class FacturasPage extends Component{
             },
         ];
 
-        const canDelete = selectedRowKeys.length > 0;
+        /*const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
-        };
+        };*/
         if(!fetched)return(<MainLoader/>);
 
 

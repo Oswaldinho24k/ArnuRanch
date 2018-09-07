@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, message, Popconfirm, Table, Tag, Divider, Select, Input, Icon, BackTop} from "antd";
+import {Button, message, Popconfirm, Table, Tag, Divider, Select, Input, Icon, BackTop, DatePicker} from "antd";
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
@@ -11,6 +11,9 @@ import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import * as empresasActions from  '../../redux/actions/empresasActions';
 import FormIngreso from "./IngresoForm";
+
+
+const { RangePicker } = DatePicker;
 
 
 
@@ -247,6 +250,15 @@ class IngresosPage extends Component {
         //this.props.cuentasActions.getCuSearch(url);
     };
 
+    handleDates=(a, b)=>{
+        let basePath = 'http://localhost:8000/api/ingresos/ingresos/?';
+        //let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?';
+        let url = basePath+`date1=${b[0]}&date2=${b[1]}`
+        console.log(a, b)
+        this.props.ingresosActions.getIngresos(url);
+        this.setState({canReset:true})
+    }
+
 
     //saveIDClient
     saveCompany=(id)=>{
@@ -289,14 +301,28 @@ class IngresosPage extends Component {
             {
                 title: 'Status',
                 dataIndex:'paid',
-                render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
+                render:(paid, obj)=><span>{
+                    paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}} >Pagado</Tag>:
+                       <Tag color="yellow" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>
+                }</span>
             },
             {
+                title: 'Status',
+                dataIndex:'sale_date',
+                render:(sale_date, obj)=>{
+
+                    return(<span>{
+
+                        obj.paid?<Tag color="green">Todo Bien</Tag>:obj.client && sale_date && moment.duration(new Date() - new Date(sale_date)).asDays() > parseInt(obj.client.credit) ?<Tag color="#f50">Vencido</Tag>:<Tag color="green">En tiempo</Tag>
+                }</span>)}
+
+            },
+            /*{
                 title: 'Registro',
                 dataIndex: 'created',
                 render: created => moment(created).startOf(3, 'days').calendar()
 
-            },
+            },*/
 
         ];
 
@@ -323,7 +349,7 @@ class IngresosPage extends Component {
 
                 <h1>Ingresos Page</h1>
 
-                <div style={{paddingBottom:'1%'}}>
+                <div style={{marginBottom:'1%', display:'flex'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
@@ -332,6 +358,8 @@ class IngresosPage extends Component {
                         style={{ width: 400 }}
                         placeholder={'Buscar ingreso...'}
                     />
+                    <Divider type="vertical" />
+                    <RangePicker onChange={this.handleDates} />
                 </div>
 
                 <BackTop visibilityHeight={100} />

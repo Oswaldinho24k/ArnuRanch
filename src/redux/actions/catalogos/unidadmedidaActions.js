@@ -46,14 +46,14 @@ export const newCatUnidad=(unidadM)=>(dispatch, getState)=>{
 //EDIT
 
 export const EDIT_UNIDADMEDIDA_SUCCESS = 'EDIT_UNIDADMEDIDA_SUCCESS';
-export function editUnidadMSuccess(unidadM) {
+export function editUnidadMSuccess(unindadM) {
     return{
-        type: EDIT_UNIDADMEDIDA_SUCCESS, unidadM
+        type: EDIT_UNIDADMEDIDA_SUCCESS, unindadM
     }
 }
 
-export const editCatUnidad=(unidadM)=>(dispatch, getState)=>{
-    return api.editCatUnidad(unidadM)
+export const editCatUnidad=(unindadM)=>(dispatch, getState)=>{
+    return api.editCatUnidad(unindadM)
         .then(r=>{
             dispatch(editUnidadMSuccess(r))
 

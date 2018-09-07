@@ -71,7 +71,7 @@ const CatalogoForm = Form.create()(
                             label={"Linea de negocio"}
                             hasFeedback
                         >
-                            {getFieldDecorator('bl', {
+                            {getFieldDecorator('bl_id', {
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
@@ -97,7 +97,7 @@ const CatalogoForm = Form.create()(
                                 >
                                     {getFieldDecorator('concepto', {
                                         rules: [{
-                                            required: true, message: 'Completa el campo!',
+
                                         }],
 
                                     })(
@@ -112,7 +112,7 @@ const CatalogoForm = Form.create()(
                                     {getFieldDecorator('monto', {
                                         initialValue:0,
                                         rules: [{
-                                            required:true
+
                                         }],
                                     })(
                                         <InputNumber
@@ -129,7 +129,7 @@ const CatalogoForm = Form.create()(
                                 >
                                     {getFieldDecorator('pay_date', {
                                         initialValue:moment( new Date(), 'YYYY-MM-DD'),
-                                        rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
+                                        rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
                                     })(
                                         <DatePicker style={{width:'100%'}} />
                                     )}

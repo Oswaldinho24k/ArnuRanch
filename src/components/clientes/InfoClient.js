@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
 import {Form, Input, Button, Select, message, Checkbox} from 'antd';
 
-const Option = Select.Option;
+//const Option = Select.Option;
 
 const FormItem = Form.Item;
-const styles = {
+/*const styles = {
     form:{
         display:'flex',flexDirection:'column', justifyContent:'space-around', flexWrap:'wrap'
 
@@ -18,7 +18,7 @@ const styles = {
     buttonSave:{
         borderColor:'#72c6cd', backgroundColor:'#72c6cd', display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'
     }
-};
+};*/
 
 
 const InfoClient = ({form,editCliente,id,editMode, handleEditMode, client, address, email, phone_number, rfc, rfcR, phone, direct_contact, name_contact, phone_contact,

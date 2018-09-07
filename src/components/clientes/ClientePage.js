@@ -96,9 +96,7 @@ class ClientePage extends Component {
         if (value === undefined) {
             callback('Verifica el RFC ingresado');
         } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
-            }
+
             callback()
         }
     };
@@ -199,7 +197,7 @@ class ClientePage extends Component {
                 dataIndex: 'rfc'
             },
             {
-                title: 'Plazo de Crédito',
+                title: 'Plazo en días',
                 dataIndex: 'credit'
             },
 

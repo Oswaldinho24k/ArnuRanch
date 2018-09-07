@@ -29,6 +29,9 @@ import saleNotesReducer from './ganado/salenotesReducer';
 
 import dataDashReducer from "./dashGanado/dashGanadoReducer";
 
+import fierrosOReducer from './ganado/fierroOReducer'
+import fierrosNReducer from './ganado/fierroNReducer'
+
 /*--------Catalogos-------*/
 import catProductosReducer from "././catalogos/catProductosReducer"
 import unidadmedidaReducer from "./catalogos/unidadmedidaReducer";
@@ -37,6 +40,9 @@ import formadepagoReducer from "./catalogos/formadepagoReducer";
 import cuentasbancariasReducer from './catalogos/cuentasbancariasReducer'
 import almacenesReducer from "./catalogos/almacenesReducer";
 import presupuestosReducer from "./catalogos/presupuestosReducer";
+import acreedoresReducer from "./creditos/acreedoresReducer";
+import disposicionessReducer from "./creditos/disposicionesReducer";
+
 
 
 
@@ -77,7 +83,13 @@ const rootReducer = combineReducers({
     catPago:formadepagoReducer,
     catBank:cuentasbancariasReducer,
     catAlmacenes:almacenesReducer,
-    catPresupuesto:presupuestosReducer
+    catPresupuesto:presupuestosReducer,
+
+    fierrosO:fierrosOReducer,
+    fierrosN:fierrosNReducer,
+
+    acreedores:acreedoresReducer,
+    disposiciones:disposicionessReducer,
 
 
 });

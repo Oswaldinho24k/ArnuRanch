@@ -2,12 +2,12 @@ import React, {Fragment, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, message, Divider, Input} from 'antd';
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as comprasActions from '../../redux/actions/compras/comprasActions';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as proveedoresActions from '../../redux/actions/administracion/proveedoresActions';
-import moment from 'moment';
+//import moment from 'moment';
 
 import CompraForm from './CompraForm';
 
@@ -200,11 +200,11 @@ class Compras extends Component {
 
         ];
 
-        const canDelete = selectedRowKeys.length > 0;
+        /*const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
-        };
+        };*/
         if(!fetched)return(<MainLoader/>);
 
         return(
@@ -219,16 +219,7 @@ class Compras extends Component {
                   Compras
               </h2>
 
-              <div style={{paddingBottom:'1%'}}>
-                  <Input.Search
-                      enterButton
-                      onSearch={this.onSearch}
-                      onChange={this.handleSearch}
-                      value={searchText}
-                      style={{ width: 400 }}
-                      placeholder={'Buscar compra...'}
-                  />
-              </div>
+
 
 
               <Table

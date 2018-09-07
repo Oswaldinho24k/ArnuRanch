@@ -76,8 +76,7 @@ export const deleteInsumo = insumoId => (dispatch, getState) =>{
     return api.removeInsumo(insumoId)
         .then( r => {
             dispatch(deleteInsumoSuccess(insumoId));
-        }).
-        catch(e=>{
+        }).catch(e=>{
             
         });
 };

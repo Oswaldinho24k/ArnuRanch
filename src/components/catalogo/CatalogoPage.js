@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, message, Popconfirm, Tabs, Divider, Select, Input, BackTop,Table,Tag} from "antd";
-import moment from 'moment';
-import {Link} from 'react-router-dom';
+import {Button, message, Popconfirm, Tabs, Divider, Input, BackTop,Table} from "antd";
+//import moment from 'moment';
+//import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as catProductsActions from '../../redux/actions/catalogos/catProductosActions'
@@ -18,23 +18,11 @@ import EditCatalogos from './EditCatalogos'
 import './catalogos.css'
 
 
-const Option = Select.Option;
+//const Option = Select.Option;
 
-const style={
-    customFilterDropdown: {
-        padding: 8,
-        borderRadius: 6,
-        backgroundColor: 'white',
-        boxShadow: '0 1px 6px rgba(0, 0, 0, .2)'
-    },
 
-    customFilterDropdownInput: {
-        width: 130,
-        marginRight: 8,
-    }
-};
 
-const opciones = [
+/*const opciones = [
     {
         name :'Cerdos',
         id: 1
@@ -56,7 +44,7 @@ const opciones = [
         id:5
     },
 
-];
+];*/
 
 class CatalogoPage extends Component {
     state = {
@@ -141,7 +129,8 @@ class CatalogoPage extends Component {
 
         e.preventDefault();
         form.validateFields((err, values) => {
-            var ob={name:values.name,code:values.code,bl:values.bl}
+            //var ob={name:values.name,code:values.code,bl:values.bl}
+            values.bl_id = this.state.idLine
             values.bl = this.state.idLine
 
            if (!err) {
@@ -165,10 +154,10 @@ class CatalogoPage extends Component {
                    this.props.formadepagoActions.newCatPago(values)
                    this.setState({visible:false})
                }
-               if(activeTab==="account"){
+              /* if(activeTab==="account"){
                    this.props.cuentasbancariasActions.newCatBank(values)
                    this.setState({visible:false})
-               }
+               }*/
                if(activeTab==="warehouse"){
                    this.props.almacenesActions.newCatAlmacen(values)
                    this.setState({visible:false})
@@ -188,6 +177,8 @@ class CatalogoPage extends Component {
     handleEdit = (values) => {
 
         let {activeTab} = this.state;
+            values.bl_id = this.state.idLine
+            values.bl = this.state.idLine
 
                 if(activeTab==="products"){
                     console.log("mira Productos",values)
@@ -218,12 +209,12 @@ class CatalogoPage extends Component {
                     message.success('Guardado con éxito');
                     this.setState({visible:false})
                 }
-                if(activeTab==="account"){
+               /* if(activeTab==="account"){
                     this.props.cuentasbancariasActions.editCatBank(values)
                     console.log("Editado con éxito");
                     message.success('Guardado con éxito');
                     this.setState({visible:false})
-                }
+                }*/
                 if(activeTab==="warehouse"){
                     this.props.almacenesActions.editCatAlmacen(values)
                     console.log("Editado con éxito");
@@ -306,7 +297,12 @@ class CatalogoPage extends Component {
                 dataIndex: 'code',
                 key:'code'
             },
-            {title:'Linea de Negocio', dataIndex:'business_line_id',key:'business_line_id'},
+            {
+                title:'Linea de Negocio',
+                dataIndex:'bl',
+                render:bl=><p>{bl?bl.name:''}</p>,
+                key:'bl'
+            },
             {
                 title: 'Actions',
                 dataIndex: 'id',
@@ -346,7 +342,7 @@ class CatalogoPage extends Component {
 
                 <h1>Pagina de Catálogo </h1>
 
-                <div style={{paddingBottom:'1%'}}>
+                {/*} <div style={{paddingBottom:'1%'}}>
                     <Input.Search
                         enterButton
                         onSearch={this.onSearch}
@@ -354,7 +350,7 @@ class CatalogoPage extends Component {
                         style={{ width: 400 }}
                         placeholder={'Buscar ingreso...'}
                     />
-                </div>
+                </div>*/}
 
                 <BackTop visibilityHeight={100} />
                 <div className="card-container">
@@ -384,12 +380,12 @@ class CatalogoPage extends Component {
                                 dataSource={catPago}
                             />
                         </TabPane>
-                        <TabPane tab="Cuentas bancarias" key="account">
+                        {/*<TabPane tab="Cuentas bancarias" key="account">
                             <Table
                                 columns={columns}
                                 dataSource={catBank}
                             />
-                        </TabPane>
+                        </TabPane>*/}
                         <TabPane tab="Almacenes" key="warehouse">
                             <Table
                                 columns={columns}

@@ -2,7 +2,7 @@ import React, {Fragment, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, Button, message, Divider, Input} from 'antd';
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as gastosGanadoActions from '../../redux/actions/gastoGanado/gastoGanadoActions';
 
@@ -143,7 +143,7 @@ class GastosGanado extends Component {
 
     render(){
         let {gastos, fetched, gastosGanadoData, } = this.props;
-        let {visible, selectedRowKeys, searchText, canReset} = this.state;
+        let {visible, searchText, canReset} = this.state;
 
         const columns = [
             {
@@ -165,11 +165,11 @@ class GastosGanado extends Component {
 
         ];
 
-        const canDelete = selectedRowKeys.length > 0;
+       /* const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
-        };
+        };*/
         if(!fetched)return(<MainLoader/>);
 
         return(

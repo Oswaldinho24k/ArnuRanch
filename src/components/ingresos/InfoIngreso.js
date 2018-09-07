@@ -94,6 +94,16 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             )}
 
                         </FormItem>
+                    <FormItem
+                        label="Fecha de venta"
+                    >
+                        {form.getFieldDecorator('sale_date', {
+                            initialValue:moment(sale_date),
+                            rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
+                        })(
+                            <DatePicker style={{width:'100%'}}  disabled={!editMode}/>
+                        )}
+                    </FormItem>
 
                     <FormItem
                         label="Concepto"
@@ -204,7 +214,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                                 )}
                             </FormItem>
 
-                            {is_sale?
+
                              <div>
                            <FormItem
                             label={"Razón Social del Cliente"}
@@ -212,7 +222,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                             {form.getFieldDecorator('client_id',{
                                 initialValue:client?client.client:'',
                                 rules: [{
-                                    required: true, message: 'Completa el campo!',
+                                    required: false, message: 'Completa el campo!',
                                 }],
                             })(
                                 <Select
@@ -229,16 +239,7 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                         </FormItem>
                        
 
-                        <FormItem
-                            label="Fecha de venta"
-                        >
-                            {form.getFieldDecorator('sale_date', {
-                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
-                                rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
-                            })(
-                                <DatePicker style={{width:'100%'}}  disabled={!editMode}/>
-                            )}
-                        </FormItem>
+
 
                         <FormItem
                             label="Cantidad"
@@ -281,8 +282,8 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                                 <Input  disabled={!editMode} />
                             )}
                         </FormItem>
-                    </div>:''
-                    }
+                    </div>:
+
 
                             {/* <FormItem>
                                 {getFieldDecorator('no_seller_check', {initialValue: false})(

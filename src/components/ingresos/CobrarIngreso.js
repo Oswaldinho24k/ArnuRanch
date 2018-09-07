@@ -1,13 +1,16 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button, Modal, message, Popconfirm, Tag, Divider, Input, Icon, BackTop, Table} from "antd";
+import {Button, Modal, message, Popconfirm, Tag, Divider, Input, Icon, BackTop, Table, DatePicker} from "antd";
 import moment from 'moment';
 import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 
 import TablePageB from "../clientes/TablePageB";
+
+
+const {RangePicker} = DatePicker
 
 const style={
     customFilterDropdown: {
@@ -115,6 +118,15 @@ class CobrarIngreso extends Component {
         });
     };
 
+    handleDates=(a, b)=>{
+        let basePath = 'http://localhost:8000/api/ingresos/ingresos/?';
+        //let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?';
+        let url = basePath+`date1=${new Date(b[0])}&date2=${new Date(b[1])}`
+        console.log(a, b)
+        this.props.ingresosActions.getIngresos(url);
+        this.setState({canReset:true})
+    }
+
     render() {
 
         const columns = [
@@ -142,15 +154,20 @@ class CobrarIngreso extends Component {
                 render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}}>Cobrado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Cobrar</Tag>}</span>
             },
             {
-                title: 'Registro',
-                dataIndex: 'created',
-                render: created => moment(created).startOf(3, 'days').calendar()
+                title: 'Status',
+                dataIndex:'sale_date',
+                render:(sale_date, obj)=>{
+
+                    return(<span>{
+
+                        obj.paid?<Tag color="green">Todo Bien</Tag>:obj.client && sale_date && moment.duration(new Date() - new Date(sale_date)).asDays() > parseInt(obj.client.credit) ?<Tag color="#f50">Vencido</Tag>:<Tag color="green">En tiempo</Tag>
+                    }</span>)}
 
             },
         ];
 
 
-        const { selectedRowKeys, data, filtered  } = this.state;
+        const { selectedRowKeys, data, filtered , searchText } = this.state;
         const canDelete = selectedRowKeys.length > 0;
         const rowSelection = {
             selectedRowKeys,
@@ -168,6 +185,19 @@ class CobrarIngreso extends Component {
                 </div>
 
                 <h1>Cuentas por Cobrar</h1>
+
+                <div style={{marginBottom:'1%', display:'flex'}}>
+                    <Input.Search
+                        enterButton
+                        onSearch={this.onSearch}
+                        onChange={this.handleSearch}
+                        value={searchText}
+                        style={{ width: 400 }}
+                        placeholder={'Buscar ingreso...'}
+                    />
+                    <Divider type="vertical" />
+                    <RangePicker onChange={this.handleDates} />
+                </div>
 
                 <BackTop visibilityHeight={100} />
 

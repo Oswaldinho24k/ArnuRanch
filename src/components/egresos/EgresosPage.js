@@ -280,17 +280,22 @@ class EgresosPage extends Component {
                 dataIndex: 'no_check',
                 render:no_check=> <span>{no_check && no_check !==null ?<span>{no_check}</span>:'No hay factura'}</span>
             },
-            {
+          /*  {
                 title: 'Status',
-                dataIndex:'paid',
-                render:paid=><span>{paid?<Tag color="#87d068" style={{width:70, textAlign:'center'}} >Pagado</Tag>:<Tag color="#f50" style={{width:70, textAlign:'center'}}>Por Pagar</Tag>}</span>
-            },
-            {
+                dataIndex:'sale_date',
+                render:(sale_date, obj)=>{
+
+                    return(<span>{
+
+                        obj.client && sale_date && moment.duration(new Date() - new Date(sale_date)).asDays() > parseInt(obj.client.credit) ?<Tag color="#f50">Vencido</Tag>:<Tag color="green">En tiempo</Tag>
+                    }</span>)}
+            },*/
+           /* {
                 title: 'Registro',
                 dataIndex: 'created',
                 render: created => moment(created).startOf(3, 'days').calendar()
 
-            },
+            },*/
         ];
 
 

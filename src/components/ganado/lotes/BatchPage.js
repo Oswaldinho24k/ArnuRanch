@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Table, Button, Modal, Input, Divider, message, Popconfirm} from 'antd';
+import {Table, Button, Modal, Input, Divider, message} from 'antd';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
@@ -47,11 +47,11 @@ const columns = [
 
 
 
-const rowSelection = {
+/*const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     }
-};
+};*/
 
 class BatchPage extends Component {
     state = {

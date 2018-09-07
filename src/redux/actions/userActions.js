@@ -34,6 +34,10 @@ import {getCatPagos} from "./catalogos/formadepagoActions";
 import {getCatBanks} from "./catalogos/cuentasbancariasActions";
 import {getCatAlmacenes} from "./catalogos/almacenesActions";
 import {getCatPresupuestos} from "./catalogos/presupuestosActions";
+import {getFierrosN} from "./ganado/fierroNActions";
+import {getFierrosO} from "./ganado/fierroOActions";
+import {getAcreedores} from "./creditos/acreedoresActions";
+import {getDisposiciones} from "./creditos/disposicionesActions";
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -91,42 +95,57 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         //dispatch the functions
         dispatch(getUser());
         dispatch(getAllUsers());
+
+        /*******ganado*******/
+
         dispatch(getAnimals());
         dispatch(getLotes());
         dispatch(getRazas());
         dispatch(getCorrales());
-        dispatch(getProveedores());
-        dispatch(getClientes());
         dispatch(getPesadas());
-        dispatch(getIngresos());
-        dispatch(getFormulas());
-        dispatch(getItems());
-        dispatch(getInsumos());
-        dispatch(getEgresos());
-        dispatch(getEmpresas());
-        dispatch(getVacunas());
-        dispatch(getLines());
-        dispatch(getLiSearch());
-        dispatch(getAlmacenes());
-        
         dispatch(getFacturas());
         dispatch(getFaSearch());
         dispatch(getAnSearch());
         dispatch(getLoSearch());
-        
+        dispatch(getSaleNotes());
+        dispatch(getReporte());
+        //fierros
+        dispatch(getFierrosN())
+        dispatch(getFierrosO())
+
+        dispatch(getFormulas());
+        dispatch(getVacunas());
+
+        /*******admin*******/
+
+
+        dispatch(getProveedores());
+        dispatch(getClientes());
+
+        dispatch(getIngresos());
+
+        dispatch(getItems());
+        dispatch(getInsumos());
+        dispatch(getEgresos());
+        dispatch(getEmpresas());
+
+        dispatch(getLines());
+        dispatch(getLiSearch());
+        dispatch(getAlmacenes());
+
         dispatch(getCuentas());
         dispatch(getCuSearch());
         dispatch(getClSearch());
         dispatch(getPrSearch());
-        dispatch(getCompras());
+
         dispatch(getCoSearch());
         dispatch(getGgSearch());
         dispatch(getGastos());
         dispatch(getDataDash());
 
-        dispatch(getSaleNotes());
+        dispatch(getCompras());
 
-        dispatch(getReporte());
+
         //catalaogos
         dispatch(getCatProduts());
         dispatch(getCatUnidades());
@@ -135,6 +154,25 @@ export const checkIfUser=()=>(dispatch, getState)=>{
         dispatch(getCatBanks());
         dispatch(getCatAlmacenes());
         dispatch(getCatPresupuestos());
+
+
+
+        //creditos y acreedores
+        dispatch(getAcreedores())
+        dispatch(getDisposiciones())
+
+        /*******cerdos*******/
+
+        /*******aves*******/
+
+        /*******alimentos*******/
+
+        /*******vacunas*******/
+
+
+
+        
+
 
 
     }

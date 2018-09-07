@@ -24,10 +24,18 @@ const styles = {
 const UsuarioForm = Form.create()(
     (props) => {
         const{visible, onCancel, onCreate, form, options_sections, options_permissions, user ,canEdit} = props;
+        console.log(user)
         const{getFieldDecorator} = form;
+        const {profile} = user
+        let theKeys = []
+        if(profile){
+            let sectionKeys = Object.keys(profile)
 
-        let section = []
-        
+            for(let key of sectionKeys){
+                if(profile[key])theKeys.push(key)
+            }
+
+        }
 
         return(
             <Modal
@@ -90,7 +98,7 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null
+                            initialValue:theKeys
                                 
                             })(
                                 <Select mode="multiple" placeholder={"Selecciona un Permiso"}  >
@@ -106,7 +114,7 @@ const UsuarioForm = Form.create()(
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 }],
-                           //initialValue:user.is_staff?'super':user.profile?user.profile.admin?'admin':'ganado':null                            
+                           initialValue:user.is_superuser?['SuperUser', 'Admin', 'Just user']:user.is_staff?['Admin', 'Just user']:['Just User']
                             })(
                                 <Select mode="multiple" placeholder={"Selecciona un Permiso"}  >
                                     {options_permissions}

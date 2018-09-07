@@ -10,17 +10,18 @@ const {TextArea} = Input;
 
 
 
-const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options, facturas, searchFactura, saveFactura, stateFactura}) => {
+const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEditMode, id,empresa, options_raza, tipo_animal, arete_siniga, merma,  arete_rancho, fecha_entrada, peso_entrada, descripcion, raza, color, options_empresa,lote, ref_factura_original, owner, costo_inicial, fierro_nuevo, fierro_original , costo_kilo, options, facturas, searchFactura, saveFactura, stateFactura, fierrosO, fierrosN, fierroO, fierroN}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
+            console.log(values)
             if (!err) {
                 if(!values.lote_id) delete values.lote_id;
                 if(!values.raza_id) delete values.raza_id;
                 if(!values.empresa_id) delete values.empresa_id;
-                /*if(!values.lote_id) values['lote_id'] = null;
-                if(!values.raza_id) values['raza_id'] = null;
+
+                /*if(!values.raza_id) values['raza_id'] = null;
                 if(!values.empresa_id) values['empresa_id'] = null;*/
                 if(!values.tipo_animal) delete values.tipo_animal;
                 if(!values.ref_factura_original_id) delete values.ref_factura_original_id;
@@ -32,12 +33,12 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                 values['ref_factura_original_id'] = stateFactura !==null ? stateFactura:ref_factura_original && ref_factura_original !==null?ref_factura_original.id:null;
                 editAnimal(values)
                     .then(r=>{
+                        console.log(r)
                         message.success('Editado con éxito');
                         handleEditMode()
                     }).catch(e=>{
-                    for (let i in e.response.data){
-                        message.error(e.response.data[i])
-                    }
+                        message.error('Ocurrió un error')
+                        console.log(e)
                 })
             }
             if (Array.isArray(e)) {
@@ -63,6 +64,8 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
     ];
 
     let tipos = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
+    fierrosO = fierrosO.map((f, key)=><Option key={f.id} value={parseInt(f.id, 10)}>{f.codigo}</Option>)
+    fierrosN = fierrosN.map((f, key)=><Option key={f.id} value={parseInt(f.id, 10)}>{f.codigo}</Option>)
 
 
     return (
@@ -319,9 +322,10 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
 
 
 
-               <div style={{display:'flex', justifyContent:'space-around'}}>
+               <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
                    <FormItem
-                       label="Fierro Original">
+                       label="Fierro Original"
+                       style={{width:'45%'}}>
 
                        {fierro_original&&!editMode?
 
@@ -344,6 +348,7 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                    <FormItem
                        onChange={()=>{}}
                        label="Fierro Nuevo"
+                       style={{width:'45%'}}
                    >
                        {fierro_nuevo&&!editMode?
                            <img src={fierro_nuevo} alt="" style={{width:'200px', height:'200px'}}/>:
@@ -361,6 +366,45 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                                </Upload.Dragger>)}
                            </div>}
 
+                   </FormItem>
+
+
+                   <FormItem
+                       label={"Fierro Original"}
+                       style={{width:'45%'}}
+                   >
+                       {form.getFieldDecorator('fierroO_id', {
+                           initialValue:fierroO?fierroO.id:'',
+                           props:{
+                               placeholder:'Selecciona un Lote',
+                           }
+                       })(
+                           <Select  placeholder={"Selecciona un Fierro Original"}  disabled={!editMode}>
+                               {fierrosO}
+                           </Select>
+
+                       )}
+
+                       {fierroO?<img src={fierroO.imagen} alt="" style={{width:'200px', height:'200px'}}/>:''}
+                   </FormItem>
+
+                   <FormItem
+                       label={"Fierro Nuevo"}
+                       style={{width:'45%'}}
+                   >
+                       {form.getFieldDecorator('fierroN_id', {
+                           initialValue:fierroN?fierroN.id:'',
+                           props:{
+                               placeholder:'Selecciona un Fierro Nuevo',
+                           }
+                       })(
+
+                           <Select  placeholder={"Selecciona un Fierro Nuevo"}  disabled={!editMode}>
+                               {fierrosN}
+                           </Select>
+
+                       )}
+                       {fierroN?<img src={fierroN.imagen} alt="" style={{width:'200px', height:'200px'}}/>:''}
                    </FormItem>
                </div>
 

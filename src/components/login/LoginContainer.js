@@ -23,6 +23,7 @@ class LoginContainer extends Component {
     logIn=(data)=>{
         this.props.userActions.logIn(data)
             .then(r=>{
+                console.log('eluser', r)
                 this.props.history.push('/');
                 message.success('Welcome')
             }).catch(e=>{

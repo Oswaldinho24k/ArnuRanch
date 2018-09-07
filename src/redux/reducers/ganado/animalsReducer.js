@@ -10,6 +10,8 @@ function object(state={}, action){
     switch(action.type){
         case GET_SINGLE_ANIMAL_SUCCESS:
             return action.animal;
+        case EDIT_ANIMAL_SUCCESS:
+            return action.animal;
         default:
             return state;
     }
@@ -23,6 +25,7 @@ function list(state=[], action){
         case SAVE_ANIMAL_SUCCESS:
             return [action.animal, ...state];
         case EDIT_ANIMAL_SUCCESS:
+            console.log(action.animal)
             let newList = state.filter(a=>{
                 return a.id!=action.animal.id
             });

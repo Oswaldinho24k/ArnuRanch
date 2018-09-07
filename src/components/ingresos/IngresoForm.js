@@ -3,7 +3,7 @@ import { Form, Input, Button, Select, InputNumber, Checkbox, Modal,DatePicker } 
 import moment from 'moment';
 
 const FormItem = Form.Item;
-const TextArea = Input;
+//const TextArea = Input;
 const Option = Select.Option;
 
 const styles = {
@@ -24,7 +24,7 @@ const styles = {
 
 const FormIngreso = Form.create()(
     (props) => {
-        const{searchEmpresas,options_empresas,saveCompany,visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, lineHandle, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable, handleSale  }=props;
+        const{searchEmpresas,options_empresas,saveCompany,visible, venta, onCancel, onCreate, form, options_clientes, options, handleChange, factura, searchLine, cuentas, searchCuenta, cuentaHandle, saveLine, searchCliente, saveClient, saveReceivable,   }=props;
         const {getFieldDecorator} = form;
 
         return(
@@ -89,6 +89,16 @@ const FormIngreso = Form.create()(
                                 }
 
                             </Select>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Fecha de venta"
+                        >
+                            {getFieldDecorator('sale_date', {
+                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
+                                rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
+                            })(
+                                <DatePicker style={{width:'100%'}} />
                             )}
                         </FormItem>
 
@@ -217,16 +227,7 @@ const FormIngreso = Form.create()(
                          </FormItem>
                        
 
-                        <FormItem
-                            label="Fecha de venta"
-                        >
-                            {getFieldDecorator('sale_date', {
-                                initialValue:moment( new Date(), 'YYYY-MM-DD'),
-                                rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
-                            })(
-                                <DatePicker style={{width:'100%'}} />
-                            )}
-                        </FormItem>
+
 
                         <FormItem
                             label="Cantidad"

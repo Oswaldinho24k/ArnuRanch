@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, Divider, Table, } from 'antd';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+//import {bindActionCreators} from 'redux';
 import MainLoader from "../common/Main Loader";
 
 class FacturaDetalle extends Component{

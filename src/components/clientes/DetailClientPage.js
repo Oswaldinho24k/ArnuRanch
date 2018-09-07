@@ -20,9 +20,7 @@ class DetailClientPage extends Component{
         if (value === undefined) {
             callback('Verifica el RFC ingresado');
         } else {
-            if(value.length < 13){
-                callback('Recuerda que son trece dígitos');
-            }
+
             callback()
         }
     };

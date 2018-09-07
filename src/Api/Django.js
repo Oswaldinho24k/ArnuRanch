@@ -6,52 +6,56 @@ let debug = true;
 
 //let logInUrl = 'http://localhost:8000/api/auth/login/';
 //let logOutUrl = 'http://localhost:8000/api/auth/logout/';
-let animalsUrl = 'http://localhost:8000/api/ganado/animals/';
+/*************************Users Urls***************************/
+
 let tokenUrl = 'http://localhost:8000/api/auth/token-auth/';
 let userUrl = 'http://localhost:8000/api/auth/me/';
+let allUsersUrl = 'http://localhost:8000/api/auth/users/';
+let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
+
+/********************Ganado Urls*******************/
+
+let animalsUrl = 'http://localhost:8000/api/ganado/animals/';
 let lotesUrl = 'http://localhost:8000/api/ganado/lotes/';
 let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
 let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
 let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
-let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
-let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
-let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
-let allUsersUrl = 'http://localhost:8000/api/auth/users/';
-let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
 let razasUrl = 'http://localhost:8000/api/ganado/razas/';
-// planta_alimentos
+let gastosGanadoUrl = 'http://localhost:8000/api/egresos/gastos/';
+let saleNotesUrl = 'http://localhost:8000/api/ganado/sale_notes/';
+let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
+let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
+let fierroOUrl = 'http://localhost:8000/api/ganado/fierrosO/';
+let fierroNUrl = 'http://localhost:8000/api/ganado/fierrosN/';
+
+
+/********************Planta de Alimentos Urls*******************/
+
 let insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
 let itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
 let formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
 let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
 
-//empresas
-let empresasUrl = 'http://localhost:8000/api/ingresos/empresas/';
-let blinesUrl = 'http://localhost:8000/api/ingresos/blines/';
-//vacunas
-let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
-//almacen
+/********************Egresos Urls*******************/
+
+let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
+let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
+
+/********************Ingresos Urls*******************/
+
 let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
 let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
-//facturas
-let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
-//cuentas
+let empresasUrl = 'http://localhost:8000/api/ingresos/empresas/';
+let blinesUrl = 'http://localhost:8000/api/ingresos/blines/';
+
+let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
+let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
 let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
-//compras
-let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
-//gastoGanado
-let gastosGanadoUrl = 'http://localhost:8000/api/egresos/gastos/';
+/********************Vacunas Urls*******************/
 
-//notas de venta 
-let saleNotesUrl = 'http://localhost:8000/api/ganado/sale_notes/';
-//endpoint de resumen de reportes
-let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
+let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
 
-
-//DashGanado
-let dashGanadoUrl = 'http://localhost:8000/api/ganado/resumen/';
-
-//Catalogos
+/********************Catologos Urls*******************/
 
 let catProductsUrl = 'http://localhost:8000/api/catalogos/products/';
 let catUnidadesUrl ='http://localhost:8000/api/catalogos/unidades/'
@@ -61,51 +65,79 @@ let catBankUrl ='http://localhost:8000/api/catalogos/banks/';
 let catAlmacenUrl = 'http://localhost:8000/api/catalogos/almacenes/';
 let catPresupuestosUrl = 'http://localhost:8000/api/catalogos/presupuestos/';
 
+/********************Creditos Urls*******************/
+let acreedoresUrl = 'http://localhost:8000/api/creditos/acreedores/'
+let disposicionesUrl = 'http://localhost:8000/api/creditos/disposiciones/'
 
 
-//heroku urls
+
+
+
+
 if(!debug){
-
     /******************************AWS Urls********************************/
-    animalsUrl = 'https://rancho.davidzavala.me/api/ganado/animals/';
+
+    /********************Users Urls*******************/
     tokenUrl = 'https://rancho.davidzavala.me/api/auth/token-auth/';
     userUrl = 'https://rancho.davidzavala.me/api/auth/me/';
+    allUsersUrl = 'https://rancho.davidzavala.me/api/auth/users/';
+    profilesUrl = 'https://rancho.davidzavala.me/api/auth/profiles/';
+
+    /********************Ganado Urls*******************/
+    animalsUrl = 'https://rancho.davidzavala.me/api/ganado/animals/';
     lotesUrl = 'https://rancho.davidzavala.me/api/ganado/lotes/';
     corralesUrl = 'https://rancho.davidzavala.me/api/ganado/corrales/';
     animalGastoUrl = 'https://rancho.davidzavala.me/api/ganado/alimentos/';
     pesadasUrl = 'https://rancho.davidzavala.me/api/ganado/pesadas/';
+    razasUrl = 'https://rancho.davidzavala.me/api/ganado/razas/';
+    facturasUrl = 'https://rancho.davidzavala.me/api/ganado/facturas/';
+    saleNotesUrl = 'https://rancho.davidzavala.me/api/ganado/sale_notes/';
+    resumenUrl = 'https://rancho.davidzavala.me/api/ganado/resumen/';
+    fierroOUrl = 'https://rancho.davidzavala.me/api/ganado/fierrosO/';
+    fierroNUrl = 'https://rancho.davidzavala.me/api/ganado/fierrosN/';
+
+
+
+    /********************Egresos Urls*******************/
     proveedoresUrl = 'https://rancho.davidzavala.me/api/egresos/proveedores/';
+    egresosUrl = 'https://rancho.davidzavala.me/api/egresos/egresos/';
+    comprasUrl = 'https://rancho.davidzavala.me/api/egresos/compras/';
+    gastosGanadoUrl = 'https://rancho.davidzavala.me/api/egresos/gastos/';
+
+    /********************Ingresos Urls*******************/
     clientesUrl = 'https://rancho.davidzavala.me/api/ingresos/clientes/';
     salesUrl = 'https://rancho.davidzavala.me/api/ingresos/ingresos/';
-    allUsersUrl = 'https://rancho.davidzavala.me/api/auth/users/';
-    profilesUrl = 'https://rancho.davidzavala.me/api/auth/profiles/';
-    razasUrl = 'https://rancho.davidzavala.me/api/ganado/razas/';
-    // planta_alimentos
-    insumosUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/insumos/';
-    itemsUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/items/';
-    formulasUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/formulas/';
-    egresosUrl = 'https://rancho.davidzavala.me/api/egresos/egresos/';
-
-    //empresas
     empresasUrl = 'https://rancho.davidzavala.me/api/ingresos/empresas/';
     blinesUrl = 'https://rancho.davidzavala.me/api/ingresos/blines/';
-    //vacunas
-    vacunasUrl = 'https://rancho.davidzavala.me/api/vacunas/vacunas/';
+    cuentasUrl = 'https://rancho.davidzavala.me/api/ingresos/cuentas/';
     //almacen
     almacenesUrl = 'https://rancho.davidzavala.me/api/inventario/almacenes/';
     itemsAlmacenUrl = 'https://rancho.davidzavala.me/api/inventario/items/';
-    //facturas
-    facturasUrl = 'https://rancho.davidzavala.me/api/ganado/facturas/';
-    //cuentas
-    cuentasUrl = 'https://rancho.davidzavala.me/api/ingresos/cuentas/';
-    //compras
-    comprasUrl = 'https://rancho.davidzavala.me/api/egresos/compras/';
-    //gastoGanado
-    gastosGanadoUrl = 'https://rancho.davidzavala.me/api/egresos/gastos/';
-    //notas de venta 
-    saleNotesUrl = 'https://rancho.davidzavala.me/api/ganado/sale_notes/';
-    //resumen reportes
-    resumenUrl = 'https://rancho.davidzavala.me/api/ganado/resumen/';
+
+
+    /********************PlantaAlimentos Urls*******************/
+    insumosUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/insumos/';
+    itemsUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/items/';
+    formulasUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/formulas/';
+
+
+    /********************Vacunas Urls*******************/
+    vacunasUrl = 'https://rancho.davidzavala.me/api/vacunas/vacunas/';
+
+
+    /********************Catalogos Urls*******************/
+    catProductsUrl = 'https://rancho.davidzavala.me/api/catalogos/products/';
+    catUnidadesUrl ='https://rancho.davidzavala.me/api/catalogos/unidades/'
+    catCfdisUrl = 'https://rancho.davidzavala.me/api/catalogos/cfdis/';
+    catPagosUrl = 'https://rancho.davidzavala.me/api/catalogos/pagos/';
+    catBankUrl ='https://rancho.davidzavala.me/api/catalogos/banks/';
+    catAlmacenUrl = 'https://rancho.davidzavala.me/api/catalogos/almacenes/';
+    catPresupuestosUrl = 'https://rancho.davidzavala.me/api/catalogos/presupuestos/';
+
+    /********************Creditos Urls*******************/
+    acreedoresUrl = 'https://rancho.davidzavala.me/api/creditos/acreedores/'
+    disposicionesUrl = 'https://rancho.davidzavala.me/api/creditos/disposiciones/'
+
 }
 
 
@@ -113,6 +145,347 @@ if(!debug){
 
 
 const api = {
+    /*******************Creditos y Acreedores*****************/
+
+    getAcreedores:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:acreedoresUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    newAcreedor:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:acreedoresUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', item)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    editAcreedor:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:acreedoresUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(item.id+'/', item)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    deleteAcreedor:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:acreedoresUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(item.id+'/')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+
+    getDisposiciones:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:disposicionesUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    newDisposicion:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:disposicionesUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', item)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    editDisposicion:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:disposicionesUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(item.id+'/', item)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    deleteDisposicion:(item)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:disposicionesUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(item.id+'/')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+
+
+
+
+    /*******************Upload fierrosO*****************/
+    getFierrosO:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:fierroOUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    newFierrosO:(object)=>{
+        let data = new FormData();
+
+        for ( var key in object ) {
+            data.append(key, object[key]);
+        }
+
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:fierroOUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', data)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    editFierroO:(object)=>{
+
+        let data = new FormData();
+        for ( var key in object ) {
+            data.append(key, object[key]);
+        }
+
+
+        if(object.imagen){
+
+            if(object.imagen === null || object.imagen === undefined || typeof object.imagen === 'string'){
+                data.delete('imagen')
+            }else{
+                data.append('imagen', object.imagen.file.originFileObj);
+            }
+        }else{
+            data.delete('fierro_original')
+        }
+
+
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: fierroOUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(object.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+
+                    reject(error);
+                });
+
+
+        });
+    },
+    /*******************Upload fierrosN*****************/
+    getFierrosN:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:fierroNUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    newFierrosN:(object)=>{
+        let data = new FormData();
+
+        for ( var key in object ) {
+            data.append(key, object[key]);
+        }
+
+
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject){
+            const instance = axios.create({
+                baseURL:fierroNUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', data)
+                .then(function(response){
+                    resolve(response.data)
+                })
+                .catch(function(error){
+                    reject(error)
+                })
+        })
+    },
+    editFierroN:(obj)=>{
+
+        let data = new FormData();
+        for ( var key in obj ) {
+            data.append(key, obj[key]);
+        }
+
+
+        if(obj.imagen){
+
+            if(obj.imagen === null || obj.imagen === undefined || typeof obj.imagen === 'string'){
+                data.delete('imagen')
+            }else{
+                data.append('imagen', obj.imagen.file.originFileObj);
+            }
+        }else{
+            data.delete('fierro_original')
+        }
+
+
+
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: fierroNUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(obj.id+'/', data)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+
+                    reject(error);
+                });
+
+
+        });
+    },
+
     /***********************Reporte********************/
     getReporte:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));

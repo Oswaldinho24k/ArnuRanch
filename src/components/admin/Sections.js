@@ -27,6 +27,7 @@ import Inventario from "../inventario/Inventario";
 import Users from "../users/Users";
 import UserDetail from "../users/UserDetail";
 import CatalogoPage from '../catalogo/CatalogoPage';
+import RequisicionesPage from '../compras/RequisicionesPage';
 
 
 
@@ -56,6 +57,12 @@ import Compras from "../compras/Compras";
 import GastosGanado from "../gastosGanado/GastosGanado";
 import SaleNotesPage from '../ganado/saleNotes/SaleNotesPage';
 import SaleNoteDetail from '../ganado/saleNotes/SaleNoteDetail';
+import ViajesDetailComponent from "../compras/ViajesDetailComponent";
+import FierrosPage from "../ganado/fierros/FierrosPage";
+import BasicTable from "./BasicTable";
+import AcreedoresPage from "../creditos/AcreedoresPage";
+import AcreedoresDetailPage from "../creditos/AcreedoresDetailPage";
+import DisposicionDetailPage from "../creditos/DisposicionDetailPage";
 
 
 export const paths = {
@@ -105,6 +112,13 @@ const Sections = ({props}) => {
                 <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
                 <Route path={'/admin/proveedores'} component={ProovedorPage}/>
 
+                <Route path={'/admin/acreedores/:id'} component={AcreedoresDetailPage}/>
+                <Route path={'/admin/acreedores'} component={AcreedoresPage}/>
+                <Route path={'/admin/disposicion/:id'} component={DisposicionDetailPage}/>
+
+                <Route path={'/admin/requisiciones'} component={RequisicionesPage}/>
+                <Route path={'/admin/viajes/:id'} component={ViajesDetailComponent}/>
+
                 {/*****************************Catalogo*************************************/}
                 <Route path={'/admin/catalogo'} component={CatalogoPage}/>
                 {/***************************** Ganado ROUTES *****************************/}
@@ -118,6 +132,8 @@ const Sections = ({props}) => {
                 <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
                 <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>
                 <Route path='/admin/saleNotes' component={SaleNotesPage}/>
+                <Route path='/admin/fierros' component={FierrosPage}/>
+
                 
 
                 <Route path={'/admin/reportes'} component={ReportesPage}/>
@@ -129,6 +145,24 @@ const Sections = ({props}) => {
 
                 <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
                 <Route path={'/admin/vacunas'} component={VacunasPage}/>
+
+                {/* Section Cerdos */}
+
+                <Route path={'/admin/cerdos/:id'} component={BasicTable}/>
+                <Route path={'/admin/cerdos'} component={BasicTable}/>
+                <Route path={'/admin/lotes/cerdos'} component={BasicTable}/>
+                <Route path={'/admin/casetas/cerdos'} component={BasicTable}/>
+                <Route path={'/admin/eventos/cerdos'} component={BasicTable}/>
+
+                {/* Section Aves */}
+
+                <Route path={'/admin/eventos/aves'} component={BasicTable}/>
+                <Route path={'/admin/aves/:id'} component={BasicTable}/>
+                <Route path={'/admin/aves'} component={BasicTable}/>
+                <Route path={'/admin/lotes/aves'} component={BasicTable}/>
+
+
+
  
 
 

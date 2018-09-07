@@ -148,7 +148,7 @@ const ClienteForm = Form.create()(
 
 
                         <FormItem
-                            label="Plazo de crédito"
+                            label="Plazo de crédito en días"
                         >
                             {getFieldDecorator('credit', {
                                 rules: [{

@@ -27,9 +27,6 @@ const CompraForm = Form.create()(
         const{visible, onCancel, onCreate, form, blines, searchLine, proveedores, searchProveedor, saveProvider, saveLine} = props;
         const{getFieldDecorator} = form;
 
-        console.log("PROVEDOREs",proveedores)
-        console.log("BLINES", blines)
-
 
         return(
             <Modal

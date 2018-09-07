@@ -3,7 +3,7 @@ import FormSalidas from '../animals/FormSalida';
 import {Card, List, Divider} from 'antd'
 import {Link} from 'react-router-dom'
 import MainLoader from '../../common/Main Loader';
-import {bindActionCreators} from "redux";
+//import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 

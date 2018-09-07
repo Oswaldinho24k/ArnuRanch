@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as saleNotesActions from '../../../redux/actions/ganado/salenotesActions'
-import {Table, Divider, Popconfirm, Modal, Button, message} from 'antd'
+import {Table, Divider, Modal, Button, message} from 'antd'
 import MainLoader from '../../common/Main Loader';
 import moment from 'moment'
 import {Link} from 'react-router-dom'
@@ -32,11 +32,11 @@ const columns = [
     width:200
 }];
 
-const rowSelection = {
+/*const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
-};
+};*/
 
 class SaleNotesPage extends Component {
     state={
@@ -89,7 +89,7 @@ class SaleNotesPage extends Component {
     
   render() {
     let {saleNotes, fetched, allData} = this.props;
-    let {visible, canUse, selectedRowKeys} = this.state;
+    let {visible, selectedRowKeys} = this.state;
     const rowSelection = {
         selectedRowKeys,
         onChange: this.onSelectChange,
@@ -115,7 +115,7 @@ class SaleNotesPage extends Component {
             <h2>Notas de Venta</h2> 
             <h5>Animales Vendidos: {count}</h5>
             <Table
-                pagination={false}
+
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={saleNotes}

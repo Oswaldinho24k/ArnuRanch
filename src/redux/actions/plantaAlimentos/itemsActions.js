@@ -77,9 +77,8 @@ export const deleteItem = itemId => (dispatch, getState) =>{
         .then( r => {
             dispatch(deleteItemSuccess(itemId));
             return r;
-        }).
-        catch(e=>{
-            
+        })
+        .catch(e=>{
             return e;
         });
 };

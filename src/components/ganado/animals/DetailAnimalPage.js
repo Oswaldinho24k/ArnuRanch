@@ -135,7 +135,7 @@ class DetailAnimalPage extends Component {
 
 
     render() {
-        const {animal, fetched, razas, lotes, empresas, facturas} = this.props;
+        const {animal, fetched, razas, lotes, empresas, facturas, fierrosO, fierrosN} = this.props;
 
         const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
         const rowSelection = {
@@ -156,6 +156,7 @@ class DetailAnimalPage extends Component {
         let options_raza = razas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
         let options_empresa = empresas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.company}</Option>);
 
+
         let contentList = {
             Detalle: <BasicInfoAndEdit
                  {...animal}
@@ -170,7 +171,9 @@ class DetailAnimalPage extends Component {
                 options_raza={options_raza}
                 options_empresa={options_empresa}
                 handleEmpresa={this.handleEmpresa}
-                wEmpresa={wEmpresa}/>,
+                wEmpresa={wEmpresa}
+                fierrosO={fierrosO}
+                fierrosN={fierrosN}/>,
             Gastos: <GastosComponent
 
                 animal={animal}
@@ -241,18 +244,15 @@ function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.key;
 
 
-
-    console.log(id)
-
-
-
     return {
+        fierrosO:state.fierrosO.list,
+        fierrosN:state.fierrosN.list,
         animal:state.animals.object,
         lotes:state.lotes.list,
         razas:state.razas.list,
         facturas:state.facturas.facturaSearch,
         empresas:state.empresas.list,
-        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined && state.facturas.list !== undefined,
+        fetched:state.animals.object!==undefined&&state.lotes.list!==undefined&&state.razas.list!==undefined&&state.empresas.list!==undefined && state.facturas.list !== undefined && state.fierrosO.list!==undefined && state.fierrosN.list!==undefined,
     }
 }
 

@@ -155,11 +155,12 @@ class UserDetail extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        
+
         let sections = options_sections.map((a)=><Option key={a.value}>{a.name}</Option>);
         let permissions = options_permissions.map((a)=><Option key={a.value}>{a.name}</Option>);
         let {user, fetched} = this.props;
         if(!fetched)return(<MainLoader/>);
+
         return (
             <Fragment>
                 <h2>Lista de Usuarios</h2>               

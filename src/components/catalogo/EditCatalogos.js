@@ -97,8 +97,8 @@ const InfoCatalogo = ({form,onCancel, visible, data,activeTab,onEdit,options,sea
                             label={"Linea de negocio"}
                             hasFeedback
                         >
-                            {getFieldDecorator('business_line_id', {
-                                initialValue:data.business_line_id,
+                            {getFieldDecorator('bl_id', {
+                                initialValue:data.bl?data.bl.name:'',
                                 rules: [{
                                     required: true, message: 'Completa el campo!',
                                 },
@@ -125,7 +125,7 @@ const InfoCatalogo = ({form,onCancel, visible, data,activeTab,onEdit,options,sea
                                     {getFieldDecorator('concepto', {
                                         initialValue:data.concepto,
                                         rules: [{
-                                            required: true, message: 'Completa el campo!',
+                                            required: false, message: 'Completa el campo!',
                                         }],
 
                                     })(
@@ -140,7 +140,7 @@ const InfoCatalogo = ({form,onCancel, visible, data,activeTab,onEdit,options,sea
                                     {getFieldDecorator('monto', {
                                         initialValue:data.monto,
                                         rules: [{
-                                            required:true
+                                            required:false
                                         }],
                                     })(
                                         <InputNumber
@@ -157,7 +157,7 @@ const InfoCatalogo = ({form,onCancel, visible, data,activeTab,onEdit,options,sea
                                 >
                                     {getFieldDecorator('pay_date', {
                                         initialValue:moment( new Date(), 'YYYY-MM-DD'),
-                                        rules: [{ type: 'object', required: true, message: 'Selecciona una fecha válida!' }],
+                                        rules: [{ type: 'object', required: false, message: 'Selecciona una fecha válida!' }],
                                     })(
                                         <DatePicker style={{width:'100%'}} />
                                     )}

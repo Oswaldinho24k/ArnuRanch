@@ -50,6 +50,8 @@ class FormAnimal extends Component {
                 if(!values.raza_id) values['raza_id'] = null;
                 if(!values.empresa_id) values['empresa_id'] = null;*/
                 if(!values.tipo_animal) delete values.tipo_animal;
+                if(!values.fierroO) delete values.fierroO;
+                if(!values.fierroN) delete values.fierroN;
                /* if(!values.costo_inicial) delete values.costo_inicial;
                 if(!values.costo_kilo) delete values.costo_kilo;
                 if(!values.peso_entrada) delete values.peso_entrada;*/
@@ -101,6 +103,8 @@ class FormAnimal extends Component {
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id, 10)} key={a.id}>{a.name}</Option>);
         let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.name}</Option>);
         let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.company}</Option>);
+        let fierrosO = this.props.fierrosO.map((f, key)=><Option value={parseInt(f.id, 10)}>{f.codigo}</Option>)
+        let fierrosN = this.props.fierrosN.map((f, key)=><Option value={parseInt(f.id, 10)}>{f.codigo}</Option>)
 
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>
@@ -400,7 +404,38 @@ class FormAnimal extends Component {
                                 </Upload.Dragger>
                             )}
                         </div>
-                    </FormItem>
+                        </FormItem>
+
+
+                        <FormItem
+                            label={"Fierro Original"}
+                            style={{width:'45%'}}
+                        >
+                            {getFieldDecorator('fierroO_id', {
+                                props:{
+                                    placeholder:'Selecciona un Lote',
+                                }
+                            })(
+                                <Select  placeholder={"Selecciona un Fierro Original"}>
+                                    {fierrosO}
+                                </Select>
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            label={"Fierro Nuevo"}
+                            style={{width:'45%'}}
+                        >
+                            {getFieldDecorator('fierroN_id', {
+                                props:{
+                                    placeholder:'Selecciona un Fierro Nuevo',
+                                }
+                            })(
+                                <Select  placeholder={"Selecciona un Fierro Nuevo"}>
+                                    {fierrosN}
+                                </Select>
+                            )}
+                        </FormItem>
                     </div>
 
                     <FormItem>
