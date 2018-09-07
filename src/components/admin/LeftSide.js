@@ -66,9 +66,9 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
                     <Menu.Item key="12">
                         <Link to={'/admin/compras'}>Compras</Link>
                     </Menu.Item>
-                    <Menu.Item key="13">
+                    {/*<Menu.Item key="13">
                         <Link to='/admin/catalogo'> Catálogos </Link>
-                    </Menu.Item>
+                    </Menu.Item>*/}
                     <Menu.Item key="14">
                         <Link to='/admin/acreedores'> Créditos </Link>
                     </Menu.Item>

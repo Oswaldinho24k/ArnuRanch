@@ -1,5 +1,5 @@
 import React from 'react'
-import {Divider, Card, Table} from "antd";
+import {Divider, Card, Table, Icon} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux'
 import MainLoader from "../common/Main Loader";
@@ -12,7 +12,18 @@ const columns = [
         title:'Fecha',
         dataIndex:'fecha',
         key:'fecha',
-        render:(t, obj)=><p>{moment(t).format('LL')}</p>
+        render:(t, obj)=>{
+
+            var check = moment(t)
+            var today = moment(new Date)
+            var month = check.format('M');
+            var day   = check.format('D');
+            var year  = check.format('YYYY');
+            if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY'))return <p><Icon type="exclamation-circle"  /> {moment(t).format('LL')}</p>
+            if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY')&&check.format('D')===today.format('D'))return <p><Icon type="warning"  /> {moment(t).format('LL')}</p>
+            else return <p><Icon type="heart" /> {moment(t).format('LL')}</p>
+
+        }
     },{
         title:'Disposición',
         dataIndex:'disp',
@@ -44,7 +55,7 @@ class DisposicionDetailPage extends React.Component{
         let {disposicion, fetched} = this.props
         if(!fetched) return <MainLoader/>
 
-        console.log(disposicion)
+
 
         let dCards = []
         let obj={}
