@@ -59,12 +59,13 @@ class DisposicionDetailPage extends React.Component{
 
         let dCards = []
         let obj={}
-        let fecha;
-        let disp=0;
-        let pago=0;
-        let saldo=0;
-        let intereses=0;
+
         for(let i = 0;i<=disposicion.plazo;i++){
+            let fecha;
+            let disp=0;
+            let pago=0;
+            let saldo=0;
+            let intereses=0;
             fecha = moment(disposicion.fecha_inicio).add(i, 'M')
             if(i===0) disp = disposicion.monto
             else disp = 0
@@ -81,10 +82,14 @@ class DisposicionDetailPage extends React.Component{
             }else if(disposicion.periodo_capital==='vencimiento'){
                 if(i===disposicion.plazo)pago=disposicion.monto
             }
-            pago = pago.toFixed((2))
+            if(i===0)pago = 0
+            console.log(pago)
+            if(pago%1!==0)pago = pago.toFixed((2))
             //saldo
-            saldo = disposicion.monto-pago*i
-            saldo = saldo.toFixed(2)
+            if(i===0)saldo = disposicion.monto
+            else saldo = dCards[i-1].saldo-pago
+
+            if(saldo%1!==0)saldo = saldo.toFixed(2)
             //let saldo;
             //pago de intereses
 
