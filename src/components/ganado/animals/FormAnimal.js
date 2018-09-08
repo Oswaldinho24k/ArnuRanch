@@ -52,6 +52,8 @@ class FormAnimal extends Component {
                 if(!values.tipo_animal) delete values.tipo_animal;
                 if(!values.fierroO) delete values.fierroO;
                 if(!values.fierroN) delete values.fierroN;
+                if(!values.fierroO_id) delete values.fierroO_id;
+                if(!values.fierroN_id) delete values.fierroN_id;
                /* if(!values.costo_inicial) delete values.costo_inicial;
                 if(!values.costo_kilo) delete values.costo_kilo;
                 if(!values.peso_entrada) delete values.peso_entrada;*/

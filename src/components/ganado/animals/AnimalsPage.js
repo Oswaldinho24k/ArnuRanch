@@ -58,6 +58,7 @@ class AnimalsPage extends Component {
                 this.handleCancel();
                 message.success('Arete añadido con éxito!')
             }).catch(e=>{
+                console.log(e.response)
             for (let i in e.response.data){
                 message.error(e.response.data[i])
             }
