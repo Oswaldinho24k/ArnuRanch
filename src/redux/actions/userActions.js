@@ -70,6 +70,7 @@ export const getUser=()=>(dispatch, getState)=>{
     return api.getUser()
         .then(r=>{
             dispatch(getUserSuccess(r))
+            return r
         }).catch(e=>{
             throw e
         })
@@ -93,88 +94,108 @@ export const checkIfUser=()=>(dispatch, getState)=>{
     const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
     if(userToken){
         //dispatch the functions
-        dispatch(getUser());
-        dispatch(getAllUsers());
-
-        /*******ganado*******/
-
-        dispatch(getAnimals());
-        dispatch(getLotes());
-        dispatch(getRazas());
-        dispatch(getCorrales());
-        dispatch(getPesadas());
-        dispatch(getFacturas());
-        dispatch(getFaSearch());
-        dispatch(getAnSearch());
-        dispatch(getLoSearch());
-        dispatch(getSaleNotes());
-        dispatch(getReporte());
-        //fierros
-        dispatch(getFierrosN())
-        dispatch(getFierrosO())
-
-        dispatch(getFormulas());
-        dispatch(getVacunas());
-
-        /*******admin*******/
-
-
-        dispatch(getProveedores());
-        dispatch(getClientes());
-
-        dispatch(getIngresos());
-
-        dispatch(getItems());
-        dispatch(getInsumos());
-        dispatch(getEgresos());
-        dispatch(getEmpresas());
-
-        dispatch(getLines());
-        dispatch(getLiSearch());
-        dispatch(getAlmacenes());
-
-        dispatch(getCuentas());
-        dispatch(getCuSearch());
-        dispatch(getClSearch());
-        dispatch(getPrSearch());
-
-        dispatch(getCoSearch());
-        dispatch(getGgSearch());
-        dispatch(getGastos());
-        dispatch(getDataDash());
-
-        dispatch(getCompras());
-
-
-        //catalaogos
-        dispatch(getCatProduts());
-        dispatch(getCatUnidades());
-        dispatch(getCatCfdis());
-        dispatch(getCatPagos());
-        dispatch(getCatBanks());
-        dispatch(getCatAlmacenes());
-        dispatch(getCatPresupuestos());
-
-
-
-        //creditos y acreedores
-        dispatch(getAcreedores())
-        dispatch(getDisposiciones())
-
-        /*******cerdos*******/
-
-        /*******aves*******/
-
-        /*******alimentos*******/
-
-        /*******vacunas*******/
-
-
-
-        
-
-
-
+        dispatch(getUser())
+            .then(r=>{
+                if(r.is_superuser)return superuserActions(dispatch)
+                if(r.profile.admin)adminActions(dispatch)
+                if(r.profile.ganado)ganadoActions(dispatch)
+                if(r.profile.vacunas)vacunasActions(dispatch)
+                if(r.profile.alimentos)alimentosActions(dispatch)
+                if(r.profile.cerdos)cerdosActions(dispatch)
+                if(r.profile.aves)avesActions(dispatch)
+            })
     }
 };
 
+
+/*******ganado*******/
+const ganadoActions=(dispatch)=>{
+    dispatch(getAnimals());
+    dispatch(getLotes());
+    dispatch(getRazas());
+    dispatch(getCorrales());
+    dispatch(getPesadas());
+    dispatch(getFacturas());
+    dispatch(getFaSearch());
+    dispatch(getAnSearch());
+    dispatch(getLoSearch());
+    dispatch(getSaleNotes());
+    dispatch(getReporte());
+    //fierros
+    dispatch(getFierrosN())
+    dispatch(getFierrosO())
+}
+/*******admin*******/
+
+const adminActions=(dispatch)=>{
+    dispatch(getProveedores());
+    dispatch(getClientes());
+
+    dispatch(getIngresos());
+
+
+    dispatch(getEgresos());
+    dispatch(getEmpresas());
+
+    dispatch(getLines());
+    dispatch(getLiSearch());
+    dispatch(getAlmacenes());
+
+    dispatch(getCuentas());
+    dispatch(getCuSearch());
+    dispatch(getClSearch());
+    dispatch(getPrSearch());
+
+    dispatch(getCoSearch());
+    dispatch(getGgSearch());
+    dispatch(getGastos());
+    dispatch(getDataDash());
+    dispatch(getCompras());
+
+    //catalaogos
+    dispatch(getCatProduts());
+    dispatch(getCatUnidades());
+    dispatch(getCatCfdis());
+    dispatch(getCatPagos());
+    dispatch(getCatBanks());
+    dispatch(getCatAlmacenes());
+    dispatch(getCatPresupuestos());
+
+    //creditos y acreedores
+    dispatch(getAcreedores())
+    dispatch(getDisposiciones())
+}
+
+
+/*******vacunas*******/
+const vacunasActions=(dispatch)=>{
+    dispatch(getVacunas());
+}
+
+/*******alimentos*******/
+const alimentosActions=(dispatch)=>{
+    dispatch(getFormulas());
+    dispatch(getItems());
+    dispatch(getInsumos());
+}
+
+/*******aves*******/
+const avesActions=(dispatch)=>{
+
+}
+
+/*******cerdos*******/
+
+const cerdosActions=(dispatch)=>{
+
+}
+/********superuser********/
+const superuserActions=(dispatch)=>{
+    dispatch(getAllUsers());
+    adminActions(dispatch)
+    ganadoActions(dispatch)
+    vacunasActions(dispatch)
+    alimentosActions(dispatch)
+    cerdosActions(dispatch)
+    avesActions(dispatch)
+}

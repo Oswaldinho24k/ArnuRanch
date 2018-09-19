@@ -36,12 +36,6 @@ const columns = [
         dataIndex: 'owner',
         key:'owner',
         width:150
-    },{
-        title:'Última Pesada',
-        dataIndex:'pesadas',
-        key:'pesadas',
-        render:val=><p>{val.length===0?0:val[val.length-1].peso}Kg</p>,
-        width:150
     }];
 
 
