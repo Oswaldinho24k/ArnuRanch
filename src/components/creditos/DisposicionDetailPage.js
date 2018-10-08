@@ -1,47 +1,15 @@
 import React from 'react'
-import {Divider, Card, Table, Icon} from "antd";
+import {Divider, Card, Table, Icon, Switch, message} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux'
 import MainLoader from "../common/Main Loader";
 import moment from 'moment'
+import {bindActionCreators} from 'redux'
+import * as recibosActions from '../../redux/actions/creditos/recibosActions'
 
 
 
-const columns = [
-    {
-        title:'Fecha',
-        dataIndex:'fecha',
-        key:'fecha',
-        render:(t, obj)=>{
 
-            var check = moment(t)
-            var today = moment(new Date)
-            var month = check.format('M');
-            var day   = check.format('D');
-            var year  = check.format('YYYY');
-            if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY'))return <p><Icon type="exclamation-circle"  /> {moment(t).format('LL')}</p>
-            if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY')&&check.format('D')===today.format('D'))return <p><Icon type="warning"  /> {moment(t).format('LL')}</p>
-            else return <p><Icon type="heart" /> {moment(t).format('LL')}</p>
-
-        }
-    },{
-        title:'Disposición',
-        dataIndex:'disp',
-        key:'disp'
-    },{
-        title:'Pago a Capital',
-        dataIndex:'pago',
-        key:'pago'
-    },{
-        title:'Saldo',
-        dataIndex:'saldo',
-        key:'saldo'
-    },{
-        title:'Pago de Intereses',
-        dataIndex:'intereses',
-        key:'intereses'
-    }
-]
 
 
 class DisposicionDetailPage extends React.Component{
@@ -51,13 +19,60 @@ class DisposicionDetailPage extends React.Component{
 
         }
     }
+
+    onChange=(e,v)=>{
+        this.props.recibosActions.updateRecibo({paid:e,id:v})
+            .then(r=>{
+                message.success('Recibo editado')
+            }).catch(e=>{
+                message.error(e.data)
+        })
+    }
     render(){
+        const columns = [
+            {
+                title:'Fecha',
+                dataIndex:'fecha',
+                key:'fecha',
+                render:(f, obj)=><p>{moment(f).format('LL')}</p>
+                /*render:(t, obj)=>{
+
+                    var check = moment(t)
+                    var today = moment(new Date)
+                    var month = check.format('M');
+                    var day   = check.format('D');
+                    var year  = check.format('YYYY');
+                    if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY'))return <p><Icon type="exclamation-circle"  /> {moment(t).format('LL')}</p>
+                    if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY')&&check.format('D')===today.format('D'))return <p><Icon type="warning"  /> {moment(t).format('LL')}</p>
+                    else return <p><Icon type="heart" /> {moment(t).format('LL')}</p>
+
+                }*/
+            },{
+                title:'Pagado',
+                dataIndex:'paid',
+                key:'paid',
+                render:(p, obj)=><Switch defaultChecked={p} onChange={(e)=>this.onChange(e,obj.id)} />
+            },{
+                title:'Pago a Capital',
+                dataIndex:'capital',
+                key:'capital'
+            },{
+                title:'Saldo',
+                dataIndex:'saldo',
+                key:'saldo'
+            },{
+                title:'Pago de Intereses',
+                dataIndex:'intereses',
+                key:'intereses'
+            }
+        ]
+
         let {disposicion, fetched} = this.props
         if(!fetched) return <MainLoader/>
 
 
 
-        let dCards = []
+        /*let dCards = []
         let obj={}
 
         for(let i = 0;i<=disposicion.plazo;i++){
@@ -111,7 +126,7 @@ class DisposicionDetailPage extends React.Component{
                 intereses
             }
             dCards.push(obj)
-        }
+        }*/
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -140,7 +155,7 @@ class DisposicionDetailPage extends React.Component{
                         <p>Periodo de pagos de capital: {disposicion.periodo_capital}</p>
                     </Card>
                     <div style={{ width: '60%' }}>
-                        <Table dataSource={dCards} columns={columns} />
+                        <Table dataSource={disposicion.recibos} columns={columns} rowKey={record => record.id} />
                     </div>
                 </div>
             </div>
@@ -156,7 +171,9 @@ const mapStateToProps=(state, oP)=>{
 }
 
 const mapDispatchToProps=(disptch)=>{
-    return{}
+    return{
+        recibosActions:bindActionCreators(recibosActions,disptch)
+    }
 }
 
 

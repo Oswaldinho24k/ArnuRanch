@@ -3,6 +3,7 @@ import axios from 'axios';
 let debug = false;
 
 export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
+//export const host = "https://rancho.davidzavala.me";
 
 
 
