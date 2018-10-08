@@ -13,6 +13,7 @@ import {AreteCard} from '../eventos/AreteCard'
 import { ReporteCard } from './ReporteCard';
 import {ResumenCard} from './ResumenCard';
 import './reportes.css'
+import {host} from '../../../Api/Django'
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -32,8 +33,8 @@ class ReportesPage extends Component {
     };
 
     handleSearch=(a)=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+
+        let basePath = host+'/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
@@ -46,26 +47,26 @@ class ReportesPage extends Component {
         let {mIds} = this.state;
         mIds = mIds.filter(i=>{return i.arete_siniga!== a})
         this.setState({mIds})
-        console.log(mIds)
+
     }
 
     onSelectLote=(value, b)=>{
-        console.log(b, value);
+
         this.setState({lote:value})
     };
     saveId=(id)=>{
         this.setState({areteId:id});
-        console.log(id)
+
     };
     saveIds=(id)=>{
         let {mIds}=this.state;
         mIds.push(id)
         this.setState({mIds});
-        console.log(mIds)
+
     };
     saveLoteId=(id)=>{
         this.setState({loteId:id});
-        console.log(id)
+
     };
 
     handleSearchLote=(a)=>{
@@ -101,7 +102,7 @@ class ReportesPage extends Component {
     saveMultiplesGastos=(gasto)=>{
         this.setState({loading:true});
         let {mIds} = this.state;
-        console.log(mIds)
+
         
         let parcialAmount = gasto.costo/mIds.length;
         parcialAmount = parcialAmount.toFixed(2);
@@ -162,7 +163,7 @@ class ReportesPage extends Component {
             .then(r => {
                 message.success('Modificado con éxito');
             }).catch(e => {
-            console.log(e)
+
         })
         
     };
@@ -172,7 +173,7 @@ class ReportesPage extends Component {
         for(let j in loteId.animals){
             animal['id']=loteId.animals[j].id;
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
+
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
                     message.success('Modificado con éxito');
@@ -204,7 +205,7 @@ class ReportesPage extends Component {
     };
     handleChangeMode=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
-        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
+        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'',  lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';

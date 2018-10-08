@@ -46,7 +46,7 @@ class InventarioEmpresa extends Component{
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
 
                 this.props.almacenActions.saveAlmacen(values)
                     .then(r=>{
@@ -59,7 +59,7 @@ class InventarioEmpresa extends Component{
                         for (let i in e.response.data){
                             message.error(e.response.data[i])
                         }
-                        console.log(values)
+
                     })
             }else{message.error('Algo fallo, verifica los campos');}
 
@@ -69,20 +69,20 @@ class InventarioEmpresa extends Component{
     eliminarAlmacen =(almacen)=>{
             this.props.almacenActions.deleteAlmacen(almacen)
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         };
 
     confirm=(p)=> {
-        console.log(p);
+
         this.eliminarAlmacen(p)
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
 
@@ -90,21 +90,21 @@ class InventarioEmpresa extends Component{
     render(){
 
         let {empresa, fetched, empresas} = this.props;
-        console.log(empresas)
+
         let {visible, key, visibleEdit} = this.state;
         if(!fetched)return(<MainLoader/>);
         let datos = [empresa.line_comp[this.state.key]];
         let almacenes = datos.map(a=> a.almacenes);
         let infor = almacenes[0];
-        console.log(infor)
+
         let info = infor.filter(f=> { return f.company === empresa.id})
-        console.log(info);
+
         let items = info.map(a=> a.items);
-        console.log(empresa)
+
 
 
         let bline= empresa.line_comp[key];
-        console.log(bline);
+
 
 
         return(

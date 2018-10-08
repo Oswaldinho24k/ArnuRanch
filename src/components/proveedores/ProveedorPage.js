@@ -6,6 +6,7 @@ import * as proveedoresActions from '../../redux/actions/administracion/proveedo
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import MainLoader from "../common/Main Loader";
+import {host} from '../../Api/Django'
 
 import TablePageB from "../clientes/TablePageB";
 
@@ -58,25 +59,25 @@ class ProovedorPage extends Component {
         for(let i in keys){
             this.props.proveedoresActions.deleteProveedor(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteProveedor();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
 
@@ -89,7 +90,7 @@ class ProovedorPage extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 this.props.proveedoresActions.saveProveedor(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
@@ -99,7 +100,7 @@ class ProovedorPage extends Component {
                     })
                     .catch(r=>{
                         message.error('El RFC ingresado ya existe!')
-                        console.log(values)
+
                     })
 
             }else{message.error('Algo fallo, verifica los campos');}
@@ -143,12 +144,12 @@ class ProovedorPage extends Component {
 
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
-        console.log(e.target.value)
+
     };
 
     onSearch = () => {
-        //let basePath = 'http://localhost:8000/api/egresos/proveedores/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/proveedores/?q=';
+
+        let basePath = host+'/egresos/proveedores/?q=';
         let url = basePath+this.state.searchText;
         this.props.proveedoresActions.getProveedores(url);
         this.setState({canReset:true})
@@ -157,8 +158,8 @@ class ProovedorPage extends Component {
 
 
     resetFilter = () => {
-        //let basePath = 'http://localhost:8000/api/egresos/proveedores/';
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/proveedores/?q=';
+
+        let basePath = host+'/egresos/proveedores/?q=';
         this.props.proveedoresActions.getProveedores(basePath)
         this.setState({
             searchText: '',
@@ -166,13 +167,7 @@ class ProovedorPage extends Component {
         });
     };
 
-    /*handlePagination=(pagina)=>{
-        console.log(this.props.proveedores);
-        let basePath = 'http://localhost:8000/api/egresos/proveedores/?page=';
-        let newUrl = basePath +pagina;
-        this.props.proveedoresActions.getProveedores(newUrl);
 
-    };*/
 
     handlePagination=(pagina)=>{
         let nextLength = pagina.toString().length;

@@ -144,7 +144,7 @@ class FormulasForm extends Component {
                         });
                 } else {
                     formula['id'] = this.props.formula.id;
-                    console.log('Estos son mis items',this.props.items);
+
                     for(let item of this.props.items){
                         this.props.deleteItem(item.id).then(r => console.log(r)).catch( e => console.log(e));
                     }
@@ -154,15 +154,15 @@ class FormulasForm extends Component {
                                 item.formula = r.id;
                                 this.props.saveItem(item)
                                     .then(r => {
-                                        console.log(r);
+
                                     })
                                     .catch(e => {
-                                        console.log(e);
+
                                     });
                             }
                             message.success("Formula editada exitosamente");
                         }).catch( e => {
-                            console.log(e);
+
                             message.error("Ups algo salió mal, contacta al administrador");
                     });
                 }

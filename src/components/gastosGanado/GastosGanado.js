@@ -5,7 +5,7 @@ import {Table, Button, message, Divider, Input} from 'antd';
 //import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
 import * as gastosGanadoActions from '../../redux/actions/gastoGanado/gastoGanadoActions';
-
+import {host} from '../../Api/Django'
 import moment from 'moment';
 
 import GastoForm from './GastoForm';
@@ -42,9 +42,9 @@ class GastosGanado extends Component {
         for(let i in keys){
             this.props.gastosGanadoActions.deleteGastoGanado(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
@@ -55,7 +55,7 @@ class GastosGanado extends Component {
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
@@ -117,8 +117,8 @@ class GastosGanado extends Component {
     //search
 
     onSearch = () => {
-        //let basePath= "http://localhost:8000/api/egresos/gastos/?q=";
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/gastos/?q=';
+        let basePath= host+"/api/egresos/gastos/?q=";
+
 
         let url = basePath+this.state.searchText;
         this.props.gastosGanadoActions.getGastos(url);
@@ -130,8 +130,8 @@ class GastosGanado extends Component {
     };
     //resetFilter
     resetFilter = () => {
-        //let basePath= "http://localhost:8000/api/egresos/gastos/";
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/gastos/?q=';
+        let basePath= host+"/api/egresos/gastos/?q";
+
         this.props.gastosGanadoActions.getGastos(basePath);
         this.setState({
             searchText:'',

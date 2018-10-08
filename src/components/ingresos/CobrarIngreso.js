@@ -6,7 +6,7 @@ import moment from 'moment';
 import * as ingresosActions from '../../redux/actions/administracion/ingresosActions';
 import {Link} from 'react-router-dom';
 import MainLoader from "../common/Main Loader";
-
+import {host} from '../../Api/Django'
 import TablePageB from "../clientes/TablePageB";
 
 
@@ -47,25 +47,25 @@ class CobrarIngreso extends Component {
         for(let i in keys){
             this.props.ingresosActions.deleteIngreso(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteIngreso();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
 
@@ -103,8 +103,8 @@ class CobrarIngreso extends Component {
     };
 
     componentWillMount(){
-        //let basePath= "http://localhost:8000/api/ingresos/ingresos/?cobrado=";
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?cobrado=';
+        let basePath= host+"/api/ingresos/ingresos/?cobrado=";
+
         let url = basePath+`${"False"}`;
         this.props.ingresosActions.getIngresos(url);
     }
@@ -119,10 +119,10 @@ class CobrarIngreso extends Component {
     };
 
     handleDates=(a, b)=>{
-        let basePath = 'http://localhost:8000/api/ingresos/ingresos/?';
-        //let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?';
+        let basePath = host+'/api/ingresos/ingresos/?';
+
         let url = basePath+`date1=${new Date(b[0])}&date2=${new Date(b[1])}`
-        console.log(a, b)
+
         this.props.ingresosActions.getIngresos(url);
         this.setState({canReset:true})
     }

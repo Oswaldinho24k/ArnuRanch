@@ -6,7 +6,7 @@ import { ReporteCard } from './ReporteCard';
 
 export const ResumenCard =({aretes, date}) => {
  
-    console.log(aretes)
+
     let kgHechosTotales = 0;
     let gdpPromedio = 0;
     let conversionPromedio = 0;
@@ -34,8 +34,9 @@ export const ResumenCard =({aretes, date}) => {
                 let alimentsQuantityTotal = 0;                                              
                 //suma el costo de todos los gastos
                 if (a ==="") a = []
-                a.aliments ? a.aliments : a.aliments=[]
-                a.pesadas?a.pesadas:a.pesadas=[]
+                if(a.aliments) a.aliments = a.aliments
+                else a.aliments=[]
+                a.pesadas= a.pesadas?a.pesadas:[]
                 let resultCost = a.aliments.map( (item, ix) => {
                     if(item.tipo==='Alimento')return alimentsCostTotal += parseFloat(item.costo)
                    else return vacunasCostTotal += parseFloat(item.costo)        
@@ -46,7 +47,7 @@ export const ResumenCard =({aretes, date}) => {
                 let promedioalimentsCostTotal = costosAlimentosTotales/a.aliments.filter(a=>a.tipo==='Alimento').length
                 
                 promedioalimentsCostTotalGeneral += parseFloat(promedioalimentsCostTotal.toFixed(2))
-                console.log(promedioalimentsCostTotalGeneral)
+
                 costosVacunasTotales += vacunasCostTotal
                 // //suma la cantidad de todos los gastos
                 let resultQuantity = a.aliments.map( (item, ix) => {

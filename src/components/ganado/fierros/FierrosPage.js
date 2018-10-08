@@ -30,7 +30,7 @@ class FierrosPage extends Component{
                 message.success('Guardado con éxito')
                 this.handleModal()
             }).catch(e=>{
-                console.log(e.response)
+
                 message.error('Ocurrió un problema, intenta más tarde')
         })
     }
@@ -41,7 +41,7 @@ class FierrosPage extends Component{
                 message.success('Guardado con éxito')
                 this.handleModal()
             }).catch(e=>{
-            console.log(e.response)
+
             message.error('Ocurrió un problema, intenta más tarde')
         })
     }

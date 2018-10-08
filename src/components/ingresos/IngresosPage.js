@@ -11,6 +11,7 @@ import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import * as empresasActions from  '../../redux/actions/empresasActions';
 import FormIngreso from "./IngresoForm";
+import {host} from '../../Api/Django'
 
 
 const { RangePicker } = DatePicker;
@@ -101,25 +102,25 @@ class IngresosPage extends Component {
         for(let i in keys){
             this.props.ingresosActions.deleteIngreso(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteIngreso();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
 
@@ -133,7 +134,7 @@ class IngresosPage extends Component {
         form.validateFields((err, values) => {
 
             if (!err) {
-                console.log(values);
+
                 values['client_id']=this.state.idClient;
                 values['business_line_id']=this.state.idLine;
                 values['receivable_id']=this.state.idReceivable;
@@ -145,7 +146,7 @@ class IngresosPage extends Component {
                         form.resetFields();
                         this.setState({ visible: false });
                     }).catch(e=>{
-                        console.log(e.response)
+
                     })
                 
 
@@ -156,7 +157,7 @@ class IngresosPage extends Component {
     };
 
     handleChange = e => {
-        console.log("name", e.target.id)
+
         if(e.target.id === "sale_check"){
             this.setState({
                 factura: e.target.checked
@@ -176,8 +177,8 @@ class IngresosPage extends Component {
 
 
     onSearch = () => {
-       // let basePath= "http://localhost:8000/api/ingresos/ingresos/?q=";
-       let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?q=';
+
+       let basePath = host+'/api/ingresos/ingresos/?q=';
 
         let url = basePath+this.state.searchText;
         this.props.ingresosActions.getIngresos(url);
@@ -186,8 +187,8 @@ class IngresosPage extends Component {
     };
 
     resetFilter = () => {
-        //let basePath= "http://localhost:8000/api/ingresos/ingresos/";
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/';
+
+        let basePath = host+'/api/ingresos/ingresos/';
 
         this.props.ingresosActions.getIngresos(basePath);
         this.setState({
@@ -217,8 +218,8 @@ class IngresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-       // let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/blines/?q=';
+
+        let basePath = host+'/api/ingresos/blines/?q=';
         let url = basePath+a;
         this.props.linesActions.getLiSearch(url);
     };
@@ -226,8 +227,8 @@ class IngresosPage extends Component {
     //Cuentas
 
     handleCuenta=(a)=>{
-        //let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/cuentas/?q=';
+
+        let basePath = host+'/api/ingresos/cuentas/?q=';
         let url = basePath+a;
         this.props.cuentasActions.getCuSearch(url);
     };
@@ -235,8 +236,8 @@ class IngresosPage extends Component {
     //Cliente
 
     handleCliente=(a)=>{
-        //let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/clientes/?q=';
+
+        let basePath = host+'/api/ingresos/clientes/?q=';
         let url = basePath+a;
         this.props.clientesActions.getClSearch(url);
     };
@@ -244,17 +245,17 @@ class IngresosPage extends Component {
     //Cuentas
 
     handleEmpresas=(a)=>{
-        //let basePath = 'http://127.0.0.1:8000/api/ingresos/empresas/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/empresas/?q=';
+
+        let basePath = host+'/api/ingresos/empresas/?q=';
         let url = basePath+a;
         //this.props.cuentasActions.getCuSearch(url);
     };
 
     handleDates=(a, b)=>{
-        let basePath = 'http://localhost:8000/api/ingresos/ingresos/?';
-        //let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?';
+
+        let basePath = host+'me/api/ingresos/ingresos/?';
         let url = basePath+`date1=${b[0]}&date2=${b[1]}`
-        console.log(a, b)
+
         this.props.ingresosActions.getIngresos(url);
         this.setState({canReset:true})
     }
@@ -338,7 +339,7 @@ class IngresosPage extends Component {
         let options = opciones.map((a) => <Option key={a.name}>{a.name}</Option>);
 
         if(!fetched)return(<MainLoader/>);
-        console.log("empresas",empresas)
+
         return (
             <Fragment>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>

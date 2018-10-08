@@ -23,6 +23,8 @@ import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 import {getCompras, getCoSearch} from "./compras/comprasActions";
 import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
 
+import {getAnimalGastos} from "./ganado/gastoAnimalActions";
+
 import { getSaleNotes } from "./ganado/salenotesActions";
 
 import {getDataDash} from "./dashGanado/dashGanadoActions";
@@ -124,42 +126,40 @@ const ganadoActions=(dispatch)=>{
     //fierros
     dispatch(getFierrosN())
     dispatch(getFierrosO())
+    dispatch(getAnimalGastos())
 }
 /*******admin*******/
 
 const adminActions=(dispatch)=>{
     dispatch(getProveedores());
     dispatch(getClientes());
-
-    dispatch(getIngresos());
-
-
-    dispatch(getEgresos());
+    //dispatch(getIngresos());
+    //dispatch(getEgresos());
     dispatch(getEmpresas());
 
-    dispatch(getLines());
-    dispatch(getLiSearch());
-    dispatch(getAlmacenes());
+    //dispatch(getLines());
+    //dispatch(getLiSearch());
+    //dispatch(getAlmacenes());
 
-    dispatch(getCuentas());
-    dispatch(getCuSearch());
-    dispatch(getClSearch());
-    dispatch(getPrSearch());
+   // dispatch(getCuentas());
+    //dispatch(getCuSearch());
+    //dispatch(getClSearch());
+    //dispatch(getPrSearch());
 
-    dispatch(getCoSearch());
-    dispatch(getGgSearch());
-    dispatch(getGastos());
-    dispatch(getDataDash());
-    dispatch(getCompras());
+    //dispatch(getCoSearch());
+    //dispatch(getGgSearch());
+    //dispatch(getGastos());
+    //dispatch(getDataDash());
+    //dispatch(getCompras());
 
     //catalaogos
-    dispatch(getCatProduts());
-    dispatch(getCatUnidades());
-    dispatch(getCatCfdis());
-    dispatch(getCatPagos());
-    dispatch(getCatBanks());
-    dispatch(getCatAlmacenes());
-    dispatch(getCatPresupuestos());
+    //dispatch(getCatProduts());
+    //dispatch(getCatUnidades());
+    //dispatch(getCatCfdis());
+    //dispatch(getCatPagos());
+    //dispatch(getCatBanks());
+    //dispatch(getCatAlmacenes());
+    //dispatch(getCatPresupuestos());
 
     //creditos y acreedores
     dispatch(getAcreedores())

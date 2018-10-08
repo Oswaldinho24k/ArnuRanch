@@ -52,16 +52,16 @@ class DetailIngresoPage extends Component{
         this.setState({editMode:!this.state.editMode})
     };
     handleSearchLine=(a)=>{
-        console.log(a)
+
         let basePath = 'https://rancho.davidzavala.me/api/ingresos/blines/?q=';
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
-        console.log(url)
+
         this.props.linesActions.getLiSearch(url);
     };
 
     handleChangeS=(value, obj)=> {
-        console.log(`selected ${value}`);
+
         this.setState({linea:value});
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/';
         //this.props.linesActions.getLiSearch(basePath);
@@ -70,16 +70,16 @@ class DetailIngresoPage extends Component{
     //Cuentas
 
     handleCuenta=(a)=>{
-        console.log(a)
+
         let basePath = 'https://rancho.davidzavala.me/api/ingresos/cuentas/?q=';
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
         let url = basePath+a;
-        console.log(url)
+
         this.props.cuentasActions.getCuSearch(url);
     };
 
     changeCuentaS=(value, obj)=> {
-        console.log(`selected ${value}`);
+
         this.setState({cuenta:value});
 
     };
@@ -87,16 +87,16 @@ class DetailIngresoPage extends Component{
     //Clientes
 
     handleClient=(a)=>{
-        console.log(a)
+
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
         let basePath = 'https://rancho.davidzavala.me/api/ingresos/clientes/?q=';
         let url = basePath+a;
-        console.log(url)
+
         this.props.clientesActions.getClSearch(url);
     };
 
     changeClientS=(value, obj)=> {
-        console.log(`selected ${value}`);
+
         this.setState({cliente:value, handleClient:true});
 
     };
@@ -104,7 +104,7 @@ class DetailIngresoPage extends Component{
     //saveIDs
 
     saveClient=(id)=>{
-        console.log("DD", id)
+
         this.setState({idClient:id})
     };
 

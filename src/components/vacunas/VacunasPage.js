@@ -56,25 +56,25 @@ class VacunasPage extends Component {
         for(let i in keys){
             this.props.vacunasActions.deleteVacuna(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteVacuna();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
     saveFormRef = (form) => {
@@ -86,7 +86,7 @@ class VacunasPage extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 this.props.vacunasActions.saveVacuna(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
@@ -96,7 +96,7 @@ class VacunasPage extends Component {
                     })
                     .catch(r=>{
 
-                        console.log(values)
+
                     })
             }else{message.error('Algo fallo, verifica los campos');}
 
@@ -105,7 +105,7 @@ class VacunasPage extends Component {
 
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
-        console.log(e.target.value)
+
     };
 
     onSearch = () => {
@@ -202,7 +202,7 @@ class VacunasPage extends Component {
         ];
 
         const { visible, selectedRowKeys, data, filtered } = this.state;
-        console.log(filtered)
+
         const canDelete = selectedRowKeys.length > 0;
         //const filter = data.length > 0;
         const rowSelection = {

@@ -6,6 +6,7 @@ import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
 import BatchForm from './BatchForm';
 import MainLoader from "../../common/Main Loader";
+import {host} from '../../../Api/Django'
 
 const columns = [
     {
@@ -49,7 +50,7 @@ const columns = [
 
 /*const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
     }
 };*/
 
@@ -88,14 +89,14 @@ class BatchPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        //let basePath = 'http://localhost:8000/api/ganado/lotes/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
+
+        let basePath = host+'/api/ganado/lotes/?q=';
         let url = basePath+this.state.searchText;
         this.props.loteActions.getLotes(url)
     };
     resetFilters=()=>{
-        //let basePath = 'http://localhost:8000/api/ganado/lotes/';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/';
+
+        let basePath = host+'/api/ganado/lotes/';
         this.props.loteActions.getLotes(basePath);
         this.setState({searchText:''});
     };
@@ -115,7 +116,7 @@ class BatchPage extends Component {
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
     deleteLotes=()=>{
@@ -123,13 +124,13 @@ class BatchPage extends Component {
         for(let i in keys){
             this.props.loteActions.deleteLote(keys[i])
                 .then(r=>{
-                    console.log(r);
+
                     message.success('Deleted successfully');
                 }).catch(e=>{
 
                 message.error('No puedes eliminar este Lote')
                 /*for (let i in this.props.errors){
-                    console.log(this.props.errors[i])
+
                     message.error(this.props.errors[i])
                 }*/
 
@@ -141,7 +142,7 @@ class BatchPage extends Component {
         this.deleteLotes()
     };
     cancel=()=>{
-        console.log('ño')
+
     }
 
     render() {
@@ -192,10 +193,13 @@ class BatchPage extends Component {
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={lotes}
+
                     rowKey={record => record.id}
                     pagination={{
                         pageSize:10,
-                        total:lotes.length,
+                        total:paginationData.count,
+                        onChange:this.handlePagination,
+                        showTotal:total => `Total: ${total} Lotes`
                         }}
                     scroll={{x:650, y:500}}
                 />
@@ -232,7 +236,7 @@ function mapStateToProps(state, ownProps) {
     return {
         lotes:state.lotes.list,
         corrales:state.corrales.list,
-        //paginationData:state.lotes.allData,
+        paginationData:state.lotes.allData,
         fetched:state.lotes.list!==undefined && state.corrales.list!==undefined,
     }
 }

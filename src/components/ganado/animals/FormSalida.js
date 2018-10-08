@@ -1,16 +1,16 @@
 import React from 'react';
 import { Divider, Form, Button, Input, Select } from 'antd';
 
-const Option = {Select};
+const Option = Select.Option;
 
 
 
-const FormSalida=({clients, form, saveSalida, disabled, price, kilograms, client, carro, flete, chofer})=>{
+const FormSalida=({clients=[], form, saveSalida, disabled, price, kilograms, client, carro, flete, chofer})=>{
+
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 saveSalida(values);
                 form.resetFields()
             }

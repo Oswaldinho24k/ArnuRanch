@@ -64,25 +64,25 @@ class Company extends Component {
         for(let i in keys){
             this.props.empresasActions.deleteEmpresa(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteEmpresa();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
     saveFormRef = (form) => {
@@ -93,11 +93,11 @@ class Company extends Component {
         const form = this.form;
         e.preventDefault();
         form.validateFields((err, values) => {
-            console.log("KssK", values)
+
             values['line_comp_id']=this.state.linea;
-            console.log("KAKAK", values)
+
             if (!err) {
-                console.log(values);
+
 
                 this.props.empresasActions.saveEmpresa(values)
                     .then(r=>{
@@ -110,7 +110,7 @@ class Company extends Component {
                         for (let i in e.response.data){
                             message.error(e.response.data[i])
                         }
-                        console.log(values)
+
                     })
             }else{message.error('Algo fallo, verifica los campos');}
 
@@ -141,7 +141,7 @@ class Company extends Component {
 
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
-        console.log(e.target.value)
+
     };
 
 
@@ -195,15 +195,15 @@ class Company extends Component {
     };
 
     handleSearchLine=(a)=>{
-        console.log(a)
+
         let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
-        console.log(url)
+
         this.props.linesActions.getLiSearch(url);
     };
 
     onSelect=(value, b)=>{
-        console.log(b, value);
+
         this.setState({linea:value})
 
     };
@@ -247,7 +247,7 @@ class Company extends Component {
         };
         let {empresas, fetched, blines, empresasData} = this.props;
         if(!fetched)return(<MainLoader/>);
-        console.log("BLINESSS",blines)
+
 
 
         return(

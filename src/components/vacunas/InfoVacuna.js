@@ -10,15 +10,15 @@ const InfoVacuna = ({form,editVacuna,id,editMode, handleEditMode, typeofv, vacci
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 values['id']=id;
                 editVacuna(values)
                     .then(r=>{
-                        console.log("Editado con éxito");
+
                         handleEditMode();
                         message.success('Guardado con éxito');
                     }).catch(e=>{
-                    console.log(e)
+
                 })
             }else{message.error('Algo fallo, verifica los campos');}
         });

@@ -2,88 +2,94 @@ import axios from 'axios';
 
 let debug = false;
 
+export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
+
+
+
+
 //Localhost urls
 
 //let logInUrl = 'http://localhost:8000/api/auth/login/';
 //let logOutUrl = 'http://localhost:8000/api/auth/logout/';
 /*************************Users Urls***************************/
 
-let tokenUrl = 'http://localhost:8000/api/auth/token-auth/';
-let userUrl = 'http://localhost:8000/api/auth/me/';
-let allUsersUrl = 'http://localhost:8000/api/auth/users/';
-let profilesUrl = 'http://localhost:8000/api/auth/profiles/';
+let tokenUrl = host+'/api/auth/token-auth/';
+let userUrl = host+'/api/auth/me/';
+let allUsersUrl = host+'/api/auth/users/';
+let profilesUrl = host+'/api/auth/profiles/';
 
 /********************Ganado Urls*******************/
 
-let animalsUrl = 'http://localhost:8000/api/ganado/animals/';
-let lotesUrl = 'http://localhost:8000/api/ganado/lotes/';
-let corralesUrl = 'http://localhost:8000/api/ganado/corrales/';
-let animalGastoUrl = 'http://localhost:8000/api/ganado/alimentos/';
-let pesadasUrl = 'http://localhost:8000/api/ganado/pesadas/';
-let razasUrl = 'http://localhost:8000/api/ganado/razas/';
-let gastosGanadoUrl = 'http://localhost:8000/api/egresos/gastos/';
-let saleNotesUrl = 'http://localhost:8000/api/ganado/sale_notes/';
-let resumenUrl = 'http://localhost:8000/api/ganado/resumen/';
-let facturasUrl = 'http://localhost:8000/api/ganado/facturas/';
-let fierroOUrl = 'http://localhost:8000/api/ganado/fierrosO/';
-let fierroNUrl = 'http://localhost:8000/api/ganado/fierrosN/';
+let animalsUrl = host+'/api/ganado/animals/';
+let lotesUrl = host+'/api/ganado/lotes/';
+let corralesUrl = host+'/api/ganado/corrales/';
+let animalGastoUrl = host+'/api/ganado/alimentos/';
+let pesadasUrl = host+'/api/ganado/pesadas/';
+let razasUrl = host+'/api/ganado/razas/';
+let gastosGanadoUrl = host+'/api/egresos/gastos/';
+let saleNotesUrl = host+'/api/ganado/sale_notes/';
+let resumenUrl = host+'/api/ganado/resumen/';
+let facturasUrl = host+'/api/ganado/facturas/';
+let fierroOUrl = host+'/api/ganado/fierrosO/';
+let fierroNUrl = host+'/api/ganado/fierrosN/';
 
 
 /********************Planta de Alimentos Urls*******************/
 
-let insumosUrl = 'http://localhost:8000/api/planta_alimentos/insumos/';
-let itemsUrl = 'http://localhost:8000/api/planta_alimentos/items/';
-let formulasUrl = 'http://localhost:8000/api/planta_alimentos/formulas/';
-let egresosUrl = 'http://localhost:8000/api/egresos/egresos/';
+let insumosUrl = host+'/api/planta_alimentos/insumos/';
+let itemsUrl = host+'/api/planta_alimentos/items/';
+let formulasUrl = host+'/api/planta_alimentos/formulas/';
+let egresosUrl = host+'/api/egresos/egresos/';
 
 /********************Egresos Urls*******************/
 
-let proveedoresUrl = 'http://localhost:8000/api/egresos/proveedores/';
-let comprasUrl = 'http://localhost:8000/api/egresos/compras/';
+let proveedoresUrl = host+'/api/egresos/proveedores/';
+let comprasUrl = host+'/api/egresos/compras/';
 
 /********************Ingresos Urls*******************/
 
-let almacenesUrl = 'http://localhost:8000/api/inventario/almacenes/';
-let itemsAlmacenUrl = 'http://localhost:8000/api/inventario/items/';
-let empresasUrl = 'http://localhost:8000/api/ingresos/empresas/';
-let blinesUrl = 'http://localhost:8000/api/ingresos/blines/';
+let almacenesUrl = host+'/api/inventario/almacenes/';
+let itemsAlmacenUrl = host+'/api/inventario/items/';
+let empresasUrl = host+'/api/ingresos/empresas/';
+let blinesUrl = host+'/api/ingresos/blines/';
 
-let clientesUrl = 'http://localhost:8000/api/ingresos/clientes/';
-let salesUrl = 'http://localhost:8000/api/ingresos/ingresos/';
-let cuentasUrl = 'http://localhost:8000/api/ingresos/cuentas/';
+let clientesUrl = host+'/api/ingresos/clientes/';
+let salesUrl = host+'/api/ingresos/ingresos/';
+let cuentasUrl = host+'/api/ingresos/cuentas/';
 /********************Vacunas Urls*******************/
 
-let vacunasUrl = 'http://localhost:8000/api/vacunas/vacunas/';
+let vacunasUrl = host+'/api/vacunas/vacunas/';
 
 /********************Catologos Urls*******************/
 
-let catProductsUrl = 'http://localhost:8000/api/catalogos/products/';
-let catUnidadesUrl ='http://localhost:8000/api/catalogos/unidades/'
-let catCfdisUrl = 'http://localhost:8000/api/catalogos/cfdis/';
-let catPagosUrl = 'http://localhost:8000/api/catalogos/pagos/';
-let catBankUrl ='http://localhost:8000/api/catalogos/banks/';
-let catAlmacenUrl = 'http://localhost:8000/api/catalogos/almacenes/';
-let catPresupuestosUrl = 'http://localhost:8000/api/catalogos/presupuestos/';
+let catProductsUrl = host+'/api/catalogos/products/';
+let catUnidadesUrl =host+'/api/catalogos/unidades/'
+let catCfdisUrl = host+'/api/catalogos/cfdis/';
+let catPagosUrl = host+'/api/catalogos/pagos/';
+let catBankUrl =host+'/api/catalogos/banks/';
+let catAlmacenUrl = host+'/api/catalogos/almacenes/';
+let catPresupuestosUrl = host+'/api/catalogos/presupuestos/';
 
 /********************Creditos Urls*******************/
-let acreedoresUrl = 'http://localhost:8000/api/creditos/acreedores/'
-let disposicionesUrl = 'http://localhost:8000/api/creditos/disposiciones/'
+let acreedoresUrl = host+'/api/creditos/acreedores/'
+let disposicionesUrl = host+'/api/creditos/disposiciones/'
+let recibosUrl = host+'/api/creditos/recibos/'
 
 
 
 
 
 
-if(!debug){
-    /******************************AWS Urls********************************/
+/*if(!debug){
+    /!******************************AWS Urls********************************!/
 
-    /********************Users Urls*******************/
+    /!********************Users Urls*******************!/
     tokenUrl = 'https://rancho.davidzavala.me/api/auth/token-auth/';
     userUrl = 'https://rancho.davidzavala.me/api/auth/me/';
     allUsersUrl = 'https://rancho.davidzavala.me/api/auth/users/';
     profilesUrl = 'https://rancho.davidzavala.me/api/auth/profiles/';
 
-    /********************Ganado Urls*******************/
+    /!********************Ganado Urls*******************!/
     animalsUrl = 'https://rancho.davidzavala.me/api/ganado/animals/';
     lotesUrl = 'https://rancho.davidzavala.me/api/ganado/lotes/';
     corralesUrl = 'https://rancho.davidzavala.me/api/ganado/corrales/';
@@ -98,13 +104,13 @@ if(!debug){
 
 
 
-    /********************Egresos Urls*******************/
+    /!********************Egresos Urls*******************!/
     proveedoresUrl = 'https://rancho.davidzavala.me/api/egresos/proveedores/';
     egresosUrl = 'https://rancho.davidzavala.me/api/egresos/egresos/';
     comprasUrl = 'https://rancho.davidzavala.me/api/egresos/compras/';
     gastosGanadoUrl = 'https://rancho.davidzavala.me/api/egresos/gastos/';
 
-    /********************Ingresos Urls*******************/
+    /!********************Ingresos Urls*******************!/
     clientesUrl = 'https://rancho.davidzavala.me/api/ingresos/clientes/';
     salesUrl = 'https://rancho.davidzavala.me/api/ingresos/ingresos/';
     empresasUrl = 'https://rancho.davidzavala.me/api/ingresos/empresas/';
@@ -115,17 +121,17 @@ if(!debug){
     itemsAlmacenUrl = 'https://rancho.davidzavala.me/api/inventario/items/';
 
 
-    /********************PlantaAlimentos Urls*******************/
+    /!********************PlantaAlimentos Urls*******************!/
     insumosUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/insumos/';
     itemsUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/items/';
     formulasUrl = 'https://rancho.davidzavala.me/api/planta_alimentos/formulas/';
 
 
-    /********************Vacunas Urls*******************/
+    /!********************Vacunas Urls*******************!/
     vacunasUrl = 'https://rancho.davidzavala.me/api/vacunas/vacunas/';
 
 
-    /********************Catalogos Urls*******************/
+    /!********************Catalogos Urls*******************!/
     catProductsUrl = 'https://rancho.davidzavala.me/api/catalogos/products/';
     catUnidadesUrl ='https://rancho.davidzavala.me/api/catalogos/unidades/'
     catCfdisUrl = 'https://rancho.davidzavala.me/api/catalogos/cfdis/';
@@ -134,11 +140,11 @@ if(!debug){
     catAlmacenUrl = 'https://rancho.davidzavala.me/api/catalogos/almacenes/';
     catPresupuestosUrl = 'https://rancho.davidzavala.me/api/catalogos/presupuestos/';
 
-    /********************Creditos Urls*******************/
+    /!********************Creditos Urls*******************!/
     acreedoresUrl = 'https://rancho.davidzavala.me/api/creditos/acreedores/'
     disposicionesUrl = 'https://rancho.davidzavala.me/api/creditos/disposiciones/'
 
-}
+}*/
 
 
 
@@ -146,6 +152,25 @@ if(!debug){
 
 const api = {
     /*******************Creditos y Acreedores*****************/
+
+    editRecibo:(obj)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function(resolve, reject){
+            const instance = axios.create({
+                baseURL:recibosUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.patch(obj.id+'/',obj)
+                .then(function(response){
+                    resolve(response.data)
+                }).catch(function(error){
+                    reject(error)
+            })
+        })
+    },
 
     getAcreedores:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
@@ -543,7 +568,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log(error.response.data)
+
                     reject(error);
                 });
         })
@@ -910,7 +935,55 @@ const api = {
         });
     },
 
+    getGastos:(url)=>{
+        if(url)animalGastoUrl = url
+        return new Promise(function (resolve, reject) {
+            const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+            const instance = axios.create({
+                baseURL: animalGastoUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('',)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    reject(error);
+                });
+
+
+        });
+    },
     /*-----------------lotes functions-----------------------*/
+    getSingleLote:(id)=>{
+        // let newUrl = animalsUrl;
+        //if(url)newUrl=url;
+
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function (resolve, reject) {
+            const instance = axios.create({
+                baseURL: lotesUrl,
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get(id+'/')
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+
+                    reject(error);
+                });
+        });
+    },
     getLotes:(url)=>{
         let newLoteUrl = lotesUrl;
         if(url)newLoteUrl=url;
@@ -1651,7 +1724,7 @@ const api = {
     },
 
     editIngreso:(ingreso)=>{
-        console.log("INGRESO", ingreso)
+
         let dataIngreso = new FormData();
         for ( var key in ingreso ) {
             dataIngreso.append(key, ingreso[key]);
@@ -1674,8 +1747,8 @@ const api = {
                 .catch(function (error) {
                     
                     
-                    console.log(ingreso);
-                    console.log('el error: ', error.response);
+
+
                     reject(error);
                 });
 
@@ -2647,7 +2720,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2664,7 +2737,7 @@ const api = {
             fecha = compra.fecha_creacion.format("YYYY-MM-DD");
             info.append('fecha_creacion', fecha);
         }
-        console.log("COMPRA_ENVIAR", compra)
+
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject) {
             const instance = axios.create({
@@ -2680,7 +2753,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2703,7 +2776,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2733,7 +2806,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2761,7 +2834,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2785,7 +2858,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2808,7 +2881,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2833,7 +2906,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2860,7 +2933,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2886,7 +2959,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -2909,7 +2982,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2933,7 +3006,7 @@ const api = {
                   resolve(response.data);
               })
               .catch(function (error) {
-                  console.log('el error: ', error.response);
+
                   reject(error);
               });
 
@@ -2956,7 +3029,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -2982,7 +3055,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3002,11 +3075,11 @@ const api = {
             });
             instance.post('', catUnidad)
                 .then(function (response) {
-                    console.log("django r:",response.data)
+
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3030,7 +3103,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3053,7 +3126,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3080,7 +3153,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3103,7 +3176,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3127,7 +3200,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3150,7 +3223,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3175,7 +3248,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3198,7 +3271,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3222,7 +3295,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3245,7 +3318,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3272,7 +3345,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3295,7 +3368,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3319,7 +3392,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3342,7 +3415,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3366,7 +3439,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3389,7 +3462,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3413,7 +3486,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3435,7 +3508,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3460,7 +3533,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error', error.response)
+
                     reject(error);
                 });
         })
@@ -3483,7 +3556,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3507,7 +3580,7 @@ const api = {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 
@@ -3530,7 +3603,7 @@ const api = {
                 })
                 .catch(function (error) {
 
-                    console.log('el error: ', error.response);
+
                     reject(error);
                 });
 

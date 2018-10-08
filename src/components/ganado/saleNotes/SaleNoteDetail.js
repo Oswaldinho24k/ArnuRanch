@@ -17,7 +17,7 @@ class SaleNoteDetail extends Component {
   render() {
       let {match, saleNote, fetched} = this.props;
       let {list, disabled} = this.state;
-      console.log(saleNote)
+
 
     if(!fetched)return <MainLoader/>
     return (

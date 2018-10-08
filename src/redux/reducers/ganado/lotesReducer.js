@@ -1,16 +1,32 @@
 import {combineReducers} from 'redux';
 import {
     GET_LOTES_DATA_SUCCESS, GET_LOTES_SUCCESS, SAVE_LOTE_SUCCESS, EDIT_LOTE_SUCCESS,
-    DELETE_LOTE_SUCCESS, GET_LOSEARCH_SUCCESS
+    DELETE_LOTE_SUCCESS, GET_LOSEARCH_SUCCESS, GET_SINGLE_LOTE_SUCCESS
 } from "../../actions/ganado/lotesActions";
-import {DELETE_ANIMAL_SUCCESS, EDIT_ANIMAL_SUCCESS} from "../../actions/ganado/animalsActions";
+import {
+    DELETE_ANIMAL_SUCCESS,
+    EDIT_ANIMAL_SUCCESS,
+    GET_SINGLE_ANIMAL_SUCCESS
+} from "../../actions/ganado/animalsActions";
+
+
+function object(state={}, action){
+    switch(action.type){
+        case GET_SINGLE_LOTE_SUCCESS:
+            return action.lote;
+        case EDIT_LOTE_SUCCESS:
+            return action.lote;
+        default:
+            return state;
+    }
+}
 
 
 
 function list(state=[], action){
     switch(action.type){
         case EDIT_ANIMAL_SUCCESS:
-            console.log('editado')
+
             let lotesFiltrados = state.filter(lote=>lote.id != action.animal.lote.id)            
             lotesFiltrados = lotesFiltrados.map(lote=>{
                 let lanimals = lote.animals.filter(a=>{return a.id!=action.animal.id})
@@ -22,7 +38,7 @@ function list(state=[], action){
             
             let animals = [...loteToUpdate.animals, action.animal]
             loteToUpdate.animals = animals
-            console.log(loteToUpdate, lotesFiltrados, action.animal)
+
 
             return [...lotesFiltrados, loteToUpdate]
         case GET_LOTES_SUCCESS:
@@ -44,14 +60,14 @@ function list(state=[], action){
     }
 }
 
-/*function allData(state={}, action){
+function allData(state={}, action){
     switch(action.type){
         case GET_LOTES_DATA_SUCCESS:
             return action.data;
         default:
             return state;
     }
-}*/
+}
 
 /*
 function loteSearch(state={}, action) {
@@ -67,7 +83,8 @@ function loteSearch(state={}, action) {
 
 const lotesReducer = combineReducers({
     list:list,
-    //allData:allData,
+    allData:allData,
+    object:object
     //loteSearch:loteSearch
 });
 

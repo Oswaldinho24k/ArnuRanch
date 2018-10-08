@@ -43,7 +43,7 @@ export const metadata = {
     ],
     rowSelection : {
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
         }
     }
 };

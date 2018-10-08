@@ -6,7 +6,7 @@ import './detailAnimal.css';
 import moment from 'moment';
 import * as facturasActions from '../../../redux/actions/facturas/facturasActions';
 import MainLoader from "../../common/Main Loader";
-
+import {host} from '../../../Api/Django'
 //const MonthPicker = DatePicker.MonthPicker;
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -82,12 +82,12 @@ class FormAnimal extends Component {
 
     handleChange=(value, obj)=> {
         this.setState({linea:value});
-        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/';
+        let basePath = host + '/api/ganado/facturas/';
         this.props.facturasActions.getFaSearch(basePath);
     };
 
     handleSearchLine=(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
+        let basePath = host + '/api/ganado/facturas/?q=';
         let url = basePath+a;
         this.props.facturasActions.getFaSearch(url);
     };
@@ -105,8 +105,8 @@ class FormAnimal extends Component {
         let options_lote = this.props.lotes.map((a) => <Option value={parseInt(a.id, 10)} key={a.id}>{a.name}</Option>);
         let options_raza= this.props.razas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.name}</Option>);
         let options_empresa= this.props.empresas.map((a, key) => <Option value={parseInt(a.id, 10)} key={key}>{a.company}</Option>);
-        let fierrosO = this.props.fierrosO.map((f, key)=><Option value={parseInt(f.id, 10)}>{f.codigo}</Option>)
-        let fierrosN = this.props.fierrosN.map((f, key)=><Option value={parseInt(f.id, 10)}>{f.codigo}</Option>)
+        let fierrosO = this.props.fierrosO.map((f, key)=><Option key={key} value={parseInt(f.id, 10)}>{f.codigo}</Option>)
+        let fierrosN = this.props.fierrosN.map((f, key)=><Option key={key} value={parseInt(f.id, 10)}>{f.codigo}</Option>)
 
         return (
             <div className={"formulario"} style={{backgroundColor: 'white'}}>

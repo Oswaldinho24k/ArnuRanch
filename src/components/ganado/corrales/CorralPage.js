@@ -33,7 +33,7 @@ const columns = [
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
     },
 };
 
@@ -62,13 +62,13 @@ class CorralPage extends Component {
                 this.handleCancel()
             }).catch(e=>{
                 for (let i in e.response.data){
-                    console.log(e.response.data[i])
+
                     message.error(e.response.data[i])
                 }
         })
     };
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
    

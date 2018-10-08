@@ -1,5 +1,25 @@
 import api from "../../../Api/Django";
 
+/*************************get a single lote********************************+*/
+
+export const GET_SINGLE_LOTE_SUCCESS = 'GET_SINGLE_LOTE_SUCCESS';
+
+export function getSingleLoteSuccess(lote){
+    return{
+        type:GET_SINGLE_LOTE_SUCCESS, lote
+    }
+}
+export const getSingleLote=(id)=>(dispatch, getState)=>{
+    return api.getSingleLote(id)
+        .then(r=>{
+
+            dispatch(getSingleLoteSuccess(r))
+        }).catch(e=>{
+            throw e
+        })
+}
+
+
 export const GET_LOTES_SUCCESS = 'GET_LOTES_SUCCESS';
 
 export function getLotesSuccess(lotes){
@@ -18,7 +38,8 @@ export function getAllDataSuccess(data){
 export const getLotes=(url)=>(dispatch, getState)=>{
     return api.getLotes(url)
         .then(r=>{
-            dispatch(getLotesSuccess(r));
+            dispatch(getLotesSuccess(r.results));
+            dispatch(getAllDataSuccess(r));
 
         }).catch(e=>{
        throw e

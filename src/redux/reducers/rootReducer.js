@@ -9,30 +9,22 @@ import pesadasReducer from "./ganado/pesadasReducer";
 import ingresosReducer from "./administracion/ingresosReducer";
 import formulasReducer from "./plantaAlimentos/formulasReducer";
 import insumosReducer from "./plantaAlimentos/insumosReducer";
-
 import egresosReducer from "./administracion/egresosReducer";
 import usersReducer from "./administracion/usersReducer";
 import razasReducer from "./ganado/razasReducer";
-
 import empresasReducer from "./administracion/empresasReducer";
 import vacunasReducer from "./vacunasReducer";
 import itemsReducer from "./plantaAlimentos/itemsReducer";
 import blinesReducer from "./administracion/blinesReducer";
 import almacenReducer from "./almacen/almacenReducer";
-
 import facturasReducer from "./facturas/facturasReducer";
 import cuentasReducer from "./cuentas/cuentasReducer";
 import comprasReducer from "./compras/comprasReducer";
 import gastosGanadoReducer from "./gastoGanado/gastoGanadoReducer";
-
 import saleNotesReducer from './ganado/salenotesReducer';
-
 import dataDashReducer from "./dashGanado/dashGanadoReducer";
-
 import fierrosOReducer from './ganado/fierroOReducer'
 import fierrosNReducer from './ganado/fierroNReducer'
-
-/*--------Catalogos-------*/
 import catProductosReducer from "././catalogos/catProductosReducer"
 import unidadmedidaReducer from "./catalogos/unidadmedidaReducer";
 import usoscfdiReducer from "./catalogos/usoscfdiReducer";
@@ -42,6 +34,7 @@ import almacenesReducer from "./catalogos/almacenesReducer";
 import presupuestosReducer from "./catalogos/presupuestosReducer";
 import acreedoresReducer from "./creditos/acreedoresReducer";
 import disposicionessReducer from "./creditos/disposicionesReducer";
+import gastoAnimalReducer from "./ganado/gastoAnimalReducer";
 
 
 
@@ -65,8 +58,9 @@ const rootReducer = combineReducers({
     vacunas: vacunasReducer,
     blines:blinesReducer,
     almacen:almacenReducer,
+    gastosAnimales:gastoAnimalReducer,
+
     //sellpoint
-    
     facturas:facturasReducer,
     
     cuentas:cuentasReducer,

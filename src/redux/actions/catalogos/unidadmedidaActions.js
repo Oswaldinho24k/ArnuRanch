@@ -12,7 +12,6 @@ export function getUnidadMedidaSuccess(unidadMe){
 export const getCatUnidades=()=>(dispatch, getState)=>{
     return api.getCatUnidades()
         .then(r=>{
-            console.log("Respuesta: ",r)
             dispatch(getUnidadMedidaSuccess(r))
         }).catch(e=>{
 

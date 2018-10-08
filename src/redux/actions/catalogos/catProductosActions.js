@@ -13,7 +13,7 @@ export const getCatProduts=()=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(getProductosSuccess(r))
         }).catch(e=>{
-            console.log("el error:", e)
+
         })
 };
 

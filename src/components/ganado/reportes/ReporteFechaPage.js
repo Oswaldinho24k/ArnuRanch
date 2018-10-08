@@ -13,6 +13,7 @@ import {AreteCard} from '../eventos/AreteCard'
 import { ReporteCard } from './ReporteCard';
 import {ResumenCard} from './ResumenCard';
 import './reportes.css'
+import {host} from '../../../Api/Django'
 
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
@@ -34,13 +35,13 @@ class ReporteFechaPage extends Component {
     };
 
     handleSearch=(a)=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+
+        let basePath = host+'/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
     handleChange=(a)=>{
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+        let basePath = host+'/api/ganado/animals/?q=';
         this.setState({areteRancho:a});
     };
 
@@ -48,37 +49,37 @@ class ReporteFechaPage extends Component {
         let {mIds} = this.state;
         mIds = mIds.filter(i=>{return i.arete_siniga!== a})
         this.setState({mIds})
-        console.log(mIds)
+
     }
 
     onSelectLote=(value, b)=>{
-        console.log(b, value);
+
         this.setState({lote:value})
     };
     saveId=(id)=>{
         this.setState({areteId:id});
-        console.log(id)
+
     };
     saveIds=(id)=>{
         let {mIds}=this.state;
         mIds.push(id)
         this.setState({mIds});
-        console.log(mIds)
+
     };
     saveLoteId=(id)=>{
         this.setState({loteId:id});
-        console.log(id)
+
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
+        let basePath = host+'/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 
     };
     handleChangeLote=(a)=>{
-        //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+
+        let basePath = host+'/api/ganado/animals/?q=';
         this.setState({lote:a});
     };
     handleMultiple=(a)=>{
@@ -101,7 +102,7 @@ class ReporteFechaPage extends Component {
     saveMultiplesGastos=(gasto)=>{
         this.setState({loading:true});
         let {mIds} = this.state;
-        console.log(mIds)
+
         
         let parcialAmount = gasto.costo/mIds.length;
         parcialAmount = parcialAmount.toFixed(2);
@@ -162,7 +163,7 @@ class ReporteFechaPage extends Component {
             .then(r => {
                 message.success('Modificado con éxito');
             }).catch(e => {
-            console.log(e)
+
         })
         
     };
@@ -172,7 +173,7 @@ class ReporteFechaPage extends Component {
         for(let j in loteId.animals){
             animal['id']=loteId.animals[j].id;
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
+
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
                     message.success('Modificado con éxito');
@@ -185,7 +186,7 @@ class ReporteFechaPage extends Component {
         }
     };
     onChangeDate=(a, b, c)=>{
-        console.log(a, b, c)
+
         this.setState({rango:b})
     }
     changeMultiplesLote=(animal)=>{
@@ -225,9 +226,9 @@ class ReporteFechaPage extends Component {
         
         if(!fetched)return(<MainLoader/>);
         if(animals[0]){
-            console.log(animals[0].fecha_entrada)
-            console.log(rango[0])
-            console.log(animals[0].fecha_entrada>rango[0])
+
+
+
         }
         
         return (

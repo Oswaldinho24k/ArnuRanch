@@ -24,7 +24,7 @@ const styles = {
 const UsuarioForm = Form.create()(
     (props) => {
         const{visible, onCancel, onCreate, form, options_sections, options_permissions, user ,canEdit} = props;
-        console.log(user)
+
         const{getFieldDecorator} = form;
         const {profile} = user
         let theKeys = []

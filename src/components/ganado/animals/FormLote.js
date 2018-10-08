@@ -9,7 +9,6 @@ const FormLote = ({form, lotes, changeLote}) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 changeLote(values); 
                 form.resetFields()
             }

@@ -45,25 +45,25 @@ class ClientePage extends Component {
         for(let i in keys){
             this.props.clientesActions.deleteCliente(keys[i])
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteCliente();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
     saveFormRef = (form) => {
@@ -75,7 +75,7 @@ class ClientePage extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 this.props.clientesActions.saveCliente(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
@@ -85,7 +85,7 @@ class ClientePage extends Component {
                         })
                     .catch(r=>{
                         message.error('El RFC ingresado ya existe!')
-                        console.log(values)
+
                     })
             }else{message.error('Algo fallo, verifica los campos');}
 
@@ -127,7 +127,7 @@ class ClientePage extends Component {
 
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
-        console.log(e.target.value)
+
     };
 
     onSearch = () => {

@@ -11,7 +11,7 @@ export function getDashDataSuccess(data){
 export const getDataDash=(url)=>(dispatch, getState)=>{
     return api.getDataDash(url)
         .then(r=>{
-            console.log(r)
+
             dispatch(getDashDataSuccess(r));
         }).catch(e=>{
             throw e

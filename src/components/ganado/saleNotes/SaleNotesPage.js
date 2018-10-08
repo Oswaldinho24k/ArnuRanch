@@ -34,7 +34,7 @@ const columns = [
 
 /*const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
     },
 };*/
 
@@ -46,7 +46,7 @@ class SaleNotesPage extends Component {
     }
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
     deleteCorrales=()=>{
@@ -54,7 +54,7 @@ class SaleNotesPage extends Component {
         for(let i in keys){
             this.props.saleNotesActions.deleteSaleNote(keys[i])
                 .then(r=>{
-                    console.log(r);
+
                     message.success('Deleted successfully');
                 }).catch(e=>{
 
@@ -68,7 +68,7 @@ class SaleNotesPage extends Component {
         this.deleteCorrales()
     };
     cancel=()=>{
-        console.log('ño')
+
     }
 
     //
@@ -100,7 +100,7 @@ class SaleNotesPage extends Component {
             count ++
         }
     }
-    console.log(count)
+
     if(!fetched)return<MainLoader/>
 
     return (

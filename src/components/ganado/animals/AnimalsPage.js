@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import FormAnimal from './FormAnimal';
 import FormAnimalLote from './FormLote';
 import moment from 'moment';
+import {host} from '../../../Api/Django'
 
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
@@ -25,12 +26,17 @@ class AnimalsPage extends Component {
         loteFilter:'',
         searchText:'',
         canReset:false,
+        loading:false
 
     };
 
     componentWillUnmount() {
         this.resetFilters()
     }
+    componentWillMount(){
+
+    }
+
 
 
 
@@ -58,7 +64,7 @@ class AnimalsPage extends Component {
                 this.handleCancel();
                 message.success('Arete añadido con éxito!')
             }).catch(e=>{
-                console.log(e.response)
+
             for (let i in e.response.data){
                 message.error(e.response.data[i])
             }
@@ -117,8 +123,7 @@ class AnimalsPage extends Component {
     };
 
     filterByLote=(lote)=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?lote=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?lote=';
+        let basePath = host+'/api/ganado/animals/?lote=';
         let url = basePath+lote;
         this.props.animalActions.getAnimals(url);
         this.setState({canReset:true})
@@ -128,8 +133,7 @@ class AnimalsPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+        let basePath = host+'/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
         this.props.animalActions.getAnimals(url);
         
@@ -137,16 +141,14 @@ class AnimalsPage extends Component {
     };
 
     handleStatus=(v)=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?s=';
-        
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?s=';
+        let basePath = host+'/api/ganado/animals/?s=';
+
         let url = basePath + v
         
         this.props.animalActions.getAnimals(url);
     }
     resetFilters=()=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/';
+        let basePath = host+'/api/ganado/animals/';
         this.props.animalActions.getAnimals(basePath);
         this.setState({searchText:'', loteFilter:'', status:true});
     };
@@ -169,7 +171,8 @@ class AnimalsPage extends Component {
     render() {
 
 
-        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset} = this.state;
+        let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset, loading} = this.state;
+
         
 
         const columns = [
@@ -235,7 +238,7 @@ class AnimalsPage extends Component {
             this.state.loteFilter.toLowerCase())!== -1);
         
             //animals = animals.filter(a=>a.status===true)
-
+        console.log(fetched)
         if(!fetched)return(<MainLoader/>);
         return (
             <div>
@@ -287,6 +290,7 @@ class AnimalsPage extends Component {
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
+                    loading={loading}
                     dataSource={animals}
                     rowKey={record => record.id}
                     pagination={{

@@ -7,26 +7,26 @@ const FormItem = Form.Item;
 
 
 const InfoBline = ({form,edit,onCancel, visible, data, name }) => {
-    console.log("DATAA", data)
-    console.log("BLINE", name)
+
+
 
     const handleSubmit = (e) => {
-        console.log("LALLA", e)
+
         e.preventDefault();
         form.validateFields((err, values) => {
 
             if (!err) {
-                console.log("VALUES",values);
+
                 values['id']=data.id;
                 values['almacenes']=data.almacenes;
-                console.log("ENVIAR", values)
+
 
                 edit(values)
                     .then(r=>{
-                        console.log("Editado con éxito");
+
                         message.success('Guardado con éxito');
                     }).catch(e=>{
-                    console.log(e)
+
                 })
             }else{message.error('Algo fallo, verifica los campos');}
         });

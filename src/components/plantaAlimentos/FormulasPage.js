@@ -8,11 +8,13 @@ import {deleteFormula} from '../../redux/actions/plantaAlimentos/formulasActions
 
 export const showMessage = (message, style) => {
     setTimeout(
+
         console.log.bind(
             console,
             `%c ${message} %c`,
             style,
             ""
+
         )
     );
 };
@@ -49,9 +51,9 @@ class FormulasPage extends Component {
     onDelete = id => {
         this.props.deleteFormula(id)
             .then(r => {
-                console.log(r);
+
             }).catch(e => {
-                console.log(e);
+
             });
         this.closeModal();
     };
@@ -67,7 +69,7 @@ class FormulasPage extends Component {
         this.deleteSelection()
     };
     cancel=()=>{
-        console.log('ok')
+
     }
 
     render() {
@@ -87,7 +89,7 @@ class FormulasPage extends Component {
         );
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
-                //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                //
                 this.setState({selectedRowsKeys:selectedRowKeys})
             }
         };

@@ -12,7 +12,7 @@ const InfoBatch = ({form, name, id, status, corral, corrales, handleEdit, canEdi
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 values['id']=id;
                 edit(values);
                 handleEdit();

@@ -31,17 +31,17 @@ class InsumosPage extends Component {
             insumo['unit_price_total'] = insumo.unit_price + insumo.freight + insumo.loading_maneuver;
             insumo.unit_price_total = parseFloat(insumo.unit_price_total.toFixed(2));
         } catch (e) {
-            console.log(e);
+
         }
-        console.log(insumo);
+
         if (insumo.id) {
             this.props.editInsumo(insumo)
                 .then(r => {
-                    console.log(r);
+
                     message.success('Guardado')
                 })
                 .catch(e => {
-                    console.log(e);
+
                     message.error(e)
                 });
             this.closeModal();
@@ -49,10 +49,10 @@ class InsumosPage extends Component {
             this.props.saveInsumo(insumo)
                 .then(r => {
                     message.success('Cambios guardados');
-                    console.log(r);
+
                 })
                 .catch(e => {
-                    console.log(e);
+
                     message.error(e)
                 });
             this.closeModal();
@@ -62,10 +62,10 @@ class InsumosPage extends Component {
     onDelete = (id) => {
         this.props.deleteInsumo(id)
             .then(r => {
-                console.log(r);
+
             })
             .catch(e => {
-                console.log(e);
+
             });
         this.closeModal();
     };
@@ -96,7 +96,7 @@ class InsumosPage extends Component {
         );
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
-                //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                //
                 this.setState({selectedRowsKeys:selectedRowKeys})
             }
         };

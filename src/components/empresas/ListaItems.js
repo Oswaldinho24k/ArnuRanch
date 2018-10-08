@@ -38,7 +38,7 @@ class ListaAlmacen extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 this.props.itemsActions.saveItem(values);
                 message.success('Guardado con éxito');
 
@@ -66,25 +66,25 @@ class ListaAlmacen extends Component {
         for(let i in keys){
             this.props.itemsActions.deleteItem(keys[i], this.props.almacenDetail.id)
                 .then(r=>{
-                    console.log(r)
+
                 }).catch(e=>{
-                console.log(e)
+
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
+
         this.deleteItem();
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
+
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+
         this.setState({ selectedRowKeys });
     };
 
@@ -95,9 +95,9 @@ class ListaAlmacen extends Component {
     }
 
     onChangeItem=(e, )=>{
-        console.log(e)
+
         let insumoInfo=this.props.insumosList.find(insumo=>{return insumo.id === e})
-        console.log(insumoInfo)
+
 
         this.setState({
             itemIn:insumoInfo.unit_price
@@ -115,7 +115,7 @@ class ListaAlmacen extends Component {
     };
 
     render(){
-        console.log(this.state.key)
+
 
         let {empresa, fetched, idl, ida, id, almacenDetail, listAlmacen, insumosList, vacunasList}= this.props;
         let {visible, selectedRowKeys, selectChange, itemIn} = this.state;
@@ -294,7 +294,7 @@ function mapStateToProps(state, ownProps) {
     });
     almacenDetail = almacenDetail[0];
     let listAlmacen=state.almacen.list;
-    console.log(listAlmacen)
+
 
     let insumosList = state.insumos.list;
     let vacunasList = state.vacunas.list;

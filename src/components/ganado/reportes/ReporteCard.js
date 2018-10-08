@@ -6,13 +6,15 @@ import {Link} from 'react-router-dom'
 const TabPane = Tabs.TabPane;
 
 
-export const ReporteCard = ({id, arete_rancho, arete_siniga, peso_entrada, lote, aliments, pesadas, costo_inicial, raza, costo_kilo, ref_factura_original, fecha_entrada}) => {
+export const ReporteCard = ({id, arete_rancho, arete_siniga, peso_entrada=0 , lote, aliments, pesadas, costo_inicial, raza, costo_kilo, ref_factura_original, fecha_entrada}) => {
 
     let alimentsCostTotal = 0;
     let vacunasCostTotal = 0;
     let alimentsQuantityTotal = 0;
-    aliments?aliments:aliments=[]
-    pesadas?pesadas:pesadas=[]
+    if(aliments)aliments=aliments
+    else aliments=[]
+    if(pesadas)pesadas=pesadas
+    else pesadas=[]
     //suma el costo de todos los gastos
     let resultCost = aliments.map( (item, ix) => {
         if(item.tipo==='Alimento')return alimentsCostTotal += parseFloat(item.costo)
@@ -23,8 +25,8 @@ export const ReporteCard = ({id, arete_rancho, arete_siniga, peso_entrada, lote,
         if(item.tipo==='Alimento')return alimentsQuantityTotal += parseFloat(item.cantidad)
     });
     //obtiene la diferencia en dias desde su llegada hasta hoy
-    var given = moment(fecha_entrada, "YYYY-MM-DD");
-    var current = moment().startOf('day');
+    let given = moment(fecha_entrada, "YYYY-MM-DD");
+    let current = moment().startOf('day');
     let differenceTotal = moment.duration(current.diff(given)).asDays().toFixed(0);
     //ultima pesada
     let lastPesadaDate = pesadas.length>=1?moment(pesadas[pesadas.length-1].created):moment(0);
@@ -32,9 +34,8 @@ export const ReporteCard = ({id, arete_rancho, arete_siniga, peso_entrada, lote,
     //dias de la llegada a la ultima pesada
     let differenceLastPesada = moment.duration(lastPesadaDate.diff(given)).asDays().toFixed(0);
     //ganancia diaria promedio y otros indicadores
-    let gdp = ((lastPesada-peso_entrada)/differenceLastPesada).toFixed(2)
-    console.log(gdp)
-    let conversion = ((lastPesada-peso_entrada)/alimentsQuantityTotal).toFixed(2)
+    let gdp = ((lastPesada - peso_entrada)/differenceLastPesada).toFixed(2)
+    let conversion = ((lastPesada - peso_entrada)/alimentsQuantityTotal).toFixed(2)
     let rendimiento = (alimentsQuantityTotal/(lastPesada-peso_entrada)).toFixed(2)
     //dias de la ultima pesada al dia de hoy
     let diffToday = moment.duration(current.diff(lastPesadaDate)).asDays().toFixed(0);

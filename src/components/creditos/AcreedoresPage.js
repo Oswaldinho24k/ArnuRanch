@@ -39,7 +39,7 @@ class AcreedoresPage extends React.Component{
                 message.success('Agregado con éxito')
                 this.handleModal()
             }).catch(e=>{
-                console.log(e.response)
+
         })
     }
 

@@ -15,6 +15,8 @@ import { AreteCard } from './AreteCard';
 import FormPesada from '../animals/FormPesada';
 import FormSalidas from '../animals/FormSalida'
 
+import {host} from '../../../Api/Django'
+
 const FormItem = Form.Item;
 const {Option, OptGroup } = Select;
 
@@ -35,8 +37,8 @@ class EventosPage extends Component {
     };
 
     handleSearch=(a)=>{
-        //let basePath = 'http://localhost:8000/api/ganado/animals/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+
+        let basePath = host+'/api/ganado/animals/?q=';
         let url = basePath+a;
         this.props.animalActions.getAnimals(url);
     };
@@ -104,20 +106,20 @@ class EventosPage extends Component {
             }
         }
         
-        console.log(sn)
+
         this.props.saleNotesActions.newSaleNote(sn)
             .then(r=>{
                 for(let j in sn.animals_id){
-                    console.log(sn.animals_id[j])
+
                     this.props.animalActions.editAnimal({id:sn.animals_id[j],status:false})
-                        .then(r=>{console.log(r)})
-                        .catch(e=>{console.log(e.response)})
+                        .then(r=>{})
+                        .catch(e=>{})
                 }
                 message.success('Nota creada con éxito');                                
                 this.setState({areteRancho:'', areteId:'', modo:''});
                 
             }).catch(e=>{
-                console.log(e.response)
+
                 for (let i in e.response.data){
                     message.error(e.response.data[i])
                 }
@@ -141,7 +143,7 @@ class EventosPage extends Component {
     saveMultiplesGastos=(gasto)=>{
         this.setState({loading:true});
         let {mIds} = this.state;
-        console.log(mIds)
+
         
         let parcialAmount = gasto.costo/mIds.length;
         parcialAmount = parcialAmount.toFixed(2);
@@ -202,7 +204,7 @@ class EventosPage extends Component {
             .then(r => {
                 message.success('Modificado con éxito');
             }).catch(e => {
-            console.log(e)
+
         })
         
     };
@@ -212,7 +214,6 @@ class EventosPage extends Component {
         for(let j in loteId.animals){
             animal['id']=loteId.animals[j].id;
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
            this.props.animalActions.editAnimal(toSend)
                 .then(r => {
                     message.success('Modificado con éxito');
@@ -234,7 +235,7 @@ class EventosPage extends Component {
                 .then(r => {
                     message.success('Modificado con éxito');
                 }).catch(e => {
-                    console.log(e)
+
                    //message.error(e.response.data[i])
                
             })
@@ -252,7 +253,7 @@ class EventosPage extends Component {
             .then(r => {
                 message.success('Modificado con éxito');
             }).catch(e => {
-            console.log(e)
+
         })
         
     };
@@ -262,7 +263,7 @@ class EventosPage extends Component {
         for(let j in loteId.animals){
             animal['animal']=loteId.animals[j].id;
             let toSend = Object.assign({}, animal);
-            console.log(toSend)
+
             this.props.pesadasActions.savePesada(toSend)
                 .then(r => {
                     message.success('Modificado con éxito');
@@ -311,13 +312,13 @@ class EventosPage extends Component {
         modo==='individual'?displayList=[areteId]:
         modo==='multiple'?displayList=mIds:
         modo==='lote'?displayList=loteId.animals:displayList=[]
-        console.log(displayList, 'antes del filtro')
+
         displayList=displayList?displayList.filter(a=>a.status===true):[]
         for(let i in displayList){
             let animal = animals.find(a=>{return a.id==displayList[i].id})
-            console.log(animal)
+
         }
-        console.log(newList)
+
         if(!fetched)return(<MainLoader/>);
 
         return (

@@ -15,7 +15,6 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
-            console.log(values)
             if (!err) {
                 if(!values.lote_id) delete values.lote_id;
                 if(!values.raza_id) delete values.raza_id;
@@ -28,17 +27,14 @@ const BasicInfo = ({form, wEmpresa, editAnimal, handleEmpresa, editMode,handleEd
                 /* if(!values.costo_inicial) delete values.costo_inicial;
                  if(!values.costo_kilo) delete values.costo_kilo;
                  if(!values.peso_entrada) delete values.peso_entrada;*/
-                console.log(values);
                 values['id']=id;
                 values['ref_factura_original_id'] = stateFactura !==null ? stateFactura:ref_factura_original && ref_factura_original !==null?ref_factura_original.id:null;
                 editAnimal(values)
                     .then(r=>{
-                        console.log(r)
                         message.success('Editado con éxito');
                         handleEditMode()
                     }).catch(e=>{
                         message.error('Ocurrió un error')
-                        console.log(e)
                 })
             }
             if (Array.isArray(e)) {

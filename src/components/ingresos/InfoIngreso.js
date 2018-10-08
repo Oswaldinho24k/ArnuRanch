@@ -25,14 +25,14 @@ const InfoIngreso = ({form,editIngreso,id,editMode, handleEditMode, business_lin
                 }
 
                 values['id']=id;
-                console.log("ENVIADO", values)
+
                 editIngreso(values)
                     .then(r=>{
-                        console.log("Editado con éxito");
+
                         handleEditMode()
                         message.success('Guardado con éxito');
                     }).catch(e=>{
-                    console.log(e)
+
                 })
             }else{message.error('Algo fallo, verifica los campos');}
         });

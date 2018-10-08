@@ -41,26 +41,20 @@ class RazasPage extends Component {
         for(let i in keys){
             this.props.razasActions.deleteRaza(keys[i])
                 .then(r=>{
-                    console.log(r)
                 }).catch(e=>{
-                console.log(e)
             })
         }
         this.setState({selectedRowKeys:[]})
     };
     confirm=(e)=> {
-        console.log(e);
         this.deleteUsuario();
-        console.log("Eliminado")
         message.success('Deleted successfully');
     };
 
     cancel=(e) =>{
-        console.log(e);
     };
 
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -73,10 +67,8 @@ class RazasPage extends Component {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 this.props.razasActions.newRaza(values)
                     .then(r=>{
-                        console.log(r);
                         message.success('Guardado con éxito');
                         form.resetFields();
                     }).catch(e=>{

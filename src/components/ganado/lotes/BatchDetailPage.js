@@ -8,6 +8,7 @@ import FormGasto from "../animals/FormGasto";
 import * as animalGastoActions from "../../../redux/actions/ganado/gastoAnimalActions";
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {bindActionCreators} from "redux";
+import * as animalActions from "../../../redux/actions/ganado/animalsActions";
 
 
 
@@ -81,7 +82,7 @@ class BatchDetailPage extends Component {
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
-            console.log(toSend)
+
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
 
@@ -106,13 +107,13 @@ class BatchDetailPage extends Component {
         this.setState({canEdit:!this.state.canEdit})
     };
     edit=(lote)=>{
-        console.log(lote);
+
         if(lote.corral===undefined)delete lote['corral'];
       this.props.lotesActions.editLote(lote)
           .then(r=>{
               message.success('editado con éxito')
           }).catch(e=>{
-              console.log(e.response.data)
+
       })
     };
 
@@ -189,22 +190,28 @@ class BatchDetailPage extends Component {
 
 
 function mapStateToProps (state, ownProps) {
+
     let corrales = state.corrales.list.filter(c=>{
         return c.lotes===null
     });
-    let loteId = ownProps.match.params.id;
+   /* let loteId = ownProps.match.params.id;
+
+
+
     let lote = state.lotes.list.filter(l => {
         return loteId == l.id;
     });
 
-    lote = lote[0];
+    lote = lote[0];*/
     return {
-        lote,
+        lote:state.lotes.object,
         corrales,
-        fetched: lote !== undefined && corrales !==undefined,
+        fetched:corrales !==undefined && state.lotes.object!==undefined,
     }
 }
- function mapDispatchToProps(dispatch){
+ function mapDispatchToProps(dispatch, oP){
+     let elId = oP.match.params.id;
+     dispatch(lotesActions.getSingleLote(elId));
      return{
          animalGastoActions:bindActionCreators(animalGastoActions, dispatch),
          lotesActions:bindActionCreators(lotesActions, dispatch),

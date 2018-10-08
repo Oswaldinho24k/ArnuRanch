@@ -11,14 +11,14 @@ const InfoProveedor = ({form,editProveedor,id,editMode, handleEditMode, provider
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 values['id']=id;
                 editProveedor(values)
                     .then(r=>{
                         message.success('Guardado con éxito');
                         handleEditMode()
                     }).catch(e=>{
-                        console.log(e)
+
                 })
             }else{message.error('Algo fallo, verifica los campos');}
         });

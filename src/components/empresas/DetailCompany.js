@@ -8,6 +8,7 @@ import MainLoader from "../common/Main Loader";
 import InfoCompany from './InfoCompany';
 import * as linesActions from '../../redux/actions/blines/blinesActions';
 import moment from 'moment';
+import {host} from '../../Api/Django'
 
 const Option = Select.Option;
 
@@ -47,7 +48,7 @@ class DetailCompany extends Component{
 
     handleSearchLine=(a)=>{
         console.log(a)
-        let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
+        let basePath = host+'/api/ingresos/blines/?q=';
         let url = basePath+a;
         console.log(url)
         this.props.linesActions.getLiSearch(url);
