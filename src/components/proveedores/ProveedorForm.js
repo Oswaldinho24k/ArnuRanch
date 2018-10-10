@@ -42,7 +42,7 @@ const ProveedorForm = Form.create()(
                     null,
                 ]}
             >
-                <Form onSubmit={this.handleSubmit} style={{overflow:'auto', maxHeight:'600px'}}>
+                <Form onSubmit={onCreate} style={{overflow:'auto', maxHeight:'600px'}}>
                     <div style={styles.form}>
                         <FormItem
                             label="Nombre del Proveedor/Razón Social"

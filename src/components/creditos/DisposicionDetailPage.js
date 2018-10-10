@@ -1,11 +1,12 @@
 import React from 'react'
-import {Divider, Card, Table, Icon, Switch, message} from "antd";
+import {Divider, Card, Table, Icon, Switch, message, Button, Popconfirm} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux'
 import MainLoader from "../common/Main Loader";
 import moment from 'moment'
 import {bindActionCreators} from 'redux'
 import * as recibosActions from '../../redux/actions/creditos/recibosActions'
+import * as disposicionesActions from '../../redux/actions/creditos/disposicionesActions'
 
 
 
@@ -27,6 +28,21 @@ class DisposicionDetailPage extends React.Component{
             }).catch(e=>{
                 message.error(e.data)
         })
+    }
+    onConfirm=()=>{
+        const {disposicion} = this.props
+        this.props.disposicionesActions.deleteDisposicion(disposicion)
+            .then(r=>{
+                console.log(r)
+                message.success('Borrado con éxito')
+                this.props.history.push(`/admin/acreedores/${disposicion.acreedor.id}`)
+            }).catch(e=>{
+                console.log(e)
+                message.error('Ocurrió un problema, intenta después')
+        })
+    }
+    onCancel=()=>{
+        return
     }
     render(){
         const columns = [
@@ -153,6 +169,10 @@ class DisposicionDetailPage extends React.Component{
                         <p>Pagos de capital: {disposicion.plazo}</p>
                         <p>Periodo de pagos de interes: {disposicion.periodo_intereses}</p>
                         <p>Periodo de pagos de capital: {disposicion.periodo_capital}</p>
+
+                        <Popconfirm title="Seguro?" onConfirm={this.onConfirm} onCancel={this.onCancel} okText="Si" cancelText="No">
+                            <Button>Delete</Button>
+                        </Popconfirm>,
                     </Card>
                     <div style={{ width: '60%' }}>
                         <Table dataSource={disposicion.recibos} columns={columns} rowKey={record => record.id} />
@@ -170,9 +190,10 @@ const mapStateToProps=(state, oP)=>{
     }
 }
 
-const mapDispatchToProps=(disptch)=>{
+const mapDispatchToProps=(dispatch)=>{
     return{
-        recibosActions:bindActionCreators(recibosActions,disptch)
+        recibosActions:bindActionCreators(recibosActions,dispatch),
+        disposicionesActions:bindActionCreators(disposicionesActions, dispatch)
     }
 }
 

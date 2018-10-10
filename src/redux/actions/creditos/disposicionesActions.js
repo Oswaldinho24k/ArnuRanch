@@ -60,8 +60,12 @@ export const deleteDisposicionSuccess = (item)=>{
 }
 
 export const deleteDisposicion=(item)=>(dispatch, getState)=>{
+    console.log(item)
     return api.deleteDisposicion(item)
         .then(r=>{
+
             dispatch(deleteDisposicionSuccess(r))
+        }).catch(e=>{
+            throw e
         })
 }

@@ -123,36 +123,56 @@ class AnimalsPage extends Component {
     };
 
     filterByLote=(lote)=>{
+        this.setState({loading:true})
         let basePath = host+'/api/ganado/animals/?lote=';
         let url = basePath+lote;
-        this.props.animalActions.getAnimals(url);
-        this.setState({canReset:true})
+        this.props.animalActions.getAnimals(url)
+            .then(r=>{
+                this.setState({canReset:true, loading:false})
+
+            })
+
         //this.setState({loteFilter:b.props.children})
     };
     handleSearch=(e)=>{
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
+        this.setState({canReset:true})
         let basePath = host+'/api/ganado/animals/?q=';
         let url = basePath+this.state.searchText;
-        this.props.animalActions.getAnimals(url);
+        this.props.animalActions.getAnimals(url)
+            .then(r=>{
+                this.setState({canReset:true, loading:false})
+            })
         
         this.setState({canReset:true})
     };
 
     handleStatus=(v)=>{
+        this.setState({loading:true})
         let basePath = host+'/api/ganado/animals/?s=';
 
         let url = basePath + v
         
-        this.props.animalActions.getAnimals(url);
+        this.props.animalActions.getAnimals(url)
+            .then(r=>{
+                this.setState({loading:false})
+            })
     }
     resetFilters=()=>{
+        this.setState({loading:true})
         let basePath = host+'/api/ganado/animals/';
-        this.props.animalActions.getAnimals(basePath);
-        this.setState({searchText:'', loteFilter:'', status:true});
+        this.props.animalActions.getAnimals(basePath)
+            .then(r=>{
+                this.setState({searchText:'', loteFilter:'', status:true, loading:false});
+            }).catch(e=>{
+                console.log(e)
+        })
+
     };
     handlePagination=(pagina)=>{
+        this.setState({loading:true})
         let nextLength = pagina.toString().length;
         let newUrl = this.props.animalsData.next;
         if(newUrl===null){
@@ -164,7 +184,10 @@ class AnimalsPage extends Component {
         }else{
             newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }
-        this.props.animalActions.getAnimals(newUrl);
+        this.props.animalActions.getAnimals(newUrl)
+            .then(r=>{
+                this.setState({loading:false})
+            })
     };
 
 
@@ -232,14 +255,12 @@ class AnimalsPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        let {animals, fetched, lotes, animalsData, razas, empresas, fierrosO, fierrosN} = this.props;
+        let {animals, lotes, animalsData, razas, empresas, fierrosO, fierrosN} = this.props;
 
         let optionsLote=lotes.filter(l=>l.name.toLowerCase().indexOf(
             this.state.loteFilter.toLowerCase())!== -1);
-        
-            //animals = animals.filter(a=>a.status===true)
-        console.log(fetched)
-        if(!fetched)return(<MainLoader/>);
+        console.log(animals)
+        //if(!fetched)return(<MainLoader/>);
         return (
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>

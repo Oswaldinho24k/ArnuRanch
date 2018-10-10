@@ -63,8 +63,9 @@ class AcreedoresDetailPage extends React.Component{
         let {match, acreedor, fetched, disposiciones} = this.props
         disposiciones = disposiciones.filter((d, key)=>d.acreedor.id===acreedor.id)
 
-        let {open} = this.state
-
+        const {open} = this.state
+        let deuda = 0
+        disposiciones.map(d=>deuda+=d.monto)
         if(!fetched) return  <MainLoader/>
         return(
             <div>
@@ -74,9 +75,9 @@ class AcreedoresDetailPage extends React.Component{
                     <Link to={'/admin/acreedores'}>Acreedores</Link>
 
                 </div>
-                <h2>Acreedor {acreedor.banco} con saldo actual de {acreedor.saldo}</h2>
+                <h2>Acreedor {acreedor.banco} con saldo actual de {acreedor.saldo-deuda}</h2>
                 <p>Disposiciones</p>
-                <Table columns={columns} dataSource={disposiciones}/>
+                <Table columns={columns} dataSource={disposiciones} rowKey={r=>r.id}/>
                 <Button type={"primary"} onClick={this.handleModal}>Agrega</Button>
                 <Modal
                     title="Nueva Disposición"
@@ -99,7 +100,6 @@ class AcreedoresDetailPage extends React.Component{
 
 const mapStateToProps=(state, oP)=>{
     let acreedor = state.acreedores.list.find(a=>a.id==oP.match.params.id)
-    console.log(state.disposiciones)
     let disposiciones = state.disposiciones.list;
 
     return{

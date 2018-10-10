@@ -59,6 +59,7 @@ class BatchPage extends Component {
         visible: false,
         searchText:'',
         selectedRowKeys:[],
+        loading:false
     };
 
     showModal = () => {
@@ -89,30 +90,41 @@ class BatchPage extends Component {
         this.setState({searchText:e.target.value})
     };
     onSearch=()=>{
-
+        this.setState({loading:true})
         let basePath = host+'/api/ganado/lotes/?q=';
         let url = basePath+this.state.searchText;
         this.props.loteActions.getLotes(url)
+            .then(r=>{
+                this.setState({loading:false})
+            })
     };
     resetFilters=()=>{
-
+        this.setState({loading:true})
         let basePath = host+'/api/ganado/lotes/';
-        this.props.loteActions.getLotes(basePath);
-        this.setState({searchText:''});
+        this.props.loteActions.getLotes(basePath)
+            .then(r=>{
+                this.setState({loading:false, searchText:''})
+            })
     };
+
+
     handlePagination=(pagina)=>{
-
-        let newUrl = this.props.paginationData.next;
+        this.setState({loading:true})
         let nextLength = pagina.toString().length;
-        if(newUrl!==null){
-            newUrl=newUrl.slice(0,newUrl.length-nextLength);
-            newUrl=newUrl+pagina;
-            this.props.loteActions.getLotes(newUrl);
-
-        }else{
+        let newUrl = this.props.paginationData.next;
+        if(newUrl===null){
             newUrl = this.props.paginationData.previous;
-            this.props.loteActions.getLotes(newUrl);
         }
+
+        if( pagina ==1 && this.props.paginationData.count <= 40){
+            newUrl='https'+newUrl.slice(4,newUrl.length);
+        }else{
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+        }
+        this.props.loteActions.getLotes(newUrl)
+            .then(r=>{
+                this.setState({loading:false})
+            })
     };
 
     onSelectChange = (selectedRowKeys) => {
@@ -146,7 +158,7 @@ class BatchPage extends Component {
     }
 
     render() {
-        const { visible , searchText, selectedRowKeys} = this.state;
+        const { visible , searchText, selectedRowKeys, loading} = this.state;
         let {lotes, fetched, corrales, paginationData} = this.props;
         const canUse = selectedRowKeys.length > 0;
         const rowSelection = {
@@ -193,7 +205,7 @@ class BatchPage extends Component {
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={lotes}
-
+                    laoding={loading}
                     rowKey={record => record.id}
                     pagination={{
                         pageSize:10,

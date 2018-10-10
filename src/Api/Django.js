@@ -154,6 +154,7 @@ let recibosUrl = host+'/api/creditos/recibos/'
 const api = {
     /*******************Creditos y Acreedores*****************/
 
+
     editRecibo:(obj)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function(resolve, reject){
@@ -269,6 +270,7 @@ const api = {
                 })
         })
     },
+  
     newDisposicion:(item)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){

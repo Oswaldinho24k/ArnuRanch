@@ -34,32 +34,36 @@ class AcreedoresForm extends React.Component{
                 )}
             </FormItem>
 
-            <FormItem
-                label="Credito "
-            >
-                {form.getFieldDecorator('credito', {
-                    rules: [{
-                        required: true, message: 'Completa el campo!',
-                    }],
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                <FormItem
+                    label="Credito "
+                    style={{width:'45%'}}
+                >
+                    {form.getFieldDecorator('credito', {
+                        rules: [{
+                            required: true, message: 'Completa el campo!',
+                        }],
 
-                })(
-                    <InputNumber />
-                )}
-            </FormItem>
-            <FormItem
-                label="Saldo "
-            >
-                {form.getFieldDecorator('saldo', {
-                    initialValue:form.getFieldValue('credito'),
-                    rules: [{
-                        required: true, message: 'Completa el campo!',
+                    })(
+                        <InputNumber style={{width:'100%'}}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    label="Saldo "
+                    style={{width:'45%'}}
+                >
+                    {form.getFieldDecorator('saldo', {
+                        initialValue:form.getFieldValue('credito'),
+                        rules: [{
+                            required: true, message: 'Completa el campo!',
 
-                    }],
+                        }],
 
-                })(
-                    <InputNumber disabled/>
-                )}
-            </FormItem>
+                    })(
+                        <InputNumber style={{width:'100%'}} disabled/>
+                    )}
+                </FormItem>
+            </div>
         </div>
         <FormItem>
             <Button type="primary" htmlType={'submit'} size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
