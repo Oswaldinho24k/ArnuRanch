@@ -63,6 +63,7 @@ import BasicTable from "./BasicTable";
 import AcreedoresPage from "../creditos/AcreedoresPage";
 import AcreedoresDetailPage from "../creditos/AcreedoresDetailPage";
 import DisposicionDetailPage from "../creditos/DisposicionDetailPage";
+import EventosList from "../ganado/eventos/EventosList";
 
 
 export const paths = {
@@ -128,6 +129,7 @@ const Sections = ({props}) => {
                 <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
                 <Route path='/admin/lotes' component={BatchPage}/>
                 <Route path='/admin/razas' component={RazasPage}/>
+                <Route path='/admin/eventos/list' component={EventosList}/>
                 <Route path='/admin/eventos' component={EventosPage}/>
                 <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
                 <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>

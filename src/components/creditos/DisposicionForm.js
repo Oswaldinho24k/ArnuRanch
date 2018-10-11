@@ -26,6 +26,19 @@ class DisposicionForm extends React.Component{
                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
 
                     <FormItem
+                        label="Folio "
+                    >
+                        {form.getFieldDecorator('numero', {
+                            rules: [{
+                                required: true, message: 'Completa el campo!',
+                            }],
+
+                        })(
+                            <Input/>
+
+                        )}
+                    </FormItem>
+                    <FormItem
                         label="Credito "
                     >
                         {form.getFieldDecorator('tipo_credito', {

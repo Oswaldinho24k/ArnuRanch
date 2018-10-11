@@ -1,5 +1,5 @@
 import React from 'react'
-import {Divider, Card, Table, Icon, Switch, message, Button, Popconfirm} from "antd";
+import {Divider, Card, Table, Icon, Switch, message, Button, Popconfirm, DatePicker} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux'
 import MainLoader from "../common/Main Loader";
@@ -14,19 +14,18 @@ import * as disposicionesActions from '../../redux/actions/creditos/disposicione
 
 
 class DisposicionDetailPage extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
 
-        }
+    state={
+        edit:''
     }
+
 
     onChange=(e,v)=>{
         this.props.recibosActions.updateRecibo({paid:e,id:v})
             .then(r=>{
                 message.success('Recibo editado')
             }).catch(e=>{
-                message.error(e.data)
+                message.error(e)
         })
     }
     onConfirm=()=>{
@@ -37,12 +36,24 @@ class DisposicionDetailPage extends React.Component{
                 message.success('Borrado con éxito')
                 this.props.history.push(`/admin/acreedores/${disposicion.acreedor.id}`)
             }).catch(e=>{
-                console.log(e)
+            console.log(e.response)
                 message.error('Ocurrió un problema, intenta después')
         })
     }
     onCancel=()=>{
         return
+    }
+    handleDate=(fecha, f2, obj)=>{
+        console.log(fecha, f2, obj)
+
+
+        this.props.recibosActions.updateRecibo({fecha:f2,id:obj.id})
+            .then(r=>{
+                message.success('Recibo editado')
+            }).catch(e=>{
+            console.log(e.response)
+
+        })
     }
     render(){
         const columns = [
@@ -50,19 +61,8 @@ class DisposicionDetailPage extends React.Component{
                 title:'Fecha',
                 dataIndex:'fecha',
                 key:'fecha',
-                render:(f, obj)=><p>{moment(f).format('LL')}</p>
-                /*render:(t, obj)=>{
-
-                    var check = moment(t)
-                    var today = moment(new Date)
-                    var month = check.format('M');
-                    var day   = check.format('D');
-                    var year  = check.format('YYYY');
-                    if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY'))return <p><Icon type="exclamation-circle"  /> {moment(t).format('LL')}</p>
-                    if(check.format('M')===today.format('M') && check.format('YYYY')===today.format('YYYY')&&check.format('D')===today.format('D'))return <p><Icon type="warning"  /> {moment(t).format('LL')}</p>
-                    else return <p><Icon type="heart" /> {moment(t).format('LL')}</p>
-
-                }*/
+                //render:(f, obj)=><p>{moment(f).format('LL')}</p>
+                render:(f, obj)=><DatePicker onChange={(a,b)=>this.handleDate(a,b,obj)} defaultValue={moment(f)}/>
             },{
                 title:'Pagado',
                 dataIndex:'paid',
@@ -77,7 +77,7 @@ class DisposicionDetailPage extends React.Component{
                 dataIndex:'saldo',
                 key:'saldo'
             },{
-                title:'Pago de Intereses',
+                title:'Intereses',
                 dataIndex:'intereses',
                 key:'intereses'
             }
@@ -154,7 +154,7 @@ class DisposicionDetailPage extends React.Component{
                 </div>
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                     <Card
-                        title={`Disposición ${disposicion.id}`}
+                        title={`Disposición ${disposicion.numero}`}
                         style={{ width: '30%' }}
                     >
 
