@@ -18,7 +18,7 @@ function list(state=[], action){
             return action.gastos
 
         case SAVE_ANIMAL_GASTO_SUCCESS:
-            return
+            return [action.gasto, ...state]
         default:
             return state
     }

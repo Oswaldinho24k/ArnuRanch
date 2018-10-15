@@ -41,6 +41,7 @@ export const getAnimalGastos=(url)=>(dispatch, getState)=>{
             dispatch(getAnimalGastosSuccess(r.results))
             dispatch(getAnimalGastosData(r))
         }).catch(e=>{
+
             throw e
         })
 }

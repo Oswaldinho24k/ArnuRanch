@@ -316,6 +316,7 @@ class AnimalsPage extends Component {
                     rowKey={record => record.id}
                     pagination={{
                         pageSize: 20,
+                        defaultCurrent:1,
                         total:animalsData.count,
                         onChange:this.handlePagination,
                         showTotal:total => `Total: ${total} aretes`}}

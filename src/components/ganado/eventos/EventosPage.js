@@ -159,9 +159,7 @@ class EventosPage extends Component {
                 .then(r=>{
 
                 }).catch(e=>{
-                for (let i in e.response.data){
-                    message.error(e.response.data[i])
-                }
+                console.log(e)
             })
         }
 
@@ -326,7 +324,7 @@ class EventosPage extends Component {
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
                     Ganado
                     <Divider type="vertical" />
-                    Eventos
+                    <Link to={'/admin/eventos/list'}>Eventos</Link>
 
                 </div>
                 <div style={{display:'flex', justifyContent:'space-around'}}>

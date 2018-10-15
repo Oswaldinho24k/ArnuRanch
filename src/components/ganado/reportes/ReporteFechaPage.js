@@ -209,7 +209,7 @@ class ReporteFechaPage extends Component {
     };
     handleChangeMode=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';
-        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
+        this.setState({modo:a, mIds:[], aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
         //let basePath = 'https://rancho.fixter.org/api/ganado/animals/?q=';

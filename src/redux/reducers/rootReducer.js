@@ -84,6 +84,7 @@ const rootReducer = combineReducers({
 
     acreedores:acreedoresReducer,
     disposiciones:disposicionessReducer,
+    eventos:gastoAnimalReducer,
 
 
 });
