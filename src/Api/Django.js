@@ -173,6 +173,42 @@ const api = {
             })
         })
     },
+    deleteRecibo:(obj)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function(resolve, reject){
+            const instance = axios.create({
+                baseURL:recibosUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.delete(obj.id+'/')
+                .then(function(response){
+                    resolve(response.data)
+                }).catch(function(error){
+                reject(error)
+            })
+        })
+    },
+    createRecibo:(obj)=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function(resolve, reject){
+            const instance = axios.create({
+                baseURL:recibosUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.post('', obj)
+                .then(function(response){
+                    resolve(response.data)
+                }).catch(function(error){
+                reject(error)
+            })
+        })
+    },
 
     getAcreedores:()=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));

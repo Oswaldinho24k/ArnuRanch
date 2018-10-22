@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import MainLoader from "../common/Main Loader";
 import moment from 'moment'
 import {bindActionCreators} from 'redux'
+import ReciboF from './ReciboForm'
 import * as recibosActions from '../../redux/actions/creditos/recibosActions'
 import * as disposicionesActions from '../../redux/actions/creditos/disposicionesActions'
 
@@ -16,7 +17,9 @@ import * as disposicionesActions from '../../redux/actions/creditos/disposicione
 class DisposicionDetailPage extends React.Component{
 
     state={
-        edit:''
+        edit:'',
+
+
     }
 
 
@@ -45,14 +48,44 @@ class DisposicionDetailPage extends React.Component{
     }
     handleDate=(fecha, f2, obj)=>{
         console.log(fecha, f2, obj)
-
-
         this.props.recibosActions.updateRecibo({fecha:f2,id:obj.id})
             .then(r=>{
                 message.success('Recibo editado')
             }).catch(e=>{
             console.log(e.response)
+            message.success('Ocurrió un problema, intenta después')
+        })
+    }
 
+    deleteRecibo=(obj)=>{
+        this.props.recibosActions.deleteRecibo(obj)
+            .then(r=>{
+                message.success('Recibo eliminado')
+
+            }).catch(e=>{
+            console.log(e.response)
+            message.success('Ocurrió un problema, intenta después')
+        })
+    }
+    updateRecibo=(obj)=>{
+        this.props.recibosActions.updateRecibo(obj)
+            .then(r=>{
+                message.success('Recibo editado')
+            }).catch(e=>{
+            message.success('Ocurrió un problema, intenta después')
+            console.log(e.response)
+
+        })
+    }
+    handleSubmit=(obj)=>{
+        obj['disposicion'] = parseInt(this.props.match.params.id)
+        this.props.recibosActions.createRecibo(obj)
+            .then(r=>{
+                message.success('recibo agregado')
+                this.setState({newRecibo:r})
+            }).catch(e=>{
+                console.log(e)
+                console.log(e.response)
         })
     }
     render(){
@@ -80,69 +113,23 @@ class DisposicionDetailPage extends React.Component{
                 title:'Intereses',
                 dataIndex:'intereses',
                 key:'intereses'
+            },{
+                title:'Actions',
+                dataIndex:'id',
+                key:'id',
+                render:(t, obj)=><div>
+
+                    <Button type="primary" shape="circle" icon="delete" size='small' onClick={()=>this.deleteRecibo(obj)}/>
+
+                </div>
             }
         ]
 
         let {disposicion, fetched} = this.props
+
         if(!fetched) return <MainLoader/>
 
 
-
-        /*let dCards = []
-        let obj={}
-
-        for(let i = 0;i<=disposicion.plazo;i++){
-            let fecha;
-            let disp=0;
-            let pago=0;
-            let saldo=0;
-            let intereses=0;
-            fecha = moment(disposicion.fecha_inicio).add(i, 'M')
-            if(i===0) disp = disposicion.monto
-            else disp = 0
-            //pago de capital
-
-            if(disposicion.periodo_capital==='mensual'){
-                if(i>0)pago=disposicion.monto/disposicion.plazo
-            }else if(disposicion.periodo_capital==='trimestral'){
-                if(i%3===0)pago=disposicion.monto/disposicion.plazo*3
-            }else if(disposicion.periodo_capital==='semestral'){
-                if(i%6===0)pago=disposicion.monto/disposicion.plazo*6
-            }else if(disposicion.periodo_capital==='anual'){
-                if(i%12===0)pago=disposicion.monto/disposicion.plazo*12
-            }else if(disposicion.periodo_capital==='vencimiento'){
-                if(i===disposicion.plazo)pago=disposicion.monto
-            }
-            if(i===0)pago = 0
-            console.log(pago)
-            if(pago%1!==0)pago = pago.toFixed((2))
-            //saldo
-            if(i===0)saldo = disposicion.monto
-            else saldo = dCards[i-1].saldo-pago
-
-            if(saldo%1!==0)saldo = saldo.toFixed(2)
-            //let saldo;
-            //pago de intereses
-
-            if(disposicion.periodo_intereses==='mensual'){
-                if(i>0){
-                    //intereses = disposicion.monto*(disposicion.tasa/100)/12
-                    intereses = dCards[i-1].saldo*(disposicion.tasa/100)/12
-                    intereses = intereses.toFixed(2)
-                }
-            }else if(disposicion.periodo_intereses==='vencimiento'){
-                if(i === disposicion.plazo)intereses = disposicion.monto*(disposicion.tasa/100)
-            }
-
-            obj = {
-                fecha,
-                disp,
-                pago,
-                saldo,
-                intereses
-            }
-            dCards.push(obj)
-        }*/
         return(
             <div>
                 <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
@@ -155,9 +142,8 @@ class DisposicionDetailPage extends React.Component{
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                     <Card
                         title={`Disposición ${disposicion.numero}`}
-                        style={{ width: '30%' }}
+                        style={{ width: '30%' ,height:'80vh'}}
                     >
-
                         <p>Acreedor:</p>
                         <p>Tipo de credito: {disposicion.tipo_credito}</p>
                         <p>Monto: {disposicion.monto}</p>
@@ -171,11 +157,19 @@ class DisposicionDetailPage extends React.Component{
                         <p>Periodo de pagos de capital: {disposicion.periodo_capital}</p>
 
                         <Popconfirm title="Seguro?" onConfirm={this.onConfirm} onCancel={this.onCancel} okText="Si" cancelText="No">
-                            <Button>Delete</Button>
-                        </Popconfirm>,
+                            <Button type={'danger'} style={{width:'100%'}}>Delete</Button>
+                        </Popconfirm>
                     </Card>
                     <div style={{ width: '60%' }}>
-                        <Table dataSource={disposicion.recibos} columns={columns} rowKey={record => record.id} />
+
+                        <ReciboF handleSubmit={this.handleSubmit}/>
+
+                        <Table dataSource={disposicion.recibos} columns={columns} rowKey={record => record.id}
+                               pagination={{
+                                pageSize: 7,
+                                defaultCurrent:1,
+                                total:disposicion.recibos.length}}/>
+
                     </div>
                 </div>
             </div>
@@ -184,9 +178,10 @@ class DisposicionDetailPage extends React.Component{
 }
 
 const mapStateToProps=(state, oP)=>{
+    const disposicion = state.disposiciones.list.find(o=>o.id==oP.match.params.id)
     return{
-        disposicion:state.disposiciones.list.find(o=>o.id==oP.match.params.id),
-        fetched:state.disposiciones.list.find(o=>o.id==oP.match.params.id)!==undefined
+        disposicion:disposicion,
+        fetched:disposicion!==undefined
     }
 }
 

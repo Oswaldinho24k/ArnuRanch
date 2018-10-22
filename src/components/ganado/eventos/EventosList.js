@@ -65,9 +65,9 @@ class EventosList extends Component {
         }
 
         //if( pagina ==1 && this.props.data.count <= 40){
-            newUrl='http'+newUrl.slice(4,newUrl.length);
+            newUrl='https'+newUrl.slice(4,newUrl.length);
         /*}else{
-            newUrl='http'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
+            newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }*/
         this.props.gastoAnimalActions.getAnimalGastos(newUrl)
             .then(r=>{
@@ -77,7 +77,7 @@ class EventosList extends Component {
         })
     };
     onSearch=()=>{
-        
+
     }
     render() {
         const {searchText} = this.state

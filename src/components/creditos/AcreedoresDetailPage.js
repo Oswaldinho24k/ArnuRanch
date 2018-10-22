@@ -75,7 +75,7 @@ class AcreedoresDetailPage extends React.Component{
                     <Link to={'/admin/acreedores'}>Acreedores</Link>
 
                 </div>
-                <h2>Acreedor {acreedor.banco} con saldo actual de {acreedor.saldo-deuda}</h2>
+                <h2>Acreedor {acreedor.banco}</h2>
                 <p>Disposiciones</p>
                 <Table columns={columns} dataSource={disposiciones} rowKey={r=>r.id}/>
                 <Button type={"primary"} onClick={this.handleModal}>Agrega</Button>
