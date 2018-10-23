@@ -1,17 +1,22 @@
 import React from "react";
 import {Button, DatePicker,Form, Input, InputNumber, Modal, Select} from "antd";
+import moment from 'moment'
 
 const Option = Select.Option
 const FormItem = Form.Item;
 
 
-
+const dateFormat = 'YYYY/MM/DD';
 
 class ReciboForm extends React.Component{
     submit=(e)=>{
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
-            //values['acreedor_id'] = this.props.acreedorId
+            console.log(values)
+            let date = moment(values.fecha).toDate()
+
+            values['fecha'] = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+            console.log(values)
             this.props.handleSubmit(values)
             this.props.form.resetFields()
         })

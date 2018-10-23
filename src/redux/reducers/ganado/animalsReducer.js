@@ -32,7 +32,7 @@ function list(state=[], action){
             
             return [action.animal, ...newList];
         case SAVE_ANIMAL_GASTO_SUCCESS:
-            let animalId = action.gasto.animal;
+            let animalId = action.gasto.animal.id;
             let animal = state.find(a=>{return a.id==animalId});        
             animal['aliments'] = [...animal.aliments, action.gasto];
             

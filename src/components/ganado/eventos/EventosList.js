@@ -25,7 +25,7 @@ class EventosList extends Component {
             .then(r=>{
                 this.setState({canReset:true, loading:false})
             }).catch(e=>{
-                console.log(e)
+
         })
     }
 
@@ -42,7 +42,7 @@ class EventosList extends Component {
     };
 
     filterRange=(moment, date)=>{
-        console.log(date)
+
         this.setState({loading:true})
         let basePath = host+'/api/ganado/alimentos/';
         let url = `${basePath}?d1=${date[0]}&d2=${date[1]}`
@@ -73,7 +73,7 @@ class EventosList extends Component {
             .then(r=>{
                 this.setState({loading:false})
             }).catch(e=>{
-                console.log(e)
+
         })
     };
     onSearch=()=>{
@@ -82,6 +82,7 @@ class EventosList extends Component {
     render() {
         const {searchText} = this.state
         const {fetched, eventos, data} = this.props
+
 
 
         if(!fetched) return <MainLoader/>

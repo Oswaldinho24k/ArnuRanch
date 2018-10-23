@@ -68,7 +68,8 @@ class EventosPage extends Component {
         this.setState({mIds});
         
     };
-    saveLoteId=(id)=>{        
+    saveLoteId=(id)=>{
+        console.log(id)
         this.setState({loteId:id});
         
     };
@@ -120,24 +121,20 @@ class EventosPage extends Component {
                 
             }).catch(e=>{
 
-                for (let i in e.response.data){
-                    message.error(e.response.data[i])
-                }
+                console.log(e)
             })
     };
    
 
     saveGasto=(gasto)=>{
-        gasto['animal'] = this.state.areteId.id;
+        gasto['animal_id'] = this.state.areteId.id;
         this.props.animalGastoActions.saveAnimalGasto(gasto)
             .then(r=>{
                 message.success('Gasto agregado con éxito');
                 this.setState({areteRancho:'', areteId:'', modo:''});
                 this.handleSearch('')
             }).catch(e=>{
-                for (let i in e.response.data){
-                    message.error(e.response.data[i])
-                }
+                console.log(e)
             })
     };
     saveMultiplesGastos=(gasto)=>{
@@ -151,7 +148,7 @@ class EventosPage extends Component {
         parcialQuantity = parcialQuantity.toFixed(2);
         for(let i in mIds){
            let animalId = mIds[i].id;
-            gasto['animal']=animalId;
+            gasto['animal_id']=animalId;
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
@@ -176,17 +173,16 @@ class EventosPage extends Component {
         parcialQuantity = parcialQuantity.toFixed(2);
         for(let i in loteId.animals){
             let animalId = loteId.animals[i].id;
-            gasto['animal']=animalId;
+            gasto['animal_id']=animalId;
+            console.log(gasto.animal)
             gasto['costo']=parcialAmount;
             if(gasto.cantidad)gasto['cantidad']=parcialQuantity;
             let toSend = Object.assign({}, gasto);
             this.props.animalGastoActions.saveAnimalGasto(toSend)
                 .then(r=>{
-
+                    console.log(r)
                 }).catch(e=>{
-                for (let i in e.response.data){
-                    message.error(e.response.data[i])
-                }
+                console.log(e)
             })
         }
 
@@ -293,7 +289,7 @@ class EventosPage extends Component {
     handleChangeMode=(a)=>{
         //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
         
-        this.setState({modo:a, mIds:[], areteId:{}, aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
+        this.setState({modo:a, mIds:[],  aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
     };
     handleChangeEvent=(a)=>{
         //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';

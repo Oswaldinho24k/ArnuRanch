@@ -11,6 +11,7 @@ export function saveAnimalGastoSuccess(gasto){
 }
 
 export const saveAnimalGasto=(gasto)=>(dispatch, getState)=>{
+
     return api.newGasto(gasto)
         .then(r=>{
             dispatch(saveAnimalGastoSuccess(r))

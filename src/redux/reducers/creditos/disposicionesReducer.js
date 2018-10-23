@@ -24,7 +24,7 @@ const list=(state=[], action)=>{
 
             return [...state.filter(d=>d.id!=action.recibo.disposicion), disposicionNew]
 
-        
+
         case DELETE_RECIBO_SUCCESS:
             const disposicion = Object.assign({},state.find(d=>d.id==action.recibo.disposicion))
             disposicion['recibos'] = [...disposicion.recibos.filter(r=>r.id!=action.recibo.id)]
