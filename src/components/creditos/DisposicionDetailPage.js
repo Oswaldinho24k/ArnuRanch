@@ -8,6 +8,7 @@ import {bindActionCreators} from 'redux'
 import ReciboF from './ReciboForm'
 import * as recibosActions from '../../redux/actions/creditos/recibosActions'
 import * as disposicionesActions from '../../redux/actions/creditos/disposicionesActions'
+import DisposicionF from './DisposicionForm'
 
 
 
@@ -18,8 +19,7 @@ class DisposicionDetailPage extends React.Component{
 
     state={
         edit:'',
-
-
+        editable:false
     }
 
 
@@ -88,6 +88,21 @@ class DisposicionDetailPage extends React.Component{
                 console.log(e.response)
         })
     }
+    editDisposicion=(item)=>{
+        item['id'] = parseInt(this.props.match.params.id)
+        delete item.acreedor_id
+        this.props.disposicionesActions.editDisposicion(item)
+            .then(r=>{
+                message.success('Editado Con éxito')
+            }).catch(e=>{
+                message.error('Ocurrió un error, intenta más tarde')
+        })
+        this.setState({editable:false})
+    }
+    handleUpdate=()=>{
+
+        this.setState({editable:true})
+    }
     render(){
         const columns = [
             {
@@ -100,7 +115,10 @@ class DisposicionDetailPage extends React.Component{
                 title:'Pagado',
                 dataIndex:'paid',
                 key:'paid',
-                render:(p, obj)=><Switch defaultChecked={p} onChange={(e)=>this.onChange(e,obj.id)} />
+                render:(p, obj, key)=>{
+                    if(key!==0) return <Switch defaultChecked={p} onChange={(e)=>this.onChange(e,obj.id)} />
+                    else return <p></p>
+                }
             },{
                 title:'Pago a Capital',
                 dataIndex:'capital',
@@ -126,6 +144,7 @@ class DisposicionDetailPage extends React.Component{
         ]
 
         let {disposicion, fetched} = this.props
+        const {editable} = this.state;
 
         if(!fetched) return <MainLoader/>
 
@@ -142,20 +161,27 @@ class DisposicionDetailPage extends React.Component{
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                     <Card
                         title={`Disposición ${disposicion.numero}`}
-                        style={{ width: '30%' ,height:'80vh'}}
+                        style={{ width: '30%' ,height:'auto'}}
                     >
-                        <p>Acreedor:</p>
-                        <p>Tipo de credito: {disposicion.tipo_credito}</p>
-                        <p>Monto: {disposicion.monto}</p>
-                        <p>Plazo (meses): {disposicion.plazo}</p>
-                        <p>Inicio: {moment(disposicion.fecha_inicio).format('LL')}</p>
-                        <p>Vencimiento: {moment(disposicion.fecha_vencimiento).format('LL')}</p>
-                        <p>Tasa de interes: {disposicion.tasa}%</p>
-                        <p>Perio de gracia: {disposicion.gracia}</p>
-                        <p>Pagos de capital: {disposicion.plazo}</p>
-                        <p>Periodo de pagos de interes: {disposicion.periodo_intereses}</p>
-                        <p>Periodo de pagos de capital: {disposicion.periodo_capital}</p>
+                        {!editable?<div>
+                            <p><strong>Acreedor:</strong>{disposicion.acreedor.banco}</p>
+                            <p><strong>Tipo de credito:</strong> {disposicion.tipo_credito}</p>
+                            <p><strong>Monto:</strong> {disposicion.monto}</p>
+                            <p><strong>Plazo (meses):</strong> {disposicion.plazo}</p>
+                            <p><strong>Inicio:</strong> {moment(disposicion.fecha_inicio).format('LL')}</p>
+                            <p><strong>Vencimiento:</strong> {moment(disposicion.fecha_vencimiento).format('LL')}</p>
+                            <p><strong>Tasa de interes:</strong> {disposicion.tasa}%</p>
+                            <p><strong>Perio de gracia:</strong> {disposicion.gracia}</p>
+                            <p><strong>Pagos de capital:</strong> {disposicion.plazo}</p>
+                            <p><strong>Periodo de pagos de interes:</strong> {disposicion.periodo_intereses}</p>
+                            <p><strong>Periodo de pagos de capital:</strong> {disposicion.periodo_capital}</p>
+                        </div>:
 
+                        <DisposicionF disposicion={disposicion} handleSubmit={this.editDisposicion}/>}
+
+
+
+                        {!editable?<Button type={"primary"} style={{width:'100%'}} onClick={this.handleUpdate}>Editar</Button>:''}
                         <Popconfirm title="Seguro?" onConfirm={this.onConfirm} onCancel={this.onCancel} okText="Si" cancelText="No">
                             <Button type={'danger'} style={{width:'100%'}}>Delete</Button>
                         </Popconfirm>
@@ -178,7 +204,10 @@ class DisposicionDetailPage extends React.Component{
 }
 
 const mapStateToProps=(state, oP)=>{
-    const disposicion = state.disposiciones.list.find(o=>o.id==oP.match.params.id)
+    const id = oP.match.params.id
+    const disposicion = state.disposiciones.list.find(o=>{
+        if(o)return o.id==id
+    })
     return{
         disposicion:disposicion,
         fetched:disposicion!==undefined

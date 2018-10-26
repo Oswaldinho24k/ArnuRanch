@@ -63,7 +63,7 @@ export const deleteAcreedorSuccess = (item)=>{
 export const deleteAcreedor=(item)=>(dispatch, getState)=>{
     return api.deleteAcreedor(item)
         .then(r=>{
-            dispatch(deleteAcreedorSuccess(r))
+            dispatch(deleteAcreedorSuccess(item))
         })
 }
 

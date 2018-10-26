@@ -10,11 +10,14 @@ const list=(state=[], action)=>{
             return [action.item, ...state]
         case EDIT_ACREEDOR_SUCCESS:
             state = state.map(i=>{
+
                 if(i.id==action.item.id) i = Object.assign({}, action.item)
+                return i
             })
             return [...state]
         case DELETE_ACREEDOR_SUCCESS:
-            return [...state.filter(i=>i.id!==action.item.id)]
+            console.log(action.item)
+            return [...state.filter(i=>i.id!=action.item.id)]
         default:
             return state
     }

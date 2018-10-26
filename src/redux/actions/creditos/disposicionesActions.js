@@ -47,6 +47,7 @@ export const editDisposicion=(item)=>(dispatch, getState)=>{
         .then(r=>{
             dispatch(editDisposicionSucess(r))
         }).catch(e=>{
+            console.log(e)
             throw e
         })
 }

@@ -1,9 +1,9 @@
-import {Button, DatePicker, Form, Input, InputNumber, Modal, Select} from "antd";
 import React from "react";
+import moment from 'moment';
+import {Button, DatePicker, Form, Input, InputNumber, Modal, Select} from "antd";
+
 
 const Option = Select.Option
-
-
 const FormItem = Form.Item;
 
 
@@ -20,28 +20,31 @@ class DisposicionForm extends React.Component{
 
     }
     render(){
-        let {form}  = this.props
+        let {form, disposicion}  = this.props
+        if(!disposicion)disposicion={}
         return(
             <Form onSubmit={this.handleSubmit} >
                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
 
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Folio "
                     >
                         {form.getFieldDecorator('numero', {
+                            initialValue:disposicion.numero,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
 
                         })(
-                            <Input/>
+                            <Input style={{width:'250px'}}/>
 
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Credito "
                     >
                         {form.getFieldDecorator('tipo_credito', {
+                            initialValue:disposicion.tipo_credito,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
                             }],
@@ -53,11 +56,12 @@ class DisposicionForm extends React.Component{
                             </Select>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Monto "
                     >
                         {form.getFieldDecorator('monto', {
-                            initialValue:form.getFieldValue('credito'),
+
+                            initialValue:disposicion.monto,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -67,11 +71,11 @@ class DisposicionForm extends React.Component{
                             <InputNumber style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Plazo "
                     >
                         {form.getFieldDecorator('plazo', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:disposicion.plazo,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -81,11 +85,11 @@ class DisposicionForm extends React.Component{
                             <InputNumber style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Fecha Inicio "
                     >
                         {form.getFieldDecorator('fecha_inicio', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:moment(disposicion.fecha_inicio),
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -95,11 +99,11 @@ class DisposicionForm extends React.Component{
                             <DatePicker style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Fecha Vencimiento "
                     >
                         {form.getFieldDecorator('fecha_vencimiento', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:moment(disposicion.fecha_vencimiento),
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -109,11 +113,11 @@ class DisposicionForm extends React.Component{
                             <DatePicker style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Tasa "
                     >
                         {form.getFieldDecorator('tasa', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:disposicion.tasa,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -123,11 +127,11 @@ class DisposicionForm extends React.Component{
                             <InputNumber style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Gracia "
                     >
                         {form.getFieldDecorator('gracia', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:disposicion.gracia,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -137,11 +141,11 @@ class DisposicionForm extends React.Component{
                             <InputNumber style={{width:'250px'}}/>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Periodo de Intereses "
                     >
                         {form.getFieldDecorator('periodo_intereses', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:disposicion.periodo_intereses,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -154,11 +158,11 @@ class DisposicionForm extends React.Component{
                             </Select>
                         )}
                     </FormItem>
-                    <FormItem
+                    <FormItem style={{margin:0}}
                         label="Periodo Capital"
                     >
                         {form.getFieldDecorator('periodo_capital', {
-                            //initialValue:form.getFieldValue('credito'),
+                            initialValue:disposicion.periodo_capital,
                             rules: [{
                                 required: true, message: 'Completa el campo!',
 
@@ -175,7 +179,7 @@ class DisposicionForm extends React.Component{
                         )}
                     </FormItem>
                 </div>
-                <FormItem>
+                <FormItem style={{margin:0}}>
                     <Button type="primary" htmlType={'submit'} size="large" style={{display:'flex', justifyContent:'center', margin:'0 auto', width:'100%'}}>
                         Guardar
                     </Button>

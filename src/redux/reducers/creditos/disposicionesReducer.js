@@ -12,6 +12,7 @@ const list=(state=[], action)=>{
         case EDIT_DISPOSICION_SUCCESS:
             state = state.map(i=>{
                 if(i.id==action.item.id) i = Object.assign({}, action.item)
+                return i
             })
             return [...state]
         case DELETE_DISPOSICION_SUCCESS:
