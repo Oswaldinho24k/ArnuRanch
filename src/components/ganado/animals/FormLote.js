@@ -3,12 +3,13 @@ import {Form, Select, Button} from 'antd';
 
 const Option = Select.Option;
 
-const FormLote = ({form, lotes, changeLote}) => {
+const FormLote = ({form, lotes, changeLote, handleSearchLote, selectId}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
+                console.log(values)
                 changeLote(values); 
                 form.resetFields()
             }
@@ -25,8 +26,15 @@ const FormLote = ({form, lotes, changeLote}) => {
                 <Form.Item label={'Elige el lote de Destino'}>
                     {form.getFieldDecorator('lote_id', {
                     })(
-                        <Select>
-                            {lotes.map((a, key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>)}
+                        <Select
+                            mode="combobox"
+                            style={{width:'100%'}}
+                            onSearch={handleSearchLote}
+                            placeholder="ingresa el nombre del lote"
+                            filterOption={true}>
+                            {lotes.map((a, key) => <Option key={key} value={a.name} >
+                                <p onClick={()=>selectId(a.id)}>{a.name}</p>
+                                </Option>)}
                         </Select>
                     )}
                 </Form.Item>

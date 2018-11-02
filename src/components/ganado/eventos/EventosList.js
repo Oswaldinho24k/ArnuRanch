@@ -82,7 +82,7 @@ class EventosList extends Component {
     render() {
         const {searchText} = this.state
         const {fetched, eventos, data} = this.props
-
+        console.log(data)
 
 
         if(!fetched) return <MainLoader/>
@@ -121,12 +121,13 @@ class EventosList extends Component {
                     </Link>
 
                     <Pagination
-                    pageSize={24}
-                    total={data.count}
-                    onChange={this.handlePagination}
-                    showTotal={total => `Total: ${total} aretes`}
-                    defaultCurrent={1}
-                    style={{padding:'1% 0'}}/>
+                        
+                        pageSize={24}
+                        defaultCurrent={1}
+                        total={data.count}
+                        onChange={this.handlePagination}
+                        showTotal={total => `Total: ${total} eventos`}
+                        style={{padding:'1% 0'}}/>
                 </div>
             </>
         );
@@ -137,7 +138,7 @@ const mapStateToProps=(state, oP)=>{
     return{
         data:state.eventos.object,
         eventos:state.eventos.list,
-        fetched:state.eventos.list!==undefined && state.eventos.object,
+        fetched:state.eventos.list!==undefined && state.eventos.object!==undefined,
     }
 }
 

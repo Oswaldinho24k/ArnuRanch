@@ -55,7 +55,7 @@ class EventosPage extends Component {
     }
 
     onSelectLote=(value, b)=>{
-        
+        console.log(value)
         this.setState({lote:value})
     };
     saveId=(id)=>{
@@ -75,7 +75,7 @@ class EventosPage extends Component {
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
+        let basePath = host + '/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 
@@ -190,7 +190,8 @@ class EventosPage extends Component {
         message.success('Gasto agregado con éxito')
     };
     changeSingleLote=(animal)=>{
-    
+        let { idFinal} = this.state
+        animal['lote_id'] = idFinal;
         animal['id']= this.state.areteId.id
         let toSend = Object.assign({}, animal);
 
@@ -203,8 +204,9 @@ class EventosPage extends Component {
         
     };
     changeLoteLote=(animal)=>{
-        let {loteId} = this.state
-        
+        let {loteId, idFinal} = this.state
+        animal['lote_id'] = idFinal;
+        console.log(animal)
         for(let j in loteId.animals){
             animal['id']=loteId.animals[j].id;
             let toSend = Object.assign({}, animal);
@@ -219,8 +221,14 @@ class EventosPage extends Component {
         
         }
     };
+    selectId=(id)=>{
+        console.log(id)
+        this.setState({idFinal:id})
+    }
     changeMultiplesLote=(animal)=>{
-        let {mIds} = this.state;
+        let {mIds, idFinal} = this.state;
+
+        animal['lote_id'] = idFinal;
         for(let j in mIds){
             animal['id']=mIds[j].id;
             let toSend = Object.assign({}, animal);
@@ -358,7 +366,7 @@ class EventosPage extends Component {
                                 mode="combobox"
                                 style={{width:'100%'}}
                                 onSelect={this.onSelectLote}
-
+                                onSearch={this.handleSearchLote}
                                 onChange={this.handleChangeLote}
                                 placeholder="ingresa el nombre del lote"
                                 filterOption={true}
@@ -413,7 +421,7 @@ class EventosPage extends Component {
                         
                         
                         {event==='gasto'? <FormGasto saveGasto={modo==='individual'?this.saveGasto:modo==='lote'?this.saveLoteGastos:modo==='multiple'?this.saveMultiplesGastos:''}/>:
-                        event==='reubicacion'?<FormAnimalLote lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
+                        event==='reubicacion'?<FormAnimalLote selectId={this.selectId} handleChangeLote={this.handleChangeLote} handleSearchLote={this.handleSearchLote}  lotes={lotes} changeLote={modo==='individual'?this.changeSingleLote:modo==='lote'?this.changeLoteLote:modo==='multiple'?this.changeMultiplesLote:''}/>:
                         event==='salida'?<FormSalidas saveSalida={this.saveSalida} clients={clients}/>:
                         event==="pesada"?<FormPesada savePesada={modo==='individual'?this.changeSinglePesada:modo==='lote'?this.changeLotePesada:modo==='multiple'?this.changeMultiplePesada:''}/>:'Elige un Evento*'}
                      </div>
@@ -456,7 +464,7 @@ function mapDispatchToProps(dispatch) {
     return {
         animalGastoActions: bindActionCreators(animalGastoActions, dispatch),
         animalActions:bindActionCreators(animalActions, dispatch),
-        lotesAction:bindActionCreators(lotesActions, dispatch),
+        lotesActions:bindActionCreators(lotesActions, dispatch),
         pesadasActions:bindActionCreators(pesadasActions, dispatch),
         saleNotesActions:bindActionCreators(saleNotesActions, dispatch),
 
