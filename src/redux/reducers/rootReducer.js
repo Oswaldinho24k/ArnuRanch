@@ -35,6 +35,7 @@ import presupuestosReducer from "./catalogos/presupuestosReducer";
 import acreedoresReducer from "./creditos/acreedoresReducer";
 import disposicionessReducer from "./creditos/disposicionesReducer";
 import gastoAnimalReducer from "./ganado/gastoAnimalReducer";
+import recibosReducer from "./creditos/recibosReducer";
 
 
 
@@ -60,6 +61,8 @@ const rootReducer = combineReducers({
     almacen:almacenReducer,
     gastosAnimales:gastoAnimalReducer,
 
+    eventos:gastoAnimalReducer,
+
     //sellpoint
     facturas:facturasReducer,
     
@@ -84,7 +87,9 @@ const rootReducer = combineReducers({
 
     acreedores:acreedoresReducer,
     disposiciones:disposicionessReducer,
-    eventos:gastoAnimalReducer,
+    recibos:recibosReducer,
+
+
 
 
 });

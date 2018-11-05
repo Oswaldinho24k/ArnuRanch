@@ -1,6 +1,6 @@
 import React from "react";
 import moment from 'moment';
-import {Button, DatePicker, Form, Input, InputNumber, Modal, Select} from "antd";
+import {Button, DatePicker, Form, Input, InputNumber, Modal, Select, Switch} from "antd";
 
 
 const Option = Select.Option
@@ -167,7 +167,6 @@ class DisposicionForm extends React.Component{
                                 required: true, message: 'Completa el campo!',
 
                             }],
-
                         })(
                             <Select style={{width:'250px'}}>
                                 <Option key={1} value={'mensual'}>Mensual</Option>
@@ -176,6 +175,19 @@ class DisposicionForm extends React.Component{
                                 <Option key={4} value={'anual'}>Anual</Option>
                                 <Option key={5} value={'vencimiento'}>Vencimiento</Option>
                             </Select>
+                        )}
+                    </FormItem>
+                    <FormItem style={{margin:0}}
+                              label="Pagado"
+                    >
+                        {form.getFieldDecorator('paid', {
+                            initialValue:disposicion.paid,
+                            rules: [{
+                                required: false
+
+                            }],
+                        })(
+                            <Switch/>
                         )}
                     </FormItem>
                 </div>

@@ -81,6 +81,7 @@ class DisposicionDetailPage extends React.Component{
         obj['disposicion'] = parseInt(this.props.match.params.id)
         this.props.recibosActions.createRecibo(obj)
             .then(r=>{
+                console.log(r)
                 message.success('recibo agregado')
                 this.setState({newRecibo:r})
             }).catch(e=>{
@@ -91,10 +92,13 @@ class DisposicionDetailPage extends React.Component{
     editDisposicion=(item)=>{
         item['id'] = parseInt(this.props.match.params.id)
         delete item.acreedor_id
+
         this.props.disposicionesActions.editDisposicion(item)
             .then(r=>{
+                console.log(r)
                 message.success('Editado Con éxito')
             }).catch(e=>{
+            console.log(e)
                 message.error('Ocurrió un error, intenta más tarde')
         })
         this.setState({editable:false})
@@ -115,10 +119,7 @@ class DisposicionDetailPage extends React.Component{
                 title:'Pagado',
                 dataIndex:'paid',
                 key:'paid',
-                render:(p, obj, key)=>{
-                    if(key!==0) return <Switch defaultChecked={p} onChange={(e)=>this.onChange(e,obj.id)} />
-                    else return <p></p>
-                }
+                render:(p, obj, key)=> <Switch defaultChecked={p} onChange={(e)=>this.onChange(e,obj.id)} />
             },{
                 title:'Pago a Capital',
                 dataIndex:'capital',
@@ -164,6 +165,7 @@ class DisposicionDetailPage extends React.Component{
                         style={{ width: '30%' ,height:'auto'}}
                     >
                         {!editable?<div>
+                            <h5>{disposicion.paid?'Pagado por completo!':'Aún pagandose'}</h5>
                             <p><strong>Acreedor:</strong>{disposicion.acreedor.banco}</p>
                             <p><strong>Tipo de credito:</strong> {disposicion.tipo_credito}</p>
                             <p><strong>Monto:</strong> {disposicion.monto}</p>

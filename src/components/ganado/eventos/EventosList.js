@@ -121,7 +121,7 @@ class EventosList extends Component {
                     </Link>
 
                     <Pagination
-                        
+
                         pageSize={24}
                         defaultCurrent={1}
                         total={data.count}

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let debug = false;
 
-//export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
-export const host = "https://rancho.davidzavala.me";
+export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
+//export const host = "https://rancho.davidzavala.me";
 
 
 
@@ -154,7 +154,24 @@ let recibosUrl = host+'/api/creditos/recibos/'
 const api = {
     /*******************Creditos y Acreedores*****************/
 
-
+    getRecibos:()=>{
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function(resolve, reject){
+            const instance = axios.create({
+                baseURL:recibosUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                }).catch(function(error){
+                reject(error)
+            })
+        })
+    },
     editRecibo:(obj)=>{
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function(resolve, reject){
@@ -327,6 +344,7 @@ const api = {
         })
     },
     editDisposicion:(item)=>{
+        console.log(item)
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
         return new Promise(function (resolve, reject){
             const instance = axios.create({
@@ -338,6 +356,7 @@ const api = {
             });
             instance.patch(item.id+'/', item)
                 .then(function(response){
+                    console.log(response.data)
                     resolve(response.data)
                 })
                 .catch(function(error){

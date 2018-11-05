@@ -15,18 +15,13 @@ import {getItems} from "./plantaAlimentos/itemsActions";
 import {getEmpresas} from "./empresasActions";
 import {getVacunas} from "./vacunasActions";
 import {getAlmacenes} from "./almacen/almacenActions";
-
 import {getLines, getLiSearch} from "./blines/blinesActions";
 import {getFacturas, getFaSearch} from "./facturas/facturasActions";
-
 import {getCuentas, getCuSearch} from "./cuentas/cuentasActions";
 import {getCompras, getCoSearch} from "./compras/comprasActions";
 import {getGastos, getGgSearch} from "./gastoGanado/gastoGanadoActions";
-
 import {getAnimalGastos} from "./ganado/gastoAnimalActions";
-
 import { getSaleNotes } from "./ganado/salenotesActions";
-
 import {getDataDash} from "./dashGanado/dashGanadoActions";
 //catalogos
 import {getCatProduts} from "./catalogos/catProductosActions";
@@ -40,6 +35,9 @@ import {getFierrosN} from "./ganado/fierroNActions";
 import {getFierrosO} from "./ganado/fierroOActions";
 import {getAcreedores} from "./creditos/acreedoresActions";
 import {getDisposiciones} from "./creditos/disposicionesActions";
+import {getRecibos} from "./creditos/recibosActions";
+
+
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -164,6 +162,7 @@ const adminActions=(dispatch)=>{
     //creditos y acreedores
     dispatch(getAcreedores())
     dispatch(getDisposiciones())
+    dispatch(getRecibos())
 }
 
 

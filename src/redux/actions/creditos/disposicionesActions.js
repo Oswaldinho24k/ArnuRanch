@@ -43,6 +43,7 @@ export const editDisposicionSucess=(item)=>{
 }
 
 export const editDisposicion=(item)=>(dispatch, getState)=>{
+
     return api.editDisposicion(item)
         .then(r=>{
             dispatch(editDisposicionSucess(r))
