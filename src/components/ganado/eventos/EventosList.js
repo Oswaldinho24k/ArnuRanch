@@ -23,15 +23,15 @@ class EventosList extends Component {
         category:''
     }
     reset=()=>{
-    let basePath = host+'/api/ganado/alimentos/';
-    this.setState({text:'', date:[], lote:'', category:''})
+        let basePath = host+'/api/ganado/alimentos/';
+        this.setState({text:'', date:['',''], lote:'', category:''})
 
-    this.props.gastoAnimalActions.getAnimalGastos(basePath)
-        .then(r=>{
-            this.setState({canReset:true, loading:false})
-        }).catch(e=>{
-            console.log(e)
-        })
+        this.props.gastoAnimalActions.getAnimalGastos(basePath)
+            .then(r=>{
+                this.setState({canReset:true, loading:false})
+            }).catch(e=>{
+                console.log(e)
+            })
     }
 
 
@@ -55,6 +55,7 @@ class EventosList extends Component {
         const {category, date, text} = this.state
         this.setState({loading:true, lote})
         let basePath = `${host}/api/ganado/alimentos/?q=${category}&lote=${lote}&d1=${date[0]}&d2=${date[1]}&text=${text}`;
+        console.log(basePath)
         this.props.gastoAnimalActions.getAnimalGastos(basePath)
             .then(r=>{
                 this.setState({canReset:true, loading:false})
