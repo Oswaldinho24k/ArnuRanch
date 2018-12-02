@@ -7,44 +7,44 @@ const FormItem = Form.Item;
 
 class FormPesada extends React.Component{
     handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.props.savePesada(values)
-                this.props.form.resetFields()
-            }
-            if (Array.isArray(e)) {
-                return e;
-            }
-            return e && e.fileList;
-        });
-    };
-    render(){
-        const { getFieldDecorator } = this.props.form;
-        return(
-            <Form onSubmit={this.handleSubmit}>
-                <FormItem  label="Monto">
-                    {getFieldDecorator('peso', {
-                        rules: [{
-                            required: true, message: 'Completa!',
-                        }],
-                    })(
-                        <InputNumber
-                            step={0.01}
-                            min={0}
-                            style={{width:'100%'}}
-                            formatter={value => `${value}Kg`}
-                            parser={value => value.replace('Kg', '')}
-                        />
-                    )}
-                </FormItem>
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+    if (!err) {
+    this.props.savePesada(values)
+    this.props.form.resetFields()
+}
+if (Array.isArray(e)) {
+    return e;
+}
+return e && e.fileList;
+});
+};
+render(){
+    const { getFieldDecorator } = this.props.form;
+    return(
+        <Form onSubmit={this.handleSubmit}>
+<FormItem  label="Monto">
+        {getFieldDecorator('peso', {
+        rules: [{
+            required: true, message: 'Completa!',
+        }],
+    })(
+    <InputNumber
+    step={0.01}
+    min={0}
+    style={{width:'100%'}}
+    formatter={value => `${value}Kg`}
+    parser={value => value.replace('Kg', '')}
+    />
+)}
+</FormItem>
 
-                <FormItem>
-                    <Button type="primary" htmlType="submit">Guardar</Button>
-                </FormItem>
-            </Form>
-        )
-    }
+    <FormItem>
+    <Button type="primary" htmlType="submit">Guardar</Button>
+        </FormItem>
+        </Form>
+)
+}
 }
 FormPesada = Form.create()(FormPesada);
 export default FormPesada;

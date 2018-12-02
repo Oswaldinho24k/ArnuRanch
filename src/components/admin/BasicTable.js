@@ -31,9 +31,9 @@ class BasicTable extends Component{
     render(){
         return(
             <div>
-                <Table dataSource={items} columns={columns}/>
-            </div>
-        )
+            <Table dataSource={items} columns={columns}/>
+        </div>
+    )
     }
 }
 

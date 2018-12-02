@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import MainLoader from "../../common/Main Loader";
 import {host} from '../../../Api/Django'
 import * as gastoAnimalActions from '../../../redux/actions/ganado/gastoAnimalActions'
+import * as lotesActions from '../../../redux/actions/ganado/lotesActions'
 import {EventCard} from "./EventCard";
 
 const RangePicker = DatePicker.RangePicker
@@ -15,45 +16,78 @@ class EventosList extends Component {
 
     state={
         searchText:'',
-        loading:false
+        loading:false,
+        text:'',
+        date:['',''],
+        lote:'',
+        category:''
+    }
+    reset=()=>{
+    let basePath = host+'/api/ganado/alimentos/';
+    this.setState({text:'', date:[], lote:'', category:''})
+
+    this.props.gastoAnimalActions.getAnimalGastos(basePath)
+        .then(r=>{
+            this.setState({canReset:true, loading:false})
+        }).catch(e=>{
+            console.log(e)
+        })
     }
 
-    reset=()=>{
-        let basePath = host+'/api/ganado/alimentos/';
+
+//filter by event type
+    filter=(category)=>{
+        const {lote, date, text} = this.state
+        this.setState({loading:true, category})
+        let basePath = `${host}/api/ganado/alimentos/?q=${category}&lote=${lote}&d1=${date[0]}&d2=${date[1]}&text=${text}`;
+        this.props.gastoAnimalActions.getAnimalGastos(basePath)
+            .then(r=>{
+                this.setState({canReset:true, loading:false})
+            }).catch(e=>{
+                message.error('Ocurrió un Problema!')
+            })
+    };
+
+    //lotes filter
+    filterByLote=(lote)=>{
+        console.log(lote)
+        this.setState({loading:true})
+        const {category, date, text} = this.state
+        this.setState({loading:true, lote})
+        let basePath = `${host}/api/ganado/alimentos/?q=${category}&lote=${lote}&d1=${date[0]}&d2=${date[1]}&text=${text}`;
+        this.props.gastoAnimalActions.getAnimalGastos(basePath)
+            .then(r=>{
+                this.setState({canReset:true, loading:false})
+            }).catch(e=>console.log(e))
+    };
+
+    //Dates filter
+    filterRange=(moment, date)=>{
+        const {lote, text, category} = this.state
+        this.setState({loading:true, date})
+        let basePath = `${host}/api/ganado/alimentos/?q=${category}&lote=${lote}&d1=${date[0]}&d2=${date[1]}&text=${text}`;
 
         this.props.gastoAnimalActions.getAnimalGastos(basePath)
             .then(r=>{
                 this.setState({canReset:true, loading:false})
             }).catch(e=>{
-
-        })
+                    message.error('Ocurrió un Problema!')
+            })
     }
 
-    filter=(lote)=>{
-        this.setState({loading:true})
-        let basePath = host+'/api/ganado/alimentos/?q=';
-        let url = basePath+lote;
-        this.props.gastoAnimalActions.getAnimalGastos(url)
+    onSearch=(text)=>{
+        const {lote, date, category} = this.state
+        this.setState({loading:true, text})
+        let basePath = `${host}/api/ganado/alimentos/?q=${category}&lote=${lote}&d1=${date[0]}&d2=${date[1]}&text=${text}`;
+        this.props.gastoAnimalActions.getAnimalGastos(basePath)
             .then(r=>{
-                this.setState({canReset:true, loading:false})
+                this.setState({loading:false})
             }).catch(e=>{
-                message.error('Ocurrió un Problema!')
-        })
-    };
-
-    filterRange=(moment, date)=>{
-
-        this.setState({loading:true})
-        let basePath = host+'/api/ganado/alimentos/';
-        let url = `${basePath}?d1=${date[0]}&d2=${date[1]}`
-        this.props.gastoAnimalActions.getAnimalGastos(url)
-            .then(r=>{
-                this.setState({canReset:true, loading:false})
-            }).catch(e=>{
-            message.error('Ocurrió un Problema!')
-        })
+                console.log(e)
+            })
     }
 
+//pagination
     handlePagination=(pagina)=>{
         this.setState({loading:true})
         let nextLength = pagina.toString().length;
@@ -65,86 +99,119 @@ class EventosList extends Component {
         }
 
         //if( pagina ==1 && this.props.data.count <= 40){
-            newUrl='https'+newUrl.slice(4,newUrl.length);
+        newUrl='https'+newUrl.slice(4,newUrl.length);
         /*}else{
             newUrl='https'+newUrl.slice(4,newUrl.length-nextLength)+pagina;
         }*/
         this.props.gastoAnimalActions.getAnimalGastos(newUrl)
             .then(r=>{
-                this.setState({loading:false})
-            }).catch(e=>{
+            this.setState({loading:false})
+        }).catch(e=>{
 
         })
     };
-    onSearch=()=>{
+//text search
 
+
+    saveGasto=(gasto)=>{
+        console.log(gasto)
+        this.props.gastoAnimalActions.updateAnimalGasto(gasto)
+            .then(r=>{
+                message.success('Editado con éxito')
+            }).catch(e=>{
+                message.error('Ocurrió un problema, intenta más tarde')
+            })
     }
-    render() {
-        const {searchText} = this.state
-        const {fetched, eventos, data} = this.props
-        console.log(data)
 
-
-        if(!fetched) return <MainLoader/>
-        return (
-            <>
-                <h2>Lista de eventos Registrados</h2>
-                <div>
-                    <Input.Search
-                        enterButton
-                        onSearch={this.onSearch}
-                        onChange={this.handleSearch}
-                        value={searchText}
-                        style={{ width: 300 }}
-                        placeholder={'Busca por arete'}/>
-                    <Divider type={'vertical'}/>
-                    <RangePicker onChange={this.filterRange}/>
-                    <Divider type={'vertical'}/>
-                    <Select style={{ width: 200 }} placeholder={'Filtros'} onChange={this.filter}>
-                        <Option value={'Alimento'}>Alimentación</Option>
-                        <Option value={'Vacuna'}>Vacunación</Option>
-                    </Select>
-                    <Divider type={'vertical'}/>
-                    <Button type={'primary'} onClick={this.reset}>Reset</Button>
-
-                </div>
-                <div>
-                    <Row gutter={18}>
-                    {eventos.map((e,key)=>(
-                            <EventCard {...e} key={key}/>
-                    ))}
-                    </Row>
-                </div>
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                    <Link to={"/admin/eventos"}>
-                        <Button type={'primary'}>Agregar</Button>
-                    </Link>
-
-                    <Pagination
-
-                        pageSize={24}
-                        defaultCurrent={1}
-                        total={data.count}
-                        onChange={this.handlePagination}
-                        showTotal={total => `Total: ${total} eventos`}
-                        style={{padding:'1% 0'}}/>
-                </div>
-            </>
-        );
+handleSearchLote=(a)=>{
+    let basePath = host + '/api/ganado/lotes/?q=';
+    let url = basePath+a;
+    this.props.lotesActions.getLotes(url);
+};
+    handleChangeLote=(a)=>{
+        this.setState({lote:a})
     }
+
+render() {
+    const {searchText, lote, text, date, category} = this.state
+    const {fetched, eventos, data, lotes} = this.props
+    console.log(fetched)
+
+
+    if(!fetched && eventos.length<=0) return <MainLoader/>
+    return (
+        <>
+            <h2>Lista de eventos Registrados</h2>
+            <div>
+            <Input.Search
+                value={text}
+                enterButton
+                onSearch={this.onSearch}
+                onChange={this.handleSearch}
+                style={{ width: 300 }}
+                placeholder={'Busca por arete'}/>
+            <Divider type={'vertical'}/>
+            <RangePicker onChange={this.filterRange}/>
+            <Divider type={'vertical'}/>
+            <Select style={{ width: 200 }} placeholder={'Tipo de Evento'} onChange={this.filter} value={category}>
+                <Option value={'Alimento'}>Alimentación</Option>
+                <Option value={'Vacuna'}>Vacunación</Option>
+            </Select>
+            <Divider type={'vertical'}/>
+            <Select
+                value={lote}
+                mode="combobox"
+                style={{ width: 200 }}
+                onChange={this.handleChangeLote}
+                onSearch={this.handleSearchLote}
+                onSelect={this.filterByLote}
+                placeholder="Filtra por nombre de lote"
+                filterOption={false}
+                    >
+                    {lotes.map(d => <Option value={d.name} key={d.id}>{d.name}</Option>)}
+            </Select>
+            <Divider type={'vertical'}/>
+            <Button type={'primary'} onClick={this.reset}>Reset</Button>
+
+            </div>
+            <div>
+            <Row gutter={18}>
+                {eventos.map((e,key)=>(
+                <EventCard {...e} key={key} evento={e} saveGasto={this.saveGasto}/>
+        ))}
+        </Row>
+            </div>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+        <Link to={"/admin/eventos"}>
+                <Button type={'primary'}>Agregar</Button>
+                </Link>
+
+        <Pagination
+            pageSize={24}
+            defaultCurrent={1}
+            total={data.count}
+            onChange={this.handlePagination}
+            showTotal={total => `Total: ${total} eventos`}
+            style={{padding:'1% 0'}}/>
+            </div>
+    </>
+);
+}
 }
 
 const mapStateToProps=(state, oP)=>{
     return{
         data:state.eventos.object,
         eventos:state.eventos.list,
-        fetched:state.eventos.list!==undefined && state.eventos.object!==undefined,
+        lotes:state.lotes.list,
+        fetched:state.eventos.list!==undefined && state.eventos.object!==undefined && state.lotes.list!==undefined,
     }
 }
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        gastoAnimalActions:bindActionCreators(gastoAnimalActions, dispatch)
+        gastoAnimalActions:bindActionCreators(gastoAnimalActions, dispatch),
+        lotesActions:bindActionCreators(lotesActions, dispatch),
     }
 }
 

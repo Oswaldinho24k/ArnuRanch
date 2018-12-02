@@ -11,16 +11,16 @@ class Dashboard extends Component{
         return(
             <div>
             <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
-                Administración
-                <Divider type="vertical" />
-                Estadísiticas
+        Administración
+        <Divider type="vertical" />
+            Estadísiticas
             </div>
             <div>
-                <h1>Estadísticas Page</h1>
-                <MainCards />
-            </div>
-            </div>
-        )
+            <h1>Estadísticas Page</h1>
+        <MainCards />
+        </div>
+        </div>
+    )
     }
 }
 

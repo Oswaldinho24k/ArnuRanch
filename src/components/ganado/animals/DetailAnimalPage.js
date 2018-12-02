@@ -60,184 +60,184 @@ class DetailAnimalPage extends Component {
 
 
     onSelectChange = (selectedRowKeys) => {
-        this.setState({ selectedRowKeys });
-    };
-    onSelectChange2 = (selectedRowKeys2) => {
-        this.setState({ selectedRowKeys2 });
-    };
-    onTabChange = (key, type) => {
+    this.setState({ selectedRowKeys });
+};
+onSelectChange2 = (selectedRowKeys2) => {
+    this.setState({ selectedRowKeys2 });
+};
+onTabChange = (key, type) => {
 
-        this.setState({ [type]: key });
-    };
+    this.setState({ [type]: key });
+};
 
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-    showModal2 = () => {
-        this.setState({
-            visible2: true,
-        });
-    };
+showModal = () => {
+    this.setState({
+        visible: true,
+    });
+};
+showModal2 = () => {
+    this.setState({
+        visible2: true,
+    });
+};
 
-    handleCancel = () => {
-        this.setState({
-            visible: false,
-            visible2:false
-        });
-    };
+handleCancel = () => {
+    this.setState({
+        visible: false,
+        visible2:false
+    });
+};
 
-    handleEditMode=()=>{
-      this.setState({editMode:!this.state.editMode})
-    };
+handleEditMode=()=>{
+    this.setState({editMode:!this.state.editMode})
+};
 
-    saveGasto=(gasto)=>{
-        gasto['animal']=this.props.match.params.key;
-        this.props.animalGastoActions.saveAnimalGasto(gasto)
-            .then(r=>{
-            this.handleCancel();
-            message.success('Gasto agregado con éxito')
-        }).catch(e=>{
-            for (let i in e.response.data){
-                message.error(e.response.data[i])
-            }
-        })
-    };
-    savePesada=(pesada)=>{
-        pesada['animal']=this.props.match.params.key;
-        this.props.pesadasActions.savePesada(pesada)
-            .then(r=>{
-                this.handleCancel();
-                message.success('Pesada agregado con éxito')
-            }).catch(e=>{
-            for (let i in e.response.data){
-                message.error(e.response.data[i])
-            }
-        })
-    };
-
-    handleEmpresa=(e)=>{
-        this.setState({wEmpresa:e})
-    };
-
-    //Facturas
-
-    searchFactura=(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
-        let url = basePath+a;
-        this.props.facturasActions.getFaSearch(url);
-    };
-
-    saveFactura=(id)=>{
-        this.setState({idFactura:id})
-    };
-
-
-    render() {
-        const {animal, fetched, razas, lotes, empresas, facturas, fierrosO, fierrosN} = this.props;
-
-        const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-            hideDefaultSelections: true,
-
-            onSelection: this.onSelection,
-        };
-        const rowSelection2 = {
-            selectedRowKeys2,
-            onChange: this.onSelectChange2,
-            hideDefaultSelections: true,
-
-            onSelection: this.onSelection,
-        };
-        let options_lote = lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
-        let options_raza = razas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
-        let options_empresa = empresas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.company}</Option>);
-
-
-        let contentList = {
-            Detalle: <BasicInfoAndEdit
-                 {...animal}
-                editAnimal={this.props.animalActions.editAnimal}
-                handleEditMode={this.handleEditMode}
-                editMode={editMode}
-                 facturas={facturas}
-                 searchFactura={this.searchFactura}
-                 saveFactura={this.saveFactura}
-                 stateFactura={this.state.idFactura}
-                options={options_lote}
-                options_raza={options_raza}
-                options_empresa={options_empresa}
-                handleEmpresa={this.handleEmpresa}
-                wEmpresa={wEmpresa}
-                fierrosO={fierrosO}
-                fierrosN={fierrosN}/>,
-            Gastos: <GastosComponent
-
-                animal={animal}
-                rowSelection={rowSelection}
-                showModal={this.showModal}/>,
-            Pesadas: <PesadasComponent
-
-                animal={animal}
-                rowSelection={rowSelection2}
-                showModal={this.showModal2}/>,
-            Reportes:<ReportesComponent
-                animal={animal}/>
-        };
-        return (
-            <div>
-                <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
-                    Ganado
-                    <Divider type="vertical" />
-                    <Link to={`/admin/animals`} style={{color:'black'}} >
-                        Aretes
-                    </Link>
-                    <Divider type="vertical" />
-
-                    {animal.arete_rancho} <span>{animal.status?'':'Inactivo'}</span>
-                    <p>{!animal.status?<Link to={`/admin/saleNotes/${animal.sale_note}`}>Nota {animal.sale_note}</Link>:''}</p>
-
-                </div>
-                <h2>Arete {animal.arete_rancho}</h2>
-                <Card
-                    tabList={tabList}
-                    onTabChange={(key) => { this.onTabChange(key, 'key'); }}
-                >
-                    {contentList[this.state.key]}
-                </Card>
-
-                <Modal title="Agregar nuevo gasto"
-                       visible={visible}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    <FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
-                </Modal>
-                <Modal title="Agregar nueva Pesada"
-                       visible={visible2}
-                       onCancel={this.handleCancel}
-                       width={'30%'}
-                       maskClosable={true}
-                       footer={[
-                           null,
-                           null,
-                       ]}
-                >
-                    <FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
-                </Modal>
-            </div>
-
-        );
-        if(!fetched)return(<MainLoader/>);
+saveGasto=(gasto)=>{
+    gasto['animal']=this.props.match.params.key;
+    this.props.animalGastoActions.saveAnimalGasto(gasto)
+        .then(r=>{
+        this.handleCancel();
+    message.success('Gasto agregado con éxito')
+}).catch(e=>{
+        for (let i in e.response.data){
+        message.error(e.response.data[i])
     }
+})
+};
+savePesada=(pesada)=>{
+    pesada['animal']=this.props.match.params.key;
+    this.props.pesadasActions.savePesada(pesada)
+        .then(r=>{
+        this.handleCancel();
+    message.success('Pesada agregado con éxito')
+}).catch(e=>{
+        for (let i in e.response.data){
+        message.error(e.response.data[i])
+    }
+})
+};
+
+handleEmpresa=(e)=>{
+    this.setState({wEmpresa:e})
+};
+
+//Facturas
+
+searchFactura=(a)=>{
+    let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
+    let url = basePath+a;
+    this.props.facturasActions.getFaSearch(url);
+};
+
+saveFactura=(id)=>{
+    this.setState({idFactura:id})
+};
+
+
+render() {
+    const {animal, fetched, razas, lotes, empresas, facturas, fierrosO, fierrosN} = this.props;
+
+    const {selectedRowKeys, visible, editMode, visible2, selectedRowKeys2, wEmpresa} = this.state;
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: this.onSelectChange,
+        hideDefaultSelections: true,
+
+        onSelection: this.onSelection,
+    };
+    const rowSelection2 = {
+        selectedRowKeys2,
+        onChange: this.onSelectChange2,
+        hideDefaultSelections: true,
+
+        onSelection: this.onSelection,
+    };
+    let options_lote = lotes.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+    let options_raza = razas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.name}</Option>);
+    let options_empresa = empresas.map((a,key) => <Option key={key} value={parseInt(a.id)} >{a.company}</Option>);
+
+
+    let contentList = {
+        Detalle: <BasicInfoAndEdit
+    {...animal}
+    editAnimal={this.props.animalActions.editAnimal}
+    handleEditMode={this.handleEditMode}
+    editMode={editMode}
+    facturas={facturas}
+    searchFactura={this.searchFactura}
+    saveFactura={this.saveFactura}
+    stateFactura={this.state.idFactura}
+    options={options_lote}
+    options_raza={options_raza}
+    options_empresa={options_empresa}
+    handleEmpresa={this.handleEmpresa}
+    wEmpresa={wEmpresa}
+    fierrosO={fierrosO}
+    fierrosN={fierrosN}/>,
+    Gastos: <GastosComponent
+
+    animal={animal}
+    rowSelection={rowSelection}
+    showModal={this.showModal}/>,
+    Pesadas: <PesadasComponent
+
+    animal={animal}
+    rowSelection={rowSelection2}
+    showModal={this.showModal2}/>,
+    Reportes:<ReportesComponent
+    animal={animal}/>
+};
+    return (
+        <div>
+        <div style={{marginBottom:10, color:'rgba(0, 0, 0, 0.65)' }}>
+    Ganado
+    <Divider type="vertical" />
+        <Link to={`/admin/animals`} style={{color:'black'}} >
+    Aretes
+    </Link>
+    <Divider type="vertical" />
+
+        {animal.arete_rancho} <span>{animal.status?'':'Inactivo'}</span>
+    <p>{!animal.status?<Link to={`/admin/saleNotes/${animal.sale_note}`}>Nota {animal.sale_note}</Link>:''}</p>
+
+    </div>
+    <h2>Arete {animal.arete_rancho}</h2>
+    <Card
+    tabList={tabList}
+    onTabChange={(key) => { this.onTabChange(key, 'key'); }}
+>
+    {contentList[this.state.key]}
+</Card>
+
+    <Modal title="Agregar nuevo gasto"
+    visible={visible}
+    onCancel={this.handleCancel}
+    width={'30%'}
+    maskClosable={true}
+    footer={[
+            null,
+        null,
+]}
+>
+<FormGasto saveGasto={this.saveGasto} handleCancel={this.handleCancel}/>
+    </Modal>
+    <Modal title="Agregar nueva Pesada"
+    visible={visible2}
+    onCancel={this.handleCancel}
+    width={'30%'}
+    maskClosable={true}
+    footer={[
+            null,
+        null,
+]}
+>
+<FormPesada savePesada={this.savePesada} handleCancel={this.handleCancel}/>
+    </Modal>
+    </div>
+
+);
+    if(!fetched)return(<MainLoader/>);
+}
 }
 
 function mapStateToProps(state, ownProps) {

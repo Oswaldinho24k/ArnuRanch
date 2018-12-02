@@ -73,107 +73,107 @@ export const paths = {
 const Sections = ({props}) => {
     return (
         <div className={'admin-sections'}>
-            <Switch>
-                {/***************************** Admin ROUTES *****************************/}
-                <Route path={'/admin/estadisticas'} component={Dashboard}/>
-                <Route path={'/admin/facturas/:fa'} component={FacturaDetalle}/>
-                <Route path={'/admin/facturas'} component={FacturasPage}/>
-                <Route path={'/admin/ingresos/blines'} component={Blines} />
-                <Route path={'/admin/ingresos/cobrar'} component={CobrarIngreso} />
-                <Route path={'/admin/ingresos/:in'} component={DetailIngresoPage} />
+        <Switch>
+        {/***************************** Admin ROUTES *****************************/}
+        <Route path={'/admin/estadisticas'} component={Dashboard}/>
+    <Route path={'/admin/facturas/:fa'} component={FacturaDetalle}/>
+    <Route path={'/admin/facturas'} component={FacturasPage}/>
+    <Route path={'/admin/ingresos/blines'} component={Blines} />
+    <Route path={'/admin/ingresos/cobrar'} component={CobrarIngreso} />
+    <Route path={'/admin/ingresos/:in'} component={DetailIngresoPage} />
 
-                {/*<Route path={'/admin/compras/:in'} component={DetailIngresoPage} />*/}
-                <Route path={'/admin/compras/'} component={Compras} />
+    {/*<Route path={'/admin/compras/:in'} component={DetailIngresoPage} />*/}
+<Route path={'/admin/compras/'} component={Compras} />
 
-                <Route path={'/admin/gastos/'} component={GastosGanado}/>
+    <Route path={'/admin/gastos/'} component={GastosGanado}/>
 
-                <Route path={'/admin/ingresos'} component={IngresosPage}/>
+    <Route path={'/admin/ingresos'} component={IngresosPage}/>
 
-                <Route path={'/admin/cuentas/:cu'} component={CuentaDetalle}/>
-                <Route path={'/admin/cuentas'} component={CuentasPage}/>
+    <Route path={'/admin/cuentas/:cu'} component={CuentaDetalle}/>
+    <Route path={'/admin/cuentas'} component={CuentasPage}/>
 
-                <Route path={'/admin/usuarios/:id'} component={UserDetail}/>
-                <Route path={'/admin/usuarios'} component={Users}/>
+    <Route path={'/admin/usuarios/:id'} component={UserDetail}/>
+    <Route path={'/admin/usuarios'} component={Users}/>
 
-                <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
-                <Route path={'/admin/empresas/inventario/:em/:li/:n'} component={ListaAlmacen}/>
-                <Route path={'/admin/empresas/inventario/:em'} component={InventarioEmpresa}/>
-                <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
-                <Route path={'/admin/empresas'} component={Company}/>
+    <Route path={'/admin/empresas/inventario/:em/:bl/detalle/:k'} component={ListaAlmacenDetail}/>
+    <Route path={'/admin/empresas/inventario/:em/:li/:n'} component={ListaAlmacen}/>
+    <Route path={'/admin/empresas/inventario/:em'} component={InventarioEmpresa}/>
+    <Route path={'/admin/empresas/:em'} component={DetailCompany}/>
+    <Route path={'/admin/empresas'} component={Company}/>
 
-                <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
-                <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>
-                <Route path={'/admin/egresos'} component={EgresosPage}/>
+    <Route path={'/admin/egresos/pagar'} component={PagarEgreso} />
+    <Route path={'/admin/egresos/:eg'} component={DetailEgresoPage}/>
+    <Route path={'/admin/egresos'} component={EgresosPage}/>
 
-                <Route path={'/admin/inventario'} component={Inventario}/>
+    <Route path={'/admin/inventario'} component={Inventario}/>
 
-                <Route path={'/admin/clientes/:i'} component={DetailClientPage} />
-                <Route path={'/admin/clientes'} component={ClientesPage}/>
+    <Route path={'/admin/clientes/:i'} component={DetailClientPage} />
+    <Route path={'/admin/clientes'} component={ClientesPage}/>
 
-                <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
-                <Route path={'/admin/proveedores'} component={ProovedorPage}/>
+    <Route path={'/admin/proveedores/:p'} component={DetailProviderPage}/>
+    <Route path={'/admin/proveedores'} component={ProovedorPage}/>
 
-                <Route path={'/admin/acreedores/:id'} component={AcreedoresDetailPage}/>
-                <Route path={'/admin/acreedores'} component={AcreedoresPage}/>
-                <Route path={'/admin/disposicion/:id'} component={DisposicionDetailPage}/>
+    <Route path={'/admin/acreedores/:id'} component={AcreedoresDetailPage}/>
+    <Route path={'/admin/acreedores'} component={AcreedoresPage}/>
+    <Route path={'/admin/disposicion/:id'} component={DisposicionDetailPage}/>
 
-                <Route path={'/admin/requisiciones'} component={RequisicionesPage}/>
-                <Route path={'/admin/viajes/:id'} component={ViajesDetailComponent}/>
+    <Route path={'/admin/requisiciones'} component={RequisicionesPage}/>
+    <Route path={'/admin/viajes/:id'} component={ViajesDetailComponent}/>
 
-                {/*****************************Catalogo*************************************/}
-                <Route path={'/admin/catalogo'} component={CatalogoPage}/>
-                {/***************************** Ganado ROUTES *****************************/}
-                <Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
-                <Route path={'/admin/animals'} component={AnimalsPage}/>
-                <Route path={'/admin/corrales'} component={CorralPage}/>
-                <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
-                <Route path='/admin/lotes' component={BatchPage}/>
-                <Route path='/admin/razas' component={RazasPage}/>
-                <Route path='/admin/eventos/list' component={EventosList}/>
-                <Route path='/admin/eventos' component={EventosPage}/>
-                <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
-                <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>
-                <Route path='/admin/saleNotes' component={SaleNotesPage}/>
-                <Route path='/admin/fierros' component={FierrosPage}/>
-
-                
-
-                <Route path={'/admin/reportes'} component={ReportesPage}/>
-                <Route path={'/admin/historico'} component={ReporteFechaPage}/>
-                {/* Planta alimentos routes begin*/}
-                <Route path={paths.formulas} component={FormulasPage}/>
-                <Route path={paths.insumos} component={InsumosPage}/>
-                {/* Planta alimentos routes end*/}
-
-                <Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
-                <Route path={'/admin/vacunas'} component={VacunasPage}/>
-
-                {/* Section Cerdos */}
-
-                <Route path={'/admin/cerdos/:id'} component={BasicTable}/>
-                <Route path={'/admin/cerdos'} component={BasicTable}/>
-                <Route path={'/admin/lotes/cerdos'} component={BasicTable}/>
-                <Route path={'/admin/casetas/cerdos'} component={BasicTable}/>
-                <Route path={'/admin/eventos/cerdos'} component={BasicTable}/>
-
-                {/* Section Aves */}
-
-                <Route path={'/admin/eventos/aves'} component={BasicTable}/>
-                <Route path={'/admin/aves/:id'} component={BasicTable}/>
-                <Route path={'/admin/aves'} component={BasicTable}/>
-                <Route path={'/admin/lotes/aves'} component={BasicTable}/>
+    {/*****************************Catalogo*************************************/}
+<Route path={'/admin/catalogo'} component={CatalogoPage}/>
+    {/***************************** Ganado ROUTES *****************************/}
+<Route path={'/admin/animals/:key'} component={DetailAnimalPage}/>
+    <Route path={'/admin/animals'} component={AnimalsPage}/>
+    <Route path={'/admin/corrales'} component={CorralPage}/>
+    <Route path='/admin/lotes/:id'  component={BatchDetailPage} />
+    <Route path='/admin/lotes' component={BatchPage}/>
+    <Route path='/admin/razas' component={RazasPage}/>
+    <Route path='/admin/eventos/list' component={EventosList}/>
+    <Route path='/admin/eventos' component={EventosPage}/>
+    <Route path='/admin/dash/animals' component={AnimalsDashboard}/>
+    <Route path='/admin/saleNotes/:id' component={SaleNoteDetail}/>
+    <Route path='/admin/saleNotes' component={SaleNotesPage}/>
+    <Route path='/admin/fierros' component={FierrosPage}/>
 
 
 
- 
+    <Route path={'/admin/reportes'} component={ReportesPage}/>
+    <Route path={'/admin/historico'} component={ReporteFechaPage}/>
+    {/* Planta alimentos routes begin*/}
+<Route path={paths.formulas} component={FormulasPage}/>
+    <Route path={paths.insumos} component={InsumosPage}/>
+    {/* Planta alimentos routes end*/}
+
+<Route path={'/admin/vacunas/:va'} component={DetailVacuna}/>
+    <Route path={'/admin/vacunas'} component={VacunasPage}/>
+
+    {/* Section Cerdos */}
+
+<Route path={'/admin/cerdos/:id'} component={BasicTable}/>
+    <Route path={'/admin/cerdos'} component={BasicTable}/>
+    <Route path={'/admin/lotes/cerdos'} component={BasicTable}/>
+    <Route path={'/admin/casetas/cerdos'} component={BasicTable}/>
+    <Route path={'/admin/eventos/cerdos'} component={BasicTable}/>
+
+    {/* Section Aves */}
+
+<Route path={'/admin/eventos/aves'} component={BasicTable}/>
+    <Route path={'/admin/aves/:id'} component={BasicTable}/>
+    <Route path={'/admin/aves'} component={BasicTable}/>
+    <Route path={'/admin/lotes/aves'} component={BasicTable}/>
 
 
 
-            </Switch>
 
 
-        </div>
-    )
+
+
+    </Switch>
+
+
+    </div>
+)
 };
 
 export default Sections;

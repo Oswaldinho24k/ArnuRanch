@@ -34,57 +34,57 @@ class AdminPage extends Component {
 
 
     toggle = () => {
+    this.setState({
+                      collapsed: !this.state.collapsed,
+});
+};
+logOut = () => {
+    this.props.userActions.logOut();
+    message.info('Vuelve Pronto ;)');
+    this.props.history.push('/login');
+};
+
+onOpenChange = (openKeys) => {
+    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.setState({ openKeys });
+    } else {
         this.setState({
-            collapsed: !this.state.collapsed,
+            openKeys: latestOpenKey ? [latestOpenKey] : [],
         });
-    };
-    logOut = () => {
-        this.props.userActions.logOut();
-        message.info('Vuelve Pronto ;)');
-        this.props.history.push('/login');
-    };
-
-    onOpenChange = (openKeys) => {
-        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            this.setState({ openKeys });
-        } else {
-            this.setState({
-                openKeys: latestOpenKey ? [latestOpenKey] : [],
-            });
-        }
     }
+}
 
 
-    render() {
-        let {user, fetched} = this.props;
-        
-        if(!fetched)return(<MainLoader/>);
-        return (
-            <Layout className={'leftside'}>
-                <Sider
-                    trigger={null}
-                    collapsible
-                    collapsed={this.state.collapsed}
-                >
-                    <div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'ADMIN'}</div>
-                    <LeftSide onOpenChange={this.onOpenChange} user={user} openKeys={this.state.openKeys}/>
-                </Sider>
-                <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Navbar
-                            {...user}
-                            logOut={this.logOut}
-                            collapsed={this.state.collapsed}
-                            toggle={this.toggle}/>
-                    </Header>
-                    <Content style={{ margin: '1%', padding: '1%', background: '#f0f2f5', minHeight: '90vh' }}>
-                        <Sections/>
-                    </Content>
-                </Layout>
-            </Layout>
-        );
-    }
+render() {
+    let {user, fetched} = this.props;
+
+    if(!fetched)return(<MainLoader/>);
+    return (
+        <Layout className={'leftside'}>
+        <Sider
+    trigger={null}
+    collapsible
+    collapsed={this.state.collapsed}
+>
+<div className="logo" >{!this.state.collapsed?'RANCHOADMIN':'ADMIN'}</div>
+    <LeftSide onOpenChange={this.onOpenChange} user={user} openKeys={this.state.openKeys}/>
+    </Sider>
+    <Layout>
+    <Header style={{ background: '#fff', padding: 0 }}>
+<Navbar
+    {...user}
+    logOut={this.logOut}
+    collapsed={this.state.collapsed}
+    toggle={this.toggle}/>
+    </Header>
+    <Content style={{ margin: '1%', padding: '1%', background: '#f0f2f5', minHeight: '90vh' }}>
+<Sections/>
+    </Content>
+    </Layout>
+    </Layout>
+);
+}
 }
 
 

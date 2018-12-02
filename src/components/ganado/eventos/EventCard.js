@@ -1,16 +1,20 @@
 import React from 'react'
-import {Card, Col} from 'antd'
+import {Card, Col, Modal} from 'antd'
 import moment from 'moment'
 import {Link} from 'react-router-dom'
+import FormGasto from "../animals/FormGasto";
 
 
-export const EventCard = ({created, tipo, cantidad, animal={}}) => {
+export const EventCard = ({created, tipo, cantidad, animal={}, visible, evento, saveGasto}) => {
+
     return(
-        <Col span={4}>
-            <Card bordered={false} style={{margin:10}}>
-                <h4>{moment(created).format('LL')}</h4>
-                {animal?<Link to={`/admin/animals/${animal.id}`}>{animal.arete_rancho}</Link>:''}
-                <p>{cantidad}</p>
+        <Col span={4} style={{padding:0}}>
+            <Card
+            bordered={false}
+            style={{margin:5,padding:0}}
+            extra={<Link to={`/admin/lotes/${animal.lote.id}`}>{animal.lote.name}</Link>}
+            title={animal?<Link to={`/admin/animals/${animal.id}`}>Arete: {animal.arete_rancho}</Link>:'None'} >
+                <FormGasto {...evento} saveGasto={saveGasto} style={{padding:0}}/>
             </Card>
         </Col>
     )

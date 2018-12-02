@@ -14,17 +14,17 @@ const columns = [{
     render:val=><p>${val}</p>
 },{
     title: 'Fecha',
-    dataIndex: 'created',
-    render:val=><p>{moment(val).format('LL')}</p>
+        dataIndex: 'created',
+        render:val=><p>{moment(val).format('LL')}</p>
 }];
 
 const GastosComponent = ({animal, rowSelection, showModal}) => {
     return (
         <Fragment>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={animal.aliments} pagination={false} rowKey={record => record.id} />
-            <Button onClick={showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
-        </Fragment>
-    )
+        <Table rowSelection={rowSelection} columns={columns} dataSource={animal.aliments} pagination={false} rowKey={record => record.id} />
+    <Button onClick={showModal} style={{margin:'1% 0'}}>Agregar Gasto</Button>
+    </Fragment>
+)
 };
 
 export default GastosComponent;
