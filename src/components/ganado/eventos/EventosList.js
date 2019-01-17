@@ -87,6 +87,10 @@ class EventosList extends Component {
                 console.log(e)
             })
     }
+    handleSearch=(e)=>{
+        
+        this.setState({text:e.target.value})
+    }
 
 //pagination
     handlePagination=(pagina)=>{

@@ -12,7 +12,7 @@ export const EventCard = ({created, tipo, cantidad, animal={}, visible, evento, 
             <Card
             bordered={false}
             style={{margin:5,padding:0}}
-            extra={<Link to={`/admin/lotes/${animal.lote.id}`}>{animal.lote.name}</Link>}
+            extra={animal && animal.lote?<Link to={`/admin/lotes/${animal.lote.id}`}>{animal.lote.name}</Link>:''}
             title={animal?<Link to={`/admin/animals/${animal.id}`}>Arete: {animal.arete_rancho}</Link>:'None'} >
                 <FormGasto {...evento} saveGasto={saveGasto} style={{padding:0}}/>
             </Card>
