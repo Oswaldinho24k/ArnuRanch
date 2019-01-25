@@ -64,6 +64,10 @@ import AcreedoresPage from "../creditos/AcreedoresPage";
 import AcreedoresDetailPage from "../creditos/AcreedoresDetailPage";
 import DisposicionDetailPage from "../creditos/DisposicionDetailPage";
 import EventosList from "../ganado/eventos/EventosList";
+import GlobalReportes from '../ganado/dashboard/GlobalReportes';
+
+//losreportes
+
 
 
 export const paths = {
@@ -137,9 +141,9 @@ const Sections = ({props}) => {
     <Route path='/admin/fierros' component={FierrosPage}/>
 
 
-
-    <Route path={'/admin/reportes'} component={ReportesPage}/>
-    <Route path={'/admin/historico'} component={ReporteFechaPage}/>
+        <Route path="/admin/global/reportes" component={GlobalReportes}/>   
+    {/* <Route path={'/admin/reportes'} component={ReportesPage}/>
+    <Route path={'/admin/historico'} component={ReporteFechaPage}/> */}
     {/* Planta alimentos routes begin*/}
 <Route path={paths.formulas} component={FormulasPage}/>
     <Route path={paths.insumos} component={InsumosPage}/>

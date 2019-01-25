@@ -97,13 +97,16 @@ const LeftSide = ({onOpenChange, user, openKeys}) => {
             <Menu.Item key="20" disabled={false}>
             <Link to='/admin/lotes'> Lotes </Link>
             </Menu.Item>
-
-            <Menu.Item key="21" >
+ 
+            <Menu.Item  >
+                <Link to="/admin/global/reportes">Reportes</Link>
+            </Menu.Item>
+            {/* <Menu.Item key="21" >
             <Link to='/admin/reportes'>  Reportes </Link>
             </Menu.Item>
             <Menu.Item key="22" >
             <Link to='/admin/historico'>  Histórico </Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item key="23" disabled={false}>
             <Link to='/admin/razas'>  Razas </Link>

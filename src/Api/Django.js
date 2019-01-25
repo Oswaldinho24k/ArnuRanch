@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let debug = false;
 
-export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
-//export const host = "https://rancho.davidzavala.me";
+//export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://rancho.davidzavala.me";
+export const host = "https://rancho.davidzavala.me";
 
 
 
@@ -33,6 +33,9 @@ let resumenUrl = host+'/api/ganado/resumen/';
 let facturasUrl = host+'/api/ganado/facturas/';
 let fierroOUrl = host+'/api/ganado/fierrosO/';
 let fierroNUrl = host+'/api/ganado/fierrosN/';
+
+/* Los mejores reportes hasta ahora lol*/
+let losReportesUrl = host + '/api/ganado/reportes/'
 
 
 /********************Planta de Alimentos Urls*******************/
@@ -152,6 +155,26 @@ let recibosUrl = host+'/api/creditos/recibos/'
 
 
 const api = {
+
+    getReportes:(url)=>{
+        if (url) losReportesUrl = url
+        const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
+        return new Promise(function(resolve, reject){
+            const instance = axios.create({
+                baseURL:losReportesUrl,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + userToken
+                }
+            });
+            instance.get('')
+                .then(function(response){
+                    resolve(response.data)
+                }).catch(function(error){
+                reject(error)
+            })
+        })
+    },
     /*******************Creditos y Acreedores*****************/
 
     getRecibos:()=>{
