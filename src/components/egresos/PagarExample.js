@@ -105,7 +105,7 @@ class PagarEgreso extends Component {
         });
 
         //let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/ingresos/?cobrado=';
+        let basePath = host + '/api/ingresos/ingresos/?cobrado=';
 
         let url = basePath+`${"False"}`;
         console.log("URL", url)

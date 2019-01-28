@@ -10,7 +10,11 @@ import * as linesActions from '../../redux/actions/blines/blinesActions';
 import * as cuentasActions from '../../redux/actions/cuentas/cuentasActions';
 import * as clientesActions from '../../redux/actions/administracion/clientesActions';
 import MainLoader from "../common/Main Loader";
+import {host} from '../../Api/Django'
+
+
 const Option = Select.Option;
+
 
 const opciones = [{
     name :'Cerdos',
@@ -53,7 +57,7 @@ class DetailIngresoPage extends Component{
     };
     handleSearchLine=(a)=>{
 
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/blines/?q=';
+        let basePath = host + '/api/ingresos/blines/?q=';
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/blines/?q=';
         let url = basePath+a;
 
@@ -71,7 +75,7 @@ class DetailIngresoPage extends Component{
 
     handleCuenta=(a)=>{
 
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/cuentas/?q=';
+        let basePath = host + '/api/ingresos/cuentas/?q=';
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/cuentas/?q=';
         let url = basePath+a;
 
@@ -89,7 +93,7 @@ class DetailIngresoPage extends Component{
     handleClient=(a)=>{
 
         //let basePath = 'http://127.0.0.1:8000/api/ingresos/clientes/?q=';
-        let basePath = 'https://rancho.davidzavala.me/api/ingresos/clientes/?q=';
+        let basePath = host + '/api/ingresos/clientes/?q=';
         let url = basePath+a;
 
         this.props.clientesActions.getClSearch(url);

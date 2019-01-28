@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {host} from '../../Api/Django'
 
 const style={
     customFilterDropdown: {
@@ -98,7 +99,7 @@ class PagarEgreso extends Component {
 
     componentWillMount(){
         //let basePath= "http://localhost:8000/api/egresos/egresos/?paid=";
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/egresos/?paid=';
+        let basePath = host + '/api/egresos/egresos/?paid=';
         let url = basePath+`${"False"}`;
         this.props.egresosActions.getEgresos(url);
 

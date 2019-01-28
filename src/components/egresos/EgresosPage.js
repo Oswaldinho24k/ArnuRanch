@@ -5,6 +5,7 @@ import MainLoader from "../common/Main Loader";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
+import {host} from '../../Api/Django'
 
 import * as egresosActions from '../../redux/actions/administracion/egresosActions';
 import FormEgreso from "./EgresoForm";
@@ -169,7 +170,7 @@ class EgresosPage extends Component {
 
     onSearch = () => {
         //let basePath= "http://localhost:8000/api/egresos/egresos/?q=";
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/egresos/?q=';
+        let basePath = host+'/api/egresos/egresos/?q=';
 
         let url = basePath+this.state.searchText;
         this.props.egresosActions.getEgresos(url);
@@ -179,7 +180,7 @@ class EgresosPage extends Component {
 
     resetFilter = () => {
         //let basePath= "http://localhost:8000/api/egresos/egresos/";
-        let basePath = 'https://rancho.davidzavala.me/api/egresos/egresos/';
+        let basePath = host+'/api/egresos/egresos/';
 
         this.props.egresosActions.getEgresos(basePath);
         this.setState({
@@ -210,7 +211,7 @@ class EgresosPage extends Component {
     };
 
     handleSearchLine=(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/ingresos/blines/?q=';
+        let basePath = host + '/api/ingresos/blines/?q=';
         let url = basePath+a;
         this.props.linesActions.getLiSearch(url);
     };
@@ -218,14 +219,14 @@ class EgresosPage extends Component {
     //providers
 
     handleSearchProvider=(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/egresos/proveedores/?q=';
+        let basePath = host + '/api/egresos/proveedores/?q=';
         let url = basePath+a;
         this.props.proveedoresActions.getPrSearch(url);
     };
 
     //compras
     compraSearch =(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/egresos/compras/?q=';
+        let basePath = host + '/api/egresos/compras/?q=';
         let url = basePath+a;
         this.props.comprasActions.getCoSearch(url);
     }
@@ -237,7 +238,7 @@ class EgresosPage extends Component {
     };
 
     handleEmpresas=(a)=>{
-        let basePath = 'http://rancho.davidzavala.me/api/ingresos/empresas/?q=';
+        let basePath = host + '/api/ingresos/empresas/?q=';
         let url = basePath+a;
         //this.props.cuentasActions.getCuSearch(url);
     };

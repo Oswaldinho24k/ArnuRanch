@@ -43,7 +43,7 @@ class EventosPage extends Component {
     this.props.animalActions.getAnimals(url);
 };
 handleChange=(a)=>{
-    //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+    
     this.setState({areteRancho:a});
 };
 
@@ -81,7 +81,7 @@ handleSearchLote=(a)=>{
 
 };
 handleChangeLote=(a)=>{
-    //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+    
     this.setState({lote:a});
 };
 handleMultiple=(a)=>{
@@ -166,7 +166,7 @@ saveMultiplesGastos=(gasto)=>{
 saveLoteGastos=(gasto)=>{
     this.setState({loading:true});
     let {loteId} = this.state;
-    //let keys = this.state.selectedRowKeys;
+    
     let parcialAmount = gasto.costo/loteId.animals.length;
     parcialAmount = parcialAmount.toFixed(2);
     let parcialQuantity = gasto.cantidad/loteId.animals.length;
@@ -295,12 +295,12 @@ changeMultiplePesada=(animal)=>{
     }
 };
 handleChangeMode=(a)=>{
-    //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+    
 
     this.setState({modo:a, mIds:[],  aretes:[], areteRancho:'', areteId:'', lote:'', loteId:{}, multiple:[]});
 };
 handleChangeEvent=(a)=>{
-    //let basePath = 'https://rancho.davidzavala.me/api/ganado/animals/?q=';
+    
     this.setState({event:a});
 };
 

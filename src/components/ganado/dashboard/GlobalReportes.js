@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
-
+import {host} from '../../../Api/Django'
 
 const RangePicker = DatePicker.RangePicker
 const Option = Select.Option
@@ -24,7 +24,7 @@ class GlobalReportes extends Component {
 
 
     componentWillMount(){
-        this.getReportes('https://rancho.davidzavala.me/api/ganado/reportes/?lote=Lote%201')
+        this.getReportes(host + '/api/ganado/reportes/?lote=Lote%201')
         //this.getReportes()
     } 
 

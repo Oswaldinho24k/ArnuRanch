@@ -70,7 +70,7 @@ class ReportesPage extends Component {
     };
 
     handleSearchLote=(a)=>{
-        let basePath = 'https://rancho.davidzavala.me/api/ganado/lotes/?q=';
+        let basePath = host + '/api/ganado/lotes/?q=';
         let url = basePath+a;
         this.props.lotesActions.getLotes(url);
 

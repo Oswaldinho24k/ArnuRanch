@@ -15,6 +15,7 @@ import PesadasComponent from "./PesadasComponent";
 import FormPesada from "./FormPesada";
 import ReportesComponent from "./ReportesComponent";
 import {store} from '../../../index';
+import {host} from '../../../Api/Django'
 
 
 
@@ -124,7 +125,7 @@ handleEmpresa=(e)=>{
 //Facturas
 
 searchFactura=(a)=>{
-    let basePath = 'http://rancho.davidzavala.me/api/ganado/facturas/?q=';
+    let basePath = host + '/api/ganado/facturas/?q=';
     let url = basePath+a;
     this.props.facturasActions.getFaSearch(url);
 };
