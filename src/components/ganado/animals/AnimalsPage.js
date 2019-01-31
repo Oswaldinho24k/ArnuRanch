@@ -161,7 +161,7 @@ handleStatus=(v)=>{
     this.props.animalActions.getAnimals(url)
         .then(r=>{
         this.setState({loading:false})
-})
+    })
 }
 resetFilters=()=>{
     this.setState({loading:true})

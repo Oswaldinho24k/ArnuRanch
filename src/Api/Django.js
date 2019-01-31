@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let debug = false;
 
-//export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://backend.rancholalaguna.mx";
-export const host = "https://backend.rancholalaguna.mx";
+export const host = window.location.host === "localhost:3000" ? "http://localhost:8000" : "https://backend.rancholalaguna.mx";
+//export const host = "https://backend.rancholalaguna.mx";
 
 
 
@@ -82,7 +82,6 @@ let recibosUrl = host+'/api/creditos/recibos/'
 
 
 const api = {
-
     getReportes:(url)=>{
         if (url) losReportesUrl = url
         const userToken = JSON.parse(localStorage.getItem('userRanchoToken'));
