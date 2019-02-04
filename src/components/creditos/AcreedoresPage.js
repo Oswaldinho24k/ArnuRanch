@@ -75,9 +75,18 @@ class AcreedoresPage extends React.Component{
     render(){
         let {acreedores, fetched, recibos} = this.props
         let {open} = this.state
+        let total = 0
+        acreedores.forEach(ac=>{
+            ac.disposiciones.forEach(i=>{
+                if(!i.paid)total+=parseFloat(i.monto)
+            })
+        })
         if(!fetched)return <MainLoader/>
         return(
             <div >
+                <div>
+                    Total de Deuda: $ {total}
+                </div>
                 <div style={{width:'100%',display:'flex', justifyContent:'space-around'}}>
                     <div style={{width:'30%'}}>
                         <h4>Vencimientos</h4>

@@ -9,6 +9,7 @@ import * as animalActions from '../../../redux/actions/ganado/animalsActions';
 import * as lotesActions from '../../../redux/actions/ganado/lotesActions';
 import {host} from '../../../Api/Django'
 import MainLoader from '../../common/Main Loader';
+import './reportes.css'
 
 const RangePicker = DatePicker.RangePicker
 const Option = Select.Option
@@ -82,8 +83,13 @@ class GlobalReportes extends Component {
         this.getReportes(basePath)
         
     }
-    resetFilters=()=>{        
+    resetFilters=()=>{  
+        const {date, lote, status} = this.state 
+        this.setState({status:'', lote:'', date:[]})        
         this.getReportes()
+    }
+    toPrint=()=>{
+        window.print()
     }
 
     
@@ -135,7 +141,7 @@ class GlobalReportes extends Component {
     if(!fetched) return <MainLoader/>
     console.log(globals)
     return (
-      <div>        
+      <div id="toPrint" className="toPrint">        
         <div style={{width:'100%', height:'auto', marginBottom:20}}>
             {/* <Input.Search                
                 enterButton               
@@ -164,10 +170,12 @@ class GlobalReportes extends Component {
             </Select>
             <Divider type={'vertical'}/>
             <Button type={'primary'} onClick={this.resetFilters}>Reset</Button>
+            <Divider type={'vertical'}/>
+            <Button type={'secondary'} onClick={this.toPrint}>Print</Button>
 
-            </div>        
+            </div>                 
          <section style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
-            <div style={{width:'45%', display:'flex', justifyContent:'space-between', flexWrap:'wrap', marginRight:'10px',height:'70vh'}}>
+            <div className="numbers" style={{width:'45%', display:'flex', justifyContent:'space-between', flexWrap:'wrap', marginRight:'10px',height:'70vh'}}>
             
                 <Card style={{width:180, height:100}}>
                     <p>conversion__avg:</p>
@@ -250,9 +258,9 @@ class GlobalReportes extends Component {
                     loading={loading}
                     dataSource={aretes}
                     rowKey={record => record.id}
-                    pagination={false}>
+                    pagination={false}/>
                 
-                </Table>
+                
             </div>
         </section> 
 

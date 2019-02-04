@@ -1,0 +1,53 @@
+@media print{
+    @page {
+        size: landscape
+    }
+    
+    .toPrint{
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;        
+    }
+    .toPrint section{        
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start !important;
+        height: auto !important;
+        justify-content: flex-start !important;
+        margin: 0 !important;    
+    }
+    .toPrint section > div{
+        height: 90vh !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;        
+    }
+    .toPrint section div .ant-card{
+        display: block !important;
+        width: 200px !important;
+        height: 100px !important;
+        padding:0 !important;        
+        margin: 0 !important;        
+    }    
+    .toPrint section div .ant-card .ant-card-body{
+        height: auto;
+        padding:0 2% !important;        
+        margin: 0 !important;        
+    }
+    .toPrint section div .ant-card .ant-card-body p{
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    .ant-layout-sider{
+        display: none !important;
+    }
+    .ant-btn{
+        display: none !important;
+    }
+    .ant-layout-header{
+        display: none !important;
+    }
+    
+
+}

@@ -64,24 +64,15 @@ const FormEgreso = Form.create()(
                                     placeholder:'Selecciona un Empresa',
                                 }
                             })(
-
-
                                 <Select
                                     placeholder={"Razón Social de Comprador"}
                                     showSearch
                                     onSearch={searchEmpresas}
-                                    filterOption={false}
-                                >
-                                    {
-                                        options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>
-                                    }
-
+                                    filterOption={false}>                                
+                                    {options_empresas.length >0? options_empresas.map((a, key) => <Option key={key} value={a.company} ><div onClick={()=>saveCompany(a.id)}><span>{a.company}</span></div></Option>):<Option key={999999} disabled >No encontrado</Option>}
                                 </Select>
                             )}
-
                         </FormItem>
-
-
                         <FormItem
                             label={"Linea de negocio"}
                             hasFeedback

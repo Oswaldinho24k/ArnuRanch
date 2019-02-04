@@ -24,9 +24,11 @@ class AnimalsPage extends Component {
         selectedRowKeys:[],
         options:'',
         loteFilter:'',
+        loteName:'',
         searchText:'',
         canReset:false,
-        loading:false
+        loading:false,
+        status:true
 
     };
 
@@ -127,12 +129,13 @@ handleChange=(loteFilter)=>{
 };
 
 filterByLote=(lote)=>{
+    const {searchText, status} = this.state
     this.setState({loading:true})
-    let basePath = host+'/api/ganado/animals/?lote=';
-    let url = basePath+lote;
+    let url = host+`/api/ganado/animals/?lote=${lote}&q=${searchText}&s=${status}`;
+    
     this.props.animalActions.getAnimals(url)
         .then(r=>{
-            this.setState({canReset:true, loading:false})
+            this.setState({canReset:true, loading:false, loteName:lote})
         }).catch(e=>console.log(e))
 
     //this.setState({loteFilter:b.props.children})
@@ -141,9 +144,10 @@ handleSearch=(e)=>{
     this.setState({searchText:e.target.value})
 };
 onSearch=()=>{
-    this.setState({canReset:true})
-    let basePath = host+'/api/ganado/animals/?q=';
-    let url = basePath+this.state.searchText;
+    const {loteName, status, searchText} = this.state
+    this.setState({canReset:true, loading:true})
+    let url = host+`/api/ganado/animals/?lote=${loteName}&q=${searchText}&s=${status}`;
+    
     this.props.animalActions.getAnimals(url)
         .then(r=>{
         this.setState({canReset:true, loading:false})
@@ -153,25 +157,25 @@ onSearch=()=>{
 };
 
 handleStatus=(v)=>{
+
     this.setState({loading:true})
-    let basePath = host+'/api/ganado/animals/?s=';
-
-    let url = basePath + v
-
+    const {loteName, searchText} = this.state
+    let url = host+`/api/ganado/animals/?lote=${loteName}&q=${searchText}&s=${v}`;
+    console.log(url)
     this.props.animalActions.getAnimals(url)
         .then(r=>{
-        this.setState({loading:false})
-    })
+            this.setState({loading:false, status:v})
+        }).catch(e=>console.log(e))
 }
 resetFilters=()=>{
     this.setState({loading:true})
     let basePath = host+'/api/ganado/animals/';
     this.props.animalActions.getAnimals(basePath)
         .then(r=>{
-        this.setState({searchText:'', loteFilter:'', status:true, loading:false});
-}).catch(e=>{
-        console.log(e)
-})
+            this.setState({searchText:'', loteFilter:'',loteName:'', status:true, loading:false});
+        }).catch(e=>{
+            console.log(e)
+        })
 
 };
 handlePagination=(pagina)=>{
@@ -195,7 +199,7 @@ handlePagination=(pagina)=>{
 
 
 render() {
-    let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset, loading} = this.state;
+    let { visible, selectedRowKeys,visible2 , loteFilter, searchText, canReset, loading, status} = this.state;
 
     const columns = [
         {
@@ -296,16 +300,17 @@ render() {
     <Divider
     type={'vertical'}/>
     <Switch
-    onChange={this.handleStatus}
-    checkedChildren="Activos"
-    unCheckedChildren="Inactivos"
-    defaultChecked />
+        onChange={this.handleStatus}
+        checkedChildren="Activos"
+        unCheckedChildren="Inactivos"
+        checked={status}
+        defaultChecked={true} />
     <Divider
-    type={'vertical'}/>
+        type={'vertical'}/> 
     <Button
-    type="primary"
-    disabled={!canReset}
-    onClick={this.resetFilters}>Restablecer</Button>
+        type="primary"
+        disabled={!canReset}
+        onClick={this.resetFilters}>Restablecer</Button>
     </div>
 
     {/*table of animals*/}

@@ -10,42 +10,58 @@ const FormItem = Form.Item;
 
 
 class FormGasto extends React.Component{
-    handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-    if (!err) {
-    console.log(values.created)
-    console.log(moment(values.created).format('YYYY-MM-DD'))
 
-    values['created']=(moment(values.created).format('YYYY-MM-DD'));
-    //values['created'] = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
-    //values['cantidad']=values['cantidad'].toFixed(2);
-    //values['costo']=values['costo'].toFixed(2);
-    if(this.props.id)values['id'] = this.props.id
-    this.props.saveGasto(values);
-    this.props.form.resetFields()
-}
-if (Array.isArray(e)) {
-    return e;
-}
-return e && e.fileList;
-});
+    state={
+        formula:{},
+        kgPrice:0
+    }
+
+    saveFormula=(a)=>{
+        console.log(a)
+        let kgPrice = parseFloat(a.total_price)/parseFloat(a.total_units)
+        this.setState({kgPrice})
+    }
+
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+        if (!err) {
+        console.log(values.created)
+        console.log(moment(values.created).format('YYYY-MM-DD'))
+
+        values['created']=(moment(values.created).format('YYYY-MM-DD'));
+        //values['created'] = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+        //values['cantidad']=values['cantidad'].toFixed(2);
+        //values['costo']=values['costo'].toFixed(2);
+        if(this.props.id)values['id'] = this.props.id
+        this.props.saveGasto(values);
+        this.props.form.resetFields()
+    }
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    });
 };
 
 
 render(){
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    const {kgPrice} = this.state
     let {fetched, vacunas, formulas, tipo, formula, cantidad, vacuna, costo, unity, insumo, insumo_q, insumo_cost, created} = this.props;
+    console.log(getFieldValue('formula'))
     if(!tipo)tipo = getFieldValue('tipo');
+
     if(!fetched) return <MainLoader/>;
 
     let vacunasOptions = vacunas.map((v, key)=>(<Option value={parseInt(v.id)} key={key}>{v.vaccine}</Option>));
-    let formulasOptions = formulas.map((f, key)=>(<Option value={parseInt(f.id)} key={key}>{f.name}</Option>));
+    
 
     return(
 
         <Form onSubmit={this.handleSubmit} style={{padding:0}}>
-<FormItem style={{margin:0}} label="Tipo">
+    <FormItem style={{margin:0}} label="Tipo">
         {getFieldDecorator('tipo', {
         initialValue:tipo,
             rules: [{
@@ -80,7 +96,7 @@ render(){
             }],
         })(
         <Select>
-        {formulasOptions}
+        {formulas.map((f, key)=>(<Option value={parseInt(f.id)} key={key}><h4 onClick={()=>this.saveFormula(f)} >{f.name} <span>${f.total_price/f.total_units}/kg</span> </h4></Option>))}
         </Select>
         )}
 
@@ -123,7 +139,7 @@ render(){
     </FormItem>
     <FormItem  label="Cantidad" style={{marginBottom:0}}>
         {getFieldDecorator('cantidad', {
-            initialValue:cantidad,
+            initialValue:cantidad || 0,
             rules: [{
                 required: true, message: 'Completa!',
             }],
@@ -180,8 +196,9 @@ render(){
     </div>:''}
 
     <FormItem  label="Monto del Gasto" style={{margin:0}}>
-        {getFieldDecorator('costo', {
-            initialValue:costo,
+        
+        {getFieldDecorator('costo', { 
+            initialValue:kgPrice*getFieldValue('cantidad'),
             rules: [{
                 required: true, message: 'Completa!',
             }],
